@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <data class="ActAlbumBD">
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            />
+
+        <View
+            android:id="@+id/expanded_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.melvinhou.kami.wiget.PhotoCutterView
+            android:id="@+id/expanded_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            android:scaleType="fitCenter"
+            />
+
+        <!--标题栏-->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@id/bar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:animateLayoutChanges="true"
+            android:theme="@style/Dimension2Bar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/Dimension2Popup"
+            app:contentInsetStartWithNavigation="0dp"
+            android:background="@drawable/bg_album_bar"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="32dp"
+            android:elevation="4dp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

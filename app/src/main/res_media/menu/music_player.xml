@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".media.music.MusicPlayerActivity">
+
+
+    <item
+        android:id="@+id/collect"
+        android:icon="@drawable/ic_collect"
+        android:orderInCategory="90"
+        android:title="收藏"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/repeat_mode_invalid"
+        android:title="单曲播放"
+        app:showAsAction="collapseActionView"/>
+
+    <item
+        android:id="@+id/repeat_mode_one"
+        android:orderInCategory="100"
+        android:title="单曲循环"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/repeat_mode_none"
+        android:orderInCategory="100"
+        android:title="列表播放"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/repeat_mode_all"
+        android:orderInCategory="100"
+        android:title="列表循环"
+        app:showAsAction="never"/>
+
+</menu>

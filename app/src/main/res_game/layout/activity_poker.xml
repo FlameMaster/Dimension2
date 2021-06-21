@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#228b22"
+    android:foreground="@drawable/fg_poker_desktop"
+    >
+
+    <LinearLayout
+        android:id="@+id/desktop"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:text="桌面"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginHorizontal="144dp"
+        android:layout_marginVertical="96dp"
+        />
+
+    <com.melvinhou.dimension2.RoundGifImageView
+        android:id="@+id/player_photo"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        app:corner_radius="36dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:src="@mipmap/fc"
+        android:foreground="@drawable/fg_photo_stroke"
+        android:elevation="8dp"
+        android:layout_marginTop="8dp"
+        />
+
+    <TextView
+        android:id="@+id/player_data"
+        android:layout_width="156dp"
+        android:layout_height="48dp"
+        android:background="@drawable/fg_klotski_frame"
+        android:text="玩家信息"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@id/player_photo"
+        app:layout_constraintBottom_toBottomOf="@id/player_photo"
+        app:layout_constraintRight_toRightOf="@id/player_photo"
+        android:layout_marginRight="36dp"
+        android:paddingRight="36dp"
+        />
+
+    <TextView
+        android:id="@+id/player_game"
+        android:layout_width="156dp"
+        android:layout_height="48dp"
+        android:background="@drawable/fg_klotski_frame"
+        android:text="地主: 玩家\n庄家: 玩家"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="@id/player_photo"
+        app:layout_constraintBottom_toBottomOf="@id/player_photo"
+        app:layout_constraintLeft_toLeftOf="@id/player_photo"
+        android:layout_marginLeft="36dp"
+        android:paddingLeft="42dp"
+        />
+
+    <TextView
+        android:id="@+id/play"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toTopOf="@id/player_cards"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/pass"
+        android:background="@drawable/bg_poker_red"
+        android:text="出牌"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:layout_marginBottom="8dp"
+        android:elevation="4dp"
+        android:visibility="invisible"
+        />
+
+    <TextView
+        android:id="@+id/pass"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toTopOf="@id/player_cards"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/play"
+        android:background="@drawable/bg_poker_black"
+        android:text="跳过"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:layout_marginBottom="8dp"
+        android:elevation="4dp"
+        android:visibility="invisible"
+        />
+
+    <com.melvinhou.dimension2.game.poker.PokerShowCardsContainer
+        android:id="@+id/player_cards"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        />
+
+    <ImageView
+        android:id="@+id/player1"
+        android:layout_width="120dp"
+        android:layout_height="180dp"
+        android:background="@drawable/fg_klotski_frame"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/player_cards"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="fitXY"
+        />
+    <View
+        android:layout_width="48dp"
+        android:layout_height="62dp"
+        app:layout_constraintBottom_toBottomOf="@id/player1"
+        app:layout_constraintRight_toRightOf="@id/player1"
+        android:background="@drawable/card_poker_background"
+        />
+
+    <TextView
+        android:id="@+id/player1_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/player1"
+        app:layout_constraintRight_toRightOf="@id/player1"
+        android:text="07"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_poker_number"
+        android:padding="4dp"
+        />
+
+    <ImageView
+        android:id="@+id/player2"
+        android:layout_width="120dp"
+        android:layout_height="180dp"
+        android:background="@drawable/fg_klotski_frame"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:gravity="center"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/player_cards"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="fitXY"
+        />
+    <View
+        android:layout_width="48dp"
+        android:layout_height="62dp"
+        app:layout_constraintBottom_toBottomOf="@id/player2"
+        app:layout_constraintLeft_toLeftOf="@id/player2"
+        android:background="@drawable/card_poker_background"
+        />
+
+    <TextView
+        android:id="@+id/player2_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/player2"
+        app:layout_constraintLeft_toLeftOf="@id/player2"
+        android:text="13"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_poker_number"
+        android:padding="4dp"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

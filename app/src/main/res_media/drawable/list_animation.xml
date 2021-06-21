@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item android:drawable="@mipmap/start_01" android:duration="100" />
+    <item android:drawable="@mipmap/start_02" android:duration="100" />
+    <item android:drawable="@mipmap/start_03" android:duration="100" />
+    <item android:drawable="@mipmap/start_04" android:duration="100" />
+    <item android:drawable="@mipmap/start_05" android:duration="100" />
+    <item android:drawable="@mipmap/start_06" android:duration="100" />
+    <item android:drawable="@mipmap/start_07" android:duration="100" />
+    <item android:drawable="@mipmap/start_08" android:duration="100" />
+    <item android:drawable="@mipmap/start_09" android:duration="100" />
+    <item android:drawable="@mipmap/start_10" android:duration="100" />
+    <item android:drawable="@mipmap/start_11" android:duration="100" />
+    <item android:drawable="@mipmap/start_12" android:duration="100" />
+    <item android:drawable="@mipmap/start_13" android:duration="100" />
+    <item android:drawable="@mipmap/start_14" android:duration="100" />
+    <item android:drawable="@mipmap/start_15" android:duration="100" />
+    <item android:drawable="@mipmap/start_16" android:duration="100" />
+    <item android:drawable="@mipmap/start_17" android:duration="100" />
+    <item android:drawable="@mipmap/start_18" android:duration="100" />
+    <item android:drawable="@mipmap/start_19" android:duration="100" />
+    <item android:drawable="@mipmap/start_20" android:duration="100" />
+    <item android:drawable="@mipmap/start_21" android:duration="100" />
+    <item android:drawable="@mipmap/start_22" android:duration="100" />
+    <item android:drawable="@mipmap/start_23" android:duration="100" />
+    <item android:drawable="@mipmap/start_24" android:duration="100" />
+    <item android:drawable="@mipmap/start_25" android:duration="100" />
+    <item android:drawable="@mipmap/start_26" android:duration="100" />
+    <item android:drawable="@mipmap/start_27" android:duration="100" />
+</animation-list>

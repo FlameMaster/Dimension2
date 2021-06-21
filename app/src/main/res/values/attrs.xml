@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+       border_thickness         设置边框的宽度
+       border_inside_color     设置内边框的颜色
+       border_outside_color     设置外边框的颜色
+       内外边框如果只设置一个的话，则认为只显示一个边框。
+    -->
+    <declare-styleable name="RoundImageView">
+        <attr name="corner_radius" format="dimension" />
+        <attr name="border_thickness" format="dimension" />
+        <attr name="border_inside_color" format="color" />
+        <attr name="border_outside_color" format="color" />
+        <attr name="fixed_size" format="boolean" />
+    </declare-styleable>
+
+
+
+    <!--
+       corner_radius         圆角半径
+       shadow_radius         阴影半径
+       deviationX            x方向偏移
+       deviationY            y方向偏移
+       shadow_color          阴影颜色
+       shadow_centre_color   阴影中间颜色
+       内外边框如果只设置一个的话，则认为只显示一个边框。
+    -->
+    <declare-styleable name="DiffusionView">
+        <attr name="diffusion_corner_radius" format="dimension" />
+        <attr name="shadow_radius" format="dimension" />
+        <attr name="deviationX" format="dimension" />
+        <attr name="deviationY" format="dimension" />
+        <attr name="shadow_color" format="color" />
+        <attr name="shadow_centre_color" format="color" />
+    </declare-styleable>
+
+
+    <!--圆弧的view-->
+    <declare-styleable name="ArcView" >
+        <attr name="arcHeight" format="dimension" />
+        <attr name="arcColor" format="color" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,76 @@
+{
+    "code": 200,
+    "data": {
+        "explain": "
+        在纷乱嘈杂的现代化城市东京，蔓延着一种吞食死尸的怪人，人们称之为喰种。某日，上井大学普通学生金木研遇上某位神秘女子，卷入一场迷之事故。自此充满波折的命运齿轮开始转动了。\n
+        《东京食尸鬼》是由石田翠创作，于集英社“周刊Young Jump”2011年41号开始连载，并在2014年发售的42号宣布完结的漫画作品。连载版是由石田翠的出道作扩充重构而成。作者石田翠于推特表示，该完结指的是“这个标题的完结”。\n
+        续篇《东京食尸鬼：re》于2014年10月17日连载开始，2018年7月5日在《周刊YOUNG JUMP》31号完结。",
+        "movies": [
+            {
+                "title": "第01话\n",
+                "url": "https://v8.yongjiu8.com/ppvod/D54C6E67E79F3CE96797B795DDAD5050.m3u8"
+            },
+            {
+                "title": "第02话\n",
+                "url": "https://v8.yongjiu8.com/ppvod/5F0E02BE5C511D6B33CF8D97E6A51CD6.m3u8"
+            },
+            {
+                "title": "第03话\n",
+                "url": "https://v8.yongjiu8.com/ppvod/79B566DDADE1EDAA6112494BB54CEED5.m3u8"
+            },
+            {
+                "title": "第04话\n",
+                "url": "https://v8.yongjiu8.com/ppvod/2CBF6BDA4E94808D3888183EA7443EA8.m3u8"
+            },
+            {
+                "title": "第05话\n",
+                "url": "https://v8.yongjiu8.com/ppvod/8EA77DECD575D20FCE812B7C7BFE97E6.m3u8"
+            },
+            {
+                "title": "第06话\n",
+                "url": "https://v8.yongjiu8.com/ppvod/79950C7ECF67D016726F75F8F8AB5DA7.m3u8"
+            },
+            {
+                "title": "第07话\n",
+                "url": "https://v8.yongjiu8.com/ppvod/7D5575AC187E55DCC552F2D02C47134A.m3u8"
+            },
+            {
+                "title": "第08话\n",
+                "url": "https://v8.yongjiu8.com/ppvod/EF9D2D7AB21FE00126E9FB53CDD1ABDC.m3u8"
+            },
+            {
+                "title": "第09话\n",
+                "url": "https://v8.yongjiu8.com/ppvod/62E543159609560D63173FDA5BB0809E.m3u8"
+            },
+            {
+                "title": "第10话\n",
+                "url": "https://v8.yongjiu8.com/ppvod/382A0C3A91E1155206A6C4EB06255573.m3u8"
+            },
+            {
+                "title": "第11话\n",
+                "url": "https://v8.yongjiu8.com/ppvod/6AE2846ED4AAAD218B4D1C50BE5BD1F8.m3u8"
+            },
+            {
+                "title": "第12话\n",
+                "url": "https://v8.yongjiu8.com/ppvod/478562A61B7DAEFF12D2DC27C096E83C.m3u8"
+            },
+            {
+                "title": "OVA01\n",
+                "url": "https://n.bwzybf.com/20171224/t9H7edWE/900kb/hls/index.m3u8"
+            },
+            {
+                "title": "OVA02\n",
+                "url": "https://yingshi.yazyzw.com/ppvod/7709A3B916E2C096953D15BB0567D365.m3u8"
+            }
+        ],
+        "owner": {
+            "intro": "少年曾经说过，我从红尘走过，只为繁华中寻你，与我同乐。",
+            "nickname": "江湖人称风尘子",
+            "photo": "https://i0.hdslb.com/bfs/face/59d7b014964dc31af6fbf319881f6231777f5f13.jpg"
+        },
+        "textDate": "2019-02-16",
+        "title": "【日漫】东京食尸鬼(第一季)"
+    },
+    "date": 0,
+    "message": "欢迎使用二刺猿"
+}

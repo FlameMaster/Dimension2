@@ -1,0 +1,11 @@
+<resources>
+
+    <style name="Dimension2Theme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Dimension2Theme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Dimension2Theme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

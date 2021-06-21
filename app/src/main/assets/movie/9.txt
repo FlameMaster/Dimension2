@@ -1,0 +1,119 @@
+{
+    "code": 200,
+    "data": {
+        "explain": "
+        某天于地球上凭空出现许多孢子，其中诞生的幼虫侵入身体后，以寄生脑部为目标，寄生完成后与脑部细胞同化，管理这个“死掉的身体”。它们能任意变形，其食物便是寄生体相同的物种。\n
+        由于寄生生物的出现，到处频传残忍的杀人事件，但人类却淡漠地忽视这种仍属少数的案件，而寄生生物逐渐了解人类世界，学会开始计划组织并利用政治的力量，使世界陷入恐慌中。\n
+        泉新一，普通的高中生，但他却是被寄生生物寄生的人类之一，但是由于某种意外，寄生在他体内的生物并没有吃掉他的大脑，而只是取代了他的右手。本性善良正直的泉新一没有被这突如其来的残酷命运击倒，为了被寄生生物杀死的亲友以及所有人类的未来，他决心与其他完全体寄生兽进行殊死搏斗。\n
+        电视动画《寄生兽 生命的准则》改编自日本漫画家岩明均原作的科幻漫画《寄生兽》。2013年11月宣布TV动画化。作品主要描写了平凡的高中生泉新一和寄生在他体内、与其右手同化的生物MIGI共存的坎坷命运。\n
+        2014年10月9日起每周四0：29在日本电视台首播，全24话。\n
+        2015年6月，因内容涉嫌血腥暴力等因素，被中国文化部纳入《网络动漫黑名单》中，并在中国大陆管辖境内全网禁播。",
+        "movies": [
+            {
+                "title": "第01话\n",
+                "url": "http://v-acfun.com/20180809/6808_75be1edb/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第02话\n",
+                "url": "http://v-acfun.com/20180809/6809_b11f3556/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第03话\n",
+                "url": "http://v-acfun.com/20180809/6810_12e4b00e/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第04话\n",
+                "url": "http://v-acfun.com/20180809/6811_1d4db8dd/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第05话\n",
+                "url": "http://v-acfun.com/20180809/6812_092f129e/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第06话\n",
+                "url": "http://v-acfun.com/20180809/6813_74a6c471/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第07话\n",
+                "url": "http://v-acfun.com/20180809/6814_c6fe708d/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第08话\n",
+                "url": "http://v-acfun.com/20180809/6815_a8a14f32/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第09话\n",
+                "url": "http://v-acfun.com/20180809/6816_a3cf70d9/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第10话\n",
+                "url": "http://v-acfun.com/20180809/6817_e3496418/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第11话\n",
+                "url": "http://v-acfun.com/20180809/6818_b21b4b3a/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第12话\n",
+                "url": "http://v-acfun.com/20180809/6819_0682c1a3/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第13话\n",
+                "url": "http://v-acfun.com/20180809/6820_8888390c/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第14话\n",
+                "url": "http://v-acfun.com/20180809/6821_96aa0dac/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第15话\n",
+                "url": "http://v-acfun.com/20180809/6822_6141561a/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第16话\n",
+                "url": "http://v-acfun.com/20180809/6823_d9f0788c/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第17话\n",
+                "url": "http://v-acfun.com/20180809/6824_e4585540/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第18话\n",
+                "url": "http://v-acfun.com/20180809/6825_9591436f/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第19话\n",
+                "url": "http://v-acfun.com/20180809/6826_3041114a/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第20话\n",
+                "url": "http://v-acfun.com/20180809/6827_bb70f86b/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第21话\n",
+                "url": "http://v-acfun.com/20180809/6828_47215b09/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第22话\n",
+                "url": "http://v-acfun.com/20180809/6829_5c57d964/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第23话\n",
+                "url": "http://v-acfun.com/20180809/6830_2472036d/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第24话\n",
+                "url": "http://v-acfun.com/20180809/6831_f4003606/1000k/hls/index.m3u8"
+            }
+        ],
+        "owner": {
+            "intro": "少年曾经说过，我从红尘走过，只为繁华中寻你，与我同乐。",
+            "nickname": "江湖人称风尘子",
+            "photo": "https://i0.hdslb.com/bfs/face/59d7b014964dc31af6fbf319881f6231777f5f13.jpg"
+        },
+        "textDate": "2019-02-17",
+        "title": "【日漫】寄生兽"
+    },
+    "date": 0,
+    "message": "欢迎使用二刺猿"
+}

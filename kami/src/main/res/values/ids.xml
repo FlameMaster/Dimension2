@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="back" type="id"/>
+    <item name="bar" type="id"/>
+    <item name="loading" type="id"/>
+</resources>

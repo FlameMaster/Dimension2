@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/cover"
+            android:layout_width="match_parent"
+            android:layout_height="560dp"
+            android:layout_marginBottom="-100dp"
+            android:layout_marginTop="-100dp"
+            android:background="#999"
+            android:scaleType="centerCrop"
+            app:loadImageHeight="@{0}"
+            app:loadImageUrl="@{coverUrl}"
+            app:loadImageWidth="@{0}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_alignBottom="@+id/cover"
+            android:background="@color/white"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            tools:ignore="MissingConstraints" />
+<!--        android:visibility="@{isShowList?View.VISIBLE:View.GONE}"-->
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:text="标题文字"
+            android:background="#8000"
+            android:paddingHorizontal="24dp"
+            android:gravity="center_vertical|left"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:letterSpacing="0.6"
+            android:layout_marginTop="268dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:lineSpacingExtra="4dp"
+            />
+
+        <View
+            android:layout_width="16dp"
+            android:layout_height="160dp"
+            android:background="#8000"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="16dp"
+            />
+
+    </RelativeLayout>
+
+    <data class="ItemMediaBD">
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isShowList"
+            type="Boolean" />
+
+        <variable
+            name="coverUrl"
+            type="String" />
+    </data>
+</layout>

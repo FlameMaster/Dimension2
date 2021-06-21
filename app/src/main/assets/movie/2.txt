@@ -1,0 +1,67 @@
+{
+    "code": 200,
+    "data": {
+        "explain": "故事讲述了在就职过程中寻不到出路的主人公琦玉，在遭遇到要夺走一位少年生命的螃蟹异变人后，迸发出了孩童时代“想要成为英雄”的想法，于是奋起与对方战斗并救下了少年。重拾对于成为英雄的志向后，琦玉通过努力锻炼终于获得了最强的力量，但因此导致脱发变成了光头。\n
+        之后他与弟子杰诺斯一起加入了英雄协会，开始了与众多英雄的冒险故事。\n
+        5-10集缺省中，实在抱歉，7集已补充",
+        "movies": [
+            {
+                "title": "第01话\n最强之人",
+                "url": "https://www.hongxinhuaxue.com/20190103/XhCKThMs/index.m3u8"
+            },
+            {
+                "title": "第02话\n孤傲的机器人",
+                "url": "http://youku.com-www-163.com/20180512/1287_065ba0cc/index.m3u8"
+            },
+            {
+                "title": "第03话\n执着的科学家",
+                "url": "http://youku.com-www-163.com/20180512/1288_577e67c7/index.m3u8"
+            },
+            {
+                "title": "第04话\n如今的忍者",
+                "url": "http://youku.com-www-163.com/20180512/1289_a3a8e0d6/index.m3u8"
+            },
+            {
+                "title": "第05话\n终极之师",
+                "url": "https://youku.com-www-163.com/20180512/1290_2987a969/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第06话\n最恐怖的城市",
+                "url": "https://youku.com-www-163.com/20180512/1291_50c49bf2/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第07话\n至高的弟子",
+                "url": "http://youku.com-www-163.com/20180512/1292_67869ebc/index.m3u8"
+            },
+            {
+                "title": "第08话\n深海之王",
+                "url": "https://youku.com-www-163.com/20180512/1293_f38c0c1d/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第09话\n不屈的正义",
+                "url": "https://youku.com-www-163.com/20180512/1294_a7b38413/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第10话\n前所未有的危机",
+                "url": "https://youku.com-www-163.com/20180512/1295_94f9db19/1000k/hls/index.m3u8"
+            },
+            {
+                "title": "第11话\n全宇宙的霸王",
+                "url": "http://youku.com-www-163.com/20180512/1296_66e2a27d/index.m3u8"
+            },
+            {
+                "title": "第12话\n最强的英雄",
+                "url": "http://youku.com-www-163.com/20180512/1297_d7d23894/index.m3u8"
+            }
+        ],
+        "owner": {
+            "intro": "少年曾经说过，我从红尘走过，只为繁华中寻你，与我同乐。",
+            "nickname": "江湖人称风尘子",
+            "photo": "https://i0.hdslb.com/bfs/face/59d7b014964dc31af6fbf319881f6231777f5f13.jpg"
+        },
+        "textDate": "2019-02-16",
+        "title": "【日漫】一拳超人"
+    },
+    "date": 0,
+    "message": "欢迎使用二刺猿"
+}

@@ -1,0 +1,217 @@
+{
+    "code": 200,
+    "data": {
+        "banners": [
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://i0.hdslb.com/bfs/album/d85042faba810a882654931f5c0cf3224e0cc2e1.jpg"
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://i0.hdslb.com/bfs/article/b4e33d91dd31f16be7c36cefc1a77fe7b628c5d8.jpg"
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://i0.hdslb.com/bfs/album/0f69ce6ea6d198e811f72f70f14e4255ded69780.png"
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://i0.hdslb.com/bfs/article/bfdf26517e1d934844bd5898280800262498eea5.jpg"
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://i0.hdslb.com/bfs/article/11c62201ae9c43c5666084be91f572758dfa64fc.jpg"
+            }
+        ],
+        "list": [
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://i0.hdslb.com/bfs/album/5835584faf677e6f44723580b13f9f1b8f28f303.jpg",
+                "width":2894,
+                "height":4093
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://i0.hdslb.com/bfs/album/f48ed5f05080fa156859824b988bb837b70beea7.jpg",
+                "width":1500,
+                "height":1060
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://b-ssl.duitang.com/uploads/item/201609/09/20160909211923_UYcxs.jpeg",
+                "width":615,
+                "height":1033
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://b-ssl.duitang.com/uploads/item/201902/15/20190215232154_UcYG3.jpeg",
+                "width":840,
+                "height":1200
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://i0.hdslb.com/bfs/article/ad698db531643433ab393ad6555a07f6daa5a8aa.jpg",
+                "width":1280,
+                "height":720
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://i0.hdslb.com/bfs/article/c296477634fcc1d4d7514f7f3ff6ba6c805dc477.png",
+                "width":1500,
+                "height":937
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://b-ssl.duitang.com/uploads/item/201607/25/20160725121819_HUZLa.jpeg",
+                "width":992,
+                "height":1403
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://b-ssl.duitang.com/uploads/item/201902/11/20190211200513_wjnxb.jpg",
+                "width":700,
+                "height":998
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://b-ssl.duitang.com/uploads/item/201812/27/20181227142253_yseje.jpg",
+                "width":1251,
+                "height":839
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://i0.hdslb.com/bfs/article/34494156d37ff9412a72bfb6ba6216b9bf479375.png",
+                "width":1280,
+                "height":720
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://i0.hdslb.com/bfs/album/7a1702be3ef76021d7682780d14f66f7ced1ebf3.jpg",
+                "width":4048,
+                "height":4080
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://b-ssl.duitang.com/uploads/item/201901/31/20190131004411_kcwov.png",
+                "width":619,
+                "height":870
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://b-ssl.duitang.com/uploads/item/201809/02/20180902080130_egllo.jpg",
+                "width":1500,
+                "height":844
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://i0.hdslb.com/bfs/album/82bbea86b222900a282a0d88298ffa3f1470cff4.jpg",
+                "width":800,
+                "height":800
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://i0.hdslb.com/bfs/article/1b89ce25e3410659c9258e18fadc6f5dfa0e2379.jpg",
+                "width":750,
+                "height":1334
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://b-ssl.duitang.com/uploads/item/201707/24/20170724133648_UhLZt.jpeg",
+                "width":1240,
+                "height":1754
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://b-ssl.duitang.com/uploads/item/201510/17/20151017200509_VLayX.jpeg",
+                "width":1006,
+                "height":719
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://b-ssl.duitang.com/uploads/item/201712/03/20171203071748_dTrca.jpeg",
+                "width":827,
+                "height":1294
+            },
+            {
+                "dateText": "2019/02/20",
+                "explain": "",
+                "owner": {},
+                "title": "",
+                "url": "https://b-ssl.duitang.com/uploads/item/201503/05/20150305150527_NMEcS.jpeg",
+                "width":744,
+                "height":1392
+            }
+        ]
+    },
+    "date": 0,
+    "message": "欢迎使用二刺猿"
+}

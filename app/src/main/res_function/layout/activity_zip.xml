@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/unzip_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:text="解压"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="16dp"
+        android:background="#aaa"
+        android:letterSpacing="0.4"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp"
+        />
+
+    <TextView
+        android:id="@+id/unzip_path"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:text="选择文件"
+        app:layout_constraintTop_toBottomOf="@id/unzip_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="16dp"
+        android:background="@drawable/bg_edit_01"
+        android:layout_marginTop="16dp"
+        />
+
+    <TextView
+        android:id="@+id/unzip_file_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="选择文件"
+        app:layout_constraintTop_toBottomOf="@id/unzip_path"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="16dp"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:background="@color/gray"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        />
+
+    <TextView
+        android:id="@+id/unzip_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="解压"
+        app:layout_constraintTop_toBottomOf="@id/unzip_path"
+        app:layout_constraintRight_toRightOf="parent"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="16dp"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:background="@color/cyan"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        />
+
+    <TextView
+        android:id="@+id/zip_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:text="压缩"
+        app:layout_constraintTop_toBottomOf="@id/unzip_bt"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="16dp"
+        android:background="#aaa"
+        android:letterSpacing="0.4"
+        android:textStyle="bold"
+        android:layout_marginTop="48dp"
+        />
+
+    <TextView
+        android:id="@+id/zip_path"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:text="待压缩"
+        app:layout_constraintTop_toBottomOf="@id/zip_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="16dp"
+        android:background="@drawable/bg_edit_01"
+        android:layout_marginTop="16dp"
+        />
+
+    <TextView
+        android:id="@+id/zip_file_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="选择文件"
+        app:layout_constraintTop_toBottomOf="@id/zip_path"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="16dp"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:background="@color/gray"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        />
+
+    <TextView
+        android:id="@+id/zip_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="压缩"
+        app:layout_constraintTop_toBottomOf="@id/zip_path"
+        app:layout_constraintRight_toRightOf="parent"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="16dp"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:background="@color/chocolate"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        />
+
+    <ListView
+        android:id="@+id/zip_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/zip_bt"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

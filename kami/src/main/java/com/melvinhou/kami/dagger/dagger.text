@@ -1,0 +1,32 @@
+dagger2：
+依赖注入框架
+
+通过
+     XxxComponent component = DaggerXxxComponent.builder()
+                                                .xxxComponent(getXxxComponent())
+                                                .xxxModule(new XxxModule(xxx))
+                                                .build();
+     component.inject(xxx);
+
+的方式将一些参数注入到xxx的类里面
+
+XxxModule里面提供一些需要注入的参数的初始化
+XxxComponent是XxxModule和xxx的桥梁，用来控制XxxModule注入到哪里面去
+
+注意：
+使用@Inject时，不能用private修饰符修饰类的成员属性
+一个Component类可以包含多个Module类  @Component(modules = {AModule.class,BModule.class})  @Component(modules = {MainModule.class}, dependencies = AppConponent.class)
+
+@Module (includes = {BModule.class})// includes 引入其它模块的参数
+
+module类中可以反向单例的参数，也可以返回好多不一样的参数，不一样时需要用@Named("release")指名，单例用@Singleton
+
+moudule所依赖的Comonent 中有被单利的对象，那么Conponnent也必须是单利的
+
+一个Conponent 可以被对个Activity/Fragment 引用
+
+单利对象只能在同一个Activity中有效。不同的Activity 持有的对象不同
+
+全局单例需要自定义注解
+
+子类component 依赖父类的component ，子类component的Scoped 要小于父类的Scoped

@@ -1,0 +1,33 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+
+    //指定当前的项目工程可以从哪些仓库上去拉取依赖库给当前项目使用
+    repositories {
+        google()//谷歌自己的库
+        mavenCentral()
+//        jcenter()//停止维护
+//        mavenLocal()
+        
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.2.1'
+        
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+//        jcenter()
+//        mavenLocal()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

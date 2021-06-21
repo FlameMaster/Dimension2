@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data class="ViewLoadingBD">
+
+        <variable
+            name="state"
+            type="com.melvinhou.kami.model.StateModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <LinearLayout
+        android:id="@id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bar"
+        android:layout_centerInParent="true"
+        android:background="@color/white"
+        android:clipChildren="true"
+        android:clipToPadding="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="@{state.empty?View.VISIBLE:View.GONE}"
+        app:layout_constraintTop_toBottomOf="@id/bar">
+
+        <!--进度条-->
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:background="@color/transparent"
+            android:indeterminateTint="@color/black"
+            android:visibility="@{state.isProgress?View.VISIBLE:View.GONE}" />
+
+        <!--加载失败的图片-->
+        <ImageView
+            android:id="@+id/img_err"
+            android:layout_width="100dp"
+            android:layout_height="86dp"
+            android:src="@android:drawable/ic_dialog_alert"
+            android:visibility="@{state.isProgress?View.GONE:View.VISIBLE}" />
+
+        <!--说明文字-->
+        <TextView
+            android:id="@+id/text_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:text="@{state.getCurrentStateLabel()}"
+            android:textColor="?attr/colorAccent"
+            android:textSize="15sp" />
+
+        <!--重新加载-->
+        <TextView
+            android:id="@+id/refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/bg_load_dialog_bg"
+            android:paddingLeft="18dp"
+            android:paddingTop="6dp"
+            android:paddingRight="18dp"
+            android:paddingBottom="6dp"
+            android:text="重新加载"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="14sp"
+            android:onClick="refresh"
+            android:visibility="@{state.isProgress?View.GONE:View.VISIBLE}" />
+    </LinearLayout>
+</layout>

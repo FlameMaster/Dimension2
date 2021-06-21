@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".a_inset.PictureActivity">
+
+
+    <item
+        android:id="@+id/collect"
+        android:icon="@drawable/ic_collect"
+        android:orderInCategory="90"
+        android:title="收藏"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/download"
+        android:icon="@drawable/ic_collect"
+        android:title="保存到本地"
+        app:showAsAction="collapseActionView"/>
+
+    <item
+        android:id="@+id/album"
+        android:orderInCategory="100"
+        android:title="相册"
+        app:showAsAction="never"/>
+
+</menu>
