@@ -19,6 +19,7 @@ import com.melvinhou.kami.net.EmptyState;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -38,6 +39,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
  */
 public abstract class BaseFragment2 extends BaseFragment implements BaseView {
 
+    private Toolbar mToolbar;
     /*工具栏菜单*/
     private Menu mMenu;
     /*进度条view*/
@@ -68,6 +70,36 @@ public abstract class BaseFragment2 extends BaseFragment implements BaseView {
      */
     protected int upBarMenuID() {
         return -1;
+    }
+
+    @Override
+    protected void initActionBar() {
+        mToolbar = getRootView().findViewById(R.id.bar);
+        if (mToolbar != null) {
+//            mToolbar.setTitle("标题");
+//            mToolbar.inflateMenu(R.menu.menu_add);
+//            setTitleCenter(mToolbar);
+            mToolbar.setNavigationOnClickListener(v -> back());
+            mToolbar.setOnMenuItemClickListener(this::onOptionsItemSelected);
+        }
+    }
+
+    /**
+     * 设置标题
+     * @param title
+     */
+    protected void setBarTitle(CharSequence title) {
+        if (mToolbar != null)
+            mToolbar.setTitle(title);
+    }
+
+    /**
+     * 返回按钮
+     * @param icon
+     */
+    protected void setBarBackIcon(int icon){
+        if (mToolbar!=null)
+            mToolbar.setNavigationIcon(icon);
     }
 
     @Override
