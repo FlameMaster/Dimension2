@@ -12,16 +12,28 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.IBinder;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.melvinhou.dimension2.R;
+import com.melvinhou.dimension2.media.video.VideoActivity2;
+import com.melvinhou.kami.adapter.RecyclerAdapter;
+import com.melvinhou.kami.adapter.RecyclerAdapter2;
+import com.melvinhou.kami.adapter.RecyclerHolder;
+import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.IOUtils;
 import com.melvinhou.kami.view.BaseActivity;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.Observable;
 
 /**
@@ -42,6 +54,7 @@ public class ScreenRecordActivity extends BaseActivity {
     private final String TAG = ScreenRecordActivity.class.getName();
     private final static int MICROPHONE_REQUEST_CODE = 789;
     private final static int LOCAL_REQUEST_CODE = 10012;
+
 
 
     MediaProjectionManager mProjectionManager;
@@ -65,6 +78,10 @@ public class ScreenRecordActivity extends BaseActivity {
         }
     };
 
+
+    private RecyclerView mRecycler;
+    private MyAdapter mAdapter;
+
     @Override
     protected int getLayoutID() {
         return R.layout.activity_screenrecord;
@@ -72,17 +89,51 @@ public class ScreenRecordActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        mRecycler = findViewById(R.id.list);
     }
 
     @Override
     protected void initListener() {
         findViewById(R.id.start).setOnClickListener(v -> start());
+        mRecycler.setLayoutManager(new LinearLayoutManager(FcUtils.getContext()));
+        mAdapter = new MyAdapter();
+        mRecycler.setAdapter(mAdapter);
+
+        mAdapter.setOnItemClickListener((viewHolder, position, data) -> {
+            Intent intent = new Intent(ScreenRecordActivity.this, VideoActivity2.class);
+            intent.putExtra("url", data);
+            intent.putExtra("title", "录屏");
+            intent.putExtra("mode", true);
+            startActivity(intent);
+        });
     }
 
     @Override
     protected void initData() {
+        View view = LayoutInflater.from(FcUtils.getContext()).inflate(R.layout.item_loadmore,mRecycler, false);
+        mAdapter.addTailView(view);
+        view.setVisibility(View.INVISIBLE);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadData();
+    }
+
+    /**
+     * 加载数据
+     */
+    private void loadData() {
+        mAdapter.clearData();
+        File dir = getRecordFilesDir();
+        if (dir.isDirectory()) {// 处理目录
+            File files[] = dir.listFiles();
+            for (int i = 0; i < files.length; i++) {
+//                File file = new File(files[i].getAbsolutePath());
+                mAdapter.addData(files[i].getAbsolutePath());
+            }
+        }
     }
 
     @Override
@@ -158,5 +209,40 @@ public class ScreenRecordActivity extends BaseActivity {
         return folderFile;
     }
 
+
+
+
+    class MyAdapter extends RecyclerAdapter<String,MyHolder> {
+        @Override
+        public void bindData(MyHolder viewHolder, int position, String data) {
+            viewHolder.update(data);
+        }
+
+        @Override
+        public int getItemLayoutId(int viewType) {
+            return R.layout.item_screen_record;
+        }
+
+        @Override
+        protected MyHolder onCreate(View View, int viewType) {
+            return new MyHolder(View);
+        }
+    }
+
+    class MyHolder extends RecyclerHolder{
+
+        TextView title,text;
+        ImageView img;
+
+        public MyHolder(@NonNull View itemView) {
+            super(itemView);
+            title = itemView.findViewById(R.id.title);
+            text = itemView.findViewById(R.id.text);
+        }
+
+        public void update(String data){
+            text.setText(data);
+        }
+    }
 
 }

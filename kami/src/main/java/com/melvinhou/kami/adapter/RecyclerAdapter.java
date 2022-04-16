@@ -1,5 +1,6 @@
 package com.melvinhou.kami.adapter;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -258,7 +259,8 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends Recy
         if (viewType != TYPE_NORMAL)
             return onCustomCreate(getCustomView(viewType), viewType);
 
-        View view = View.inflate(FcUtils.getContext(), getItemLayoutId(viewType), null);
+//        View view = View.inflate(FcUtils.getContext(), getItemLayoutId(viewType), parent);
+        View view = LayoutInflater.from(FcUtils.getContext()).inflate(getItemLayoutId(viewType),parent, false);
 
         return onCreate(view, viewType);
     }
