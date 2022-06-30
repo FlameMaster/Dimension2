@@ -66,6 +66,8 @@ public class WebActivity extends BindingActivity<ActWebBD> {
     //视频全屏
     private View mCustomView;
     private WebChromeClient.CustomViewCallback mCustomViewCallback;
+    //请求回调
+    private PermissionUtil.PermissionGrant permissionGrant;
 
 
     private final static int PHOTO_REQUEST = 100;
@@ -584,6 +586,29 @@ public class WebActivity extends BindingActivity<ActWebBD> {
 //        startActivityForResult(albumIntent, PHOTO_REQUEST);
     }
 
+    @Override
+    protected void onPermissionGranted(int requestCode) {
+        super.onPermissionGranted(requestCode);
+        if (permissionGrant != null)
+            permissionGrant.onPermissionGranted(requestCode);
+    }
+
+    @Override
+    protected void onPermissionCancel(int requestCode) {
+        super.onPermissionCancel(requestCode);
+        if (permissionGrant != null)
+            permissionGrant.onPermissionCancel(requestCode);
+    }
+
+    /**
+     * 权限申请成功的回调
+     *
+     * @param permissionGrant
+     */
+    public void setPermissionGrant(PermissionUtil.PermissionGrant permissionGrant) {
+        this.permissionGrant = permissionGrant;
+    }
+
     /**
      * 录像
      */
@@ -636,7 +661,7 @@ public class WebActivity extends BindingActivity<ActWebBD> {
 
     @Override
     public void back() {
-        if (TextUtils.isEmpty(mUrl)||mUrl.equals(getViewDataBinding().web.getUrl()))
+        if (TextUtils.isEmpty(mUrl) || mUrl.equals(getViewDataBinding().web.getUrl()))
             super.back();
         else
             getViewDataBinding().web.goBack();

@@ -53,8 +53,14 @@ public class ScreenRecordActivity extends BaseActivity {
 
     private final String TAG = ScreenRecordActivity.class.getName();
     private final static int MICROPHONE_REQUEST_CODE = 789;
-    private final static int LOCAL_REQUEST_CODE = 10012;
-
+    //录屏回调
+    private final static int RECORD_REQUEST_CODE = 10012;
+    //权限请求
+    public static final int REQUEST_CODE_PERMISSIONS = 2112;
+    //权限列表：录屏和文件
+    private static final String[] REQUIRED_PERMISSIONS = {
+            Manifest.permission.INTERACT_ACROSS_PROFILES,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
 
     MediaProjectionManager mProjectionManager;
@@ -110,7 +116,7 @@ public class ScreenRecordActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        View view = LayoutInflater.from(FcUtils.getContext()).inflate(R.layout.item_loadmore,mRecycler, false);
+        View view = LayoutInflater.from(FcUtils.getContext()).inflate(R.layout.item_loadmore, mRecycler, false);
         mAdapter.addTailView(view);
         view.setVisibility(View.INVISIBLE);
     }
@@ -118,7 +124,8 @@ public class ScreenRecordActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadData();
+        if (allPermissionsGranted( REQUIRED_PERMISSIONS)) loadData();
+        else ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
     }
 
     /**
@@ -137,31 +144,44 @@ public class ScreenRecordActivity extends BaseActivity {
     }
 
     @Override
+    protected void onPermissionGranted(int requestCode) {
+        if (requestCode == REQUEST_CODE_PERMISSIONS)
+            loadData();
+    }
+
+    @Override
+    protected void onPermissionCancel(int requestCode) {
+        if (requestCode == REQUEST_CODE_PERMISSIONS)
+            FcUtils.showToast("没有权限读取录屏资料");
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == MICROPHONE_REQUEST_CODE) {
-            start();
-        }
-        if (requestCode == LOCAL_REQUEST_CODE && resultCode == RESULT_OK) {
-            Intent intent = new Intent(this, ScreenRecordService.class);
-            //录屏申请数据
-            intent.putExtra("data", data);
-            intent.putExtra("resultCode", resultCode);
-            //屏幕宽高
-            int[] size = getDisplaySize();
-            int displayWidth = size[0];
-            int displayHeight = size[1];
-            intent.putExtra("width", displayWidth);
-            intent.putExtra("height", displayHeight);
-            //存储位置
-            intent.putExtra("path", getRecordFilesDir().getAbsolutePath());
+        if (resultCode == RESULT_OK) {
+            if (requestCode == MICROPHONE_REQUEST_CODE) {
+                start();
+            } else if (requestCode == RECORD_REQUEST_CODE) {
+                Intent intent = new Intent(this, ScreenRecordService.class);
+                //录屏申请数据
+                intent.putExtra("data", data);
+                intent.putExtra("resultCode", resultCode);
+                //屏幕宽高
+                int[] size = getDisplaySize();
+                int displayWidth = size[0];
+                int displayHeight = size[1];
+                intent.putExtra("width", displayWidth);
+                intent.putExtra("height", displayHeight);
+                //存储位置
+                intent.putExtra("path", getRecordFilesDir().getAbsolutePath());
 //            intent.putExtra("surface",surface); // Surface 用于显示录屏的数据
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForegroundService(intent); // 启动前台服务
-            } else {
-                startService(intent);
-            }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(intent); // 启动前台服务
+                } else {
+                    startService(intent);
+                }
 //            bindService(intent, mServiceConnection, Service.BIND_AUTO_CREATE);
+            }
         }
     }
 
@@ -185,7 +205,7 @@ public class ScreenRecordActivity extends BaseActivity {
         mProjectionManager
                 = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
         Intent screenCaptureIntent = mProjectionManager.createScreenCaptureIntent();
-        startActivityForResult(screenCaptureIntent, LOCAL_REQUEST_CODE);
+        startActivityForResult(screenCaptureIntent, RECORD_REQUEST_CODE);
     }
 
 
@@ -210,9 +230,7 @@ public class ScreenRecordActivity extends BaseActivity {
     }
 
 
-
-
-    class MyAdapter extends RecyclerAdapter<String,MyHolder> {
+    class MyAdapter extends RecyclerAdapter<String, MyHolder> {
         @Override
         public void bindData(MyHolder viewHolder, int position, String data) {
             viewHolder.update(data);
@@ -229,9 +247,9 @@ public class ScreenRecordActivity extends BaseActivity {
         }
     }
 
-    class MyHolder extends RecyclerHolder{
+    class MyHolder extends RecyclerHolder {
 
-        TextView title,text;
+        TextView title, text;
         ImageView img;
 
         public MyHolder(@NonNull View itemView) {
@@ -240,7 +258,7 @@ public class ScreenRecordActivity extends BaseActivity {
             text = itemView.findViewById(R.id.text);
         }
 
-        public void update(String data){
+        public void update(String data) {
             text.setText(data);
         }
     }

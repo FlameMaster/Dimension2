@@ -50,25 +50,26 @@ public class PermissionUtil {
     public static final int CODE_WRITE_EXTERNAL_STORAGE = 8;
     public static final int CODE_MULTI_PERMISSION = 100;
 
-    /*录制声音通过手机或耳机的麦克*/
+    //录制声音通过手机或耳机的麦克
     public static final String PERMISSION_RECORD_AUDIO = Manifest.permission.RECORD_AUDIO;
-    /*访问GMail账户列表*/
+    //访问GMail账户列表
     public static final String PERMISSION_GET_ACCOUNTS = Manifest.permission.GET_ACCOUNTS;
-    /*访问电话状态*/
+    //访问电话状态
     public static final String PERMISSION_READ_PHONE_STATE = Manifest.permission.READ_PHONE_STATE;
-    /*允许程序从非系统拨号器里输入电话号码*/
+    //允许程序从非系统拨号器里输入电话号码
     public static final String PERMISSION_CALL_PHONE = Manifest.permission.CALL_PHONE;
-    /*允许访问摄像头进行拍照*/
+    //允许访问摄像头进行拍照
     public static final String PERMISSION_CAMERA = Manifest.permission.CAMERA;
-    /*通过GPS芯片接收卫星的定位信息，定位精度达10米以内*/
+    //通过GPS芯片接收卫星的定位信息，定位精度达10米以内
     public static final String PERMISSION_ACCESS_FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
-    /*通过WiFi或移动基站的方式获取用户错略的经纬度信息，定位精度大概误差在30~1500米*/
+    //通过WiFi或移动基站的方式获取用户错略的经纬度信息，定位精度大概误差在30~1500米
     public static final String PERMISSION_ACCESS_COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
-    /*读取存储权限*/
+    //读取存储权限
     public static final String PERMISSION_READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
-    /*写入存储权限*/
+    //写入存储权限
     public static final String PERMISSION_WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
+    //权限列表
     private static final String[] requestPermissions = {
             PERMISSION_RECORD_AUDIO,
             PERMISSION_GET_ACCOUNTS,

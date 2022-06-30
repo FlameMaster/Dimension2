@@ -3,6 +3,9 @@ package com.melvinhou.dimension2.web;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * ===========================================================
  * = 作 者：风 尘
@@ -22,5 +25,8 @@ public class Js2AndroidConnector {
     @JavascriptInterface
     public void test(String tag, String ppt) {
         Log.e("JS->Android", "test-->tag=" + tag + "\rppt=" + ppt);
+        List list = new ArrayList();
+        for (int i = 0;i<list.size();i++){}
     }
+
 }

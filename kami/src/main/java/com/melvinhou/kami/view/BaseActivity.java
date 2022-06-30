@@ -10,11 +10,14 @@ import android.view.WindowManager;
 
 import com.melvinhou.kami.BaseApplication;
 import com.melvinhou.kami.R;
+import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.PermissionUtil;
 import com.melvinhou.kami.wiget.LoadDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 /**
  * ===============================================
@@ -31,8 +34,6 @@ import androidx.appcompat.widget.Toolbar;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
-    //请求回调
-    private PermissionUtil.PermissionGrant permissionGrant;
     //工具栏
     private Toolbar mToolbar;
     //加载弹窗
@@ -207,8 +208,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void initData();
 
 
-//***********************************回调*********************************************//
+//***********************************权限*********************************************//
 
+    /**
+     * @param requestCode
+     * @param permissions
+     */
+    private void requestPermission(int requestCode, String[] permissions) {
+        //请求授予此应用程序的权限
+        ActivityCompat.requestPermissions(this, permissions, requestCode);
+    }
 
     /**
      * 处理权限请求结果
@@ -222,23 +231,60 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Log.e(getClass().getName(), "权限授予成功");
-            if (permissionGrant != null)
-                permissionGrant.onPermissionGranted(requestCode);
-        } else {
-            if (permissionGrant != null)
-                permissionGrant.onPermissionCancel(requestCode);
-        }
+        //权限判断
+        if (allPermissionsGranted(grantResults)) onPermissionGranted(requestCode);
+        else onPermissionCancel(requestCode);
+
     }
 
     /**
-     * 权限申请成功的回调
+     * 获取权限回调
      *
-     * @param permissionGrant
+     * @param requestCode
      */
-    public void setPermissionGrant(PermissionUtil.PermissionGrant permissionGrant) {
-        this.permissionGrant = permissionGrant;
+    protected void onPermissionGranted(int requestCode) {
+        Log.e(getClass().getName(), "权限授予成功");
+    }
+
+    /**
+     * 获取权限回调
+     *
+     * @param requestCode
+     */
+    protected void onPermissionCancel(int requestCode) {
+        Log.e(getClass().getName(), "权限授予失败");
+    }
+
+
+    /**
+     * 权限验证判断
+     *
+     * @param grantResults
+     * @return
+     */
+    private boolean allPermissionsGranted(int[] grantResults) {
+        for (int result : grantResults) {
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * 权限验证判断
+     *
+     * @param permissions
+     * @return
+     */
+    protected boolean allPermissionsGranted(String[] permissions) {
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
