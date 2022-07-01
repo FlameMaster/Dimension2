@@ -7,21 +7,35 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.media.projection.MediaProjectionManager;
+import android.net.Uri;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.media.video.VideoActivity2;
 import com.melvinhou.kami.adapter.RecyclerAdapter;
 import com.melvinhou.kami.adapter.RecyclerAdapter2;
 import com.melvinhou.kami.adapter.RecyclerHolder;
+import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.IOUtils;
 import com.melvinhou.kami.view.BaseActivity;
@@ -55,12 +69,19 @@ public class ScreenRecordActivity extends BaseActivity {
     private final static int MICROPHONE_REQUEST_CODE = 789;
     //录屏回调
     private final static int RECORD_REQUEST_CODE = 10012;
+    //浮动窗口申请回调
+    private final static int FLOAT_WINDOW_REQUEST_CODE = 10071;
     //权限请求
     public static final int REQUEST_CODE_PERMISSIONS = 2112;
     //权限列表：录屏和文件
-    private static final String[] REQUIRED_PERMISSIONS = {
-            Manifest.permission.INTERACT_ACROSS_PROFILES,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private static final String[] REQUIRED_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+    //浮动窗口
+    private WindowManager.LayoutParams mParams;
+    private WindowManager mWindowManager;
+    private TextView mStopView;
+    private TextView mDownTimerView;
+    private  Intent data;
 
 
     MediaProjectionManager mProjectionManager;
@@ -100,7 +121,8 @@ public class ScreenRecordActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-        findViewById(R.id.start).setOnClickListener(v -> start());
+        mWindowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        findViewById(R.id.start).setOnClickListener(v -> launchRecord());
         mRecycler.setLayoutManager(new LinearLayoutManager(FcUtils.getContext()));
         mAdapter = new MyAdapter();
         mRecycler.setAdapter(mAdapter);
@@ -115,17 +137,22 @@ public class ScreenRecordActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (allPermissionsGranted(REQUIRED_PERMISSIONS))
+            loadData();
+    }
+
+    @Override
     protected void initData() {
         View view = LayoutInflater.from(FcUtils.getContext()).inflate(R.layout.item_loadmore, mRecycler, false);
         mAdapter.addTailView(view);
         view.setVisibility(View.INVISIBLE);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (allPermissionsGranted( REQUIRED_PERMISSIONS)) loadData();
-        else ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
+        //权限申请
+        if (allPermissionsGranted(REQUIRED_PERMISSIONS))
+            loadData();
+        else
+            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
     }
 
     /**
@@ -160,27 +187,11 @@ public class ScreenRecordActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == MICROPHONE_REQUEST_CODE) {
-                start();
+                launchRecord();
             } else if (requestCode == RECORD_REQUEST_CODE) {
-                Intent intent = new Intent(this, ScreenRecordService.class);
-                //录屏申请数据
-                intent.putExtra("data", data);
-                intent.putExtra("resultCode", resultCode);
-                //屏幕宽高
-                int[] size = getDisplaySize();
-                int displayWidth = size[0];
-                int displayHeight = size[1];
-                intent.putExtra("width", displayWidth);
-                intent.putExtra("height", displayHeight);
-                //存储位置
-                intent.putExtra("path", getRecordFilesDir().getAbsolutePath());
-//            intent.putExtra("surface",surface); // Surface 用于显示录屏的数据
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    startForegroundService(intent); // 启动前台服务
-                } else {
-                    startService(intent);
-                }
-//            bindService(intent, mServiceConnection, Service.BIND_AUTO_CREATE);
+                this.data = data;
+                start();
+//                startRecord();
             }
         }
     }
@@ -194,7 +205,10 @@ public class ScreenRecordActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    private void start() {
+    /**
+     * 启动录制
+     */
+    private void launchRecord() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -230,6 +244,152 @@ public class ScreenRecordActivity extends BaseActivity {
     }
 
 
+    /**
+     * 浮动窗口
+     */
+    private void start() {
+        //设置允许弹出悬浮窗口的权限
+        requestWindowPermission();
+        //悬浮窗布局参数
+        initFloatWindowParams();
+        //倒计时
+        showDownTimer();
+        //跳转桌面
+        toDesktop();
+    }
+
+    /**
+     * android 6.0或者之后的版本需要发一个intent让用户授权
+     */
+    private void requestWindowPermission() {
+        if (!Settings.canDrawOverlays(getApplicationContext())) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, FLOAT_WINDOW_REQUEST_CODE);
+        }
+    }
+
+    /**
+     * 浮动按钮的参数
+     */
+    private void initFloatWindowParams() {
+        //创建窗口布局参数
+        mParams = new WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT, 0, 0, PixelFormat.TRANSPARENT);
+        //设置悬浮窗坐标
+//        mParams.x=100;
+//        mParams.y=100;
+        //表示该Window无需获取焦点，也不需要接收输入事件
+        mParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        mParams.gravity = Gravity.CENTER;
+        //设置window 类型
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//API Level 26
+            mParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        } else {
+            mParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
+        }
+    }
+
+    /**
+     * 倒计时的悬浮窗
+     */
+    private void showDownTimer() {
+        //创建倒计时的悬浮窗
+        if (null == mDownTimerView) {
+            mDownTimerView = new TextView(FcUtils.getContext());
+            mDownTimerView.setText("3");
+            mDownTimerView.setTextSize(72);
+            mDownTimerView.setTextColor(Color.RED);
+            mWindowManager.addView(mDownTimerView, mParams);
+        }
+        //启动倒计时
+        new CountDownTimer(3000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mDownTimerView.setText(String.valueOf(millisUntilFinished / 1000));
+            }
+
+            @Override
+            public void onFinish() {
+                if (mWindowManager != null && mDownTimerView != null)
+                    mWindowManager.removeView(mDownTimerView);
+                mDownTimerView = null;
+                //显示停止键
+                showStopButton();
+                //开始录制
+                startRecord();
+            }
+        }.start();
+    }
+
+    /**
+     * 结束录制按钮
+     */
+    @SuppressLint("ClickableViewAccessibility")
+    private void showStopButton() {
+        if (null == mStopView) {
+            mParams.gravity = Gravity.TOP | Gravity.LEFT;
+            mStopView = new TextView(FcUtils.getContext());
+            mStopView.setText("3");
+            int paddingh = DimenUtils.dp2px(8);
+            int paddingv = DimenUtils.dp2px(2);
+            mStopView.setPadding(paddingh, paddingv, paddingh, paddingv);
+            mStopView.setBackgroundColor(Color.parseColor("#eeeeee"));
+            mStopView.setText("点击停止");
+            mStopView.setTextColor(Color.BLACK);
+            mWindowManager.addView(mStopView, mParams);
+            mStopView.setOnClickListener(v -> {
+                if (null != mStopView) {
+                    if (mWindowManager != null && mStopView != null)
+                        mWindowManager.removeView(mStopView);
+                    mStopView = null;
+                    Log.e("录屏", "结束录屏");
+                    //结束
+                    if (mRecordBinder != null) mRecordBinder.stop();
+                    //停止服务
+//        unbindService(mServiceConnection);
+                    stopService(new Intent(ScreenRecordActivity.this, ScreenRecordService.class));
+                }
+            });
+        }
+    }
+
+    /**
+     * 跳转桌面
+     */
+    private void toDesktop() {
+        Intent mIntent = new Intent(Intent.ACTION_MAIN);
+        mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        mIntent.addCategory(Intent.CATEGORY_HOME);
+        startActivity(mIntent);
+    }
+
+    /**
+     * 开始录制
+     */
+    private void startRecord(){
+        Log.e("录屏","开始录屏");
+        Intent intent = new Intent(this, ScreenRecordService.class);
+        intent.putExtra("resultCode",RESULT_OK);
+        intent.putExtra("data",data);
+        //屏幕宽高
+        int[] size = getDisplaySize();
+        int displayWidth = size[0];
+        int displayHeight = size[1];
+        intent.putExtra("width", displayWidth);
+        intent.putExtra("height", displayHeight);
+        //存储位置
+        intent.putExtra("path", getRecordFilesDir().getAbsolutePath());
+//            intent.putExtra("surface",surface); // Surface 用于显示录屏的数据
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent); // 启动前台服务
+        } else {
+            startService(intent);
+        }
+//            bindService(intent, mServiceConnection, Service.BIND_AUTO_CREATE);
+    }
+
     class MyAdapter extends RecyclerAdapter<String, MyHolder> {
         @Override
         public void bindData(MyHolder viewHolder, int position, String data) {
@@ -256,10 +416,21 @@ public class ScreenRecordActivity extends BaseActivity {
             super(itemView);
             title = itemView.findViewById(R.id.title);
             text = itemView.findViewById(R.id.text);
+            img = itemView.findViewById(R.id.img);
         }
 
         public void update(String data) {
+            File file = new File(data);
+            title.setText(file.getName());
             text.setText(data);
+            Glide.with(FcUtils.getContext())
+                    .load(file)
+                    .apply(new RequestOptions()
+                            .override(100, 100)
+                            .placeholder(R.mipmap.fc)
+                            .error(R.mipmap.fc)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL))
+                    .into(img);
         }
     }
 

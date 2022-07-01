@@ -128,7 +128,7 @@ public class FCVidoeView extends TextureView implements TextureView.SurfaceTextu
             try {
                 mMediaPlayer = new MediaPlayer();
                 mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mMediaPlayer.setScreenOnWhilePlaying(true);
+                mMediaPlayer.setScreenOnWhilePlaying(true);//设置屏幕常亮
                 mMediaPlayer.setLooping(isLooping);
                 mMediaPlayer.setOnPreparedListener(mOnPreparedListener);
                 mMediaPlayer.setOnVideoSizeChangedListener(mOnVideoSizeChangedListener);
@@ -406,7 +406,7 @@ public class FCVidoeView extends TextureView implements TextureView.SurfaceTextu
             mMediaPlayer.reset();//把各项参数恢复到初始状态
             mMediaPlayer.setDataSource(FcUtils.getContext(), getUri());
             mMediaPlayer.setSurface(new Surface(surface));
-            mMediaPlayer.prepareAsync();
+            mMediaPlayer.prepareAsync();//异步准备
 //                          mMediaPlayer.prepare();    //进行缓冲
         } catch (Exception e) {
             e.printStackTrace();

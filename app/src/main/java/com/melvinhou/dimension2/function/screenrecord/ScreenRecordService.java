@@ -24,7 +24,9 @@ import android.util.Log;
 import android.view.Surface;
 
 import com.melvinhou.dimension2.R;
+import com.melvinhou.kami.util.DateUtils;
 import com.melvinhou.kami.util.FcUtils;
+import com.melvinhou.kami.util.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -138,7 +140,7 @@ public class ScreenRecordService extends Service {
         if (TextUtils.isEmpty(path))
             path = getExternalCacheDir().getAbsolutePath();
         mRecordPath = new File(path + File.separator
-                + "test" + ".mp4").getAbsolutePath();
+                + "REC_"+ FileUtils.getFileNameForDate() + ".mp4").getAbsolutePath();
 
         mDpi = 1;
         mBufferInfo = new MediaCodec.BufferInfo();

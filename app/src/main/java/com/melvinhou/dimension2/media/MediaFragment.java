@@ -440,8 +440,8 @@ public class MediaFragment extends BindingFragment<FgtMediaBD> {
 
     private void openTextureVideo() {
         Intent intent = new Intent(FcUtils.getContext(), VideoActivity2.class);
-//        intent.putExtra("url", "https://webstatic.mihoyo.com/upload/op-public/2020/07/03/162a01170202715c5d0d726e2462feee_5099585596951325768.mp4");
-        intent.putExtra("url", "https://uploadstatic.mihoyo.com/hk4e/upload/officialsites/202012/zhongli_gameplayPV_final_V3_fix.mp4");
+        intent.putExtra("url", "https://webstatic.bh3.com/video/bh3.com/pv/CG_OP_1800.mp4");
+//        intent.putExtra("url", "https://uploadstatic.mihoyo.com/hk4e/upload/officialsites/202012/zhongli_gameplayPV_final_V3_fix.mp4");
         intent.putExtra("title", "岩王帝君-钟离");
         intent.putExtra("mode", false);
         toActivity(intent);

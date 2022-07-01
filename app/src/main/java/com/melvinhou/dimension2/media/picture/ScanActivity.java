@@ -279,12 +279,14 @@ public class ScanActivity extends BaseActivity {
             intent.putExtra("title", "扫描结果");
             intent.putExtra("url", text);
             startActivity(intent);
+            finish();
         } else {
             ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 //            cm.setText(text);
             ClipData clip = ClipData.newPlainText(text,text);
             cm.setPrimaryClip(clip);
             FcUtils.showToast("已复制扫描结果：" + text);
+            finish();
         }
     }
 
