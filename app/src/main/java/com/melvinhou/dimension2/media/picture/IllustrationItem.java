@@ -1,6 +1,6 @@
 package com.melvinhou.dimension2.media.picture;
 
-import com.melvinhou.dimension2.User;
+import com.melvinhou.dimension2.user.User;
 
 /**
  * ===========================================================

@@ -6,8 +6,8 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.melvinhou.dimension2.AssetsFileKey;
-import com.melvinhou.dimension2.LoadUtils;
+import com.melvinhou.dimension2.net.AssetsFileKey;
+import com.melvinhou.dimension2.utils.LoadUtils;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.NullBoxBD;
 import com.melvinhou.dimension2.pager.BaseListPager;

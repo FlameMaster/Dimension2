@@ -4,9 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 
 import com.google.gson.reflect.TypeToken;
-import com.melvinhou.dimension2.AssetsFileKey;
+import com.melvinhou.dimension2.net.AssetsFileKey;
 import com.melvinhou.dimension2.CYEntity;
-import com.melvinhou.dimension2.LoadUtils;
+import com.melvinhou.dimension2.utils.LoadUtils;
 import com.melvinhou.kami.mvp.BaseModel;
 import com.melvinhou.kami.net.EmptyState;
 import com.melvinhou.kami.util.IOUtils;

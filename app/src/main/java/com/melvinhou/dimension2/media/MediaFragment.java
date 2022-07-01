@@ -17,10 +17,11 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.google.gson.reflect.TypeToken;
-import com.melvinhou.dimension2.AssetsFileKey;
+import com.melvinhou.dimension2.media.picture.ScanActivity;
+import com.melvinhou.dimension2.net.AssetsFileKey;
 import com.melvinhou.dimension2.CYEntity;
 import com.melvinhou.dimension2.GlobalParameters;
-import com.melvinhou.dimension2.LoadUtils;
+import com.melvinhou.dimension2.utils.LoadUtils;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.FgtMediaBD;
 import com.melvinhou.dimension2.media.animation.SvgAnimationActivity;
@@ -315,6 +316,7 @@ public class MediaFragment extends BindingFragment<FgtMediaBD> {
                     openCamera();
                     break;
                 case GlobalParameters.MediaLevel2Type.PICTURE_SCAN:
+                    openSacn();
                     break;
             }
         } else if (GlobalParameters.MediaLevel1Type.VIDEO == level1Typ) {
@@ -356,6 +358,11 @@ public class MediaFragment extends BindingFragment<FgtMediaBD> {
 
     private void openCamera() {
         toActivity(new Intent(FcUtils.getContext(), CameraActivity.class));
+    }
+
+
+    private void openSacn() {
+        toActivity(new Intent(FcUtils.getContext(), ScanActivity.class));
     }
 
     private void openPagerActivity(String title, BasePager[] pagers) {

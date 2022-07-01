@@ -16,6 +16,7 @@ import com.melvinhou.dimension2.function.messenger.ImHomeActivity;
 import com.melvinhou.dimension2.function.pdf.PdfActivity;
 import com.melvinhou.dimension2.function.screenrecord.ScreenRecordActivity;
 import com.melvinhou.dimension2.function.zip.ZipActivity;
+import com.melvinhou.dimension2.net.HttpConstant;
 import com.melvinhou.kami.adapter.RecyclerAdapter;
 import com.melvinhou.kami.adapter.RecyclerHolder;
 import com.melvinhou.kami.util.FcUtils;
@@ -49,6 +50,8 @@ public class FunctionFragment extends Fragment {
             R.mipmap.ic_launcher_round, R.mipmap.ic_launcher_round,
             R.mipmap.ic_launcher_round
     };
+
+    //聊天，录屏，pdf,投屏，桌面，压缩，地图，扫描
     private String[] title = {
             "聊天", "录屏",
             "网络", "PDF",
@@ -136,7 +139,7 @@ public class FunctionFragment extends Fragment {
             Intent intent = new Intent(getContext(), ZipActivity.class);
             startActivity(intent);
         }else  if (title[3].equals(key)){//pdf
-            String url = "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/pdf/product.pdf";
+            String url = HttpConstant.SERVER_RES +"pdf/product.pdf";
             Intent intent = new Intent(getContext(), PdfActivity.class);
             intent.putExtra("url",url);
             intent.putExtra("title","测试专用PDF");

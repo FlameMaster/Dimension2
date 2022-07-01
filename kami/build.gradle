@@ -49,7 +49,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     api "androidx.appcompat:appcompat:$appcompatVersion"
-    api 'androidx.constraintlayout:constraintlayout:1.1.3'
+    api 'androidx.constraintlayout:constraintlayout:2.0.4'
     api "com.android.support:design:$supportLibraryVersion"
     api "com.google.code.gson:gson:$gsonVersion"
     //rx套件

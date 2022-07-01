@@ -2,7 +2,7 @@
     "code": 200,
     "data": [
         {
-            "coverUrl": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/background/media_picture.jpeg",
+            "coverUrl": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/background/media_picture.jpeg",
             "subTitle": "图片预览和处理",
             "tabs": [
                 {
@@ -40,7 +40,7 @@
             "type": 100
         },
         {
-            "coverUrl": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/background/media_video.jpeg",
+            "coverUrl": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/background/media_video.jpeg",
             "subTitle": "视频播放相关整理",
             "tabs": [
                 {
@@ -68,7 +68,7 @@
             "type": 200
         },
         {
-            "coverUrl": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/background/media_music.jpg",
+            "coverUrl": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/background/media_music.jpg",
             "subTitle": "音频相关内容",
             "tabs": [
                 {
@@ -81,7 +81,7 @@
             "type": 300
         },
         {
-            "coverUrl": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/background/media_animator.jpeg",
+            "coverUrl": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/background/media_animator.jpeg",
             "subTitle": "包括全部动画在内的研究",
             "tabs": [
                 {
@@ -109,7 +109,7 @@
             "type": 400
         },
         {
-            "coverUrl": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/background/media_tiktok.jpg",
+            "coverUrl": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/background/media_tiktok.jpg",
             "subTitle": "独立出来探索抖音小功能",
             "tabs": [
                 {
@@ -122,7 +122,7 @@
             "type": 290
         },
         {
-            "coverUrl": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/background/media_system.jpg",
+            "coverUrl": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/background/media_system.jpg",
             "subTitle": "就放在这里占位置",
             "tabs": [
                 {

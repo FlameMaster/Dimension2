@@ -1,4 +1,4 @@
-package com.melvinhou.dimension2;
+package com.melvinhou.dimension2.user;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

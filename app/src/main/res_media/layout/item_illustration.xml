@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="MissingDefaultResource">
 
-    <com.melvinhou.dimension2.RoundGifImageView
+    <com.melvinhou.dimension2.ui.widget.RoundGifImageView
         android:id="@+id/img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         app:loadImageUrl="@{item.url}"
         app:loadImageWidth="@{width}">
 
-    </com.melvinhou.dimension2.RoundGifImageView>
+    </com.melvinhou.dimension2.ui.widget.RoundGifImageView>
 
     <data class="ItemIllustrationBD">
 

@@ -1,5 +1,8 @@
 package com.melvinhou.dimension2;
 
+import com.melvinhou.dimension2.db.SqlManager;
+import com.melvinhou.dimension2.net.HttpConstant;
+import com.melvinhou.dimension2.user.User;
 import com.melvinhou.kami.BaseApplication;
 import com.melvinhou.kami.BaseException;
 import com.melvinhou.kami.manager.ThreadManager;
@@ -37,15 +40,15 @@ public class Dimension2Application extends BaseApplication {
                 if (!isUserCreated){
                     SqlManager.addUsers(getContext(),
                             createUser(10001l,"拜拜风尘子",
-                                    "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/user/01.jpg"),
+                                    HttpConstant.SERVER_RES +"image/portrait/01.jpg"),
                             createUser(10002l,"车厘子",
-                                    "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/user/02.jpeg"),
+                                    HttpConstant.SERVER_RES +"image/portrait/02.jpeg"),
                             createUser(10003l,"呆呆小耗子",
-                                    "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/user/03.jpg"),
+                                    HttpConstant.SERVER_RES +"image/portrait/03.jpg"),
                             createUser(10004l,"医生姐姐来啦",
-                                    "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/user/04.jpg"),
+                                    HttpConstant.SERVER_RES +"image/portrait/04.jpg"),
                             createUser(10005l,"花无痕两两",
-                                    "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/user/05.jpeg")
+                                    HttpConstant.SERVER_RES +"image/portrait/05.jpeg")
                             );
 
                 }

@@ -6,6 +6,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.melvinhou.dimension2.R;
+import com.melvinhou.dimension2.net.HttpConstant;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.view.BaseActivity;
 
@@ -42,16 +43,16 @@ public class GameKlotskiActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        loadNetImage(R.id.caocao,"https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/game/klotski/caocao.jpg");
-        loadNetImage(R.id.guanyu,"https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/game/klotski/guanyu.jpg");
-        loadNetImage(R.id.zhangfei,"https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/game/klotski/zhangfei.jpg");
-        loadNetImage(R.id.zhaoyun,"https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/game/klotski/zhaoyun.jpg");
-        loadNetImage(R.id.huangzhong,"https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/game/klotski/huangzhong.jpg");
-        loadNetImage(R.id.machao,"https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/game/klotski/machao.jpg");
-        loadNetImage(R.id.bin01,"https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/game/klotski/zu03.jpg");
-        loadNetImage(R.id.bin02,"https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/game/klotski/zu01.jpg");
-        loadNetImage(R.id.bin03,"https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/game/klotski/zu04.jpg");
-        loadNetImage(R.id.bin04,"https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/game/klotski/zu02.jpg");
+        loadNetImage(R.id.caocao, HttpConstant.SERVER_RES +"image/game/klotski/caocao.jpg");
+        loadNetImage(R.id.guanyu,HttpConstant.SERVER_RES +"image/game/klotski/guanyu.jpg");
+        loadNetImage(R.id.zhangfei,HttpConstant.SERVER_RES +"image/game/klotski/zhangfei.jpg");
+        loadNetImage(R.id.zhaoyun,HttpConstant.SERVER_RES +"image/game/klotski/zhaoyun.jpg");
+        loadNetImage(R.id.huangzhong,HttpConstant.SERVER_RES +"image/game/klotski/huangzhong.jpg");
+        loadNetImage(R.id.machao,HttpConstant.SERVER_RES +"image/game/klotski/machao.jpg");
+        loadNetImage(R.id.bin01,HttpConstant.SERVER_RES +"image/game/klotski/zu03.jpg");
+        loadNetImage(R.id.bin02,HttpConstant.SERVER_RES +"image/game/klotski/zu01.jpg");
+        loadNetImage(R.id.bin03,HttpConstant.SERVER_RES +"image/game/klotski/zu04.jpg");
+        loadNetImage(R.id.bin04,HttpConstant.SERVER_RES +"image/game/klotski/zu02.jpg");
     }
 
     private void loadNetImage(int id,String url){

@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.melvinhou.dimension2.R;
+import com.melvinhou.dimension2.net.HttpConstant;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.IOUtils;
@@ -133,9 +134,9 @@ public class GamePokerActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        loadNetImage(R.id.player_photo, "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/game/poker/player.jpg");
-        loadNetImage(R.id.player1, "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/game/poker/player1.png");
-        loadNetImage(R.id.player2, "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/game/poker/player2.png");
+        loadNetImage(R.id.player_photo, HttpConstant.SERVER_RES +"image/game/poker/player.jpg");
+        loadNetImage(R.id.player1, HttpConstant.SERVER_RES +"image/game/poker/player1.png");
+        loadNetImage(R.id.player2, HttpConstant.SERVER_RES +"image/game/poker/player2.png");
         reStart(null);
     }
 

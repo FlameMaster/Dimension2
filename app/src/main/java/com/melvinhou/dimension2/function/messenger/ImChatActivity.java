@@ -18,8 +18,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.melvinhou.dimension2.Dimension2Application;
 import com.melvinhou.dimension2.R;
-import com.melvinhou.dimension2.SqlManager;
-import com.melvinhou.dimension2.User;
+import com.melvinhou.dimension2.db.SqlManager;
+import com.melvinhou.dimension2.user.User;
+import com.melvinhou.dimension2.net.HttpConstant;
 import com.melvinhou.kami.adapter.RecyclerAdapter;
 import com.melvinhou.kami.adapter.RecyclerHolder;
 import com.melvinhou.kami.manager.ThreadManager;
@@ -63,7 +64,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class ImChatActivity extends BaseActivity {
 
-    private final String url_background = "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/background/baskground001.jpg";
+    private final String url_background = HttpConstant.SERVER_RES +"background/baskground001.jpg";
 
 
     /*RxBus的接收器*/

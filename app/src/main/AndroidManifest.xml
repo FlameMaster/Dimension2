@@ -66,6 +66,10 @@
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".media.picture.ScanActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".media.music.MusicPlayerActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask" />

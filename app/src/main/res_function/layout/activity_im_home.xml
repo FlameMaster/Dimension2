@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent"
         >
 
-        <com.melvinhou.dimension2.RoundGifImageView
+        <com.melvinhou.dimension2.ui.widget.RoundGifImageView
             android:id="@+id/user_photo"
             android:layout_width="72dp"
             android:layout_height="72dp"

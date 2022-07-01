@@ -1,4 +1,4 @@
-package com.melvinhou.dimension2;
+package com.melvinhou.dimension2.net;
 
 /**
  * ===============================================

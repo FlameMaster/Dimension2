@@ -1,4 +1,6 @@
-package com.melvinhou.dimension2;
+package com.melvinhou.dimension2.db;
+
+import com.melvinhou.dimension2.user.User;
 
 import java.util.List;
 

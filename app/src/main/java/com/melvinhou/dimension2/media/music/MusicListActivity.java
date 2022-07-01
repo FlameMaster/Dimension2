@@ -18,6 +18,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ActMusicListBD;
+import com.melvinhou.dimension2.net.HttpConstant;
 import com.melvinhou.kami.adapter.RecyclerAdapter2;
 import com.melvinhou.kami.adapter.RecyclerHolder;
 import com.melvinhou.kami.mvvm.BindingActivity;
@@ -50,7 +51,7 @@ public class MusicListActivity extends BindingActivity<ActMusicListBD> {
 
     private MusicAdapter mAdapter;
     private static final String URL_BACKGROUND
-            = "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/background/music_background.jpg";
+            = HttpConstant.SERVER_RES +"image/background/music_background.jpg";
     private static final int REQUEST_CODE_PERMISSIONS = 21;
     /**
      * 从Android 10 开始，应用即使申请了权限，也只能读写自己外部存储的私有目录，

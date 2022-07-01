@@ -1,6 +1,7 @@
 package com.melvinhou.dimension2;
 
 import com.google.gson.annotations.SerializedName;
+import com.melvinhou.dimension2.user.User;
 
 import java.util.List;
 

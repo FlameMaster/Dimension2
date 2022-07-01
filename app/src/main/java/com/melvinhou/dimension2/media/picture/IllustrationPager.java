@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.view.ViewGroup;
 
 import com.google.gson.reflect.TypeToken;
-import com.melvinhou.dimension2.AssetsFileKey;
+import com.melvinhou.dimension2.net.AssetsFileKey;
 import com.melvinhou.dimension2.CYEntity;
-import com.melvinhou.dimension2.LoadUtils;
+import com.melvinhou.dimension2.utils.LoadUtils;
 import com.melvinhou.dimension2.PairEntity;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ItemIllustrationBD;

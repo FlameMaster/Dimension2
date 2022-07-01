@@ -30,7 +30,7 @@
         android:layout_marginVertical="96dp"
         />
 
-    <com.melvinhou.dimension2.RoundGifImageView
+    <com.melvinhou.dimension2.ui.widget.RoundGifImageView
         android:id="@+id/player_photo"
         android:layout_width="72dp"
         android:layout_height="72dp"

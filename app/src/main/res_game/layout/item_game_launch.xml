@@ -10,7 +10,7 @@
         android:background="@drawable/ripple_down"
         >
 
-        <com.melvinhou.dimension2.RoundGifImageView
+        <com.melvinhou.dimension2.ui.widget.RoundGifImageView
             android:id="@+id/img"
             android:layout_width="0dp"
             android:layout_height="0dp"

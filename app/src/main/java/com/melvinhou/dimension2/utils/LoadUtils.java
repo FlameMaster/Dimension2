@@ -1,7 +1,8 @@
-package com.melvinhou.dimension2;
+package com.melvinhou.dimension2.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.melvinhou.dimension2.CYEntity;
 import com.melvinhou.kami.util.FcUtils;
 
 import java.io.IOException;

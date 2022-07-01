@@ -15,8 +15,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.melvinhou.dimension2.R;
-import com.melvinhou.dimension2.SqlManager;
-import com.melvinhou.dimension2.User;
+import com.melvinhou.dimension2.db.SqlManager;
+import com.melvinhou.dimension2.user.User;
+import com.melvinhou.dimension2.net.HttpConstant;
 import com.melvinhou.kami.adapter.RecyclerAdapter;
 import com.melvinhou.kami.adapter.RecyclerHolder;
 import com.melvinhou.kami.manager.ThreadManager;
@@ -253,13 +254,13 @@ public class ImHomeActivity extends BaseActivity {
             String name = edit_name.getText().toString();
             String ip = edit_ip.getText().toString();
             String port = edit_port.getText().toString();
-            String photo = "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/user/03.jpg";
+            String photo = HttpConstant.SERVER_RES +"image/portrait/03.jpg";
             //非空判断
             if (TextUtils.isEmpty(ip) || TextUtils.isEmpty(port)) {
                 ip = mIp;
                 port = String.valueOf(mPort);
                 name = "Your Phone";
-                photo = "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/user/01.jpg";
+                photo = HttpConstant.SERVER_RES +"image/portrait/01.jpg";
             }
             addFriend(name, photo, ip, Integer.valueOf(port));
             dialog.dismiss();

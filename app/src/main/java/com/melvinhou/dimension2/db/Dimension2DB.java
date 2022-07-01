@@ -1,4 +1,7 @@
-package com.melvinhou.dimension2;
+package com.melvinhou.dimension2.db;
+
+import com.melvinhou.dimension2.db.UserDao;
+import com.melvinhou.dimension2.user.User;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;

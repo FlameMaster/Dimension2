@@ -1,6 +1,6 @@
 package com.melvinhou.dimension2.function.messenger;
 
-import com.melvinhou.dimension2.User;
+import com.melvinhou.dimension2.user.User;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

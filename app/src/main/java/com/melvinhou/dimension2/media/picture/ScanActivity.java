@@ -2,10 +2,13 @@ package com.melvinhou.dimension2.media.picture;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.util.Log;
+import android.graphics.Rect;
+import android.text.TextUtils;
 import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.View;
@@ -21,17 +24,14 @@ import com.google.zxing.PlanarYUVLuminanceSource;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
-import com.melvinhou.dimension2.ui.widget.CameraXCustomPreviewView;
 import com.melvinhou.dimension2.R;
+import com.melvinhou.dimension2.ui.widget.CameraXCustomPreviewView;
+import com.melvinhou.dimension2.web.WebActivity;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.IOUtils;
-import com.melvinhou.kami.util.ResourcesUtils;
 import com.melvinhou.kami.view.BaseActivity;
 
-import java.io.File;
 import java.nio.ByteBuffer;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -45,7 +45,6 @@ import androidx.camera.core.FocusMeteringAction;
 import androidx.camera.core.FocusMeteringResult;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageCapture;
-import androidx.camera.core.ImageCaptureException;
 import androidx.camera.core.ImageProxy;
 import androidx.camera.core.MeteringPoint;
 import androidx.camera.core.MeteringPointFactory;
@@ -69,25 +68,22 @@ import io.reactivex.ObservableOnSubscribe;
  * <p>
  * = 时 间：2020/7/19 23:18
  * <p>
- * = 分 类 说 明：相机
+ * = 分 类 说 明：扫码
  * ================================================
  */
-public class CameraActivity extends BaseActivity {
+public class ScanActivity extends BaseActivity {
 
-    private static final String TAG = "二次元相机";
-    //照片名称格式
-    private static final String FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS";
+    private static final String TAG = "二次元扫码";
+
     private static final int REQUEST_CODE_PERMISSIONS = 10;
     private static final String[] REQUIRED_PERMISSIONS = {Manifest.permission.CAMERA};
 
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private Preview preview;// 预览画面
     private CameraXCustomPreviewView viewFinder;
-    private View focusView;
-    private TextView textView;
+    private View focusView,scanView;
     private Camera camera;
     private CameraControl cameraControl;
-    private File outputDirectory;
     private ExecutorService cameraExecutor;
     //图像处理
     private ImageCapture imageCapture;
@@ -100,7 +96,7 @@ public class CameraActivity extends BaseActivity {
 
     @Override
     protected int getLayoutID() {
-        return R.layout.activity_camera;
+        return R.layout.activity_scan;
     }
 
     @Override
@@ -150,14 +146,13 @@ public class CameraActivity extends BaseActivity {
     @Override
     protected void initView() {
         viewFinder = findViewById(R.id.view_finder);
+        scanView = findViewById(R.id.view_scan);
         focusView = findViewById(R.id.focus);
-        textView = findViewById(R.id.text);
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
     }
 
     @Override
     protected void initListener() {
-        findViewById(R.id.bt_camera_capture).setOnClickListener(this::takePhoto);
         //设置手势事件
         viewFinder.setCustomTouchListener(new CameraXCustomPreviewView.CustomTouchListener() {
             @Override
@@ -206,7 +201,7 @@ public class CameraActivity extends BaseActivity {
                         }
                     } catch (Exception e) {
                     }
-                }, ContextCompat.getMainExecutor(CameraActivity.this));
+                }, ContextCompat.getMainExecutor(ScanActivity.this));
             }
 
             @Override
@@ -250,7 +245,6 @@ public class CameraActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        outputDirectory = getOutputDirectory();
         cameraExecutor = Executors.newSingleThreadExecutor();
 
 
@@ -273,6 +267,28 @@ public class CameraActivity extends BaseActivity {
     }
 
     /**
+     * 扫码结果处理
+     *
+     * @param text
+     */
+    private void onSuccess(String text) {
+        if (TextUtils.isEmpty(text)) {
+
+        } else if (text.contains("http://") || text.contains("https://")) {
+            Intent intent = new Intent(FcUtils.getContext(), WebActivity.class);
+            intent.putExtra("title", "扫描结果");
+            intent.putExtra("url", text);
+            startActivity(intent);
+        } else {
+            ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+//            cm.setText(text);
+            ClipData clip = ClipData.newPlainText(text,text);
+            cm.setPrimaryClip(clip);
+            FcUtils.showToast("已复制扫描结果：" + text);
+        }
+    }
+
+    /**
      * 准备相机
      */
     private void startCamera() {
@@ -289,7 +305,7 @@ public class CameraActivity extends BaseActivity {
                 // 在重新绑定之前解除用例绑定
                 cameraProvider.unbindAll();
                 // 相机关联生命周期
-                camera = cameraProvider.bindToLifecycle(CameraActivity.this,
+                camera = cameraProvider.bindToLifecycle(ScanActivity.this,
                         cameraSelector, preview, imageCapture, imageAnalyzer);
                 //相机对焦
                 cameraControl = camera.getCameraControl();
@@ -303,60 +319,6 @@ public class CameraActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }, ContextCompat.getMainExecutor(this));
-    }
-
-    /**
-     * 拍照
-     *
-     * @param view
-     */
-    private void takePhoto(View view) {
-        // 获得可修改映像捕获用例的稳定引用
-        if (imageCapture == null) return;
-        // 创建带有时间戳的输出文件来保存图像
-        File photoFile = new File(
-                outputDirectory, new SimpleDateFormat(FILENAME_FORMAT, Locale.US
-        ).format(System.currentTimeMillis()) + ".jpg");
-        Log.e(TAG, "rotation=" + preview.getTargetRotation());
-        // 创建包含文件+元数据的输出选项对象
-        ImageCapture.OutputFileOptions outputOptions = new ImageCapture.OutputFileOptions
-                .Builder(photoFile)
-                .build();
-        // 设置图片捕捉监听器，在拍照后触发
-        imageCapture.takePicture(outputOptions, ContextCompat.getMainExecutor(this),
-                new ImageCapture.OnImageSavedCallback() {
-                    @Override
-                    public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-                        Uri savedUri = Uri.fromFile(photoFile);
-                        String msg = "Photo capture succeeded: " + savedUri.toString();
-                        Toast.makeText(FcUtils.getContext(), msg, Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, msg);
-                        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, savedUri);
-                        sendBroadcast(mediaScanIntent);
-                    }
-
-                    @Override
-                    public void onError(@NonNull ImageCaptureException exception) {
-                        Log.e(TAG, "Photo capture failed: ${exc.message}", exception);
-                    }
-                });
-    }
-
-    /**
-     * 获取照片保存地址
-     *
-     * @return
-     */
-    private File getOutputDirectory() {
-        File[] mediaDirs = FcUtils.getContext().getExternalMediaDirs();
-        File mediaDir = mediaDirs.length > 0 ? mediaDirs[0] : null;
-        if (mediaDir != null) {
-            mediaDir = new File(mediaDir, ResourcesUtils.getString(R.string.app_name));
-            mediaDir.mkdirs();
-        }
-        return mediaDir != null && mediaDir.exists() ?
-                mediaDir : FcUtils.getContext().getFilesDir();
-//        return FileUtils.getDiskCacheDir("");
     }
 
     /**
@@ -388,7 +350,7 @@ public class CameraActivity extends BaseActivity {
                 int width = image.getWidth();
                 int height = image.getHeight();
                 image.close();
-                //TODO 调整crop的矩形区域，目前是全屏（全屏有更好的识别体验，但是在部分手机上可能OOM）
+                //todo 调整crop的矩形区域，目前是全屏（全屏有更好的识别体验，但是在部分手机上可能OOM）
                 PlanarYUVLuminanceSource source = new PlanarYUVLuminanceSource(
                         data, width, height, 0, 0, width, height, false);
                 BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
@@ -401,15 +363,15 @@ public class CameraActivity extends BaseActivity {
                 } catch (FormatException e) {
                     e.printStackTrace();
                 } finally {
-                    if (result!=null)
-                    emitter.onNext(result);
-                    else  isHeading = false;
+                    if (result != null)
+                        emitter.onNext(result);
+                    else isHeading = false;
                     emitter.onComplete();
                 }
             })
                     .compose(IOUtils.setThread())
                     .subscribe(result -> {
-                            textView.setText(result.getText());
+                        onSuccess(result.getText());
                     });
         }
 

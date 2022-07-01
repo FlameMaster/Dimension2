@@ -1,4 +1,4 @@
-package com.melvinhou.dimension2;
+package com.melvinhou.dimension2.ui.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+
+import com.melvinhou.dimension2.R;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
