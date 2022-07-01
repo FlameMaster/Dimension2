@@ -9,6 +9,7 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.media.projection.MediaProjectionManager;
 import android.net.Uri;
 import android.os.Build;
@@ -126,6 +127,14 @@ public class ScreenRecordActivity extends BaseActivity {
         mRecycler.setLayoutManager(new LinearLayoutManager(FcUtils.getContext()));
         mAdapter = new MyAdapter();
         mRecycler.setAdapter(mAdapter);
+        mRecycler.addItemDecoration(new RecyclerView.ItemDecoration(){
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                //设定底部边距为
+                int height = DimenUtils.dp2px(10);
+                outRect.set(0,0, 0, height);
+            }
+        });
 
         mAdapter.setOnItemClickListener((viewHolder, position, data) -> {
             Intent intent = new Intent(ScreenRecordActivity.this, VideoActivity2.class);
@@ -391,6 +400,7 @@ public class ScreenRecordActivity extends BaseActivity {
     }
 
     class MyAdapter extends RecyclerAdapter<String, MyHolder> {
+
         @Override
         public void bindData(MyHolder viewHolder, int position, String data) {
             viewHolder.update(data);
