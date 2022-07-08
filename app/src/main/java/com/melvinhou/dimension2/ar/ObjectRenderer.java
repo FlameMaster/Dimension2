@@ -110,8 +110,8 @@ public class ObjectRenderer {
 
   private BlendMode blendMode = null;
 
-  // Temporary matrices allocated here to reduce number of allocations for each frame.
-  private final float[] modelMatrix = new float[16];
+    //临时的矩阵分配在这里减少分配的数量为每一帧。
+     private final float[] modelMatrix = new float[16];
   private final float[] modelViewMatrix = new float[16];
   private final float[] modelViewProjectionMatrix = new float[16];
 
@@ -263,6 +263,11 @@ public class ObjectRenderer {
     compileAndLoadShaderProgram(context);
   }
 
+    /**
+     * 编译和加载着色程序
+     * @param context
+     * @throws IOException
+     */
   private void compileAndLoadShaderProgram(Context context) throws IOException {
     // Compiles and loads the shader program based on the selected mode.
     Map<String, Integer> defineValuesMap = new TreeMap<>();

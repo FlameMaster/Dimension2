@@ -44,6 +44,7 @@ class Ar3Renderer implements GLSurfaceView.Renderer {
     // 并且当设备被唤醒或者用户从其他activity切换回去时，也会被调用。
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
+        // Set the background frame color
         //设置清空屏幕用的颜色，这里使用红色
 //        GLES20.glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);//黑色
@@ -67,6 +68,7 @@ class Ar3Renderer implements GLSurfaceView.Renderer {
     //当绘制每一帧的时候会被调用
     @Override
     public void onDrawFrame(GL10 gl10) {
+        // Redraw background color
         //清空屏幕，会调用glClearColor中定义的颜色来填充整个屏幕
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT|GLES20.GL_DEPTH_BUFFER_BIT);
 

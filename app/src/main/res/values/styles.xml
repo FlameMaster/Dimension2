@@ -116,4 +116,12 @@
         <item name="overlapAnchor">false</item>
     </style>
 
+
+
+
+    <!-- dialog从上面面进出动画 -->
+    <style name="TopDialogAnimation" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/anim_dialog_top_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_dialog_top_out</item>
+    </style>
 </resources>

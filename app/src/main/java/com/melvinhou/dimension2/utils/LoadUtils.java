@@ -83,4 +83,26 @@ public class LoadUtils {
             return text;
         }
     }
+
+    /**
+     * 读取assets下的txt文件，返回utf-8 String
+     *
+     * @param fileName 不包括后缀
+     * @return
+     */
+    public static String readAssetsTxt(String fileName,String unit) {
+        String text = null;
+        try {
+            InputStream is = FcUtils.getContext().getAssets().open(fileName + unit);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            text = new String(buffer, "utf-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            return text;
+        }
+    }
 }

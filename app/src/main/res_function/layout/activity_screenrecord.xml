@@ -20,6 +20,7 @@
         app:contentInsetStartWithNavigation="0dp"
         android:layout_marginTop="24dp"
         android:elevation="4dp"
+        app:title="录屏"
         />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@drawable/bg_desktop_popup"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_setting"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="设置"
+        android:textColor="#ff1e1e1e"
+        android:textSize="13sp"
+        android:gravity="center"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F4F5F7"
+        android:layout_marginHorizontal="8dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_unload"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="卸载"
+        android:textColor="#ff1e1e1e"
+        android:textSize="13sp"
+        android:gravity="center"
+        />
+
+
+</LinearLayout>

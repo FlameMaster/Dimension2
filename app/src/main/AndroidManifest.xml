@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.melvinhou.dimension2"
     xmlns:android="http://schemas.android.com/apk/res/android">
-<!--
-从Android 10 开始，应用即使申请了权限，也只能读写自己外部存储的私有目录，
-就是Android/data/对应应用包名 下的相关目目录。
-除此之外任何目录的读写都会被拒绝，并提示android Permission denied。
-需要在AndroidManifest.xml 文件中，在application标签中添加如下属性android:requestLegacyExternalStorage=“true”
--->
+    <!--
+    从Android 10 开始，应用即使申请了权限，也只能读写自己外部存储的私有目录，
+    就是Android/data/对应应用包名 下的相关目目录。
+    除此之外任何目录的读写都会被拒绝，并提示android Permission denied。
+    需要在AndroidManifest.xml 文件中，在application标签中添加如下属性android:requestLegacyExternalStorage=“true”
+    -->
     <application
         android:name=".Dimension2Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:requestLegacyExternalStorage="true"
         android:theme="@style/Dimension2Theme"
         android:usesCleartextTraffic="true">
         <activity
@@ -23,7 +23,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -71,12 +70,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".media.music.MusicPlayerActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".media.music.MusicListActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".media.animation.SystemAnimationActivity"
             android:screenOrientation="portrait" />
@@ -97,12 +96,34 @@
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ar.Ar3"
+            android:name=".ar.ARActivity2"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ar.opengl.OpenglEsActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ar.dome.ArDomeActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ar.d3.D3Activity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".function.pdf.PdfActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".function.desktop.DesktopActivity"
+            android:screenOrientation="portrait">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--                <category android:name="android.intent.category.HOME" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--            </intent-filter>-->
+        </activity>
         <activity
             android:name=".function.zip.ZipActivity"
             android:screenOrientation="portrait" />
@@ -115,8 +136,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".function.messenger.ImChatActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
         <meta-data
             android:name="com.google.ar.core"
@@ -132,17 +153,29 @@
                 android:resource="@xml/appwidget_info" />
         </receiver>
 
-        <service android:name=".function.screenrecord.ScreenRecordService"
-            android:foregroundServiceType="mediaProjection">
-        </service>
         <receiver android:name=".function.screenrecord.ScreenRecordBroadcastReceiver">
             <intent-filter>
-                <action android:name="screen_record_stop"/>
+                <action android:name="screen_record_stop" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="androidx.media.session.MediaButtonReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </receiver>
 
+        <service
+            android:name=".function.screenrecord.ScreenRecordService"
+            android:foregroundServiceType="mediaProjection"></service>
+
         <service android:name=".media.video.MediaPlayerService" />
 
+        <!--
+             在API 21之前，MediaSession使用广播接收器与媒体会话通信。不一定非得是这个广播接收器,
+             但它必须处理行动"android.intent.action.MEDIA_BUTTON".
+             此外，这用于在接收到媒体按钮事件(如“play”)时从非活动状态恢复服务。
+             用于接受媒体播放的意图（MediaNotificationManager）
+        -->
         <service
             android:name=".media.music.MusicService"
             android:enabled="true"
@@ -151,61 +184,63 @@
                 <action android:name="android.media.browse.MediaBrowserService" />
             </intent-filter>
         </service>
-
-        <!--
-             在API 21之前，MediaSession使用广播接收器与媒体会话通信。不一定非得是这个广播接收器,
-             但它必须处理行动"android.intent.action.MEDIA_BUTTON".
-             此外，这用于在接收到媒体按钮事件(如“play”)时从非活动状态恢复服务。
-             用于接受媒体播放的意图（MediaNotificationManager）
-        -->
-        <receiver android:name="androidx.media.session.MediaButtonReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.MEDIA_BUTTON"/>
-            </intent-filter>
-        </receiver>
     </application>
 
-    <uses-feature
-        android:name="android.hardware.camera.ar"
-        android:required="true" /> <!-- <uses-feature android:name="android.hardware.camera" -->
+    <supports-gl-texture android:name="GL_OES_compressed_ETC1_RGB8_texture" /> <!-- <uses-feature android:name="android.hardware.camera" -->
     <!-- android:required="true" /> -->
     <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" -->
     <!-- android:maxSdkVersion="18" /> -->
+    <supports-gl-texture android:name="GL_OES_compressed_paletted_texture" />
+    <uses-feature
+        android:name="android.hardware.camera.ar"
+        android:required="true" />
+
     <uses-feature
         android:glEsVersion="0x00030000"
         android:required="true" />
-    <uses-feature android:name="android.hardware.camera.any" />
+    <uses-feature android:name="android.hardware.camera.any" /> <!-- AR -->
+    <uses-feature
+        android:glEsVersion="0x00030001"
+        android:required="true" /> <!-- Sceneform requires OpenGLES 3.0 or later. -->
+    <uses-feature
+        android:name="android.hardware.opengles.aep"
+        android:required="true" />
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- AR -->
-    <uses-permission android:name="android.permission.CAMERA" /> <!-- Sceneform requires OpenGLES 3.0 or later. -->
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <!--android9.0使用前台服务的应用-->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!--录屏-->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- 聊天-->
     <!--允许应用程序改变网络状态-->
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
     <!--允许应用程序改变WIFI连接状态-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <!--允许应用程序访问有关的网络信息-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!--允许应用程序访问WIFI网卡的网络信息-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <!--允许应用程序完全使用网络-->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
 
     <!--唤醒锁定权限-->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <!--桌面悬浮权限-->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--查询所有应用权限-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+
+    <!-- Tell the system this app requires OpenGL ES 3.1. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!--声明应用支持哪些纹理压缩格式-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
 
 </manifest>

@@ -5,7 +5,10 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.melvinhou.dimension2.R;
-import com.melvinhou.dimension2.ar.Ar3;
+import com.melvinhou.dimension2.ar.ARActivity;
+import com.melvinhou.dimension2.ar.d3.D3Activity;
+import com.melvinhou.dimension2.ar.dome.ArDomeActivity;
+import com.melvinhou.dimension2.ar.opengl.OpenglEsActivity;
 import com.melvinhou.dimension2.databinding.FgtHomeBD;
 import com.melvinhou.dimension2.game.GameLaunchPager;
 import com.melvinhou.dimension2.pager.BasePager;
@@ -88,7 +91,7 @@ public class HomeFragment extends BindingFragment<FgtHomeBD> {
 
     }
     public void toAR(View view){
-        Intent intent =new Intent(FcUtils.getContext(), Ar3.class);
+        Intent intent =new Intent(FcUtils.getContext(), ArDomeActivity.class);
         startActivity(intent);
     }
 

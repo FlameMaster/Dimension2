@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.melvinhou.dimension2.R;
+import com.melvinhou.dimension2.function.desktop.DesktopActivity;
 import com.melvinhou.dimension2.function.messenger.ImHomeActivity;
 import com.melvinhou.dimension2.function.pdf.PdfActivity;
 import com.melvinhou.dimension2.function.screenrecord.ScreenRecordActivity;
@@ -134,6 +135,9 @@ public class FunctionFragment extends Fragment {
             startActivity(intent);
         }else if (title[1].equals(key)){//录屏
             Intent intent = new Intent(getContext(), ScreenRecordActivity.class);
+            startActivity(intent);
+        }else if (title[5].equals(key)){//桌面
+            Intent intent = new Intent(getContext(), DesktopActivity.class);
             startActivity(intent);
         }else if (title[6].equals(key)){//zip
             Intent intent = new Intent(getContext(), ZipActivity.class);
