@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.function.desktop.DesktopActivity;
-import com.melvinhou.dimension2.function.messenger.ImHomeActivity;
+import com.melvinhou.dimension2.function.im.ImHomeActivity;
 import com.melvinhou.dimension2.function.pdf.PdfActivity;
 import com.melvinhou.dimension2.function.screenrecord.ScreenRecordActivity;
 import com.melvinhou.dimension2.function.zip.ZipActivity;

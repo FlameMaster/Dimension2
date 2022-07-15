@@ -1,0 +1,21 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "isDownload": true,
+            "explain": "文件大小：<1MB",
+            "fileName": "redcar",
+            "title": "小红车",
+            "directoryPath": "ar/models"
+        },
+        {
+            "cover": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/ar/model/keqing.jpg",
+            "explain": "下载大小：5.19MB",
+            "fileName": "keqing",
+            "title": "原神-刻晴",
+            "url": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/ar/model/keqing.zip"
+        }
+    ],
+    "date": 0,
+    "message": "欢迎使用二刺猿"
+}

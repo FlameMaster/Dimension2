@@ -93,11 +93,11 @@ public class ShaderUtil {
         // Drain the queue of all errors.
         int error;
         while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
-            Log.e(tag, label + ": glError " + error);
+//            Log.e(tag, label + ": glError " + error);
             lastError = error;
         }
         if (lastError != GLES20.GL_NO_ERROR) {
-            throw new RuntimeException(label + ": glError " + lastError);
+//            throw new RuntimeException(label + ": glError " + lastError);
         }
     }
 

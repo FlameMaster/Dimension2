@@ -100,15 +100,10 @@
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ar.opengl.OpenglEsActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ar.dome.ArDomeActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ar.d3.D3Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ar.d3.D3ListActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
@@ -131,11 +126,11 @@
             android:name=".function.screenrecord.ScreenRecordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".function.messenger.ImHomeActivity"
+            android:name=".function.im.ImHomeActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".function.messenger.ImChatActivity"
+            android:name=".function.im.ImChatActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 

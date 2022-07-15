@@ -259,7 +259,7 @@ public class ARActivity2 extends BaseActivity  implements GLSurfaceView.Renderer
             pointCloudRenderer.createOnGlThread(this);
             //模型对象,可以设置多个纹理，懒得写
             virtualObject.createOnGlThread(this,
-                    "ar/models/girl.obj", "ar/models/girl_body.jpg");
+                    "ar/models/redcar.obj", "ar/models/redcar.jpg");
             virtualObject.setMaterialProperties(0.0f, 2.0f, 0.5f, 6.0f);
             //阴影
             virtualObjectShadow.createOnGlThread(
@@ -269,7 +269,6 @@ public class ARActivity2 extends BaseActivity  implements GLSurfaceView.Renderer
         } catch (IOException e) {
             Log.e(TAG, "Failed to read an asset file", e);
         }
-
     }
 
     /**

@@ -15,6 +15,9 @@ package com.melvinhou.dimension2.net;
  */
 public class AssetsFileKey {
 
+    //模型列表
+    public final static String AR_D3_LIST ="test_ar_d3_list";
+
     //媒体列表
     public final static String MEDIA_LIST ="test_media_list";
     //插画列表

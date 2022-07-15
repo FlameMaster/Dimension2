@@ -39,6 +39,7 @@ import com.melvinhou.kami.adapter.RecyclerHolder;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.util.ResourcesUtils;
 import com.melvinhou.kami.view.BaseActivity;
 
 import java.io.File;
@@ -245,7 +246,7 @@ public class ScreenRecordActivity extends BaseActivity {
 
     public File getRecordFilesDir() {
         File folderFile = new File(Environment.getExternalStorageDirectory().getPath()
-                + File.separator + "Dimension2" + File.separator + "record");
+                + File.separator + ResourcesUtils.getString(R.string.app_name) + File.separator + "record");
         if (!folderFile.exists()) {
             folderFile.mkdirs();
         }

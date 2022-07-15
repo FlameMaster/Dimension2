@@ -110,8 +110,8 @@ public class ObjectRenderer {
 
   private BlendMode blendMode = null;
 
-    //临时的矩阵分配在这里减少分配的数量为每一帧。
-     private final float[] modelMatrix = new float[16];
+  //临时的矩阵分配在这里减少分配的数量为每一帧。
+  private final float[] modelMatrix = new float[16];
   private final float[] modelViewMatrix = new float[16];
   private final float[] modelViewProjectionMatrix = new float[16];
 
@@ -369,8 +369,7 @@ public class ObjectRenderer {
 
     ShaderUtil.checkGLError(TAG, "Before draw");
 
-    // Build the ModelView and ModelViewProjection matrices
-    // for calculating object position and light.
+    // 构建ModelView和ModelViewProjection矩阵来计算对象的位置和光线.
     Matrix.multiplyMM(modelViewMatrix, 0, cameraView, 0, modelMatrix, 0);
     Matrix.multiplyMM(modelViewProjectionMatrix, 0, cameraPerspective, 0, modelViewMatrix, 0);
 

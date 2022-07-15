@@ -27,12 +27,12 @@ varying vec2 v_TexCoord;
 uniform vec4 u_ObjColor;
 
 void main() {
-    // We support approximate sRGB gamma.
+    // 我们支持近似sRGB伽玛.
     const float kGamma = 0.4545454;
     const float kInverseGamma = 2.2;
     const float kMiddleGrayGamma = 0.466;
 
-    // Unpack lighting and material parameters for better naming.
+    // 打开照明和材料参数，以便更好地命名.
     vec3 viewLightDirection = u_LightingParameters.xyz;
     vec3 colorShift = u_ColorCorrectionParameters.rgb;
     float averagePixelIntensity = u_ColorCorrectionParameters.a;
@@ -42,39 +42,38 @@ void main() {
     float materialSpecular = u_MaterialParameters.z;
     float materialSpecularPower = u_MaterialParameters.w;
 
-    // Normalize varying parameters, because they are linearly interpolated in the vertex shader.
+    // 规范化变化的参数，因为它们在顶点着色器中是线性插值的.
     vec3 viewFragmentDirection = normalize(v_ViewPosition);
     vec3 viewNormal = normalize(v_ViewNormal);
 
-    // Flip the y-texture coordinate to address the texture from top-left.
+    // 翻转y纹理坐标来从左上角处理纹理.
     vec4 objectColor = texture2D(u_Texture, vec2(v_TexCoord.x, 1.0 - v_TexCoord.y));
 
-    // Apply color to grayscale image only if the alpha of u_ObjColor is
-    // greater and equal to 255.0.
+    // 只有当u_ObjColor的alpha值为l到255.0时，才对灰度图像应用颜色.
     objectColor.rgb *= mix(vec3(1.0), u_ObjColor.rgb / 255.0,
                            step(255.0, u_ObjColor.a));
 
-    // Apply inverse SRGB gamma to the texture before making lighting calculations.
+    // 在进行照明计算之前，对纹理应用逆SRGB伽马.
     objectColor.rgb = pow(objectColor.rgb, vec3(kInverseGamma));
 
-    // Ambient light is unaffected by the light intensity.
+    // 环境光不受光强的影响.
     float ambient = materialAmbient;
 
-    // Approximate a hemisphere light (not a harsh directional light).
+    // 近似于半球光(不是刺眼的方向光).
     float diffuse = materialDiffuse *
             0.5 * (dot(viewNormal, viewLightDirection) + 1.0);
 
-    // Compute specular light.
+    // 计算反射光.
     vec3 reflectedLightDirection = reflect(viewLightDirection, viewNormal);
     float specularStrength = max(0.0, dot(viewFragmentDirection, reflectedLightDirection));
     float specular = materialSpecular *
             pow(specularStrength, materialSpecularPower);
 
     vec3 color = objectColor.rgb * (ambient + diffuse) + specular;
-    // Apply SRGB gamma before writing the fragment color.
+    // 在写入片段颜色之前应用SRGB伽马.
     color.rgb = pow(color, vec3(kGamma));
-    // Apply average pixel intensity and color shift
+    // 应用平均像素强度和颜色变化
     color *= colorShift * (averagePixelIntensity / kMiddleGrayGamma);
-    gl_FragColor.rgb = color;
-    gl_FragColor.a = objectColor.a;
+    gl_FragColor.rgb += color;
+    //gl_FragColor.a = objectColor.a;
 }

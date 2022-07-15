@@ -3,6 +3,7 @@ package com.melvinhou.kami.wiget;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -50,9 +51,11 @@ public class LoadDialog extends ProgressDialog {
     }
 
     public void show(String text) {
-        TextView tv = getWindow().findViewById(R.id.tv_load_dialog);
-        if (tv != null)
+        TextView tv = findViewById(R.id.tv_load_dialog);
+        if (tv != null) {
             tv.setText(text);
+            tv.setVisibility(View.VISIBLE);
+        }
 
         if (!isShowing())
             show();

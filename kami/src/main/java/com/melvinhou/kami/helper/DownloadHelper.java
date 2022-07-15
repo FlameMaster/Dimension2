@@ -11,10 +11,13 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 
 
+import com.melvinhou.kami.R;
 import com.melvinhou.kami.util.FcUtils;
+import com.melvinhou.kami.util.ResourcesUtils;
 
 import java.io.File;
 
@@ -40,7 +43,11 @@ public class DownloadHelper {
     /* 下载ID*/
     private long mDownloadId;
     /*文件名*/
-    private String fileName;
+    private final String fileName;
+    /*相对子路径*/
+    private final String dirPath;
+    /*是否是公用目录*/
+    private boolean isPublic;
     /*文件下载地址*/
     private String downloadUrl;
     private boolean downloading;
@@ -65,19 +72,28 @@ public class DownloadHelper {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private DownloadHelper(String fileName, String downloadUrl) {
-        this.fileName = fileName;
+    private DownloadHelper(String downloadUrl, String fileName, String dirPath, boolean isPublic) {
         this.downloadUrl = downloadUrl;
+        this.fileName = fileName;
+        this.dirPath = dirPath;
+        this.isPublic = isPublic;
+    }
+
+    public static DownloadHelper getInstance(String downloadUrl, String fileName, String dirPath, boolean isPublic) {
+        DownloadHelper helper = new DownloadHelper(downloadUrl, fileName, dirPath, isPublic);
+        helper.registerReceiver();
+        return helper;
     }
 
     /**
      * 保证每个创建都是唯一
+     *
      * @param fileName
      * @param downloadUrl
      * @return
      */
-    public static DownloadHelper getInstance(String fileName, String downloadUrl) {
-        DownloadHelper helper = new DownloadHelper(fileName, downloadUrl);
+    public static DownloadHelper getInstance(String downloadUrl, String fileName) {
+        DownloadHelper helper = new DownloadHelper(downloadUrl, fileName, null, false);
         helper.registerReceiver();
         return helper;
     }
@@ -94,6 +110,7 @@ public class DownloadHelper {
 
     /**
      * 日志控制器
+     *
      * @param msg
      */
     private void logDebug(String msg) {
@@ -104,6 +121,7 @@ public class DownloadHelper {
 
     /**
      * 是否正在下载
+     *
      * @return
      */
     public boolean isDownloading() {
@@ -139,7 +157,7 @@ public class DownloadHelper {
                     showDownloadList();
                 }
                 //下载完成（跟下面重复就不写了
-                else if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)){
+                else if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
                     //打开文件
                 }
             }
@@ -150,7 +168,7 @@ public class DownloadHelper {
         intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         intentFilter.addAction(DownloadManager.ACTION_NOTIFICATION_CLICKED);
         intentFilter.addAction(DownloadManager.ACTION_VIEW_DOWNLOADS);
-        FcUtils.getContext().registerReceiver(mDownloadDetailsReceiver,intentFilter);
+        FcUtils.getContext().registerReceiver(mDownloadDetailsReceiver, intentFilter);
     }
 
     /**
@@ -183,10 +201,13 @@ public class DownloadHelper {
 //                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
                 .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI)
 //                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)//公用文件下载位置
-                .setDestinationInExternalFilesDir(FcUtils.getContext(),
-                        Environment.DIRECTORY_DOWNLOADS, fileName)
+//                .setDestinationInExternalPublicDir(getDirPath(), fileName)//自定义文件下载位置
+//                .setDestinationInExternalFilesDir(FcUtils.getContext(), Environment.DIRECTORY_DOWNLOADS, fileName)
 //                .allowScanningByMediaScanner()//允许MediaScanner扫描到这个文件，默认不允许
         ;
+        //下载位置
+        if (isPublic) request.setDestinationInExternalPublicDir(getDirPath(), fileName);
+        else request.setDestinationInExternalFilesDir(FcUtils.getContext(), getDirPath(), fileName);
         try {
             mDownloadId = mDownloadManager.enqueue(request); // 加入下载队列
             if (mDownloadId != 0) {
@@ -201,6 +222,27 @@ public class DownloadHelper {
                 FcUtils.getContext().startActivity(intent);
             }
         }
+    }
+
+    /**
+     * 获取下载文件的目录
+     *
+     * @return
+     */
+    private String getDirPath() {
+//        Log.e("位置", "getExternalStorageDirectory=" + Environment.getExternalStorageDirectory().getPath());
+//        Log.e("位置", "getDataDirectory=" + Environment.getDataDirectory().getPath());
+//        Log.e("位置", "getDownloadCacheDirectory=" + Environment.getDownloadCacheDirectory().getPath());
+//        Log.e("位置", "getRootDirectory=" + Environment.getRootDirectory().getPath());
+//        Log.e("位置", "getFilesDir=" + FcUtils.getContext().getFilesDir().getPath());
+//        Log.e("位置", "getCacheDir=" + FcUtils.getContext().getCacheDir().getPath());
+//        Log.e("位置", "getDir=" + FcUtils.getContext().getDir("233", Context.MODE_PRIVATE).getPath());
+//        Log.e("位置", "getExternalCacheDir=" + FcUtils.getContext().getExternalCacheDir().getPath());
+        String path = Environment.DIRECTORY_DOWNLOADS;
+        //下载目录判断
+        if (!TextUtils.isEmpty(dirPath))
+            path = ResourcesUtils.getString(R.string.app_name) + dirPath;
+        return path;
     }
 
     /**
@@ -229,7 +271,10 @@ public class DownloadHelper {
                     break;
                 case DownloadManager.STATUS_SUCCESSFUL: //下载完成， 由系统触发
                     stopQueryProgress();
-                    File downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+
+                    File downloadDir = isPublic
+                            ? Environment.getExternalStoragePublicDirectory(getDirPath())
+                            : FcUtils.getContext().getExternalFilesDir(getDirPath());
                     totalSize = c.getLong(c.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
                     if (downloadListener != null) {
                         String fullName = downloadDir.getPath() + File.separator + fileName;
@@ -266,6 +311,7 @@ public class DownloadHelper {
 
     /**
      * 关闭查询流
+     *
      * @param cursor
      */
     private void closeCursor(Cursor cursor) {
@@ -295,6 +341,7 @@ public class DownloadHelper {
 
         /**
          * 进度
+         *
          * @param soFarSize
          * @param totalSize
          */
@@ -302,6 +349,7 @@ public class DownloadHelper {
 
         /**
          * 下载成功
+         *
          * @param fileFullPath
          * @param totalSize
          */
