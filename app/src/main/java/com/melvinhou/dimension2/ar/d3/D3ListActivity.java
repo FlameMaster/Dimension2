@@ -69,6 +69,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.collection.ArrayMap;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -99,8 +100,9 @@ public class D3ListActivity extends BaseActivity2 {
     private final String TAG = D3ListActivity.class.getName();
     //权限请求
     public static final int REQUEST_CODE_PERMISSIONS = 2113;
+    public static final int REQUEST_CODE_PERMISSIONS2 = 2114;
     //权限列表：文件
-    private static final String[] REQUIRED_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private static final String[] REQUIRED_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
     //管理进程的
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 
@@ -132,6 +134,16 @@ public class D3ListActivity extends BaseActivity2 {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_OK && resultCode == REQUEST_CODE_PERMISSIONS2) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&Environment.isExternalStorageManager())
+                FcUtils.showToast("获取权限成功");
+            else FcUtils.showToast("未能获取权限");
+        }
+    }
+
+    @Override
     protected void initView() {
         mRecycler = findViewById(R.id.list);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -158,12 +170,20 @@ public class D3ListActivity extends BaseActivity2 {
                 intent.putExtra("objPath", data.getDirectoryPath());
                 startActivity(intent);
             } else if (allPermissionsGranted(REQUIRED_PERMISSIONS)) {
-                downloadObj(data);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager())
+                    downloadObj(data);
+                else {
+                    Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                    intent.setData(Uri.fromParts("package", getPackageName(), null));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivityForResult(intent, REQUEST_CODE_PERMISSIONS2);
+                }
             } else {
                 FcUtils.showToast("请开启文件读写权限后重试");
             }
         });
     }
+
 
     @Override
     protected void initData() {
@@ -267,14 +287,14 @@ public class D3ListActivity extends BaseActivity2 {
                 "下载", "取消") {
             @Override
             public void confirm() {
-                downloadFile(data.getFileName(),data.getUrl());
+                downloadFile(data.getFileName(), data.getUrl());
             }
         });
     }
 
     //下载文件
     private void downloadFile(String fileName, String url) {
-        DownloadHelper helper = DownloadHelper.getInstance(url, fileName);
+        DownloadHelper helper = DownloadHelper.getInstance(url, fileName + ".zip");
         helper.setDownloadListener(new DownloadHelper.DownloadListener() {
             @Override
             public void onStart() {
@@ -308,7 +328,7 @@ public class D3ListActivity extends BaseActivity2 {
         String folderPath =
                 ResourcesUtils.getString(com.melvinhou.kami.R.string.app_name)
                         + "/model/" + file.getName();
-        File folderFile = Environment.getExternalStoragePublicDirectory(folderPath);
+        File folderFile = Environment.getExternalStoragePublicDirectory(folderPath.substring(0, folderPath.length() - 4));
         if (!folderFile.exists()) {
             folderFile.mkdirs();
         }
