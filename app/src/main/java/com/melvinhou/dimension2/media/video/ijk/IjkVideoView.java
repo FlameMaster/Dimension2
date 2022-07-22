@@ -48,7 +48,8 @@ public class IjkVideoView extends ViewGroup {
 
     //视频文件地址
     private Uri mUri, mNativeUri;
-
+    //是否打开本地代理开关
+    private boolean mLocalProxyEnable = false;
     //视频缓存
     private HttpProxyCacheServer mProxy;
     private LocalProxyVideoHelper mProxyHelper;
@@ -191,8 +192,9 @@ public class IjkVideoView extends ViewGroup {
 //        if (pathSegList != null && pathSegList.size() > 0)
 //            fileName = pathSegList.get(pathSegList.size() - 1);
         String scheme = uri.getScheme();
-        if ("http".equals(scheme) || "https".equals(scheme)) {
-            //videochahe
+        if (mLocalProxyEnable)
+            if ("http".equals(scheme) || "https".equals(scheme)) {
+                //videochahe
 //            mProxy = VideoCacheHelper.getProxy();
 //            String path = uri.toString();
 //            if (listener != null) {
@@ -200,14 +202,14 @@ public class IjkVideoView extends ViewGroup {
 //            }
 //            mNativeUri = Uri.parse(mProxy.getProxyUrl(path));
 
-            //构建本地代理url
-            String playUrl = ProxyCacheUtils.getProxyUrl(uri.toString(), null, null);
-            mNativeUri = Uri.parse(playUrl);
-            //请求放在客户端,便于控制
-            mProxyHelper.startRequestVideoInfo(uri.toString(),listener);
-        } else {
-            mNativeUri = uri;
-        }
+                //构建本地代理url
+                String playUrl = ProxyCacheUtils.getProxyUrl(uri.toString(), null, null);
+                mNativeUri = Uri.parse(playUrl);
+                //请求放在客户端,便于控制
+                mProxyHelper.startRequestVideoInfo(uri.toString(), listener);
+            } else {
+                mNativeUri = uri;
+            }
         mUri = uri;
 
         //首次加载
@@ -283,7 +285,7 @@ public class IjkVideoView extends ViewGroup {
         //播放准备完毕监听
         mMediaPlayer.setOnPreparedListener(iMediaPlayer -> {
             setScreenRate((float) iMediaPlayer.getVideoWidth() / (float) iMediaPlayer.getVideoHeight());
-            if (listener!=null) listener.onPrepared(iMediaPlayer);
+            if (listener != null) listener.onPrepared(iMediaPlayer);
         });
     }
 
@@ -329,14 +331,16 @@ public class IjkVideoView extends ViewGroup {
         public void start() {
             if (mMediaPlayer != null)
                 mMediaPlayer.start();
-            mProxyHelper.resumeLocalProxyTask();
+            if (mLocalProxyEnable)
+                mProxyHelper.resumeLocalProxyTask();
         }
 
         @Override
         public void pause() {
             if (mMediaPlayer != null)
                 mMediaPlayer.pause();
-            mProxyHelper.pauseLocalProxyTask();
+            if (mLocalProxyEnable)
+                mProxyHelper.pauseLocalProxyTask();
         }
 
         @Override
@@ -361,7 +365,8 @@ public class IjkVideoView extends ViewGroup {
             if (null != listener && mProxy != null)
                 mProxy.unregisterCacheListener(listener);
 
-            mProxyHelper.releaseLocalProxyResources();
+            if (mLocalProxyEnable)
+                mProxyHelper.releaseLocalProxyResources();
         }
 
         @Override
@@ -372,13 +377,14 @@ public class IjkVideoView extends ViewGroup {
         @Override
         public void seekTo(long msec) {
 
-            // 拖动进度条
-            long totalDuration = mMediaPlayer.getDuration();
-            if (totalDuration > 0) {
-                float percent = msec * 1.0f / totalDuration;
-                mProxyHelper.seekToCachePosition(percent);
+            if (mLocalProxyEnable) {
+                // 拖动进度条
+                long totalDuration = mMediaPlayer.getDuration();
+                if (totalDuration > 0) {
+                    float percent = msec * 1.0f / totalDuration;
+                    mProxyHelper.seekToCachePosition(percent);
+                }
             }
-
 
             if (mMediaPlayer != null)
                 mMediaPlayer.seekTo(msec);
