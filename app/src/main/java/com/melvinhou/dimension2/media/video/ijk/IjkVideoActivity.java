@@ -204,6 +204,7 @@ public class IjkVideoActivity extends BaseActivity {
         String url = getIntent().getStringExtra("url");
         if (StringUtils.noNull(url)) {
             //视频加载
+            mVidoe.setLocalProxyEnable(true);
             mVidoe.setVideoPath(url);
             changePlay(null);
         }

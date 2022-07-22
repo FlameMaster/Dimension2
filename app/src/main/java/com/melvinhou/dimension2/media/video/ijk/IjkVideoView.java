@@ -196,7 +196,7 @@ public class IjkVideoView extends ViewGroup {
 //        if (pathSegList != null && pathSegList.size() > 0)
 //            fileName = pathSegList.get(pathSegList.size() - 1);
         String scheme = uri.getScheme();
-        if (mLocalProxyEnable)
+        if (mLocalProxyEnable) {
             if ("http".equals(scheme) || "https".equals(scheme)) {
                 //videochahe
 //            mProxy = VideoCacheHelper.getProxy();
@@ -214,6 +214,9 @@ public class IjkVideoView extends ViewGroup {
             } else {
                 mNativeUri = uri;
             }
+        } else {
+            mNativeUri = null;
+        }
         mUri = uri;
 
         //首次加载
