@@ -89,6 +89,10 @@ public class IjkVideoView extends ViewGroup {
 
     private Context mContext;
 
+    public void setLocalProxyEnable(boolean enable) {
+        mLocalProxyEnable = enable;
+    }
+
 
     public IjkVideoView(@NonNull Context context) {
         super(context);
