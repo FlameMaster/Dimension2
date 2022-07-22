@@ -18,6 +18,7 @@ import android.widget.EditText;
 
 import com.google.gson.reflect.TypeToken;
 import com.melvinhou.dimension2.media.picture.ScanActivity;
+import com.melvinhou.dimension2.media.video.ijk.IjkVideoActivity;
 import com.melvinhou.dimension2.net.AssetsFileKey;
 import com.melvinhou.dimension2.CYEntity;
 import com.melvinhou.dimension2.GlobalParameters;
@@ -327,6 +328,9 @@ public class MediaFragment extends BindingFragment<FgtMediaBD> {
                 case GlobalParameters.MediaLevel2Type.VIDEO_TEXTURE:
                     openTextureVideo();
                     break;
+                case GlobalParameters.MediaLevel2Type.VIDEO_IJK:
+                    openIjkVideo();
+                    break;
                 case GlobalParameters.MediaLevel2Type.VIDEO_LIVE:
                     openVideoLive();
                     break;
@@ -440,8 +444,16 @@ public class MediaFragment extends BindingFragment<FgtMediaBD> {
 
     private void openTextureVideo() {
         Intent intent = new Intent(FcUtils.getContext(), VideoActivity2.class);
-        intent.putExtra("url", "https://webstatic.bh3.com/video/bh3.com/pv/CG_OP_1800.mp4");
-//        intent.putExtra("url", "https://uploadstatic.mihoyo.com/hk4e/upload/officialsites/202012/zhongli_gameplayPV_final_V3_fix.mp4");
+//        intent.putExtra("url", "https://webstatic.bh3.com/video/bh3.com/pv/CG_OP_1800.mp4");
+        intent.putExtra("url", "https://uploadstatic.mihoyo.com/hk4e/upload/officialsites/202012/zhongli_gameplayPV_final_V3_fix.mp4");
+        intent.putExtra("title", "岩王帝君-钟离");
+        intent.putExtra("mode", false);
+        toActivity(intent);
+    }
+
+    private void openIjkVideo() {
+        Intent intent = new Intent(FcUtils.getContext(), IjkVideoActivity.class);
+        intent.putExtra("url", "https://uploadstatic.mihoyo.com/hk4e/upload/officialsites/202012/zhongli_gameplayPV_final_V3_fix.mp4");
         intent.putExtra("title", "岩王帝君-钟离");
         intent.putExtra("mode", false);
         toActivity(intent);

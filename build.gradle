@@ -4,11 +4,22 @@ buildscript {
 
     //指定当前的项目工程可以从哪些仓库上去拉取依赖库给当前项目使用
     repositories {
-        google()//谷歌自己的库
-        mavenCentral()
+//        google()//谷歌自己的库
+//        mavenCentral()
 //        jcenter()//停止维护
 //        mavenLocal()
-        
+
+        maven {
+            url "https://maven.aliyun.com/nexus/content/groups/public/"
+        }
+        mavenCentral()
+        google()
+        jcenter()
+        maven { url 'https://repo1.maven.org/maven2/' }//um
+        maven { url 'https://jitpack.io' }
+        maven { url "https://oss.jfrog.org/libs-snapshot" }
+        maven { url "https://mvn.mob.com/android" }
+        maven { url 'https://developer.huawei.com/repo/' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.1.2'
@@ -21,10 +32,22 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
-        mavenCentral()
+//        google()
+//        mavenCentral()
 //        jcenter()
 //        mavenLocal()
+
+        maven {
+            url "https://maven.aliyun.com/nexus/content/groups/public/"
+        }
+        mavenCentral()
+        google()
+        jcenter()
+        maven { url 'https://repo1.maven.org/maven2/' }//um
+        maven { url 'https://jitpack.io' }
+        maven { url "https://oss.jfrog.org/libs-snapshot" }
+        maven { url "https://mvn.mob.com/android" }
+        maven { url 'https://developer.huawei.com/repo/' }
     }
 }
 

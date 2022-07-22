@@ -1,9 +1,11 @@
 package com.melvinhou.dimension2.ar.d3;
 
 import android.content.Context;
+import android.graphics.Matrix;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -25,6 +27,10 @@ import com.melvinhou.kami.wiget.PhotoCutterView;
  */
 public class D3SurfaceView extends GLSurfaceView {
 
+    /**
+     * 手势检测
+     */
+    private GestureDetector mGestureDetector;
     /**
      * 缩放手势检测
      */
@@ -52,6 +58,7 @@ public class D3SurfaceView extends GLSurfaceView {
     }
 
     private void init() {
+        mGestureDetector = new GestureDetector(getContext(), new GestureListener());
         mScaleGestureDetector = new ScaleGestureDetector(getContext(), new ScaleGestureListener());
         setOnTouchListener(new MatrixTouchListener());
     }
@@ -66,19 +73,17 @@ public class D3SurfaceView extends GLSurfaceView {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            if (mRenderer != null)
+            if (mRenderer != null) {
+                mGestureDetector.onTouchEvent(event);
                 mScaleGestureDetector.onTouchEvent(event);
+                requestRender();
+            }
             float x = event.getX();
             float y = event.getY();
             switch (event.getAction()) {
                 case MotionEvent.ACTION_MOVE:
                     float dx = x - previousX;
                     float dy = y - previousY;
-                    if (mRenderer != null) {
-                        mRenderer.updateAngleX(dx);
-                        mRenderer.updateAngleY(dy);
-                        requestRender();
-                    }
             }
 
             previousX = x;
@@ -89,9 +94,78 @@ public class D3SurfaceView extends GLSurfaceView {
 
 
     /**
+     * 手势监听，需要用什么继承什么
+     */
+    class GestureListener extends GestureDetector.SimpleOnGestureListener {
+        //按下
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+
+        //单击确认
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            return super.onSingleTapConfirmed(e);
+        }
+
+        //双击
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            return super.onDoubleTap(e);
+        }
+
+        //双击按下抬起各触发一次
+        @Override
+        public boolean onDoubleTapEvent(MotionEvent e) {
+            return super.onDoubleTapEvent(e);
+        }
+
+        //抬起
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            return super.onSingleTapUp(e);
+        }
+
+        //短按
+        @Override
+        public void onShowPress(MotionEvent e) {
+            super.onShowPress(e);
+        }
+
+        //长按
+        @Override
+        public void onLongPress(MotionEvent e) {
+            super.onLongPress(e);//不精确
+        }
+
+        //滑动
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+//            if (Math.sqrt(distanceX * distanceX + distanceY * distanceY) > 10f)
+            if (mRenderer != null) {
+                if (e2.getPointerCount() > 1) {
+                    mRenderer.updateTranslationY(distanceY/getHeight());
+                } else {
+                    mRenderer.updateAngleX(-distanceX);
+                    mRenderer.updateAngleY(-distanceY);
+                }
+            }
+            return super.onScroll(e1, e2, distanceX, distanceY);
+        }
+
+        //滚动
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
+    }
+
+    /**
      * 缩放手势监听
      */
     class ScaleGestureListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+
         //缩放手势开始
         @Override
         public boolean onScaleBegin(ScaleGestureDetector detector) {
@@ -102,7 +176,10 @@ public class D3SurfaceView extends GLSurfaceView {
         //缩放中
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-            Log.d("缩放", "x=" + detector.getFocusX() + "\r\ty=" + detector.getFocusX() + "\r\tscale=" + detector.getScaleFactor());
+//            Log.d("缩放",
+//            "x=" + detector.getFocusX() +
+//            "\r\ty=" + detector.getFocusY() +
+//            "\r\tscale=" + detector.getScaleFactor());
             mRenderer.updateScale(detector.getScaleFactor());
             return true;
         }

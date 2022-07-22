@@ -55,6 +55,11 @@
                 },
                 {
                     "iconUrl": "",
+                    "title": "Ijk播放器",
+                    "type": 212
+                },
+                {
+                    "iconUrl": "",
                     "title": "直播",
                     "type": 240
                 },

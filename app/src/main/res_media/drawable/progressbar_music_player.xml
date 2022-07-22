@@ -24,7 +24,7 @@
         android:id="@android:id/secondaryProgress">
         <clip>
             <shape>
-                <solid android:color="@color/white"/>
+                <solid android:color="#5FFF"/>
             </shape>
         </clip>
     </item>

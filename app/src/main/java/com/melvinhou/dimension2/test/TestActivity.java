@@ -1,6 +1,9 @@
 package com.melvinhou.dimension2.test;
 
+import android.view.View;
+
 import com.melvinhou.dimension2.R;
+import com.melvinhou.dimension2.media.video.ijk.IjkVideoView;
 import com.melvinhou.kami.view.BaseActivity;
 
 /**
@@ -27,6 +30,11 @@ public class TestActivity extends BaseActivity {
     @Override
     protected void initView() {
 
+        TestView testView = findViewById(R.id.test);
+        testView.setOnClickListener(v -> testView.start());
+
+        IjkVideoView videoView = findViewById(R.id.video);
+        videoView.setVideoPath("https://uploadstatic.mihoyo.com/hk4e/upload/officialsites/202012/zhongli_gameplayPV_final_V3_fix.mp4");
     }
 
     @Override

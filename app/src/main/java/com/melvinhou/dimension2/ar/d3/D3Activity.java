@@ -1,15 +1,26 @@
 package com.melvinhou.dimension2.ar.d3;
 
+import android.app.Dialog;
 import android.net.Uri;
 import android.opengl.GLSurfaceView;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.ar.d3.model.D3ObjGroup;
+import com.melvinhou.dimension2.function.im.ImHomeActivity;
+import com.melvinhou.dimension2.net.HttpConstant;
 import com.melvinhou.kami.model.EventMessage;
+import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.IOUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
@@ -65,6 +76,15 @@ public class D3Activity extends BaseActivity {
 
     private String mObjPath, mObjName;
 
+    @Override
+    protected void initWindowUI() {
+        super.initWindowUI();
+
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
+    }
 
     @Override
     protected int getLayoutID() {
@@ -83,7 +103,8 @@ public class D3Activity extends BaseActivity {
 
     @Override
     protected void initListener() {
-
+        findViewById(R.id.back).setOnClickListener(v -> finish());
+        findViewById(R.id.setting).setOnClickListener(v -> showDialog());
 
     }
 
@@ -91,9 +112,9 @@ public class D3Activity extends BaseActivity {
     protected void initData() {
         // 设定好使用的OpenGL版本.
         mSurfaceView.setEGLContextClientVersion(3);
-        mConfig = new D3Config(0, 2, 1000,
-                0, 15, 30,
-                0, 10, -1);
+        mConfig = new D3Config(0, 2, 100,
+                0, 0, 20,
+                0, 0, 0);
         mModel.obj.observe(this, obj -> {
             mRenderer = new D3Renderer(obj, mObjPath, mConfig);
             mSurfaceView.setD3Renderer(mRenderer);
@@ -234,7 +255,7 @@ public class D3Activity extends BaseActivity {
                 && message.contains(getClass().getName())) {
             if (message.contains(RxMsgParameters.DATA_REFRESH)) {
                 FcUtils.runOnUIThread(() -> {
-                   if (data != null) {
+                    if (data != null) {
                         showTextProcess(data.toString());
                     } else {
                         mProcess.setVisibility(View.GONE);
@@ -242,5 +263,153 @@ public class D3Activity extends BaseActivity {
                 });
             }
         }
+    }
+
+
+    /**
+     * 参数列表
+     */
+    private void showDialog() {
+        Dialog dialog = new Dialog(this, R.style.Dimension2Dialog);
+        dialog.setContentView(R.layout.dialog_d3_parameters);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        Window dialogWindow = dialog.getWindow();
+        //设置布局大小
+        dialogWindow.setLayout(
+//                DimenUtils.getScreenSize()[0] - DimenUtils.dp2px(32),
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT);
+        //设置整体大小包括外部半透明
+//        WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+//        params.width = DimenUtils.getScreenSize()[0] - DimenUtils.dp2px(16);
+//        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//        dialogWindow.setAttributes(params);
+        //设置Dialog位置
+        dialogWindow.setGravity(Gravity.BOTTOM);
+
+        dialog.findViewById(R.id.tv01).setOnClickListener(view -> {
+            dialog.dismiss();
+            showProgressDialog(1, ((TextView) view).getText().toString(),
+                    (int)mConfig.eye_x, -100, 100);
+        });
+        dialog.findViewById(R.id.tv02).setOnClickListener(view -> {
+            dialog.dismiss();
+            showProgressDialog(2, ((TextView) view).getText().toString(),
+                    (int)mConfig.eye_y, -100, 100);
+        });
+        dialog.findViewById(R.id.tv03).setOnClickListener(view -> {
+            dialog.dismiss();
+            showProgressDialog(3, ((TextView) view).getText().toString(),
+                    (int)mConfig.eye_z, 2, 100);
+        });
+        dialog.findViewById(R.id.tv04).setOnClickListener(view -> {
+            dialog.dismiss();
+            showProgressDialog(4, ((TextView) view).getText().toString(),
+                    (int)mConfig.view_center_x, -100, 100);
+        });
+        dialog.findViewById(R.id.tv05).setOnClickListener(view -> {
+            dialog.dismiss();
+            showProgressDialog(5, ((TextView) view).getText().toString(),
+                    (int)mConfig.view_center_y, -100, 100);
+        });
+        dialog.findViewById(R.id.tv06).setOnClickListener(view -> {
+            dialog.dismiss();
+            showProgressDialog(6, ((TextView) view).getText().toString(),
+                    (int)mConfig.view_center_z, -100, 100);
+        });
+
+        dialog.findViewById(R.id.tv_submit).setOnClickListener(view -> {
+            dialog.dismiss();
+                mConfig.eye_x = 0;
+                mConfig.eye_y = 0;
+                mConfig.eye_z = 10;
+                mConfig.view_center_x = 0;
+                mConfig.view_center_y = 0;
+                mConfig.view_center_z = 0;
+            mSurfaceView.requestRender();
+        });
+        dialog.show();
+    }
+
+    //负数进度弥补
+    private int negative = 0;
+
+    /**
+     * 参数调整
+     */
+    private void showProgressDialog(int type, String title, int current, int min, int max) {
+        //判断是否有负数
+        boolean isNegative = min < 0;
+        negative = 0;
+        if (isNegative) {
+            negative = Math.abs(min);
+            min = 0;
+            max += negative;
+            current += negative;
+        }
+        Dialog dialog = new Dialog(this, R.style.Dimension2Dialog);
+        dialog.setContentView(R.layout.dialog_d3_progress);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        Window dialogWindow = dialog.getWindow();
+        //设置布局大小
+        dialogWindow.setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT);
+        //设置Dialog位置
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        SeekBar progress = dialog.findViewById(R.id.progress);
+        TextView tvTitle = dialog.findViewById(R.id.tv_title);
+        TextView tvNow = dialog.findViewById(R.id.tv_now);
+        TextView tvMin = dialog.findViewById(R.id.tv_min);
+        TextView tvMax = dialog.findViewById(R.id.tv_max);
+        progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progress -= negative;
+                switch (type) {
+                    case 1:
+                        mConfig.eye_x = progress;
+                        break;
+                    case 2:
+                        mConfig.eye_y = progress;
+                        break;
+                    case 3:
+                        mConfig.eye_z = progress;
+                        break;
+                    case 4:
+                        mConfig.view_center_x = progress;
+                        break;
+                    case 5:
+                        mConfig.view_center_y = progress;
+                        break;
+                    case 6:
+                        mConfig.view_center_z = progress;
+                        break;
+                }
+                tvNow.setText("当前：" + progress);
+                mSurfaceView.requestRender();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+        tvTitle.setText(title);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            progress.setMin(min);
+        }
+        progress.setMax(max);
+        progress.setProgress(current);
+        tvMin.setText(String.valueOf(min - negative));
+        tvMax.setText(String.valueOf(max - negative));
+        tvNow.setText("当前：" + (current - negative));
+        dialog.show();
     }
 }

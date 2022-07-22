@@ -50,11 +50,10 @@ public class D3Renderer implements GLSurfaceView.Renderer {
 
     //旋转角度
     private volatile float mAngleX = 0, mAngleY = 0;
+    //模型缩放大小
     private volatile float mScale = 1;
-
-    public float getAngleX() {
-        return mAngleX;
-    }
+    //位移
+    private volatile float mTranslationX = 0, mTranslationY = 0;
 
     public void updateAngleX(float angleX) {
         this.mAngleX += angleX * TOUCH_SCALE_FACTOR;
@@ -68,12 +67,16 @@ public class D3Renderer implements GLSurfaceView.Renderer {
         if (mAngleY < -45) mAngleY = -45;
     }
 
-    public float getScale() {
-        return mScale;
+    public void updateScale(float scale) {
+        this.mScale *= scale;
     }
 
-    public void updateScale(float scale) {
-        this.mScale = scale;
+    public void updateTranslationX(float mTranslationX) {
+        this.mTranslationX += mTranslationX;
+    }
+
+    public void updateTranslationY(float mTranslationY) {
+        this.mTranslationY += mTranslationY*20;
     }
 
     D3Renderer(Obj obj, String directoryPath, D3Config config) {
@@ -113,12 +116,6 @@ public class D3Renderer implements GLSurfaceView.Renderer {
                 //  near需要小于setLookAtM中的eyeZ，大于的话会导致目标在观察者后面,绘制的图像就会消失在镜头前
                 //  far一般设置的比较大，太小会导致3D图形的投影矩阵没法容纳图形全部的背面,背面部分被隐藏
                 mConfig.projection_near, mConfig.projection_far);
-
-
-        //设置观察视角,坐标系同屏幕坐标方向，z为深度
-        Matrix.setLookAtM(viewMatrix, 0, mConfig.eye_x, mConfig.eye_y, mConfig.eye_z,//摄像机在世界坐标系的位置
-                mConfig.view_center_x, mConfig.view_center_y, mConfig.view_center_z,//目标物中心在世界坐标系中的位置
-                0f, 1f, 0f);//相机方向，相机与目标物的连线的垂直线（摄像机为眼睛，头顶指向的方向）
     }
 
     //当绘制每一帧的时候会被调用
@@ -129,9 +126,15 @@ public class D3Renderer implements GLSurfaceView.Renderer {
         // 清除深度缓冲与颜色缓冲
         GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
 
+
+        //设置观察视角,坐标系同屏幕坐标方向，z为深度
+        Matrix.setLookAtM(viewMatrix, 0, mConfig.eye_x, mConfig.eye_y, mConfig.eye_z,//摄像机在世界坐标系的位置
+                mConfig.view_center_x, mConfig.view_center_y, mConfig.view_center_z,//目标物中心在世界坐标系中的位置
+                0f, 1f, 0f);//相机方向，相机与目标物的连线的垂直线（摄像机为眼睛，头顶指向的方向）
+
         mStack.push(mMatrix.clone());
-//        objectTranslate(0, 0, 0);//位移
-//        objectScale(mScale, mScale, mScale);//缩放
+        objectTranslation(0, mTranslationY, 0);//位移
+        objectScale(mScale, mScale, mScale);//缩放
         objectRotate(0, mAngleX, 0);//旋转
         float[] mMVPMatrix = new float[16];
         Matrix.multiplyMM(mMVPMatrix, 0, viewMatrix, 0, mMatrix, 0);
@@ -166,13 +169,13 @@ public class D3Renderer implements GLSurfaceView.Renderer {
     }
 
     /**
-     * 缩放模型
+     * 移动模型
      *
      * @param x
      * @param y
      * @param z
      */
-    private void objectTranslate(float x, float y, float z) {
+    private void objectTranslation(float x, float y, float z) {
         Matrix.translateM(mMatrix, 0, x, y, z);
     }
 }

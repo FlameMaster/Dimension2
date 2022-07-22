@@ -48,6 +48,8 @@ public class GlobalParameters {
         int VIDEO_SURFACE = 220;
         //新式播放器
         int VIDEO_TEXTURE = 210;
+        //ijk播放器
+        int VIDEO_IJK = 212;
         //直播
         int VIDEO_LIVE = 240;
         //电视
