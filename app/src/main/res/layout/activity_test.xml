@@ -7,6 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<!--    放射性动画-->
+
     <com.melvinhou.dimension2.test.TestView
         android:id="@+id/test"
         android:layout_width="match_parent"

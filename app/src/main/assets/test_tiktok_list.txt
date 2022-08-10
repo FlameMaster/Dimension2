@@ -3,7 +3,7 @@
     "data": [
         {
             "id": "33587",
-            "url": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/video/tv_dome04.mkv",
+            "url": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/video/tv_dome04.mp4",
             "cover_address": "",
             "title": "【银魂】眼泪这东西啊，是流出来就能把辛酸和悲伤都冲走的好东西。可等你们长大成人了就会明白，人生还有眼泪也冲刷不干净的巨大悲伤，还有难忘的痛苦让你们即使想哭也不能流泪，所以真正坚强的人，都是越想哭反而笑得越大声，怀揣着痛苦和悲伤，即使如此也要带上它们笑着前行。",
             "explain": "",
@@ -12,7 +12,7 @@
             "share_count": 0,
             "user": {
                 "nickname": "车厘子",
-                "photo": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/portrait/02.jpeg"
+                "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/02.jpeg"
             },
             "comments": [
                 {
@@ -20,7 +20,7 @@
                     "content": "一入银魂深似海，从此节操是路人。",
                     "user": {
                         "nickname": "拜拜风尘子",
-                        "photo": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/portrait/01.jpg"
+                        "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/01.jpg"
                     },
                     "sub_comments": []
                 },
@@ -29,7 +29,7 @@
                     "content": "立誓今生尊你为王，用我热血为你封疆！233",
                     "user": {
                         "nickname": "车厘子",
-                        "photo": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/portrait/02.jpeg"
+                        "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/02.jpeg"
                     },
                     "sub_comments": []
                 }
@@ -37,7 +37,7 @@
         },
         {
             "id": "4525",
-            "url": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/video/tv_dome01.mkv",
+            "url": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/video/tv_dome01.mp4",
             "cover_address": "",
             "title": "爆裂吧，现实！崩坏吧，精神！放逐这个世界！快来感受下中二病的世界吧！",
             "explain": "",
@@ -46,7 +46,7 @@
             "share_count": 538,
             "user": {
                 "nickname": "拜拜风尘子",
-                "photo": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/portrait/01.jpg"
+                "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/01.jpg"
             },
             "comments": [
                 {
@@ -54,7 +54,7 @@
                     "content": "六花好可怜，父亲的突然离世，令她至今无法接受这个事实。正在她最痛苦无助的时候，遇上了中二的富樫勇太。她相信父亲在“不可视境界线”另端的平行世界，为寻找“不可视境界线”而患上中二病。",
                     "user": {
                         "nickname": "车厘子",
-                        "photo": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/portrait/02.jpeg"
+                        "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/02.jpeg"
                     },
                     "sub_comments": [
                         {
@@ -63,7 +63,7 @@
                             "correlativeUserName": "",
                             "user": {
                                 "nickname": "花无痕两两",
-                                "photo": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/portrait/05.jpeg"
+                                "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/05.jpeg"
                             }
                         },
                         {
@@ -72,7 +72,7 @@
                             "correlativeUserName": "",
                             "user": {
                                 "nickname": "拜拜风尘子",
-                                "photo": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/portrait/01.jpg"
+                                "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/01.jpg"
                             }
                         },
                         {
@@ -81,7 +81,7 @@
                             "correlativeUserName": "花无痕两两",
                             "user": {
                                 "nickname": "呆呆小耗子",
-                                "photo": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/portrait/03.jpg"
+                                "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/03.jpg"
                             }
                         }
                     ]
@@ -91,7 +91,7 @@
                     "content": "被漆黑的烈焰吞噬殆尽吧！",
                     "user": {
                         "nickname": "呆呆小耗子",
-                        "photo": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/portrait/03.jpg"
+                        "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/03.jpg"
                     },
                     "sub_comments": []
                 },
@@ -100,7 +100,7 @@
                     "content": "无聊的视频，下一个",
                     "user": {
                         "nickname": "医生姐姐来啦",
-                        "photo": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/portrait/04.jpg"
+                        "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/04.jpg"
                     },
                     "sub_comments": [
                         {
@@ -109,7 +109,7 @@
                             "correlativeUserName": "",
                             "user": {
                                 "nickname": "拜拜风尘子",
-                                "photo": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/portrait/01.jpg"
+                                "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/01.jpg"
                             }
                         }
                     ]
@@ -118,7 +118,7 @@
         },
         {
             "id": "11235",
-            "url": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/video/tv_dome03.mkv",
+            "url": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/video/tv_dome03.mp4",
             "cover_address": "",
             "title": "隐约雷鸣，阴霾天空，但盼风雨来，能留你在此；隐约雷鸣，阴霾天空，即使天无雨，我亦留此地。",
             "explain": "",
@@ -127,7 +127,7 @@
             "share_count": 8,
             "user": {
                 "nickname": "花无痕两两",
-                "photo": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/portrait/05.jpeg"
+                "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/05.jpeg"
             },
             "comments": [
                 {
@@ -135,7 +135,7 @@
                     "content": "如果下雨了，你愿意留下吗？",
                     "user": {
                         "nickname": "车厘子",
-                        "photo": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/portrait/02.jpeg"
+                        "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/02.jpeg"
                     },
                     "sub_comments": [
                         {
@@ -144,7 +144,7 @@
                             "correlativeUserName": "",
                             "user": {
                                 "nickname": "医生姐姐来啦",
-                                "photo": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/portrait/04.jpg"
+                                "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/04.jpg"
                             }
                         }
                     ]

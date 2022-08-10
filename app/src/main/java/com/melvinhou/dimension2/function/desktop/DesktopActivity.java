@@ -90,7 +90,7 @@ public class DesktopActivity extends BaseActivity {
         //高斯模糊
         MultiTransformation mation4 = new MultiTransformation(new BlurTransformation(50));
         Glide.with(FcUtils.getContext())
-                .load("http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/image/background/baskground001.jpg")
+                .load("https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/background/baskground001.jpg")
                 .apply(new RequestOptions()
                         .transform(mation4)
                         .diskCacheStrategy(DiskCacheStrategy.ALL))

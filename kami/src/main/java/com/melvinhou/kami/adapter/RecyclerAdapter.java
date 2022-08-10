@@ -358,7 +358,7 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends Recy
     public abstract int getItemLayoutId(int viewType);
 
     /*初始化*/
-    protected abstract VH onCreate(View View, int viewType);
+    protected abstract VH onCreate(View view, int viewType);
 
     /*可以被继承的特殊条目初始化*/
     public RecyclerHolder onCustomCreate(View insertView, int viewType) {

@@ -9,12 +9,27 @@
             "directoryPath": "ar/models"
         },
         {
-            "cover": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/ar/model/keqing.jpg",
+            "cover": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/ar/model/keqing.jpg",
             "explain": "下载大小：5.19MB",
             "fileName": "keqing",
             "title": "原神-刻晴",
-            "url": "http://reabk0s12.hb-bkt.clouddn.com/Ciyuan2/app/ar/model/keqing.zip"
+            "url": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/ar/model/keqing.zip"
+        },
+        {
+            "cover": "",
+            "explain": "下载大小：5.52MB",
+            "fileName": "ganyu",
+            "title": "原神-甘雨",
+            "url": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/ar/model/ganyu.zip"
+        },
+        {
+            "cover": "",
+            "explain": "下载大小：5MB",
+            "fileName": "raiden",
+            "title": "原神-雷电影",
+            "url": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/ar/model/raiden.zip"
         }
+
     ],
     "date": 0,
     "message": "欢迎使用二刺猿"

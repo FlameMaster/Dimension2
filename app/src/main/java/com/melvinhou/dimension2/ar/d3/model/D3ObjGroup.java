@@ -73,7 +73,7 @@ public class D3ObjGroup implements D3Object {
 //        objPath = "ar/models/redcar.obj";
         try {
             // 加载模型文件
-            Obj obj = ObjReader.read(getFile(objPath,objName));
+            Obj obj = ObjReader.read(getFile(objPath, objName));
             obj = ObjUtils.convertToRenderable(obj);
             load(obj);
         } catch (IOException e) {
@@ -108,12 +108,13 @@ public class D3ObjGroup implements D3Object {
     public void load(Obj obj) throws IOException {
         List<Mtl> mtls = new ArrayList<>();
         for (String mtlName : obj.getMtlFileNames()) {
-            mtls.addAll(MtlReader.read(getFile(mDirectoryPath,mtlName)));
+            mtls.addAll(MtlReader.read(getFile(mDirectoryPath, mtlName)));
         }
 
         for (Mtl mtl : mtls) {
             String groupName = mtl.getName();
             ObjGroup group = obj.getMaterialGroup(groupName);
+            if (group == null) continue;
             String mapPath = mtl.getMapKd();
             if (TextUtils.isEmpty(mapPath)) {
                 continue;
@@ -177,7 +178,7 @@ public class D3ObjGroup implements D3Object {
         Bitmap bitmap = null;
         bitmap = mLruCache.get(fileName);
         if (bitmap == null) {
-            bitmap = BitmapFactory.decodeStream(getFile(mDirectoryPath,fileName));
+            bitmap = BitmapFactory.decodeStream(getFile(mDirectoryPath, fileName));
             mLruCache.put(fileName, bitmap);
         }
         return bitmap;
@@ -186,6 +187,7 @@ public class D3ObjGroup implements D3Object {
 
     /**
      * 加载文件
+     *
      * @param path
      * @param fileName
      * @return
@@ -193,7 +195,7 @@ public class D3ObjGroup implements D3Object {
      */
     private InputStream getFile(String path, String fileName) throws IOException {
         String filePath = path + File.separator + fileName;
-        if (isAssetsFile){
+        if (isAssetsFile) {
             return getAssetsIs(filePath);
         }
         Uri uri = Uri.fromFile(new File(filePath));

@@ -37,7 +37,7 @@ public class HttpConstant {
     /*api地址*/
     public static final String SERVER_API = SERVER_URL+"mbapp/appexamination/";
     /*资源地址*/
-    public static final String SERVER_RES = "http://reabk0s12.hb-bkt.clouddn.com/"+"Ciyuan2/app/";
+    public static final String SERVER_RES = "https://otakuboy.oss-cn-beijing.aliyuncs.com/"+"Ciyuan2/app/";
 
 
 

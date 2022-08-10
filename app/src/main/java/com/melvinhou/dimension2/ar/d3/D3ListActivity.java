@@ -195,12 +195,17 @@ public class D3ListActivity extends BaseActivity2 {
                 }
             }
             for (D3Entity entity : list) {
-                D3Entity newEn = map.get(entity.getFileName());
+                D3Entity newEn = map.remove(entity.getFileName());
                 if (newEn != null) {
                     entity.setDirectoryPath(newEn.getDirectoryPath());
                     entity.setExplain(newEn.getExplain());
                     entity.setDownload(true);
                 }
+            }
+            //剩余的本地目录
+            for (String key :map.keySet()){
+                D3Entity newEn = map.get(key);
+                list.add(newEn);
             }
             emitter.onNext(list);
             emitter.onComplete();
