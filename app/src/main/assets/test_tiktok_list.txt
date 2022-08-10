@@ -11,7 +11,7 @@
             "comment_count": 52,
             "share_count": 0,
             "user": {
-                "nickname": "车厘子",
+                "nickName": "车厘子",
                 "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/02.jpeg"
             },
             "comments": [
@@ -19,7 +19,7 @@
                     "id": "",
                     "content": "一入银魂深似海，从此节操是路人。",
                     "user": {
-                        "nickname": "拜拜风尘子",
+                        "nickName": "拜拜风尘子",
                         "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/01.jpg"
                     },
                     "sub_comments": []
@@ -28,7 +28,7 @@
                     "id": "",
                     "content": "立誓今生尊你为王，用我热血为你封疆！233",
                     "user": {
-                        "nickname": "车厘子",
+                        "nickName": "车厘子",
                         "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/02.jpeg"
                     },
                     "sub_comments": []
@@ -45,7 +45,7 @@
             "comment_count": 7254,
             "share_count": 538,
             "user": {
-                "nickname": "拜拜风尘子",
+                "nickName": "拜拜风尘子",
                 "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/01.jpg"
             },
             "comments": [
@@ -53,7 +53,7 @@
                     "id": "",
                     "content": "六花好可怜，父亲的突然离世，令她至今无法接受这个事实。正在她最痛苦无助的时候，遇上了中二的富樫勇太。她相信父亲在“不可视境界线”另端的平行世界，为寻找“不可视境界线”而患上中二病。",
                     "user": {
-                        "nickname": "车厘子",
+                        "nickName": "车厘子",
                         "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/02.jpeg"
                     },
                     "sub_comments": [
@@ -62,7 +62,7 @@
                             "content": "请问动漫在哪里能看到呢？好喜欢的说。",
                             "correlativeUserName": "",
                             "user": {
-                                "nickname": "花无痕两两",
+                                "nickName": "花无痕两两",
                                 "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/05.jpeg"
                             }
                         },
@@ -71,7 +71,7 @@
                             "content": "越来越喜欢中二病了！",
                             "correlativeUserName": "",
                             "user": {
-                                "nickname": "拜拜风尘子",
+                                "nickName": "拜拜风尘子",
                                 "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/01.jpg"
                             }
                         },
@@ -80,7 +80,7 @@
                             "content": "在哔哩哔哩动画有正版哦，总共有两季，还有一部剧场版。",
                             "correlativeUserName": "花无痕两两",
                             "user": {
-                                "nickname": "呆呆小耗子",
+                                "nickName": "呆呆小耗子",
                                 "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/03.jpg"
                             }
                         }
@@ -90,7 +90,7 @@
                     "id": "",
                     "content": "被漆黑的烈焰吞噬殆尽吧！",
                     "user": {
-                        "nickname": "呆呆小耗子",
+                        "nickName": "呆呆小耗子",
                         "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/03.jpg"
                     },
                     "sub_comments": []
@@ -99,7 +99,7 @@
                     "id": "",
                     "content": "无聊的视频，下一个",
                     "user": {
-                        "nickname": "医生姐姐来啦",
+                        "nickName": "医生姐姐来啦",
                         "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/04.jpg"
                     },
                     "sub_comments": [
@@ -108,7 +108,7 @@
                             "content": "啊这，不带这么说的吧。",
                             "correlativeUserName": "",
                             "user": {
-                                "nickname": "拜拜风尘子",
+                                "nickName": "拜拜风尘子",
                                 "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/01.jpg"
                             }
                         }
@@ -126,7 +126,7 @@
             "comment_count": 25,
             "share_count": 8,
             "user": {
-                "nickname": "花无痕两两",
+                "nickName": "花无痕两两",
                 "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/05.jpeg"
             },
             "comments": [
@@ -134,7 +134,7 @@
                     "id": "",
                     "content": "如果下雨了，你愿意留下吗？",
                     "user": {
-                        "nickname": "车厘子",
+                        "nickName": "车厘子",
                         "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/02.jpeg"
                     },
                     "sub_comments": [
@@ -143,7 +143,7 @@
                             "content": "即使不下雨，我也在这里啊。",
                             "correlativeUserName": "",
                             "user": {
-                                "nickname": "医生姐姐来啦",
+                                "nickName": "医生姐姐来啦",
                                 "photo": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/04.jpg"
                             }
                         }

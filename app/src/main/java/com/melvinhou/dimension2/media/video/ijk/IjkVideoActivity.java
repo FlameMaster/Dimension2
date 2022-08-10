@@ -8,11 +8,13 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,6 +26,7 @@ import android.widget.TextView;
 
 import com.jeffmony.videocache.model.VideoCacheInfo;
 import com.melvinhou.dimension2.R;
+import com.melvinhou.dimension2.ar.d3.D3SurfaceView;
 import com.melvinhou.dimension2.media.video.FCVidoeView;
 import com.melvinhou.dimension2.media.video.MediaController;
 import com.melvinhou.kami.util.DeviceUtils;
@@ -40,6 +43,10 @@ import java.util.concurrent.TimeUnit;
 import androidx.appcompat.app.ActionBar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Group;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
@@ -70,12 +77,13 @@ public class IjkVideoActivity extends BaseActivity {
     public static final int SCREEN_DIRECTION_UNDEFINED = 404;
 
 
+    private WindowInsetsControllerCompat windowInsetsController;
     private IjkVideoView mVidoe;
     private Group mVideoToolsGroup;
     private ImageView mPlayButton;
     private SeekBar mProgress;
     private TextView mTitle, mTextProgress, mTextMaxProgress;
-    private View mBack, mRotationButton, mVideoShade, mLoadProgress;
+    private View mBack, mRotationButton, mVideoShade, mLoadProgress, mBottomTools;
     //显示工具条计时，开始进度条计时
     private Disposable mChangeOrientationDisposable, mProgressDisposable;
     //屏幕旋转监听的参数
@@ -87,27 +95,84 @@ public class IjkVideoActivity extends BaseActivity {
 
     //控制器
     private MediaController mMediaController;
+    /**
+     * 手势检测
+     */
+    private GestureDetector mGestureDetector;
 
 
     //屏幕方向
     int mScreenDirection;
     //是否横屏显示,是否开启电影模式
     boolean isLandscape = false;
+    //底部导航栏设置padding
+    int mNavigationPadding = 0;
 
     @Override
     protected void initWindowUI() {
-        getWindow().getDecorView().setSystemUiVisibility(
-//                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |//粘性沉浸模式
-//                View.SYSTEM_UI_FLAG_IMMERSIVE |//沉浸模式
-                //两行全屏模式
-                View.SYSTEM_UI_FLAG_FULLSCREEN |
-                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                        //以下防止布局随着系统栏的隐藏和显示调整大小
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-        //带有layout的是伪全屏，会覆盖在视图上
-        getWindow().setStatusBarColor(0x40000000);
+//        showSystemUI();
+        hideSystemUI();
+
+        //刘海屏适配
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            lp.layoutInDisplayCutoutMode
+                    = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        }
+        getWindow().setAttributes(lp);
+        //控制系统界面的工具
+//        windowInsetsController
+//                = ViewCompat.getWindowInsetsController(getWindow().getDecorView());
+//        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+    }
+
+    private void showSystemUI() {
+        if (windowInsetsController != null) {
+            //导航栏和状态栏的颜色（黑白）
+            windowInsetsController.setAppearanceLightStatusBars(false);
+            windowInsetsController.setAppearanceLightNavigationBars(false);
+            windowInsetsController.show(WindowInsetsCompat.Type.systemBars());
+        } else {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        }
+    }
+
+    private void hideSystemUI() {
+        if (windowInsetsController != null) {
+            windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
+        } else {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |//粘性沉浸模式
+                            View.SYSTEM_UI_FLAG_IMMERSIVE |//沉浸模式
+                            //两行全屏
+                            View.SYSTEM_UI_FLAG_FULLSCREEN |
+                            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                            //以下防止布局随着系统栏的隐藏和显示调整大小
+                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+                            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+            //带有layout的是伪全屏，会覆盖在视图上
+//            getWindow().setStatusBarColor(0x40000000);
+        }
+    }
+
+    private void showToolsUI() {
+        mVideoToolsGroup.setVisibility(View.VISIBLE);
+    }
+
+    private void hideToolsUI() {
+        mVideoToolsGroup.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            hideSystemUI();
+        }
     }
 
     @Override
@@ -137,6 +202,7 @@ public class IjkVideoActivity extends BaseActivity {
         mProgress = findViewById(R.id.video_progress);
         mTextProgress = findViewById(R.id.video_progress_text);
         mTextMaxProgress = findViewById(R.id.video_progress_max_text);
+        mBottomTools = findViewById(R.id.video_tools_bottom);
 
         //控制器
         mMediaController = mVidoe.getController();
@@ -164,12 +230,12 @@ public class IjkVideoActivity extends BaseActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                cleaToolsHideTimer();
+                cleaHideTimer();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                startHideTimer();
+                startToolsTimer();
             }
         });
 
@@ -181,18 +247,42 @@ public class IjkVideoActivity extends BaseActivity {
         //状态栏变化的监听
         getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(visibility -> {
             Log.e("状态栏变化", "visibility=" + visibility);
-            cleaToolsHideTimer();
+            cleaHideTimer();
             if (visibility == View.SYSTEM_UI_FLAG_VISIBLE) {//状态栏显示
-                mVideoToolsGroup.setVisibility(View.VISIBLE);
-                startHideTimer();
+//                showToolsUI();
+                startSystemHideTimer();
             } else {//状态栏隐藏
-                mVideoToolsGroup.setVisibility(View.GONE);
+//                hideToolsUI();
+            }
+        });
+
+        //界面的一些手势监听
+        mGestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {//单击确认
+                if (mVideoToolsGroup.getVisibility() == View.VISIBLE)
+                    hideToolsUI();
+                else {
+                    showToolsUI();
+                    startToolsTimer();
+                }
+                return true;
+            }
+
+        });
+        getWindow().getDecorView().setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (mGestureDetector != null)
+                    mGestureDetector.onTouchEvent(event);
+                return true;
             }
         });
     }
 
     @Override
     protected void initData() {
+        mNavigationPadding = DimenUtils.getNavigationHeight();
         //屏幕方向
         mScreenDirection = ResourcesUtils.getResources()
                 .getConfiguration().orientation;
@@ -270,14 +360,22 @@ public class IjkVideoActivity extends BaseActivity {
     /**
      * 清空UI隐藏的计时器
      */
-    private void cleaToolsHideTimer() {
+    private void cleaHideTimer() {
         if (mChangeOrientationDisposable != null) mChangeOrientationDisposable.dispose();
     }
 
-    private void startHideTimer() {
+    private void startSystemHideTimer() {
+        cleaHideTimer();
+        mChangeOrientationDisposable = Observable.timer(1, TimeUnit.SECONDS)
+                .compose(IOUtils.setThread())
+                .subscribe(aLong -> hideSystemUI());
+    }
+
+    private void startToolsTimer() {
+        cleaHideTimer();
         mChangeOrientationDisposable = Observable.timer(3, TimeUnit.SECONDS)
                 .compose(IOUtils.setThread())
-                .subscribe(aLong -> initWindowUI());
+                .subscribe(aLong -> hideToolsUI());
     }
 
     /**
@@ -439,8 +537,8 @@ public class IjkVideoActivity extends BaseActivity {
      */
     @Override
     public void setRequestedOrientation(int requestedOrientation) {
-        cleaToolsHideTimer();
-        startHideTimer();
+        startSystemHideTimer();
+        startToolsTimer();
         if (requestedOrientation == SCREEN_DIRECTION_UNDEFINED | requestedOrientation == mScreenDirection)
             return;
         super.setRequestedOrientation(requestedOrientation);
@@ -516,7 +614,6 @@ public class IjkVideoActivity extends BaseActivity {
         public void onBufferingUpdate(IMediaPlayer iMediaPlayer, int i) {
             Log.e("IJK播放器", "onBufferingUpdate=" + i);
         }
-
 
 
 //视频缓冲器的监听

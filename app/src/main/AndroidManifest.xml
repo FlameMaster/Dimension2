@@ -20,7 +20,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -142,7 +143,7 @@
             android:name="com.google.ar.core"
             android:value="optional" /> <!-- "required"必须使用arcore or "optional"可以不使用. -->
 
-        <receiver android:name=".media.music.MusicWidgetProvider">
+        <receiver android:name=".media.music.MusicWidgetProvider" android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -152,12 +153,14 @@
                 android:resource="@xml/appwidget_info" />
         </receiver>
 
-        <receiver android:name=".function.screenrecord.ScreenRecordBroadcastReceiver">
+        <receiver android:name=".function.screenrecord.ScreenRecordBroadcastReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="screen_record_stop" />
             </intent-filter>
         </receiver>
-        <receiver android:name="androidx.media.session.MediaButtonReceiver">
+        <receiver android:name="androidx.media.session.MediaButtonReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>

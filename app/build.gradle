@@ -2,13 +2,14 @@ plugins {
     id 'com.android.application'
 }
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    compileSdk 32
+//    compileSdkVersion 31
+//    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.melvinhou.dimension2"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
 
@@ -122,5 +123,9 @@ dependencies {
         exclude group: 'com.github.JeffMony.PlayerSDK', module: 'ijkplayer'
     }
 
+    //控制状态栏
+    implementation 'androidx.core:core:1.6.0'
+    //大图查看器
+    implementation 'com.github.SherlockGougou:BigImageViewPager:androidx-7.0.3'
 
 }

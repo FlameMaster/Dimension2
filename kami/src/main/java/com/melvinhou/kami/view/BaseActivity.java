@@ -130,6 +130,30 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 初始化状态栏和导航栏
      */
     protected void initWindowUI() {
+        //向后倾斜
+        //向后倾斜模式适用于用户不会与屏幕进行大量互动的全屏体验，例如在观看视频时。
+        //当用户希望调出系统栏时，只需点按屏幕上的任意位置即可。
+//        decorView.setSystemUiVisibility(
+//                View.SYSTEM_UI_FLAG_FULLSCREEN
+//                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
+        //沉浸模式
+        //沉浸模式适用于用户将与屏幕进行大量互动的应用。示例包括游戏、查看图库中的图片或者阅读分页内容，如图书或演示文稿中的幻灯片。
+        //当用户需要调出系统栏时，他们可从隐藏系统栏的任一边滑动。
+        //要求使用这种这种意图更强的手势是为了确保用户与您应用的互动不会因意外轻触和滑动而中断。
+//        decorView.setSystemUiVisibility(
+//                View.SYSTEM_UI_FLAG_IMMERSIVE
+//                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+//                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
+        //粘性沉浸模式
+        //在普通的沉浸模式中，只要用户从边缘滑动，系统就会负责显示系统栏，您的应用甚至不会知道发生了该手势。
+        //因此，如果用户实际上可能是出于主要的应用体验而需要从屏幕边缘滑动，例如在玩需要大量滑动的游戏或使用绘图应用时，您应改为启用“粘性”沉浸模式。
+        //在粘性沉浸模式下，如果用户从隐藏了系统栏的边缘滑动，系统栏会显示出来，但它们是半透明的，并且轻触手势会传递给应用，因此应用也会响应该手势。
+//        decorView.setSystemUiVisibility(
+//                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+//                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+//                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION );
         //透明工具条
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {// Android 5.0 以上 全透明
 

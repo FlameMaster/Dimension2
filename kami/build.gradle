@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 ext {
-    supportLibraryVersion = "30.0.2"
+    supportLibraryVersion = "30.0.3"
     appcompatVersion = "1.1.0"
     rxJavaVersion = "2.2.4"
     rxAndroidVersion = "2.1.0"
@@ -8,7 +8,7 @@ ext {
     retrofitVersion = "2.5.0"
     gsonVersion = "2.8.5"
     disklrucacheVersion = "2.0.2"
-    glideVersion = "4.8.0"
+    glideVersion = "4.11.0"
 }
 
 android {

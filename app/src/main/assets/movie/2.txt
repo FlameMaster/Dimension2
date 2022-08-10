@@ -56,7 +56,7 @@
         ],
         "owner": {
             "intro": "少年曾经说过，我从红尘走过，只为繁华中寻你，与我同乐。",
-            "nickname": "江湖人称风尘子",
+            "nickName": "江湖人称风尘子",
             "photo": "https://i0.hdslb.com/bfs/face/59d7b014964dc31af6fbf319881f6231777f5f13.jpg"
         },
         "textDate": "2019-02-16",

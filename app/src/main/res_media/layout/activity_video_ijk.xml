@@ -40,7 +40,7 @@
         android:id="@+id/video_tools_group"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:constraint_referenced_ids="video_shade,back,video_title,video_play,video_change,video_progress,video_progress_text,video_progress_max_text"/>
+        app:constraint_referenced_ids="video_shade,video_tools_top,video_tools_bottom"/>
 
     <!--  前景  -->
     <View
@@ -51,119 +51,120 @@
         app:layout_constraintBottom_toBottomOf="@id/video_container"
         app:layout_constraintLeft_toLeftOf="@id/video_container"
         app:layout_constraintRight_toRightOf="@id/video_container"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/video_container"
         android:background="@drawable/fg_video_container"
         />
 
-    <!--返回-->
-    <ImageView
-        android:id="@id/back"
-        android:layout_width="?attr/actionBarSize"
-        android:layout_height="?attr/actionBarSize"
-        android:padding="12dp"
-        android:src="@drawable/ic_back2"
-        android:elevation="3dp"
-        app:layout_constraintDimensionRatio="H,1:1"
+    <LinearLayout
+        android:id="@+id/video_tools_top"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/video_shade"
-        app:layout_constraintLeft_toLeftOf="@id/video_container"
-        />
+        app:layout_constraintLeft_toLeftOf="@id/video_shade"
+        app:layout_constraintRight_toRightOf="@id/video_shade"
+        android:orientation="horizontal"
+        android:elevation="3dp"
+        >
 
-    <!--视频标题-->
-    <TextView
-        android:id="@+id/video_title"
+        <!--返回-->
+        <ImageView
+            android:id="@id/back"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:padding="12dp"
+            android:src="@drawable/ic_back2"
+            />
+
+        <!--视频标题-->
+        <TextView
+            android:id="@+id/video_title"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical|left"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:paddingHorizontal="12dp"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/video_tools_bottom"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:ellipsize="end"
-        android:gravity="center_vertical|left"
-        android:includeFontPadding="false"
-        android:maxLines="1"
-        android:paddingHorizontal="12dp"
-        android:singleLine="true"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:elevation="3dp"
-        app:layout_constraintTop_toTopOf="@id/back"
-        app:layout_constraintBottom_toBottomOf="@id/back"
-        app:layout_constraintLeft_toRightOf="@id/back"
-        app:layout_constraintRight_toRightOf="@id/video_container"
-        />
-
-    <!--播放/暂停-->
-    <ImageView
-        android:id="@+id/video_play"
-        android:layout_width="?attr/actionBarSize"
-        android:layout_height="?attr/actionBarSize"
-        android:padding="16dp"
-        android:src="@drawable/ic_tv_play"
-        android:elevation="3dp"
-        app:layout_constraintLeft_toLeftOf="@id/video_container"
-        app:layout_constraintBottom_toBottomOf="@id/video_container"
-        />
-
-    <!--全屏切换-->
-    <ImageView
-        android:id="@+id/video_change"
-        android:layout_width="?attr/actionBarSize"
-        android:layout_height="?attr/actionBarSize"
-        android:padding="16dp"
-        android:elevation="3dp"
-        android:src="@drawable/ic_tv_chjangetv"
-        app:layout_constraintBottom_toBottomOf="@id/video_container"
-        app:layout_constraintRight_toRightOf="@id/video_container"
-        />
-
-    <!--时间进度条-->
-    <TextView
-        android:id="@+id/video_progress_max_text"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:includeFontPadding="false"
-        android:text="/04:13"
-        android:textColor="@color/white"
-        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/video_shade"
+        app:layout_constraintLeft_toLeftOf="@id/video_shade"
+        app:layout_constraintRight_toRightOf="@id/video_shade"
+        android:orientation="horizontal"
         android:elevation="3dp"
-        app:layout_constraintBottom_toBottomOf="@id/video_play"
-        app:layout_constraintRight_toLeftOf="@id/video_change"
-        app:layout_constraintTop_toTopOf="@id/video_play"
-        />
+        >
 
-    <!--时间进度条-->
-    <TextView
-        android:id="@+id/video_progress_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:includeFontPadding="false"
-        android:text="01:29"
-        android:textColor="@color/white"
-        android:textSize="10sp"
-        android:elevation="3dp"
-        app:layout_constraintBottom_toBottomOf="@id/video_progress_max_text"
-        app:layout_constraintRight_toLeftOf="@id/video_progress_max_text"
-        app:layout_constraintTop_toTopOf="@id/video_progress_max_text"
-        />
+        <!--播放/暂停-->
+        <ImageView
+            android:id="@+id/video_play"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:padding="16dp"
+            android:src="@drawable/ic_tv_play"
+            />
 
 
-    <!--时间控制条-->
-    <SeekBar
-        android:id="@+id/video_progress"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:indeterminateDrawable="@android:drawable/progress_indeterminate_horizontal"
-        android:indeterminateOnly="false"
-        android:max="100"
-        android:maxHeight="4dp"
-        android:minHeight="4dp"
-        android:progress="70"
-        android:secondaryProgress="80"
-        android:elevation="3dp"
-        android:progressDrawable="@drawable/progressbar_music_player"
-        android:thumb="@drawable/progressbar_music_player_bar"
-        android:thumbOffset="0dp"
-        app:layout_constraintLeft_toRightOf="@id/video_play"
-        app:layout_constraintRight_toLeftOf="@id/video_progress_text"
-        app:layout_constraintTop_toTopOf="@id/video_play"
-        app:layout_constraintBottom_toBottomOf="@id/video_play"
-        />
+        <!--时间控制条-->
+        <SeekBar
+            android:id="@+id/video_progress"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_weight="1"
+            android:indeterminateDrawable="@android:drawable/progress_indeterminate_horizontal"
+            android:indeterminateOnly="false"
+            android:max="100"
+            android:maxHeight="4dp"
+            android:minHeight="4dp"
+            android:progress="70"
+            android:secondaryProgress="80"
+            android:progressDrawable="@drawable/progressbar_music_player"
+            android:thumb="@drawable/progressbar_music_player_bar"
+            android:thumbOffset="0dp"
+            />
+
+        <!--时间进度条-->
+        <TextView
+            android:id="@+id/video_progress_text"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:includeFontPadding="false"
+            android:text="01:29"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:gravity="center_vertical"
+            />
+
+        <!--时间进度条-->
+        <TextView
+            android:id="@+id/video_progress_max_text"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:includeFontPadding="false"
+            android:text="/04:13"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:gravity="center_vertical"
+            />
+
+        <!--全屏切换-->
+        <ImageView
+            android:id="@+id/video_change"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:padding="16dp"
+            android:src="@drawable/ic_tv_chjangetv"
+            />
+
+    </LinearLayout>
 
     <!--加载视频的进度条-->
     <ProgressBar
@@ -173,9 +174,9 @@
         android:background="@color/transparent"
         android:elevation="4dp"
         android:indeterminateTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/video_container"
-        app:layout_constraintLeft_toLeftOf="@id/video_container"
-        app:layout_constraintRight_toRightOf="@id/video_container"
-        app:layout_constraintTop_toTopOf="@id/video_container" />
+        app:layout_constraintBottom_toBottomOf="@id/video_shade"
+        app:layout_constraintLeft_toLeftOf="@id/video_shade"
+        app:layout_constraintRight_toRightOf="@id/video_shade"
+        app:layout_constraintTop_toTopOf="@id/video_shade" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
