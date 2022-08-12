@@ -24,11 +24,11 @@
         android:label="@string/title_function"
         tools:layout="@layout/fragment_function" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_gallery"-->
-<!--        android:name="com.melvinhou.dimension2.ui.gallery.GalleryFragment"-->
-<!--        android:label="@string/menu_gallery"-->
-<!--        tools:layout="@layout/fragment_gallery" />-->
+    <fragment
+        android:id="@+id/navigation_space_pre"
+        android:name="com.melvinhou.dimension2.prespace.SpacePreFragment"
+        android:label="@string/title_space_pre"
+        tools:layout="@layout/fragment_space_pre" />
 
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_slideshow"-->

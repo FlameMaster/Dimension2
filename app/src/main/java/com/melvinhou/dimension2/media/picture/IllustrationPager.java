@@ -13,7 +13,7 @@ import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ItemIllustrationBD;
 import com.melvinhou.dimension2.pager.BaseListPager;
 import com.melvinhou.dimension2.pager.PagerActivity;
-import com.melvinhou.kami.adapter.BindingHolder;
+import com.melvinhou.kami.adapter.DataBindingHolder;
 import com.melvinhou.kami.model.EventMessage;
 import com.melvinhou.kami.net.EmptyState;
 import com.melvinhou.kami.util.DimenUtils;
@@ -113,7 +113,7 @@ public class IllustrationPager extends BaseListPager<IllustrationItem, Illustrat
     }
 
 
-    class IllustrationHolder extends BindingHolder<ItemIllustrationBD> {
+    class IllustrationHolder extends DataBindingHolder<ItemIllustrationBD> {
 
         public IllustrationHolder(ItemIllustrationBD binding) {
             super(binding);

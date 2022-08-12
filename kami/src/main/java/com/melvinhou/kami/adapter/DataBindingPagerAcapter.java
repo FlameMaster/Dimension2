@@ -28,7 +28,7 @@ import androidx.viewpager.widget.PagerAdapter;
  * ================================================
  */
 
-public abstract class BindingPagerAcapter<VB extends ViewDataBinding, D> extends PagerAdapter {
+public abstract class DataBindingPagerAcapter<VB extends ViewDataBinding, D> extends PagerAdapter {
     private List<D> mList;
     //自己造一个池，可以提高加载效率，与复用率，
     private Pools.Pool<View> pool;
@@ -50,7 +50,7 @@ public abstract class BindingPagerAcapter<VB extends ViewDataBinding, D> extends
         return mList;
     }
 
-    public BindingPagerAcapter(List<D> list, int poolLength) {
+    public DataBindingPagerAcapter(List<D> list, int poolLength) {
         mList = list;
         pool = new Pools.SimplePool<>(poolLength);
     }

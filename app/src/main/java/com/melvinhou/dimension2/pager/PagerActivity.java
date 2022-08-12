@@ -8,7 +8,7 @@ import com.melvinhou.dimension2.PairEntity;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ActPagerBD;
 import com.melvinhou.kami.model.EventMessage;
-import com.melvinhou.kami.mvvm.BindingActivity;
+import com.melvinhou.kami.mvvm.DataBindingActivity;
 import com.melvinhou.rxjava.RxBus;
 import com.melvinhou.rxjava.RxBusClient;
 import com.melvinhou.rxjava.RxMsgParameters;
@@ -32,7 +32,7 @@ import androidx.viewpager.widget.ViewPager;
  * = 分 类 说 明：列表切换pager
  * ============================================================
  */
-public class PagerActivity extends BindingActivity<ActPagerBD> {
+public class PagerActivity extends DataBindingActivity<ActPagerBD> {
 
     //页面的adapter
     private PagerAdapter mPagerAdapter;

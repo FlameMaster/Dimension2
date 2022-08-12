@@ -2,6 +2,8 @@ package com.melvinhou.dimension2.media.video.ijk;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -23,6 +25,7 @@ import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
+import tv.danmaku.ijk.media.player.ISurfaceTextureHolder;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 /**
@@ -233,7 +236,8 @@ public class IjkVideoView extends ViewGroup {
             mMediaPlayer.stop();
             mMediaPlayer.setDisplay(null);
             mMediaPlayer.release();
-        } else createMediaPlayer();
+        }
+        createMediaPlayer();
 
         //监听
         if (listener != null) {
@@ -247,12 +251,25 @@ public class IjkVideoView extends ViewGroup {
         }
 
         try {
-            mMediaPlayer.setDataSource(mContext, getUri());
-        } catch (IOException e) {
+            if (TextUtils.isEmpty(mMediaPlayer.getDataSource())) {
+                mMediaPlayer.setDataSource(mContext, getUri());
+                mMediaPlayer.setDisplay(mSurfaceView.getHolder());//给mediaPlayer设置视图
+                mMediaPlayer.prepareAsync();//异步准备
+            }
+        } catch (IOException | IllegalArgumentException | SecurityException | IllegalStateException e) {
             e.printStackTrace();
         }
-        mMediaPlayer.setDisplay(mSurfaceView.getHolder());//给mediaPlayer设置视图
-        mMediaPlayer.prepareAsync();//异步准备
+    }
+
+    private void bindSurfaceHolder(IMediaPlayer mp) {
+        if (mp != null) {
+            if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) &&
+                    (mp instanceof ISurfaceTextureHolder)) {
+                ISurfaceTextureHolder textureHolder = (ISurfaceTextureHolder) mp;
+                textureHolder.setSurfaceTexture(null);
+            }
+            mp.setDisplay(mSurfaceView.getHolder());
+        }
     }
 
     /**
@@ -303,7 +320,10 @@ public class IjkVideoView extends ViewGroup {
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
             //surfaceview创建成功后，加载视频
-            openMediaPlayer();
+//            if (mMediaPlayer != null)
+                bindSurfaceHolder(mMediaPlayer);
+//            else
+//                openMediaPlayer();
         }
 
         @Override
@@ -338,15 +358,15 @@ public class IjkVideoView extends ViewGroup {
         public void start() {
             if (mMediaPlayer != null)
                 mMediaPlayer.start();
-            if (mLocalProxyEnable)
+            if (mLocalProxyEnable && mProxyHelper != null)
                 mProxyHelper.resumeLocalProxyTask();
         }
 
         @Override
         public void pause() {
-            if (mMediaPlayer != null)
+            if (isPlaying())
                 mMediaPlayer.pause();
-            if (mLocalProxyEnable)
+            if (mLocalProxyEnable && mProxyHelper != null)
                 mProxyHelper.pauseLocalProxyTask();
         }
 

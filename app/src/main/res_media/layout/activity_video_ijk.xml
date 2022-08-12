@@ -117,7 +117,8 @@
         <SeekBar
             android:id="@+id/video_progress"
             android:layout_width="0dp"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:indeterminateDrawable="@android:drawable/progress_indeterminate_horizontal"
             android:indeterminateOnly="false"
@@ -135,7 +136,8 @@
         <TextView
             android:id="@+id/video_progress_text"
             android:layout_width="wrap_content"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:includeFontPadding="false"
             android:text="01:29"
             android:textColor="@color/white"
@@ -147,7 +149,8 @@
         <TextView
             android:id="@+id/video_progress_max_text"
             android:layout_width="wrap_content"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:includeFontPadding="false"
             android:text="/04:13"
             android:textColor="@color/white"

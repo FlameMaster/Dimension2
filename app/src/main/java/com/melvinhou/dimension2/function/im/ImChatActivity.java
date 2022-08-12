@@ -216,10 +216,7 @@ public class ImChatActivity extends BaseActivity {
         mIP = getIntent().getStringExtra("ip");
         mPort = getIntent().getIntExtra("port", 17432);
         //model
-        ViewModelProvider.Factory factory = ViewModelProvider.AndroidViewModelFactory
-                .getInstance(Dimension2Application.getInstance());
-        ViewModelProvider viewModelProvider = new ViewModelProvider(this, factory);
-        mModel = viewModelProvider.get(ImChatModel.class);
+        mModel = new ViewModelProvider(this).get(ImChatModel.class);
         mModel.onCreate(mCurrentUserId);
 
         //用户数据

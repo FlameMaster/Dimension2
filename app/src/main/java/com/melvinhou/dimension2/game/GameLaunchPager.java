@@ -9,7 +9,7 @@ import com.melvinhou.dimension2.databinding.ItemGameLaunchBD;
 import com.melvinhou.dimension2.game.klotski.GameKlotskiActivity;
 import com.melvinhou.dimension2.game.poker.GamePokerActivity;
 import com.melvinhou.dimension2.pager.BaseListPager;
-import com.melvinhou.kami.adapter.BindingHolder;
+import com.melvinhou.kami.adapter.DataBindingHolder;
 import com.melvinhou.kami.net.EmptyState;
 import com.melvinhou.kami.util.FcUtils;
 
@@ -132,7 +132,7 @@ public class GameLaunchPager extends BaseListPager<GameLaunchItem, GameLaunchPag
             toActivity(intent);
     }
 
-    class Holder extends BindingHolder<ItemGameLaunchBD> {
+    class Holder extends DataBindingHolder<ItemGameLaunchBD> {
 
         public Holder(ItemGameLaunchBD binding) {
             super(binding);

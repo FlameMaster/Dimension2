@@ -33,7 +33,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
  * = 分 类 说 明：最基础的fragment
  * ================================================
  */
-public abstract class BindingFragment<DB extends ViewDataBinding> extends BaseFragment2 {
+public abstract class DataBindingFragment<DB extends ViewDataBinding> extends BaseFragment2 {
 
     /*视图模型*/
     private DB mBinding;

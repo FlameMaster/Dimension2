@@ -7,12 +7,10 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Rect;
 import android.text.TextUtils;
 import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.common.util.concurrent.ListenableFuture;
@@ -25,7 +23,7 @@ import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 import com.melvinhou.dimension2.R;
-import com.melvinhou.dimension2.ui.widget.CameraXCustomPreviewView;
+import com.melvinhou.dimension2.ui.widget.CameraXCustomTouchView;
 import com.melvinhou.dimension2.web.WebActivity;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.IOUtils;
@@ -52,6 +50,7 @@ import androidx.camera.core.Preview;
 import androidx.camera.core.SurfaceOrientedMeteringPointFactory;
 import androidx.camera.core.ZoomState;
 import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
@@ -80,7 +79,8 @@ public class ScanActivity extends BaseActivity {
 
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private Preview preview;// 预览画面
-    private CameraXCustomPreviewView viewFinder;
+    private PreviewView viewFinder;
+    private CameraXCustomTouchView touchView;
     private View focusView,scanView;
     private Camera camera;
     private CameraControl cameraControl;
@@ -131,6 +131,7 @@ public class ScanActivity extends BaseActivity {
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
                 startCamera();
@@ -146,6 +147,7 @@ public class ScanActivity extends BaseActivity {
     @Override
     protected void initView() {
         viewFinder = findViewById(R.id.view_finder);
+        touchView = findViewById(R.id.view_touch);
         scanView = findViewById(R.id.view_scan);
         focusView = findViewById(R.id.focus);
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
@@ -154,7 +156,7 @@ public class ScanActivity extends BaseActivity {
     @Override
     protected void initListener() {
         //设置手势事件
-        viewFinder.setCustomTouchListener(new CameraXCustomPreviewView.CustomTouchListener() {
+        touchView.setCustomTouchListener(new CameraXCustomTouchView.CustomTouchListener() {
             @Override
             public void zoom() {
                 if (zoomState == null) return;
@@ -251,12 +253,12 @@ public class ScanActivity extends BaseActivity {
         preview = new Preview.Builder()
                 .setTargetAspectRatio(AspectRatio.RATIO_4_3)//宽高比
 //                .setTargetRotation(viewFinder.getDisplay().getRotation())
-                .setTargetRotation(Surface.ROTATION_90)
+//                .setTargetRotation(Surface.ROTATION_90)
                 .build();
         imageCapture = new ImageCapture.Builder()
                 .setTargetAspectRatio(AspectRatio.RATIO_4_3)//宽高比
                 .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)//图像捕获模式/低质量高速
-                .setFlashMode(ImageCapture.FLASH_MODE_ON)//闪光模式
+//                .setFlashMode(ImageCapture.FLASH_MODE_ON)//闪光模式
                 .build();
         imageAnalyzer = new ImageAnalysis.Builder()
                 // 仅将最新图像传送到分析仪，并在到达图像时将其丢弃。
@@ -316,7 +318,7 @@ public class ScanActivity extends BaseActivity {
                 maxZoomRatio = zoomState.getValue().getMaxZoomRatio();
                 minZoomRatio = zoomState.getValue().getMinZoomRatio();
 //                preview.setSurfaceProvider(viewFinder.createSurfaceProvider(camera.getCameraInfo()));//低版本
-                preview.setSurfaceProvider(viewFinder.createSurfaceProvider());
+                preview.setSurfaceProvider(viewFinder.getSurfaceProvider());
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -15,7 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ActMusicPlayerBD;
-import com.melvinhou.kami.mvvm.BindingActivity;
+import com.melvinhou.kami.mvvm.DataBindingActivity;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.StringUtils;
@@ -38,7 +38,7 @@ import io.reactivex.Observable;
  * = 分 类 说 明：音乐播放器
  * ================================================
  */
-public class MusicPlayerActivity extends BindingActivity<ActMusicPlayerBD> {
+public class MusicPlayerActivity extends DataBindingActivity<ActMusicPlayerBD> {
 
     //帮助类的回调监听
     private MediaBrowserCallback myMusicCallback;

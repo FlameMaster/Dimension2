@@ -47,6 +47,9 @@
             android:name=".pager.PagerActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".prespace.SpacePreActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".media.picture.PictureActivity"
             android:screenOrientation="portrait" />
         <activity

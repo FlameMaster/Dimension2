@@ -40,7 +40,7 @@ import com.melvinhou.dimension2.media.video.VideoLivePager;
 import com.melvinhou.dimension2.pager.BasePager;
 import com.melvinhou.dimension2.pager.PagerActivity;
 import com.melvinhou.kami.model.EventMessage;
-import com.melvinhou.kami.mvvm.BindingFragment;
+import com.melvinhou.kami.mvvm.DataBindingFragment;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.IOUtils;
@@ -74,7 +74,7 @@ import io.reactivex.ObservableOnSubscribe;
  * = 分 类 说 明：媒体主页
  * ================================================
  */
-public class MediaFragment extends BindingFragment<FgtMediaBD> {
+public class MediaFragment extends DataBindingFragment<FgtMediaBD> {
 
 
     private MediaViewModel mediaViewModel;

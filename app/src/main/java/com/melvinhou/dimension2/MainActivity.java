@@ -6,7 +6,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 
 import com.melvinhou.dimension2.databinding.ActMainBD;
-import com.melvinhou.kami.mvvm.BindingActivity;
+import com.melvinhou.kami.mvvm.DataBindingActivity;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,7 +31,7 @@ import androidx.navigation.ui.NavigationUI;
  * = 分 类 说 明：主页
  * ================================================
  */
-public class MainActivity extends BindingActivity<ActMainBD> {
+public class MainActivity extends DataBindingActivity<ActMainBD> {
 
     private AppBarConfiguration mAppBarConfiguration;
     private NavController mNavController;
@@ -101,7 +101,7 @@ public class MainActivity extends BindingActivity<ActMainBD> {
         });
         NavigationUI.setupWithNavController(getViewDataBinding().btnNavView, mNavController);
 //        NavigationUI.setupActionBarWithNavController(this, mNavController, mAppBarConfiguration);
-//        NavigationUI.setupWithNavController(getViewDataBinding().navView, mNavController);
+        NavigationUI.setupWithNavController(getViewDataBinding().navView, mNavController);
 
     }
 

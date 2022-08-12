@@ -1,6 +1,6 @@
 package com.melvinhou.kami.mvp;
 
-import com.melvinhou.kami.mvvm.BindingFragment;
+import com.melvinhou.kami.mvvm.DataBindingFragment;
 
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.LifecycleOwner;
@@ -18,7 +18,7 @@ import androidx.lifecycle.LifecycleOwner;
  * = 分 类 说 明：mvp-v
  * ================================================
  */
-public abstract class MvpFragment2<P extends MvpPresenter, DB extends ViewDataBinding> extends BindingFragment<DB>
+public abstract class MvpFragment2<P extends MvpPresenter, DB extends ViewDataBinding> extends DataBindingFragment<DB>
         implements MvpView<P> {
 
 

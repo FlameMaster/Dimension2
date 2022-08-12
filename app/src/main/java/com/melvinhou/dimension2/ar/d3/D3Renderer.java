@@ -90,8 +90,8 @@ public class D3Renderer implements GLSurfaceView.Renderer {
     // 并且当设备被唤醒或者用户从其他activity切换回去时，也会被调用。
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        //背景框颜色，清空屏幕用的颜色
-        GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        //背景框颜色，清空屏幕用的颜色rgba
+        GLES20.glClearColor(0.0f, 1.0f, 0.0f, 0.0f);
         //打开深度检测
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
         //打开背面剪裁
@@ -135,7 +135,7 @@ public class D3Renderer implements GLSurfaceView.Renderer {
         mStack.push(mMatrix.clone());
         objectTranslation(0, mTranslationY, 0);//位移
         objectScale(mScale, mScale, mScale);//缩放
-        objectRotate(0, mAngleX, 0);//旋转
+        objectRotate(mAngleY, mAngleX, 0);//旋转
         float[] mMVPMatrix = new float[16];
         Matrix.multiplyMM(mMVPMatrix, 0, viewMatrix, 0, mMatrix, 0);
         Matrix.multiplyMM(mMVPMatrix, 0, projectionMatrix, 0, mMVPMatrix, 0);

@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ItemTiktokBD;
-import com.melvinhou.kami.adapter.BindingRecyclerAdapter;
+import com.melvinhou.kami.adapter.DataBindingRecyclerAdapter;
 import com.melvinhou.kami.manager.ThreadManager;
 import com.melvinhou.kami.util.FcUtils;
 
@@ -28,7 +28,7 @@ import androidx.databinding.ViewDataBinding;
  * = 分 类 说 明：抖音列表适配器
  * ================================================
  */
-public class TikTokAdapter extends BindingRecyclerAdapter<TiktokEntity, TikTokHolder> {
+public class TikTokAdapter extends DataBindingRecyclerAdapter<TiktokEntity, TikTokHolder> {
 
     private boolean lock = false;
     //点击事件

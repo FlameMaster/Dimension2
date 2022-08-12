@@ -4,10 +4,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.camera.view.PreviewView;
 
 /**
  * ===============================================
@@ -22,7 +22,7 @@ import androidx.camera.view.PreviewView;
  * = 分 类 说 明：带有手势控制的pv
  * ================================================
  */
-public class CameraXCustomPreviewView extends PreviewView
+public class CameraXCustomTouchView extends View
         implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
 
@@ -38,20 +38,20 @@ public class CameraXCustomPreviewView extends PreviewView
         this.mCustomTouchListener = listener;
     }
 
-    public CameraXCustomPreviewView(@NonNull Context context) {
+    public CameraXCustomTouchView(@NonNull Context context) {
         this(context, null);
     }
 
-    public CameraXCustomPreviewView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public CameraXCustomTouchView(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CameraXCustomPreviewView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public CameraXCustomTouchView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         this(context, attrs, defStyleAttr, 0);
     }
 
 
-    public CameraXCustomPreviewView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public CameraXCustomTouchView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         mGestureDetector = new GestureDetector(context, this);
         mGestureDetector.setOnDoubleTapListener(this);

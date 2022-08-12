@@ -81,9 +81,22 @@ public class D3Activity extends BaseActivity {
         super.initWindowUI();
 
         getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |//粘性沉浸模式
+                        View.SYSTEM_UI_FLAG_IMMERSIVE |//沉浸模式
+                        //两行全屏
+                        View.SYSTEM_UI_FLAG_FULLSCREEN |
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                        //以下防止布局随着系统栏的隐藏和显示调整大小
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        //刘海屏适配
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            lp.layoutInDisplayCutoutMode
+                    = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        }
+        getWindow().setAttributes(lp);
     }
 
     @Override
@@ -113,7 +126,7 @@ public class D3Activity extends BaseActivity {
         // 设定好使用的OpenGL版本.
         mSurfaceView.setEGLContextClientVersion(3);
         mConfig = new D3Config(0, 2, 100,
-                0, 0, 20,
+                0, 0, 30,
                 0, 0, 0);
         mModel.obj.observe(this, obj -> {
             mRenderer = new D3Renderer(obj, mObjPath, mConfig);

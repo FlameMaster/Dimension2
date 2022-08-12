@@ -6,13 +6,12 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.melvinhou.dimension2.media.video.ijk.IjkVideoActivity;
 import com.melvinhou.dimension2.net.AssetsFileKey;
 import com.melvinhou.dimension2.utils.LoadUtils;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.NullBoxBD;
 import com.melvinhou.dimension2.pager.BaseListPager;
-import com.melvinhou.kami.adapter.BindingHolder;
+import com.melvinhou.kami.adapter.DataBindingHolder;
 import com.melvinhou.kami.net.EmptyState;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
@@ -120,7 +119,7 @@ public class TVListPager extends BaseListPager<MapEntity, TVListPager.TVHolder> 
     }
 
 
-    class TVHolder extends BindingHolder<NullBoxBD> {
+    class TVHolder extends DataBindingHolder<NullBoxBD> {
         TextView tv;
 
         public TVHolder(NullBoxBD binding) {

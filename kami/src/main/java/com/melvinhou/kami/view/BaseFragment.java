@@ -48,9 +48,9 @@ public abstract class BaseFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         //初始化布局模型
         int layoutId = getLayoutID();
+        mRootView =inflater.inflate(layoutId, container, false);
         //初始化
         initFragment();
-        mRootView =inflater.inflate(layoutId, container, false);
         return mRootView;
     }
 

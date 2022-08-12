@@ -19,8 +19,8 @@ import com.bumptech.glide.request.target.ViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ItemMediaBD;
-import com.melvinhou.kami.adapter.BindingHolder;
-import com.melvinhou.kami.adapter.BindingRecyclerAdapter;
+import com.melvinhou.kami.adapter.DataBindingHolder;
+import com.melvinhou.kami.adapter.DataBindingRecyclerAdapter;
 import com.melvinhou.kami.adapter.RecyclerAdapter2;
 import com.melvinhou.kami.adapter.RecyclerHolder;
 import com.melvinhou.kami.util.DimenUtils;
@@ -47,7 +47,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * = 分 类 说 明：多媒体相关
  * ================================================
  */
-class MediaListAdapter extends BindingRecyclerAdapter<MediaItemEntity, MediaListAdapter.MediaListHolder> {
+class MediaListAdapter extends DataBindingRecyclerAdapter<MediaItemEntity, MediaListAdapter.MediaListHolder> {
 
     /*条目点击事件*/
     private OnTabClickListener mListener;
@@ -75,7 +75,7 @@ class MediaListAdapter extends BindingRecyclerAdapter<MediaItemEntity, MediaList
     /**
      * 一级条目
      */
-    class MediaListHolder extends BindingHolder<ItemMediaBD> {
+    class MediaListHolder extends DataBindingHolder<ItemMediaBD> {
 
         private MediaTabAdapter adapter;
 

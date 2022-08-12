@@ -15,7 +15,7 @@ import com.bumptech.glide.load.resource.bitmap.VideoDecoder;
 import com.bumptech.glide.request.RequestOptions;
 import com.melvinhou.dimension2.databinding.ItemTiktokBD;
 import com.melvinhou.dimension2.media.video.FCVidoeView;
-import com.melvinhou.kami.adapter.BindingHolder;
+import com.melvinhou.kami.adapter.DataBindingHolder;
 import com.melvinhou.kami.util.FcUtils;
 
 import java.security.MessageDigest;
@@ -35,7 +35,7 @@ import androidx.annotation.NonNull;
  * = 分 类 说 明：
  * ================================================
  */
-public class TikTokHolder extends BindingHolder<ItemTiktokBD> {
+public class TikTokHolder extends DataBindingHolder<ItemTiktokBD> {
 
     public TikTokHolder(ItemTiktokBD binding) {
         super(binding);

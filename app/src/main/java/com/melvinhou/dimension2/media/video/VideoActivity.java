@@ -34,11 +34,11 @@ import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.melvinhou.dimension2.CYEntity;
-import com.melvinhou.dimension2.utils.LoadUtils;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ActVideoBD;
-import com.melvinhou.kami.adapter.BindingRecyclerAdapter;
-import com.melvinhou.kami.mvvm.BindingActivity;
+import com.melvinhou.dimension2.utils.LoadUtils;
+import com.melvinhou.kami.adapter.DataBindingRecyclerAdapter;
+import com.melvinhou.kami.mvvm.DataBindingActivity;
 import com.melvinhou.kami.util.DeviceUtils;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
@@ -75,7 +75,7 @@ import io.reactivex.disposables.Disposable;
  * = 分 类 说 明：播放视频页面，SurfaceView容器，闲的蛋疼写的
  * ============================================================
  */
-public class VideoActivity extends BindingActivity<ActVideoBD> {
+public class VideoActivity extends DataBindingActivity<ActVideoBD> {
 
     //todo 因为我手机是16:9的，就懒的写翻转后适配了
 
@@ -716,13 +716,13 @@ public class VideoActivity extends BindingActivity<ActVideoBD> {
     class ListAdaper extends RecyclerView.Adapter<ListHolder> {
 
         List<MediaModel> datas;
-        BindingRecyclerAdapter.OnItemClickListener itemClickListener;
+        DataBindingRecyclerAdapter.OnItemClickListener itemClickListener;
 
         ListAdaper() {
             datas = new ArrayList<>();
         }
 
-        public void setItemClickListener(BindingRecyclerAdapter.OnItemClickListener itemClickListener) {
+        public void setItemClickListener(DataBindingRecyclerAdapter.OnItemClickListener itemClickListener) {
             this.itemClickListener = itemClickListener;
         }
 

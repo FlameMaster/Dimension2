@@ -30,7 +30,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
  * = 分 类 说 明：最基础的activity
  * ================================================
  */
-public abstract class BindingActivity<DB extends ViewDataBinding> extends BaseActivity2 {
+public abstract class DataBindingActivity<DB extends ViewDataBinding> extends BaseActivity2 {
 
     /*视图模型*/
     private DB mBinding;
@@ -66,7 +66,7 @@ public abstract class BindingActivity<DB extends ViewDataBinding> extends BaseAc
     protected View initLoadingView() {
 
         mLoadingBD = DataBindingUtil.bind(
-                View.inflate(BindingActivity.this,
+                View.inflate(DataBindingActivity.this,
                         R.layout.view_loading_forbinding, null));
 
         ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT);

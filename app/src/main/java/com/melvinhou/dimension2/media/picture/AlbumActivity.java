@@ -22,7 +22,7 @@ import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ActAlbumBD;
 import com.melvinhou.kami.adapter.RecyclerAdapter2;
 import com.melvinhou.kami.adapter.RecyclerHolder;
-import com.melvinhou.kami.mvvm.BindingActivity;
+import com.melvinhou.kami.mvvm.DataBindingActivity;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.IOUtils;
@@ -49,7 +49,7 @@ import io.reactivex.ObservableOnSubscribe;
  * = 分 类 说 明：相册
  * ================================================
  */
-public class AlbumActivity extends BindingActivity<ActAlbumBD> {
+public class AlbumActivity extends DataBindingActivity<ActAlbumBD> {
 
     private AlbumAdapter mAdapter;
     private Animator currentAnimator;

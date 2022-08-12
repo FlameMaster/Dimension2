@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ItemMoreBD;
 import com.melvinhou.dimension2.databinding.VpListBD;
-import com.melvinhou.kami.adapter.BindingHolder;
-import com.melvinhou.kami.adapter.BindingRecyclerAdapter;
+import com.melvinhou.kami.adapter.DataBindingHolder;
+import com.melvinhou.kami.adapter.DataBindingRecyclerAdapter;
 import com.melvinhou.kami.model.StateModel;
 import com.melvinhou.kami.net.EmptyState;
 import com.melvinhou.kami.util.FcUtils;
@@ -29,7 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * = 分 类 说 明：
  * ============================================================
  */
-public abstract class BaseListPager<D, H extends BindingHolder> extends BasePager<VpListBD> {
+public abstract class BaseListPager<D, H extends DataBindingHolder> extends BasePager<VpListBD> {
 
 
     /*页码和每页长度*/
@@ -155,7 +155,7 @@ public abstract class BaseListPager<D, H extends BindingHolder> extends BasePage
      * @param position
      * @param itemViewType
      */
-    protected void onCustomItemBind(BindingHolder viewHolder, int position, int itemViewType) {
+    protected void onCustomItemBind(DataBindingHolder viewHolder, int position, int itemViewType) {
 
     }
 
@@ -239,7 +239,7 @@ public abstract class BaseListPager<D, H extends BindingHolder> extends BasePage
 //////////////////////////////////////////////////////////////////////////////////////////////
 
     /*配合listpager的条目管理器*/
-    public class ListAdapter extends BindingRecyclerAdapter<D, H> {
+    public class ListAdapter extends DataBindingRecyclerAdapter<D, H> {
 
         @Override
         public void bindData(H viewHolder, int RealPosition, D data) {
@@ -251,7 +251,7 @@ public abstract class BaseListPager<D, H extends BindingHolder> extends BasePage
         }
 
         @Override
-        protected void bindCustomData(BindingHolder viewHolder, int position, int itemViewType) {
+        protected void bindCustomData(DataBindingHolder viewHolder, int position, int itemViewType) {
             onCustomItemBind(viewHolder, position, itemViewType);
             if (position == getItemCount() - 1 && getDatas().size() > 0) {
                 loadMore();

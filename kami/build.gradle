@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 ext {
     supportLibraryVersion = "30.0.3"
-    appcompatVersion = "1.1.0"
+    appcompatVersion = "1.4.1"
     rxJavaVersion = "2.2.4"
     rxAndroidVersion = "2.1.0"
     daggerVersion = "2.19"
@@ -32,7 +32,7 @@ android {
     buildFeatures {
         dataBinding = true
         // for view binding :
-        // viewBinding = true
+        viewBinding = true
     }
     buildToolsVersion = supportLibraryVersion
     compileOptions {

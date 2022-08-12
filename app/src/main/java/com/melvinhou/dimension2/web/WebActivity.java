@@ -29,7 +29,7 @@ import android.webkit.WebViewClient;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ActWebBD;
 import com.melvinhou.kami.manager.DialogCheckBuilder;
-import com.melvinhou.kami.mvvm.BindingActivity;
+import com.melvinhou.kami.mvvm.DataBindingActivity;
 import com.melvinhou.kami.util.DateUtils;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.PermissionUtil;
@@ -54,7 +54,7 @@ import androidx.core.content.FileProvider;
  * = 分 类 说 明：web浏览器
  * ============================================================
  */
-public class WebActivity extends BindingActivity<ActWebBD> {
+public class WebActivity extends DataBindingActivity<ActWebBD> {
 
     private String mUrl, mTitle;
     //判断是否是录像

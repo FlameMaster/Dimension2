@@ -13,7 +13,7 @@ import com.melvinhou.dimension2.pager.PagerActivity;
 import com.melvinhou.dimension2.test.TestActivity;
 import com.melvinhou.dimension2.web.WebActivity;
 import com.melvinhou.kami.model.EventMessage;
-import com.melvinhou.kami.mvvm.BindingFragment;
+import com.melvinhou.kami.mvvm.DataBindingFragment;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.rxjava.RxBus;
 import com.melvinhou.rxjava.RxBusClient;
@@ -34,7 +34,7 @@ import androidx.lifecycle.ViewModelProviders;
  * = 分 类 说 明：主页
  * ================================================
  */
-public class HomeFragment extends BindingFragment<FgtHomeBD> {
+public class HomeFragment extends DataBindingFragment<FgtHomeBD> {
 
     private HomeViewModel homeViewModel;
 

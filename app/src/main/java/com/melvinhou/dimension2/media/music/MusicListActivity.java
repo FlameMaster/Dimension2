@@ -21,7 +21,7 @@ import com.melvinhou.dimension2.databinding.ActMusicListBD;
 import com.melvinhou.dimension2.net.HttpConstant;
 import com.melvinhou.kami.adapter.RecyclerAdapter2;
 import com.melvinhou.kami.adapter.RecyclerHolder;
-import com.melvinhou.kami.mvvm.BindingActivity;
+import com.melvinhou.kami.mvvm.DataBindingActivity;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
@@ -47,7 +47,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * = 分 类 说 明：音乐列表
  * ================================================
  */
-public class MusicListActivity extends BindingActivity<ActMusicListBD> {
+public class MusicListActivity extends DataBindingActivity<ActMusicListBD> {
 
     private MusicAdapter mAdapter;
     private static final String URL_BACKGROUND

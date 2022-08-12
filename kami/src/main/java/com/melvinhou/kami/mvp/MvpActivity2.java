@@ -1,6 +1,6 @@
 package com.melvinhou.kami.mvp;
 
-import com.melvinhou.kami.mvvm.BindingActivity;
+import com.melvinhou.kami.mvvm.DataBindingActivity;
 
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.LifecycleOwner;
@@ -18,7 +18,7 @@ import androidx.lifecycle.LifecycleOwner;
  * = 分 类 说 明：mvp页面顶层
  * ================================================
  */
-public abstract class MvpActivity2<P extends MvpPresenter, DB extends ViewDataBinding> extends BindingActivity<DB>
+public abstract class MvpActivity2<P extends MvpPresenter, DB extends ViewDataBinding> extends DataBindingActivity<DB>
         implements MvpView<P>{
 
 

@@ -2,6 +2,7 @@ package com.melvinhou.kami.adapter;
 
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewbinding.ViewBinding;
 
 /**
  * ===============================================
@@ -16,12 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
  * = 分 类 说 明：配合recyclerview使用的viewholder
  * ================================================
  */
-public class BindingHolder<VB extends ViewDataBinding> extends RecyclerView.ViewHolder {
+public class BindViewHolder<VB extends ViewBinding> extends RecyclerHolder {
 
     /**/
     private VB binding;
 
-    public BindingHolder(VB binding) {
+    public BindViewHolder(VB binding) {
         super(binding.getRoot());
         this.binding = binding;
     }

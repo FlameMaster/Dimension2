@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
  * = 功 能；可添加头布局和设置点击事件的recyclerview
  * ================================================
  */
-public abstract class BindingRecyclerAdapter<T, VH extends BindingHolder> extends RecyclerView.Adapter<BindingHolder> {
+public abstract class DataBindingRecyclerAdapter<T, VH extends DataBindingHolder> extends RecyclerView.Adapter<DataBindingHolder> {
 
     /*正常布局*/
     public static final int TYPE_NORMAL = -1;
@@ -42,7 +42,7 @@ public abstract class BindingRecyclerAdapter<T, VH extends BindingHolder> extend
     /*条目点击事件*/
     private OnItemClickListener mListener;
 
-    public BindingRecyclerAdapter() {
+    public DataBindingRecyclerAdapter() {
         mDatas = new ArrayList<>();
         mHeaderBindings = new ArrayList<>();
 //        mInsertBindings = new SparseArray<>();
@@ -233,7 +233,7 @@ public abstract class BindingRecyclerAdapter<T, VH extends BindingHolder> extend
 
     /*初始化条目*/
     @Override
-    public BindingHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
+    public DataBindingHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
 
         //判断条目类型是否是普通类型
         if (viewType != TYPE_NORMAL)
@@ -250,7 +250,7 @@ public abstract class BindingRecyclerAdapter<T, VH extends BindingHolder> extend
 
     /* 初始化对应条目数据*/
     @Override
-    public void onBindViewHolder(final BindingHolder viewHolder, int position) {
+    public void onBindViewHolder(final DataBindingHolder viewHolder, int position) {
         //判断布局类型执行相关超作
         if (getItemViewType(position) != TYPE_NORMAL) {
             bindCustomData(viewHolder, position, getItemViewType(position));
@@ -290,7 +290,7 @@ public abstract class BindingRecyclerAdapter<T, VH extends BindingHolder> extend
 
     /*使用瀑布流时使头布局独占一行*/
     @Override
-    public void onViewAttachedToWindow(BindingHolder holder) {
+    public void onViewAttachedToWindow(DataBindingHolder holder) {
         super.onViewAttachedToWindow(holder);
         ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
         if (lp != null && lp instanceof StaggeredGridLayoutManager.LayoutParams//判断布局类型是瀑布流
@@ -308,7 +308,7 @@ public abstract class BindingRecyclerAdapter<T, VH extends BindingHolder> extend
     }
 
     /*获取当前条目位置,此功能只对普通条目有效，镶嵌条目不计算*/
-    public int getRealPosition(BindingHolder holder) {
+    public int getRealPosition(DataBindingHolder holder) {
         int position = holder.getLayoutPosition();
         //减去头布局数量
         int realPosition = position - getHeaderSize();
@@ -329,7 +329,7 @@ public abstract class BindingRecyclerAdapter<T, VH extends BindingHolder> extend
     public abstract void bindData(VH viewHolder, int position, T data);
 
     /*对特殊条目的初始化*/
-    protected void bindCustomData(BindingHolder viewHolder, int position, int itemViewType) {
+    protected void bindCustomData(DataBindingHolder viewHolder, int position, int itemViewType) {
     }
 
     /*布局引用*/
@@ -339,13 +339,13 @@ public abstract class BindingRecyclerAdapter<T, VH extends BindingHolder> extend
     protected abstract VH onCreate(ViewDataBinding binding, int viewType);
 
     /*可以被继承的特殊条目初始化*/
-    public BindingHolder onCustomCreate(ViewDataBinding insertBinding, int viewType) {
-        return new BindingHolder(insertBinding);
+    public DataBindingHolder onCustomCreate(ViewDataBinding insertBinding, int viewType) {
+        return new DataBindingHolder(insertBinding);
     }
 
 
     /*条目点击事件接口*/
-    public interface OnItemClickListener<T, VH extends BindingHolder> {
+    public interface OnItemClickListener<T, VH extends DataBindingHolder> {
         void onItemClick(VH viewHolder, int position, T data);
     }
 }

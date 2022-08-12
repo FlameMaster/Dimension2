@@ -115,7 +115,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected void initActivity(int layoutId) {
         initWindowUI();
-        setContentView(layoutId);
+        if (layoutId > 0) setContentView(layoutId);
         //工具栏
         initToolBar();
         //初始化显示

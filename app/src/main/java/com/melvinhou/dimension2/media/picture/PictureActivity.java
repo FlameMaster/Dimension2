@@ -12,7 +12,7 @@ import android.view.View;
 import com.bumptech.glide.request.RequestOptions;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ActPictureBD;
-import com.melvinhou.kami.mvvm.BindingActivity;
+import com.melvinhou.kami.mvvm.DataBindingActivity;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.wiget.PhotoCutterView;
 
@@ -29,7 +29,7 @@ import com.melvinhou.kami.wiget.PhotoCutterView;
  * = 分 类 说 明：图片查看
  * ================================================
  */
-public class PictureActivity extends BindingActivity<ActPictureBD> {
+public class PictureActivity extends DataBindingActivity<ActPictureBD> {
 
     //文件查找格式
     public static final String FILE_UNSPECIFIED = "*/*";
