@@ -5,7 +5,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Environment;
+import android.os.storage.StorageManager;
+import android.os.storage.StorageVolume;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,8 +35,11 @@ import com.melvinhou.kami.util.IOUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
 
 import java.io.File;
+import java.lang.reflect.Method;
+import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import cc.shinichi.library.ImagePreview;
@@ -170,12 +176,12 @@ public class PrePhotoFragment extends BindFragment<ActivityListBinding, SpacePre
         Log.e("位置", "dowloads=" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
         //本地
         loadList(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()
-                + File.separator + "Android"+File.separator+"data"+File.separator+"");
+                + File.separator + "Android" + File.separator + "data" + File.separator + "");
         loadList(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
     }
 
 
-    private void loadList(String path){
+    private void loadList(String path) {
         File dir = new File(path);
         if (!dir.exists()) {
             dir.mkdirs();
