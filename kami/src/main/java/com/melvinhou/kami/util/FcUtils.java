@@ -146,4 +146,7 @@ public class FcUtils {
     public static View inflate(int R_ID) {
         return View.inflate(getContext(), R_ID, null);
     }
+
+
+
 }

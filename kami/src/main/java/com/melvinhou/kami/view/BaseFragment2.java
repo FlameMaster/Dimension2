@@ -48,7 +48,6 @@ public abstract class BaseFragment2 extends BaseFragment implements BaseView {
     private boolean isShowLoading = false;
 
 
-
     public boolean isShowLoading() {
         return isShowLoading;
     }
@@ -79,6 +78,17 @@ public abstract class BaseFragment2 extends BaseFragment implements BaseView {
 //            mToolbar.setTitle("标题");
 //            mToolbar.inflateMenu(R.menu.menu_add);
 //            setTitleCenter(mToolbar);
+//            mToolbar.setNavigationIcon(R.drawable.ic_bar_back);
+            if (upBarMenuID() > 0) {
+                mToolbar.inflateMenu(upBarMenuID());
+                mMenu = mToolbar.getMenu();
+                if (mMenu != null) {
+                    initMenu(mMenu);
+                    for (int i = 0; i < mMenu.size(); i++) {
+                        mMenu.getItem(i).setOnMenuItemClickListener(item -> onOptionsItemSelected(item));
+                    }
+                }
+            }
             mToolbar.setNavigationOnClickListener(v -> back());
             mToolbar.setOnMenuItemClickListener(this::onOptionsItemSelected);
         }
@@ -86,6 +96,7 @@ public abstract class BaseFragment2 extends BaseFragment implements BaseView {
 
     /**
      * 设置标题
+     *
      * @param title
      */
     protected void setBarTitle(CharSequence title) {
@@ -95,10 +106,11 @@ public abstract class BaseFragment2 extends BaseFragment implements BaseView {
 
     /**
      * 返回按钮
+     *
      * @param icon
      */
-    protected void setBarBackIcon(int icon){
-        if (mToolbar!=null)
+    protected void setBarBackIcon(int icon) {
+        if (mToolbar != null)
             mToolbar.setNavigationIcon(icon);
     }
 
@@ -131,6 +143,7 @@ public abstract class BaseFragment2 extends BaseFragment implements BaseView {
 
     /**
      * 获取对应类型的act
+     *
      * @return
      */
     private BaseActivity2 getActivity2() {
@@ -197,7 +210,7 @@ public abstract class BaseFragment2 extends BaseFragment implements BaseView {
     @Override
     public void changeLoadingState(@EmptyState int code, String message) {
         ((TextView) mLoadingView.findViewById(R.id.text_state)).setText(message);
-        switch (code){
+        switch (code) {
             case EmptyState.NET_ERROR:
                 mLoadingView.findViewById(R.id.progress).setVisibility(View.GONE);
                 mLoadingView.findViewById(R.id.img_err).setVisibility(View.VISIBLE);
@@ -215,27 +228,27 @@ public abstract class BaseFragment2 extends BaseFragment implements BaseView {
     @Override
     public void showCheckView(DialogCheckBuilder builder) {
         BaseActivity2 activity = getActivity2();
-        if (activity!=null)
+        if (activity != null)
             activity.showCheckView(builder);
     }
 
     @Override
     public void hideCheckView() {
         BaseActivity2 activity = getActivity2();
-        if (activity!=null)
+        if (activity != null)
             activity.hideCheckView();
     }
 
     public void showProcess(String message) {
 
         BaseActivity2 activity = getActivity2();
-        if (activity!=null)
+        if (activity != null)
             activity.showProcess(message);
     }
 
     public void hideProcess() {
         BaseActivity2 activity = getActivity2();
-        if (activity!=null)
+        if (activity != null)
             activity.hideProcess();
     }
 
@@ -244,7 +257,7 @@ public abstract class BaseFragment2 extends BaseFragment implements BaseView {
     @Override
     public void nullClick() {
         BaseActivity2 activity = getActivity2();
-        if (activity!=null)
+        if (activity != null)
             activity.nullClick();
     }
 
@@ -279,7 +292,7 @@ public abstract class BaseFragment2 extends BaseFragment implements BaseView {
             Pair<View, String> p = new Pair<>(view, view.getTransitionName());
             ActivityOptions activityOptions =
                     ActivityOptions.makeSceneTransitionAnimation(getActivity(), p);
-            startActivityForResult(intent,0, activityOptions.toBundle());
+            startActivityForResult(intent, 0, activityOptions.toBundle());
         } else
             startActivityForResult(intent, 0);
     }

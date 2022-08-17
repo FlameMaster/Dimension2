@@ -1,6 +1,7 @@
 package com.melvinhou.dimension2.prespace;
 
 import android.app.Application;
+import android.net.Uri;
 
 import com.melvinhou.kami.mvvm.BaseModel;
 
@@ -27,4 +28,9 @@ public class SpacePreModel extends BaseModel {
 
 
     MutableLiveData<Integer> page = new MutableLiveData();
+
+    //文件夹位置
+    MutableLiveData<Integer> locationType = new MutableLiveData();
+    //自选的文件夹
+    MutableLiveData<Uri> useLocationUri= new MutableLiveData();
 }

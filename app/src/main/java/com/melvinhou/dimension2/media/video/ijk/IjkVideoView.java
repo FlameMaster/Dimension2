@@ -38,7 +38,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  * <p>
  * = 时 间：2022/7/18 0018 15:51
  * <p>
- * = 分 类 说 明：
+ * = 分 类 说 明：ijk的播放器
  * ================================================
  */
 public class IjkVideoView extends ViewGroup {
@@ -74,8 +74,10 @@ public class IjkVideoView extends ViewGroup {
      * @param rate
      */
     public void setScreenRate(float rate) {
-        mScreenRate = rate;
-        invalidate();
+        if (mScreenRate != rate) {
+            mScreenRate = rate;
+            requestLayout();
+        }
     }
 
     //合并监听
@@ -261,17 +263,6 @@ public class IjkVideoView extends ViewGroup {
         }
     }
 
-    private void bindSurfaceHolder(IMediaPlayer mp) {
-        if (mp != null) {
-            if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) &&
-                    (mp instanceof ISurfaceTextureHolder)) {
-                ISurfaceTextureHolder textureHolder = (ISurfaceTextureHolder) mp;
-                textureHolder.setSurfaceTexture(null);
-            }
-            mp.setDisplay(mSurfaceView.getHolder());
-        }
-    }
-
     /**
      * 创建一个新的player
      */
@@ -320,10 +311,7 @@ public class IjkVideoView extends ViewGroup {
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
             //surfaceview创建成功后，加载视频
-//            if (mMediaPlayer != null)
-                bindSurfaceHolder(mMediaPlayer);
-//            else
-//                openMediaPlayer();
+            openMediaPlayer();
         }
 
         @Override
@@ -358,7 +346,7 @@ public class IjkVideoView extends ViewGroup {
         public void start() {
             if (mMediaPlayer != null)
                 mMediaPlayer.start();
-            if (mLocalProxyEnable && mProxyHelper != null)
+            if (mLocalProxyEnable)
                 mProxyHelper.resumeLocalProxyTask();
         }
 
@@ -366,7 +354,7 @@ public class IjkVideoView extends ViewGroup {
         public void pause() {
             if (isPlaying())
                 mMediaPlayer.pause();
-            if (mLocalProxyEnable && mProxyHelper != null)
+            if (mLocalProxyEnable)
                 mProxyHelper.pauseLocalProxyTask();
         }
 

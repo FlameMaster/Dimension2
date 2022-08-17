@@ -29,6 +29,12 @@ public class LoadDialog extends ProgressDialog {
         init(getContext());
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        init(getContext());
+    }
+
     private void init(Context context) {
         //设置不可取消，点击其他区域不能取消，实际中可以抽出去封装供外包设置
         setCancelable(isCancel);

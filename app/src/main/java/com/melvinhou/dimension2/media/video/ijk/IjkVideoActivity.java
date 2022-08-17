@@ -573,7 +573,7 @@ public class IjkVideoActivity extends BaseActivity {
         @Override
         public void onVideoSizeChanged(IMediaPlayer iMediaPlayer, int width, int height, int i2, int i3) {
             Log.e("IJK播放器", "onVideoSizeChanged=" + width + "\r\t" + i2);
-
+            mVidoe.setScreenRate((float) iMediaPlayer.getVideoWidth() / (float) iMediaPlayer.getVideoHeight());
         }
 
         @Override

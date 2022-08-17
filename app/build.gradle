@@ -61,7 +61,7 @@ android {
     packagingOptions {
         pickFirst 'lib/armeabi-v7a/libijkffmpeg.so'
         pickFirst 'lib/armeabi-v7a/libijkplayer.so'
-        pickFirst 'lib/armeabi-v7a/libijksdl.so'
+        pickFirst 'lib/armeabi-v7a/libijknickNamel.so'
     }
 }
 

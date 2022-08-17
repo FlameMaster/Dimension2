@@ -7,11 +7,16 @@
     除此之外任何目录的读写都会被拒绝，并提示android Permission denied。
     需要在AndroidManifest.xml 文件中，在application标签中添加如下属性android:requestLegacyExternalStorage=“true”
     -->
+    <!--    在清单声明不启用沙盒存储
+        android:preserveLegacyExternalStorage="true"
+        android:requestLegacyExternalStorage="true"
+    -->
     <application
         android:name=".Dimension2Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:preserveLegacyExternalStorage="true"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -19,9 +24,9 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
+            android:exported="true"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:exported="true">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -120,12 +125,12 @@
         <activity
             android:name=".function.desktop.DesktopActivity"
             android:screenOrientation="portrait">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--                <category android:name="android.intent.category.HOME" />-->
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--            </intent-filter>-->
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--                <category android:name="android.intent.category.HOME" />-->
+            <!--                <category android:name="android.intent.category.DEFAULT" />-->
+            <!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".function.zip.ZipActivity"
@@ -146,7 +151,9 @@
             android:name="com.google.ar.core"
             android:value="optional" /> <!-- "required"必须使用arcore or "optional"可以不使用. -->
 
-        <receiver android:name=".media.music.MusicWidgetProvider" android:exported="false">
+        <receiver
+            android:name=".media.music.MusicWidgetProvider"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -156,13 +163,15 @@
                 android:resource="@xml/appwidget_info" />
         </receiver>
 
-        <receiver android:name=".function.screenrecord.ScreenRecordBroadcastReceiver"
+        <receiver
+            android:name=".function.screenrecord.ScreenRecordBroadcastReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="screen_record_stop" />
             </intent-filter>
         </receiver>
-        <receiver android:name="androidx.media.session.MediaButtonReceiver"
+        <receiver
+            android:name="androidx.media.session.MediaButtonReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
@@ -196,6 +205,7 @@
     <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" -->
     <!-- android:maxSdkVersion="18" /> -->
     <supports-gl-texture android:name="GL_OES_compressed_paletted_texture" />
+
     <uses-feature
         android:name="android.hardware.camera.ar"
         android:required="true" />

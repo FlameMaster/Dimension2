@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.melvinhou.kami.BaseApplication;
 
@@ -54,6 +56,7 @@ public class FileUtils {
 
     /**
      * 文件下载
+     *
      * @param urlStr
      * @param file
      * @return
@@ -112,6 +115,7 @@ public class FileUtils {
 
     /**
      * 打开文件
+     *
      * @param uri
      */
     public static void openFile(Uri uri) {
@@ -181,10 +185,9 @@ public class FileUtils {
     }
 
     public static void openFile(String filePath) {
-        if (TextUtils.isEmpty(filePath))return;
+        if (TextUtils.isEmpty(filePath)) return;
         openFile(new File(filePath));
     }
-
 
 
     /**
@@ -247,7 +250,6 @@ public class FileUtils {
     }
 
 
-
     //获取缓存路径
     public static File getDiskCacheDir(String uniqueName) {
         String cachePath;
@@ -266,10 +268,10 @@ public class FileUtils {
         long size = defaultSize;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
                 || !Environment.isExternalStorageRemovable()) {
-            size+=getFolderSize(new File(FcUtils.getContext().getExternalCacheDir().getPath()));
+            size += getFolderSize(new File(FcUtils.getContext().getExternalCacheDir().getPath()));
         }
 
-        size+=getFolderSize(new File(FcUtils.getContext().getCacheDir().getPath()));
+        size += getFolderSize(new File(FcUtils.getContext().getCacheDir().getPath()));
 
         return size;
     }
@@ -278,9 +280,79 @@ public class FileUtils {
     public static void clearDiskCache() {
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
                 || !Environment.isExternalStorageRemovable()) {
-            deleteFolderFile(FcUtils.getContext().getExternalCacheDir().getPath(),false);
+            deleteFolderFile(FcUtils.getContext().getExternalCacheDir().getPath(), false);
         }
-        deleteFolderFile(FcUtils.getContext().getCacheDir().getPath(),false);
+        deleteFolderFile(FcUtils.getContext().getCacheDir().getPath(), false);
+    }
+
+    //复制文件
+    public static void copyfile(File fromFile, File toFile, Boolean rewrite) {
+        if (!fromFile.exists()) {
+            return;
+        }
+        if (!fromFile.isFile()) {
+            return;
+        }
+        if (!fromFile.canRead()) {
+            return;
+        }
+        if (!toFile.getParentFile().exists()) {
+            toFile.getParentFile().mkdirs();
+        }
+        if (toFile.exists() && rewrite) {
+            toFile.delete();
+        }
+        //当文件不存时，canWrite一直返回的都是false
+        if (!toFile.canWrite()) {
+            FcUtils.showToast("不能够写将要复制的目标文件");
+            return;
+        }
+        try {
+            InputStream fosfrom = FcUtils.getContext().openFileInput(fromFile.getAbsolutePath());
+            FileOutputStream fosto = new FileOutputStream(toFile);
+            byte bt[] = new byte[1024];
+            int c;
+            while ((c = fosfrom.read(bt)) > 0) {
+                fosto.write(bt, 0, c); //将内容写到新文件当中
+            }
+            fosfrom.close();
+            fosto.close();
+        } catch (Exception ex) {
+            Log.e("readfile", ex.getMessage());
+        }
+    }
+
+    //复制文件
+    public static void copyfile(Uri fromUri, File toFile, Boolean rewrite) {
+        Log.e("文件复制","in="+fromUri+"\r\tout="+toFile.getPath());
+        if (fromUri == null) {
+            return;
+        }
+        if (!toFile.getParentFile().exists()) {
+            toFile.getParentFile().mkdirs();
+        }
+        if (toFile.exists() && rewrite) {
+            toFile.delete();
+        }
+        //当文件不存时，canWrite一直返回的都是false
+//        if (!toFile.canWrite()) {
+//            FcUtils.runOnUIThread(() -> FcUtils.showToast("不能够写将要复制的目标文件"));
+//            return;
+//        }
+        try {
+            InputStream is = FcUtils.getContext().getContentResolver().openInputStream(fromUri);
+            FileOutputStream fos = new FileOutputStream(toFile);
+            byte buffer[] = new byte[1024];
+
+            int count = 0;
+            while ((count = is.read(buffer, 0, buffer.length)) != -1) {
+                fos.write(buffer, 0, count);
+            }
+            is.close();
+            fos.close();
+        } catch (Exception ex) {
+            Log.e("readfile", ex.getMessage());
+        }
     }
 
 }

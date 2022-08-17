@@ -1,62 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@id/bar_root"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
 
-    <data>
-
-        <variable
-            name="title"
-            type="String"/>
-
-        <variable
-            name="elevation"
-            type="Integer"/>
-
-        <variable
-            name="bg"
-            type="Integer" />
-
-        <import type="com.melvinhou.kami.util.DimenUtils"/>
-        <import type="android.graphics.Color"/>
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@id/bar_root"
+    <!--标题-->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@id/bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@{bg!=null?bg:@color/white}"
-        android:elevation="@{elevation!=null?DimenUtils.dp2px(elevation):DimenUtils.dp2px(8)}"
-        >
-        <!--标题栏-->
-        <androidx.appcompat.widget.Toolbar
-            android:id="@id/bar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_marginTop="24dp"
-            android:animateLayoutChanges="true"
-            android:theme="@style/Dimension2Bar"
-            app:layout_constraintTop_toTopOf="parent"
-            app:popupTheme="@style/Dimension2Popup"
-            />
+        android:layout_height="?attr/actionBarSize"
+        android:animateLayoutChanges="true"
+        app:navigationIcon="@drawable/ic_bar_back"
+        android:theme="@style/Dimension2Bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/Dimension2Popup" />
 
-        <!--标题-->
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:text="@{title}"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@id/bar"
-            app:layout_constraintLeft_toLeftOf="@id/bar"
-            app:layout_constraintRight_toRightOf="@id/bar"
-            app:layout_constraintTop_toTopOf="@id/bar"
-            android:lines="1"
-            android:ellipsize="end"
-            android:paddingHorizontal="56dp"
-            />
+    <!--标题栏-->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1"
+        android:paddingHorizontal="56dp"
+        android:text="居中标题"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/bar"
+        app:layout_constraintLeft_toLeftOf="@id/bar"
+        app:layout_constraintRight_toRightOf="@id/bar"
+        app:layout_constraintTop_toTopOf="@id/bar" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

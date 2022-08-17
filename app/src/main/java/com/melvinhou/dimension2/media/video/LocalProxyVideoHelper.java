@@ -1,5 +1,7 @@
 package com.melvinhou.dimension2.media.video;
 
+import android.text.TextUtils;
+
 import com.jeffmony.videocache.VideoProxyCacheManager;
 import com.jeffmony.videocache.listener.IVideoCacheListener;
 import com.jeffmony.videocache.utils.LogUtils;
@@ -68,20 +70,24 @@ public class LocalProxyVideoHelper {
     }
 
     public void pauseLocalProxyTask() {
+        if (TextUtils.isEmpty(mVideoUrl))return;
         //暂停缓存任务
         VideoProxyCacheManager.getInstance().pauseCacheTask(mVideoUrl);
     }
 
     public void resumeLocalProxyTask() {
+        if (TextUtils.isEmpty(mVideoUrl))return;
         //恢复缓存任务
         VideoProxyCacheManager.getInstance().resumeCacheTask(mVideoUrl);
     }
 
     public void seekToCachePosition(float percent) {
+        if (TextUtils.isEmpty(mVideoUrl))return;
         VideoProxyCacheManager.getInstance().seekToCacheTaskFromClient(mVideoUrl, percent);
     }
 
     public void releaseLocalProxyResources() {
+        if (TextUtils.isEmpty(mVideoUrl))return;
         // 释放缓存任务
         VideoProxyCacheManager.getInstance().stopCacheTask(mVideoUrl);   //停止视频缓存任务
         VideoProxyCacheManager.getInstance().releaseProxyReleases(mVideoUrl);

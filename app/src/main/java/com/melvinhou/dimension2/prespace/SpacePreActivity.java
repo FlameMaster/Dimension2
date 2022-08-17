@@ -1,10 +1,8 @@
 package com.melvinhou.dimension2.prespace;
 
 import android.Manifest;
-import android.content.Intent;
-import android.os.Build;
-import android.os.Environment;
 import android.util.SparseArray;
+import android.view.KeyEvent;
 
 import com.melvinhou.dimension2.databinding.ActivityViewpagerBinding;
 import com.melvinhou.kami.mvvm.BindActivity;
@@ -12,7 +10,6 @@ import com.melvinhou.kami.mvvm.BindFragment;
 import com.melvinhou.kami.util.FcUtils;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -45,14 +42,30 @@ public class SpacePreActivity extends BindActivity<ActivityViewpagerBinding, Spa
 
     //权限请求
     public static final int REQUEST_CODE_PERMISSIONS = 2113;
-    public static final int REQUEST_CODE_PERMISSIONS2 = 2114;
     //权限列表：文件
     private static final String[] REQUIRED_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
     //
-    public static final int PAGE_PHOTO = 0;
+    public static final int PAGE_HOME = 0;
+    public static final int PAGE_PICTURE = 1;
+    public static final int PAGE_VIDEO = 2;
+    public static final int PAGE_FILE = 3;
 
     private SparseArray<BindFragment> fragments = new SparseArray();
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            fragments.get(mBinding.container.getCurrentItem()).back();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void back() {
+        fragments.get(mBinding.container.getCurrentItem()).back();
+    }
 
     @Override
     protected void initView() {
@@ -79,8 +92,12 @@ public class SpacePreActivity extends BindActivity<ActivityViewpagerBinding, Spa
     protected void initListener() {
         mModel.page.observe(this, new Observer<Integer>() {
             @Override
-            public void onChanged(Integer integer) {
-                mBinding.container.setCurrentItem(integer, false);
+            public void onChanged(Integer page) {
+                if (page < 0) {
+                    finish();
+                } else if (page >= fragments.size()) return;
+
+                mBinding.container.setCurrentItem(page, false);
             }
         });
     }
@@ -90,24 +107,15 @@ public class SpacePreActivity extends BindActivity<ActivityViewpagerBinding, Spa
         //权限申请
         if (allPermissionsGranted(REQUIRED_PERMISSIONS)) {
             loadData();
-        }else
+        } else
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
     }
 
     private void loadData() {
-        fragments.put(PAGE_PHOTO, PrePhotoFragment.getInstance());
-        mModel.page.postValue(PAGE_PHOTO);
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_OK && resultCode == REQUEST_CODE_PERMISSIONS2) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager())
-                FcUtils.showToast("获取权限成功");
-            else FcUtils.showToast("未能获取权限");
-        }
+        fragments.put(PAGE_HOME, PreHomeFragment.getInstance());
+        fragments.put(PAGE_PICTURE, PrePictureFragment.getInstance());
+        fragments.put(PAGE_VIDEO, PreVideoFragment.getInstance());
+        mModel.page.postValue(PAGE_HOME);
     }
 
     @Override

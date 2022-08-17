@@ -15,7 +15,7 @@
         android:background="@color/white">
 
         <include
-            layout="@layout/inset_bar"
+            layout="@layout/inset_bar_full"
             app:elevation="@{8}"
             app:title="@{title}"/>
 

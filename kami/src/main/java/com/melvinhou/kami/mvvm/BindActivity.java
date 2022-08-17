@@ -1,7 +1,13 @@
 package com.melvinhou.kami.mvvm;
 
+import android.content.Intent;
+
 import com.melvinhou.kami.view.BaseActivity2;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewbinding.ViewBinding;
@@ -21,6 +27,9 @@ import androidx.viewbinding.ViewBinding;
  */
 public abstract class BindActivity<VB extends ViewBinding, M extends BaseModel> extends BaseActivity2 {
 
+    //新版本的意图打开
+    private ActivityResultLauncher<Intent> startActivity;
+
     protected VB mBinding;
     protected M mModel;
 
@@ -31,6 +40,9 @@ public abstract class BindActivity<VB extends ViewBinding, M extends BaseModel> 
 
     @Override
     protected void initActivity(int layoutId) {
+        startActivity =
+                registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                        BindActivity.this::onActivityBack);
         mBinding = openViewBinding();
         setContentView(mBinding.getRoot());
         mModel = new ViewModelProvider(this).get(openModelClazz());
@@ -65,4 +77,36 @@ public abstract class BindActivity<VB extends ViewBinding, M extends BaseModel> 
     protected abstract VB openViewBinding();
 
     protected abstract Class<M> openModelClazz();
+
+
+    /**
+     * 打开有返回值的intent
+     *
+     * @param intent
+     */
+    protected void toResultActivity(Intent intent, ActivityResultCallback<ActivityResult> callback) {
+        ActivityResultContracts.StartActivityForResult result
+                = new ActivityResultContracts.StartActivityForResult();
+        registerForActivityResult(result, callback)
+                .launch(intent);
+    }
+
+
+    /**
+     * 打开有返回值的intent
+     *
+     * @param intent
+     */
+    protected void toResultActivity(Intent intent) {
+        startActivity.launch(intent);
+    }
+
+    /**
+     * 替换早期的返回
+     */
+    protected void onActivityBack(ActivityResult result) {
+        //此处进行数据接收（接收回调）
+        if (result.getResultCode() == RESULT_OK) {
+        }
+    }
 }
