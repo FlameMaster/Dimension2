@@ -83,6 +83,10 @@ public class PreHomeFragment extends BindFragment<FragmentSpacePreBinding, Space
     @Override
     protected void initView() {
         mBinding.barRoot.title.setText("隐私档案");
+
+        mBinding.ivPicture.setImageResource(R.mipmap.fc);
+        mBinding.ivVideo.setImageResource(R.mipmap.fc);
+        mBinding.ivFile.setImageResource(R.mipmap.fc);
     }
 
     @Override
@@ -114,7 +118,6 @@ public class PreHomeFragment extends BindFragment<FragmentSpacePreBinding, Space
         mBinding.ivPicture.setOnClickListener(v -> mModel.page.postValue(SpacePreActivity.PAGE_PICTURE));
         mBinding.ivVideo.setOnClickListener(v -> mModel.page.postValue(SpacePreActivity.PAGE_VIDEO));
         mBinding.ivFile.setOnClickListener(v -> mModel.page.postValue(SpacePreActivity.PAGE_FILE));
-
     }
 
 

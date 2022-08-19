@@ -386,7 +386,7 @@ public class NestedPhotoView extends AppCompatImageView implements NestedScrolli
             int imgHeight = drawable.getIntrinsicHeight();
             if (drawable.toString().equals(mImageKey)) return;
             mImageKey = drawable.toString();
-            Log.e("setImageDrawable", "imgWidth=" + imgWidth + "\t\timgHeight=" + imgHeight);
+//            Log.e("setImageDrawable", "imgWidth=" + imgWidth + "\t\timgHeight=" + imgHeight);
             initImageMatrix(imgWidth, imgHeight);
         } catch (Exception e) {
             Log.e("PhotoCutterView", "图片加载失败");
