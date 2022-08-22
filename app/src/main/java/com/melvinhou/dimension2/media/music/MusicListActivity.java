@@ -124,6 +124,7 @@ public class MusicListActivity extends DataBindingActivity<ActMusicListBD> {
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
                 MediaBrowserHelper.registerCallback(myMusicCallback);

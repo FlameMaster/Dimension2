@@ -173,7 +173,7 @@ public class ImageUtils {
         }
         cursor.moveToFirst();
         String videoId = cursor.getString(cursor
-                .getColumnIndex(MediaStore.Video.Media._ID));
+                .getColumnIndexOrThrow(MediaStore.Video.Media._ID));
 
         if (videoId == null) {
             return null;

@@ -155,7 +155,7 @@ public class ScreenRecordService extends Service {
         Intent intent = new Intent(FcUtils.getContext(), ScreenRecordBroadcastReceiver.class);
         intent.setAction("screen_record_stop");
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                FcUtils.getContext(), 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                FcUtils.getContext(), 0, intent, PendingIntent.FLAG_ONE_SHOT|PendingIntent.FLAG_IMMUTABLE);
         Notification notification = new NotificationCompat.Builder(
                 ScreenRecordService.this, String.valueOf(NOTIFICATION_ID))
                 .setSmallIcon(R.mipmap.ic_launcher)

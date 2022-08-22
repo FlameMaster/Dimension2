@@ -252,15 +252,15 @@ public class DownloadHelper {
         // 通过ID向下载管理查询下载情况，返回一个cursor
         Cursor c = mDownloadManager.query(new DownloadManager.Query().setFilterById(mDownloadId));
         if (c != null && c.moveToFirst()) {
-            int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
+            int status = c.getInt(c.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS));
             logDebug("下载状态：" + status);
             switch (status) {
                 case DownloadManager.STATUS_PAUSED: //下载暂停， 由系统触发
                 case DownloadManager.STATUS_PENDING: //下载延迟， 由系统触发
                     break;
                 case DownloadManager.STATUS_RUNNING: //正在下载， 由系统触发
-                    long soFarSize = c.getLong(c.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
-                    long totalSize = c.getLong(c.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
+                    long soFarSize = c.getLong(c.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
+                    long totalSize = c.getLong(c.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
                     if (totalSize > 0) {
                         logDebug(String.format("total:%s soFar:%s ", totalSize, soFarSize)
                                 + soFarSize * 1.0f / totalSize);
@@ -275,7 +275,7 @@ public class DownloadHelper {
                     File downloadDir = isPublic
                             ? Environment.getExternalStoragePublicDirectory(getDirPath())
                             : FcUtils.getContext().getExternalFilesDir(getDirPath());
-                    totalSize = c.getLong(c.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
+                    totalSize = c.getLong(c.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
                     if (downloadListener != null) {
                         String fullName = downloadDir.getPath() + File.separator + fileName;
                         logDebug(fullName);

@@ -286,7 +286,7 @@ public class MediaBrowserHelper {
                         mMediaController.getPlaybackState());
 
                 MediaBrowserHelper.this.onConnected(mMediaController);
-            } catch (RemoteException e) {
+            } catch (Exception e) {//RemoteException
                 Log.d(TAG, String.format("onConnected: Problem: %s", e.toString()));
                 throw new RuntimeException(e);
             }

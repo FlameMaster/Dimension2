@@ -134,8 +134,8 @@ public class MusicService extends MediaBrowserServiceCompat {
             List<MediaBrowserCompat.MediaItem> entity = null;
             if (MusicLibrary.loadNativeData(FcUtils.getContext())) {
                 entity = MusicLibrary.getMediaItems();
+                emitter.onNext(entity);
             }
-            emitter.onNext(entity);
             emitter.onComplete();
         })
                 .compose(IOUtils.setThread())

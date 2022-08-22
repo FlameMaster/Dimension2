@@ -189,11 +189,12 @@
              但它必须处理行动"android.intent.action.MEDIA_BUTTON".
              此外，这用于在接收到媒体按钮事件(如“play”)时从非活动状态恢复服务。
              用于接受媒体播放的意图（MediaNotificationManager）
+             exported必须为false，不然退出时无法关闭通知栏
         -->
         <service
             android:name=".media.music.MusicService"
             android:enabled="true"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.media.browse.MediaBrowserService" />
             </intent-filter>

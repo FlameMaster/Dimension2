@@ -208,7 +208,7 @@ public class MediaNotificationManager {
         Intent openUI = new Intent(mService, MusicPlayerActivity.class);
         openUI.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         return PendingIntent.getActivity(
-                mService, REQUEST_CODE, openUI, PendingIntent.FLAG_CANCEL_CURRENT);
+                mService, REQUEST_CODE, openUI, PendingIntent.FLAG_CANCEL_CURRENT|PendingIntent.FLAG_MUTABLE);
     }
 
 }

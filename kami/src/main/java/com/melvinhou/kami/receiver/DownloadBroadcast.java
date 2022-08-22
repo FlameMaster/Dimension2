@@ -65,9 +65,9 @@ public class DownloadBroadcast extends BroadcastReceiver {
             cursor = downloadManager.query(query);
             if (cursor != null && cursor.moveToFirst()) {
                 //获取文件下载路径
-//                String filename = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_FILENAME));
+//                String filename = cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_FILENAME));
                 int status = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS));
-                int fileUriIdx = cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI);
+                int fileUriIdx = cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI);
                 String fileUri = cursor.getString(fileUriIdx);
                 //下载完成
                 if (status == DownloadManager.STATUS_SUCCESSFUL) {

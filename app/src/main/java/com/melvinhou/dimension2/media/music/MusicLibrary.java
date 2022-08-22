@@ -16,6 +16,7 @@
 
 package com.melvinhou.dimension2.media.music;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -71,34 +72,48 @@ public class MusicLibrary {
         boolean state = false;
         try {
             clear();
-            Cursor cursor = context.getContentResolver().query(
-                    MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null,
-                    MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
+            //Uri，指向external的database
+            Uri contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+            //projection：选择的列; where：过滤条件; sortOrder：排序。
+            String[] projection = {
+                    MediaStore.Audio.Media._ID,
+                    MediaStore.Audio.Media.DISPLAY_NAME,
+                    MediaStore.Audio.Media.DATA,
+                    MediaStore.Audio.Media.ALBUM,
+                    MediaStore.Audio.Media.ARTIST,
+                    MediaStore.Audio.Media.DURATION,
+                    MediaStore.Audio.Media.SIZE
+            };
+            String where
+                    = "mime_type in ('audio/mpeg','audio/x-ms-wma') and bucket_display_name <> 'audio' and is_music > 0 ";
+            String sortOrder = MediaStore.Audio.Media.DEFAULT_SORT_ORDER;
+            Cursor cursor = context.getContentResolver().query(contentUri, null, null, null,
+                    sortOrder);
             for (int i = 0; i < cursor.getCount(); i++) {
                 cursor.moveToNext();
                 String id = cursor.getString(cursor
-                        .getColumnIndex(MediaStore.Audio.Media._ID)); // 音乐id
+                        .getColumnIndexOrThrow(MediaStore.Audio.Media._ID)); // 音乐id
                 String title = cursor.getString((cursor
-                        .getColumnIndex(MediaStore.Audio.Media.TITLE))); // 音乐标题
+                        .getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE))); // 音乐标题
                 String artist = cursor.getString(cursor
-                        .getColumnIndex(MediaStore.Audio.Media.ARTIST)); // 艺术家
+                        .getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)); // 艺术家
                 String album = cursor.getString(cursor
-                        .getColumnIndex(MediaStore.Audio.Media.ALBUM)); // 专辑
+                        .getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM)); // 专辑
 //            String genre = cursor.getString(cursor
-//                    .getColumnIndex(MediaStore.Audio.Media.GENRE)); // 流派
+//                    .getColumnIndexOrThrow(MediaStore.Audio.Media.GENRE)); // 流派
                 String displayName = cursor.getString(cursor
-                        .getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME));//文件名称
+                        .getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME));//文件名称
                 long albumId = cursor.getInt(cursor
-                        .getColumnIndex(MediaStore.Audio.Media.ALBUM_ID));
+                        .getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID));
                 long duration = cursor.getLong(cursor
-                        .getColumnIndex(MediaStore.Audio.Media.DURATION)); // 时长
+                        .getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)); // 时长
                 long size = cursor.getLong(cursor
-                        .getColumnIndex(MediaStore.Audio.Media.SIZE)); // 文件大小
+                        .getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE)); // 文件大小
                 String url = cursor.getString(cursor
-                        .getColumnIndex(MediaStore.Audio.Media.DATA)); // 文件路径
+                        .getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)); // 文件路径
 
                 int isMusic = cursor.getInt(cursor
-                        .getColumnIndex(MediaStore.Audio.Media.IS_MUSIC)); // 是否为音乐
+                        .getColumnIndexOrThrow(MediaStore.Audio.Media.IS_MUSIC)); // 是否为音乐
                 if (isMusic != 0) { // 只把音乐添加到集合当中
                     createMediaMetadataCompat(
                             id,
@@ -114,6 +129,10 @@ public class MusicLibrary {
                 }
             }
             state = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } catch (Error e) {
+            e.printStackTrace();
         } finally {
             return state;
         }
@@ -147,9 +166,9 @@ public class MusicLibrary {
     }
 
 
-
     /**
      * 获取封面
+     *
      * @param context
      * @param mediaId
      * @return
@@ -180,6 +199,7 @@ public class MusicLibrary {
 
     /**
      * 获取封面
+     *
      * @param context
      * @param mediaId
      * @return
@@ -190,6 +210,7 @@ public class MusicLibrary {
 
     /**
      * 获取音乐列表
+     *
      * @return
      */
     public static List<MediaBrowserCompat.MediaItem> getMediaItems() {

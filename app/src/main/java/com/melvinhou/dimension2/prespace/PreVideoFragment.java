@@ -277,7 +277,7 @@ public class PreVideoFragment extends BindFragment<ActivityListBinding, SpacePre
                     .query(uri, filePathColumn, null, null, null);
             if (null != cursor) {
                 if (cursor.moveToFirst()) {
-                    int index = cursor.getColumnIndex(filePathColumn[1]);
+                    int index = cursor.getColumnIndexOrThrow(filePathColumn[1]);
                     if (index > -1) {
                         data = cursor.getString(index);
                     }

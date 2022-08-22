@@ -96,6 +96,8 @@ dependencies {
     implementation 'com.google.ar:core:1.18.0'
     implementation 'de.javagl:obj:0.3.0'
 
+    //音频播放库
+    implementation 'androidx.media:media:1.6.0'
 
     //ijk视频播放库
     implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'

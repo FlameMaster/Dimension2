@@ -144,7 +144,7 @@ public class MusicWidgetProvider extends AppWidgetProvider {
         intent.setClass(context, MusicListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(
-                context, 0, intent, 0);
+                context, 0, intent, PendingIntent.FLAG_NO_CREATE|PendingIntent.FLAG_IMMUTABLE);
         // 设置点击事件
         views.setOnClickPendingIntent(R.id.cover, pendingIntent);
         views.setOnClickPendingIntent(R.id.tab_play,

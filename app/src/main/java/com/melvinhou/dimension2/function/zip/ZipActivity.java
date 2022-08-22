@@ -369,7 +369,7 @@ public class ZipActivity extends BaseActivity {
                     .query(uri, null, null, null);
             cursor.moveToFirst();
             name = cursor.getString(cursor
-                    .getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                    .getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
             cursor.close();
         }
         return name;
