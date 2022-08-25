@@ -27,7 +27,7 @@ public class MeteorShowerManager extends RecyclerView.LayoutManager {
 
     //最多同屏显示
     public final int MAX_COUNT = 12;
-    public final int  ITEM_SCROLL_HEIGHT =1000;
+    public final int ITEM_SCROLL_HEIGHT = 1000;
 
     //总偏移量,负数
     private int verticalScrolloffset = 0;
@@ -56,7 +56,7 @@ public class MeteorShowerManager extends RecyclerView.LayoutManager {
             ratioSet[index] = ratioSet[i];
             ratioSet[i] = temp;
         }
-        randomDistance =new float[]{1f,0.8f,0.3f,1,0.5f};
+        randomDistance = new float[]{1f, 0.8f, 0.3f, 1, 0.5f};
 
     }
 
@@ -73,7 +73,7 @@ public class MeteorShowerManager extends RecyclerView.LayoutManager {
         //半径确认
         int radius = Math.min(getWidth(), getHeight());
         //限制半径
-        int endRadius = (radius-itemSize) / 2;
+        int endRadius = (radius - itemSize) / 2;
         for (int i = 0; i < ratioSet.length; i++) {
             int[] parameters = fcc(ratioSet[i]);
             //角度
@@ -85,7 +85,7 @@ public class MeteorShowerManager extends RecyclerView.LayoutManager {
             int endX = (int) (endRadius * cosX * vectorX);
             int endY = (int) (endRadius * cosY * vectorY);
             rightLocation[i] = new int[]{endX, endY};
-            Log.e("滑动" + i, "endX=" + endX + "\r\tendY=" + endY + "\r\tdegree=" + degree);
+//            Log.e("滑动" + i, "endX=" + endX + "\r\tendY=" + endY + "\r\tdegree=" + degree);
         }
         layout(recycler);
     }
@@ -94,6 +94,50 @@ public class MeteorShowerManager extends RecyclerView.LayoutManager {
         detachAndScrapAttachedViews(recycler);
         int centerX = getWidth() / 2;
         int centerY = getHeight() / 2;
+        int startIndex = verticalScrolloffset / ITEM_SCROLL_HEIGHT;
+        if (startIndex + MAX_COUNT > getItemCount()) startIndex = getItemCount() - MAX_COUNT;
+        if (startIndex > MAX_COUNT) {
+            removeAndRecycleView(recycler.getViewForPosition(startIndex - MAX_COUNT), recycler);
+        }
+
+        int count = startIndex > MAX_COUNT ? MAX_COUNT : startIndex + 1;
+        for (int i = 0; i < count; i++) {
+            int index = startIndex - i;
+            int childTop = index * ITEM_SCROLL_HEIGHT;
+            int currentY = verticalScrolloffset - childTop;
+            View child = recycler.getViewForPosition(index);
+            addView(child);
+            measureChildWithMargins(child, 0, 0);
+            int width = getDecoratedMeasuredWidth(child);
+            int height = getDecoratedMeasuredHeight(child);
+
+            int left = centerX - width / 2;
+            int top = centerY - height / 2;
+            layoutDecorated(child, left, top, left + width, top + height);
+
+            float offsetRatio = (float) currentY / (float) (ITEM_SCROLL_HEIGHT * MAX_COUNT);
+            float tRatio = offsetRatio / 0.6f;
+            float aStartRatio = offsetRatio / 0.2f;
+            float aEndRatio = 1f - (offsetRatio - 0.8f) / 0.2f;
+            if (tRatio > 1f) tRatio = 1f;
+            if (aStartRatio > 1f) aStartRatio = 1f;
+            if (aEndRatio > 1f) aEndRatio = 1f;
+
+
+//                int left = (int) (centerX + rightLocation[i % MAX_COUNT][0] * tRatio - width / 2);
+//                int top = (int) (centerY + rightLocation[i % MAX_COUNT][1] * tRatio - height / 2);
+//                layoutDecorated(child, left, top, left + width, top + height);
+            child.setAlpha(offsetRatio > 0.5f ? aEndRatio : aStartRatio);
+            int position = index % MAX_COUNT;
+            child.setTranslationX(rightLocation[position][0] * tRatio * randomDistance[index % randomDistance.length]);
+            child.setTranslationY(rightLocation[position][1] * tRatio * randomDistance[index % randomDistance.length]);
+            child.setScaleX(tRatio);
+            child.setScaleY(tRatio);
+//            if (i == startIndex)
+//                Log.e("滑动" + index, "offsetRatio=" + offsetRatio + "\r\tcurrentY=" + currentY + "\r\tstartIndex=" + startIndex);
+        }
+
+        /*
         for (int i = 0; i < getItemCount(); i++) {
             int childTop = i * ITEM_SCROLL_HEIGHT;
             int currentY = verticalScrolloffset - childTop;
@@ -108,7 +152,7 @@ public class MeteorShowerManager extends RecyclerView.LayoutManager {
 
                 int left = centerX - width / 2;
                 int top = centerY - height / 2;
-                layoutDecorated(child, left, top, left+width, top+height);
+                layoutDecorated(child, left, top, left + width, top + height);
 
                 float offsetRatio = (float) currentY / (float) (ITEM_SCROLL_HEIGHT * MAX_COUNT);
                 float tRatio = offsetRatio / 0.6f;
@@ -124,12 +168,13 @@ public class MeteorShowerManager extends RecyclerView.LayoutManager {
 //                layoutDecorated(child, left, top, left + width, top + height);
                 child.setAlpha(offsetRatio > 0.5f ? aEndRatio : aStartRatio);
                 int position = i % MAX_COUNT;
-                child.setTranslationX(rightLocation[position][0] * tRatio * randomDistance[i%randomDistance.length]);
-                child.setTranslationY(rightLocation[position][1] * tRatio * randomDistance[i%randomDistance.length]);
+                child.setTranslationX(rightLocation[position][0] * tRatio * randomDistance[i % randomDistance.length]);
+                child.setTranslationY(rightLocation[position][1] * tRatio * randomDistance[i % randomDistance.length]);
                 child.setScaleX(tRatio);
                 child.setScaleY(tRatio);
             }
         }
+        */
     }
 
     private int[] fcc(double degree) {

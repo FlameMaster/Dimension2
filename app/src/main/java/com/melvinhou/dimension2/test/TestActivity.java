@@ -3,7 +3,10 @@ package com.melvinhou.dimension2.test;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.os.Build;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
@@ -15,16 +18,12 @@ import com.melvinhou.dimension2.media.video.ijk.IjkVideoView;
 import com.melvinhou.kami.adapter.RecyclerAdapter;
 import com.melvinhou.kami.adapter.RecyclerHolder;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
 import com.melvinhou.kami.view.BaseActivity;
 
-import java.util.concurrent.TimeUnit;
-
+import androidx.annotation.NonNull;
 import androidx.core.view.WindowCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
-import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -64,13 +63,41 @@ public class TestActivity extends BaseActivity {
     @Override
     protected void initView() {
         ViewPager2 viewPager2 = findViewById(R.id.viewpager);
+
+        RecyclerAdapter adapter = new RecyclerAdapter<String, RecyclerHolder>() {
+            @Override
+            public void bindData(RecyclerHolder viewHolder, int position, String data) {
+                NestedPhotoView view = viewHolder.itemView.findViewById(R.id.item_photo);
+                String url = "https://i0.hdslb.com/bfs/album/d7cfc41b79f63852b48b5072e4ccb6fc65a81038.jpg";
+                Glide.with(FcUtils.getContext()).load(url).into(view);
+                view.viewPager2 = viewPager2;
+            }
+
+            @Override
+            public int getItemLayoutId(int viewType) {
+                return R.layout.item_photo;
+            }
+
+            @Override
+            protected RecyclerHolder onCreate(View view, int viewType) {
+                return new RecyclerHolder(view);
+            }
+        };
+        viewPager2.setAdapter(adapter);
+        for (int i = 0; i < 10; i++)
+            adapter.addData("");
+        adapter.notifyDataSetChanged();
+        viewPager2.setUserInputEnabled(false);
+
+
+//        test1();
+    }
+
+    int verticalScrolloffset = 0;
+
+    void test1() {
         RecyclerView listView = findViewById(R.id.list);
-//        listView.setLayoutManager(new LinearLayoutManager(FcUtils.getContext(), LinearLayoutManager.HORIZONTAL, false) {
-//            @Override
-//            public boolean canScrollVertically() {
-//                return false;
-//            }
-//        });
+
 //        CardLayoutManager mCardLayoutManager = new CardLayoutManager(3, 0.5f);
 //        listView.setLayoutManager(mCardLayoutManager);
 //        listView.setLayoutManager(new ScrollSpeedLinearLayoutManger(this,
@@ -88,6 +115,12 @@ public class TestActivity extends BaseActivity {
                 String url = "https://i0.hdslb.com/bfs/album/d7cfc41b79f63852b48b5072e4ccb6fc65a81038.jpg";
 //                view.setImageURI(Uri.parse(url));
                 Glide.with(FcUtils.getContext()).load(url).into(view);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FcUtils.showToast("点击了" + position);
+                    }
+                });
             }
 
             @Override
@@ -100,39 +133,56 @@ public class TestActivity extends BaseActivity {
                 return new RecyclerHolder(view);
             }
         };
-//        viewPager2.setAdapter(adapter);
-        listView.setAdapter(adapter);
+        RecyclerView.Adapter<RecyclerView.ViewHolder> adapter1 = new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+            @NonNull
+            @Override
+            public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View itemView =
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.item_test01, parent, false);
+                return new RecyclerHolder(itemView) {
+                };
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+                final int index = position;
+                ImageView view = holder.itemView.findViewById(R.id.image);
+                TextView textView = holder.itemView.findViewById(R.id.title);
+                textView.setText(String.valueOf(position));
+                String url = "https://i0.hdslb.com/bfs/album/d7cfc41b79f63852b48b5072e4ccb6fc65a81038.jpg";
+//                view.setImageURI(Uri.parse(url));
+                Glide.with(FcUtils.getContext()).load(url).into(view);
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FcUtils.showToast("点击了"+index);
+                    }
+                });
+            }
+
+            @Override
+            public int getItemCount() {
+                return Integer.MAX_VALUE;
+            }
+        };
+        listView.setAdapter(adapter1);
         for (int i = 0; i < 100; i++)
             adapter.addData("");
-        adapter.notifyDataSetChanged();
-
-        viewPager2.setUserInputEnabled(false);
-
-//        int min = adapter.getDatas().size() * 1000 - 1;
-//        listView.scrollToPosition(min - 1);
-//        listView.smoothScrollToPosition(min);
-//        mCardLayoutManager.setMinPosition(min);
-//        new CardSnapHelper(3).attachToRecyclerView(listView);
-//        mCardLayoutManager.setPageChangeListener(pageChangeListener);
-
-//        mDisposable = Observable.interval(3000, 50, TimeUnit.MILLISECONDS)
-//                .compose(IOUtils.setThread())
-//                .subscribe(residueTime -> {
-//                    //更新进度条
-//                    listView.smoothScrollBy(0,100);
-//                });
+        adapter1.notifyDataSetChanged();
 
         ValueAnimator animator = ValueAnimator.ofInt(
                 meteorShowerManager.ITEM_SCROLL_HEIGHT * meteorShowerManager.MAX_COUNT);
-        animator.setDuration(3000);
+        animator.setDuration(10*1000);
         animator.setInterpolator(new LinearInterpolator());
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 int value = (int) animation.getAnimatedValue();
                 int offset = value - verticalScrolloffset;
-                listView.smoothScrollBy(0, offset);
                 verticalScrolloffset = value;
+//                    listView.smoothScrollBy(0, offset);
+                listView.scrollBy(0, offset);
+
             }
         });
         animator.addListener(new Animator.AnimatorListener() {
@@ -158,8 +208,6 @@ public class TestActivity extends BaseActivity {
         });
         animator.start();
     }
-
-    int verticalScrolloffset = 0;
 
 
     void test() {

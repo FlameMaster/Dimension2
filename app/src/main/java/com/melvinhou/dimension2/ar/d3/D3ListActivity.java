@@ -143,7 +143,8 @@ public class D3ListActivity extends BaseActivity2 {
                 intent.putExtra("objPath", data.getDirectoryPath());
                 startActivity(intent);
             } else if (allPermissionsGranted(REQUIRED_PERMISSIONS)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager())
+
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R || Environment.isExternalStorageManager())
                     downloadObj(data);
                 else {
                     Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
@@ -250,7 +251,7 @@ public class D3ListActivity extends BaseActivity2 {
 
     public File getModelFilesDir() {
         File folderFile = new File(Environment.getExternalStorageDirectory().getPath()
-                + File.separator + ResourcesUtils.getString(R.string.app_name) + File.separator + "model");
+                + File.separator + ResourcesUtils.getString(R.string.app_name) + File.separator + ".model");
         if (!folderFile.exists()) {
             folderFile.mkdirs();
         }
@@ -305,7 +306,7 @@ public class D3ListActivity extends BaseActivity2 {
         showProcess("解压模型中...");
         String folderPath =
                 ResourcesUtils.getString(com.melvinhou.kami.R.string.app_name)
-                        + "/model/" + file.getName();
+                        + "/.model/" + file.getName();
         File folderFile = Environment.getExternalStoragePublicDirectory(folderPath.substring(0, folderPath.length() - 4));
         if (!folderFile.exists()) {
             folderFile.mkdirs();

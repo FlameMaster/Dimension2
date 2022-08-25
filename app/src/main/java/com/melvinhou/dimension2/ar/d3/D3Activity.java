@@ -187,7 +187,7 @@ public class D3Activity extends BaseActivity {
 
     public File getModelFilesDir() {
         File folderFile = new File(Environment.getExternalStorageDirectory().getPath()
-                + File.separator + ResourcesUtils.getString(R.string.app_name) + File.separator + "model");
+                + File.separator + ResourcesUtils.getString(R.string.app_name) + File.separator + ".model");
         if (!folderFile.exists()) {
             folderFile.mkdirs();
         }

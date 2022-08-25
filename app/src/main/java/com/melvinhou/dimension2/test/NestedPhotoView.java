@@ -1,4 +1,4 @@
-package com.melvinhou.kami.wiget;
+package com.melvinhou.dimension2.test;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -21,6 +21,7 @@ import android.view.ViewTreeObserver;
 
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
+import com.melvinhou.kami.wiget.RotateGestureDetector;
 
 import java.io.IOException;
 
@@ -28,7 +29,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.view.NestedScrollingChild2;
-import androidx.core.view.NestedScrollingChild3;
+import androidx.viewpager2.widget.ViewPager2;
 
 /**
  * ===========================================================
@@ -270,7 +271,10 @@ public class NestedPhotoView extends AppCompatImageView implements NestedScrolli
         mScaleGestureDetector = new ScaleGestureDetector(getContext(), new ScaleGestureListener());
         mRotateGestureDetector = new RotateGestureDetector(getContext(), new RotateGestureListener());
         setOnTouchListener(new MatrixTouchListener());
+
     }
+
+    ViewPager2 viewPager2;
 
     //TODO 仅写了uri的图片加载，其它加载懒得写了
 
@@ -373,7 +377,7 @@ public class NestedPhotoView extends AppCompatImageView implements NestedScrolli
         }
     }
 
-    public void setNullBitmap(){
+    public void setNullBitmap() {
         super.setImageBitmap(null);
     }
 
@@ -440,7 +444,7 @@ public class NestedPhotoView extends AppCompatImageView implements NestedScrolli
         mImgMatrix.postTranslate(mIntrinsicLeft, mIntrinsicTop);
         setImageMatrix(mImgMatrix);
         //边界修正，懒得改直接用现成
-        if (mGestureMode==GESTURE_MODE_BOX)restoreSize();
+        if (mGestureMode == GESTURE_MODE_BOX) restoreSize();
         Log.e("PhotoCutterView", "修改图片初始化参数"
                 + "\nscale=" + mMinScale + "\r\tleft=" + mIntrinsicLeft + "\r\ttop=" + mIntrinsicTop
                 + "\nimgWidth=" + imgWidth + "\r\timgHeight=" + imgHeight
@@ -451,12 +455,12 @@ public class NestedPhotoView extends AppCompatImageView implements NestedScrolli
     /**
      * 大小复位
      */
-    public void restoreSize(){
+    public void restoreSize() {
 
         float scale = mMinScale / mMaxScale;
         float[] values = new float[9];
         mImgMatrix.getValues(values);
-        float[] checkScale = checkScale(values, scale, getWidth()/2, getHeight()/2);
+        float[] checkScale = checkScale(values, scale, getWidth() / 2, getHeight() / 2);
         scale = checkScale[0];
         mFocusX = checkScale[1];
         mFocusY = checkScale[2];
@@ -712,7 +716,10 @@ public class NestedPhotoView extends AppCompatImageView implements NestedScrolli
             if (Math.sqrt(distanceX * distanceX + distanceY * distanceY) > 10f) {
                 float[] values = new float[9];
                 mImgMatrix.getValues(values);
-                mImgMatrix.postTranslate(checkDxBound(values, -distanceX), checkDyBound(values, -distanceY));
+                float tx = checkDxBound(values, -distanceX);
+                Log.e("滑动ing", "dx=" + tx);
+                viewPager2.setUserInputEnabled(isTranslate && tx == 0f);
+                mImgMatrix.postTranslate(tx, checkDyBound(values, -distanceY));
 //                mImgMatrix.postTranslate(-distanceX, -distanceY);
                 setImageMatrix(mImgMatrix);
             }
@@ -725,6 +732,8 @@ public class NestedPhotoView extends AppCompatImageView implements NestedScrolli
             return super.onFling(e1, e2, velocityX, velocityY);
         }
     }
+
+    boolean isTranslate = false;
 
     /**
      * 缩放手势监听
@@ -740,6 +749,7 @@ public class NestedPhotoView extends AppCompatImageView implements NestedScrolli
         //缩放中
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
+            viewPager2.setUserInputEnabled(false);
 //            Log.d("缩放", "x=" + detector.getFocusX() + "\r\ty=" + detector.getFocusX());
             float[] values = new float[9];
             mImgMatrix.getValues(values);
@@ -806,6 +816,12 @@ public class NestedPhotoView extends AppCompatImageView implements NestedScrolli
             mScaleGestureDetector.onTouchEvent(event);
             if (mGestureMode == GESTURE_MODE_INFINITE)
                 mRotateGestureDetector.onTouchEvent(event);
+            if (event.getAction()==MotionEvent.ACTION_DOWN&&event.getPointerCount()>1){
+                isTranslate=false;
+            }
+            if (event.getAction()==MotionEvent.ACTION_UP&&event.getPointerCount()<2){
+                isTranslate=true;
+            }
             return true;
         }
     }
