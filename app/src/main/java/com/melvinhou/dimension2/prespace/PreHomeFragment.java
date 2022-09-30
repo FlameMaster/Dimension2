@@ -124,23 +124,23 @@ public class PreHomeFragment extends BindFragment<FragmentSpacePreBinding, Space
     @SuppressLint("CheckResult")
     @Override
     protected void initData() {
-        mBinding.tabGroup.check(R.id.tab01);
-        //file=/storage/emulated/0/Android/data/com.melvinhou.dimension2/files
-        //file=/storage/6E9D-3084/Android/data/com.melvinhou.dimension2/files
-        File[] files = getContext().getExternalFilesDirs(null);//能获取sd卡的android目录
-        for (File file : files) {
-            Log.e("setOnClickListener", "file=" + file.getAbsolutePath());
-        }
-        mBinding.tab02.setText(mBinding.tab02.getText() + getFileSize(Environment.getExternalStorageDirectory()));
-        //sd卡和usb
-        if (files.length > 1) {
-            mBinding.tab03.setVisibility(View.VISIBLE);
-            mBinding.tab03.setText(mBinding.tab03.getText() + getFileSize(files[1]));
-        }
-        if (files.length > 2) {
-            mBinding.tab04.setVisibility(View.VISIBLE);
-            mBinding.tab04.setText(mBinding.tab04.getText() + getFileSize(files[2]));
-        }
+            mBinding.tabGroup.check(R.id.tab01);
+            //file=/storage/emulated/0/Android/data/com.melvinhou.dimension2/files
+            //file=/storage/6E9D-3084/Android/data/com.melvinhou.dimension2/files
+            File[] files = getContext().getExternalFilesDirs(null);//能获取sd卡的android目录
+            for (File file : files) {
+                Log.e("setOnClickListener", "file=" + file.getAbsolutePath());
+            }
+            mBinding.tab02.setText(mBinding.tab02.getText() + getFileSize(Environment.getExternalStorageDirectory()));
+            //sd卡和usb
+            if (files.length > 1) {
+                mBinding.tab03.setVisibility(View.VISIBLE);
+                mBinding.tab03.setText(mBinding.tab03.getText() + getFileSize(files[1]));
+            }
+            if (files.length > 2) {
+                mBinding.tab04.setVisibility(View.VISIBLE);
+                mBinding.tab04.setText(mBinding.tab04.getText() + getFileSize(files[2]));
+            }
 
     }
 

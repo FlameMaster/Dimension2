@@ -1,114 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    >
 
-<!--    放射性动画-->
-
-    <com.melvinhou.dimension2.test.TestView
-        android:id="@+id/test"
+    <RadioGroup
+        android:id="@+id/tabhost"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/white"
+        android:orientation="horizontal"
         >
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            app:round="40dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/fc"
-            android:padding="4dp"
-            android:background="#ccc"
-            />
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            app:round="40dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/fc"
-            android:padding="4dp"
-            android:background="#ccc"
-            />
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            app:round="40dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/fc"
-            android:padding="4dp"
-            android:background="#ccc"
-            />
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            app:round="40dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/fc"
-            android:padding="4dp"
-            android:background="#ccc"
-            />
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            app:round="40dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/fc"
-            android:padding="4dp"
-            android:background="#ccc"
-            />
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            app:round="40dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/fc"
-            android:padding="4dp"
-            android:background="#ccc"
-            />
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            app:round="40dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/fc"
-            android:padding="4dp"
-            android:background="#ccc"
-            />
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            app:round="40dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/fc"
-            android:padding="4dp"
-            android:background="#ccc"
-            />
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            app:round="40dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/fc"
-            android:padding="4dp"
-            android:background="#ccc"
-            />
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            app:round="40dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/fc"
-            android:padding="4dp"
-            android:background="#ccc"
-            />
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            app:round="40dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/fc"
-            android:padding="4dp"
-            android:background="#ccc"
-            />
-    </com.melvinhou.dimension2.test.TestView>
+
+    </RadioGroup>
 
 
-    <com.melvinhou.dimension2.media.video.ijk.IjkVideoView
-        android:id="@+id/video"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/indicator"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        app:tabGravity="fill"
+        app:tabMaxWidth="0dp"
+        app:tabIndicatorHeight="2dp"
+        app:tabIndicatorFullWidth="false"
+        app:tabMode="scrollable"
+        app:tabIndicatorColor="#0084EE"
+        app:tabIndicator="@drawable/shape_tab_indicator"
+        app:tabRippleColor="@null"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:tabSelectedTextColor="#0084EE"
+        app:tabTextColor="@color/gray"
+        android:background="@color/white"
         />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

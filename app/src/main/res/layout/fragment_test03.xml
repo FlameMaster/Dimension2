@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.melvinhou.dimension2.test.Test3View
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+<!--    封面-->
+    <com.melvinhou.dimension2.test.NestedScrollChildView
+        android:id="@+id/mCover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/andy"
+            android:scaleType="centerCrop"
+            />
+
+    </com.melvinhou.dimension2.test.NestedScrollChildView>
+<!--    个人信息-->
+    <include layout="@layout/inset_fragment_test3"/>
+<!--    主区域-->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/mScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:text="@string/large_text"
+                android:padding="16dp"
+                />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+<!--    标题栏-->
+    <include layout="@layout/inset_bar_full2"/>
+
+</com.melvinhou.dimension2.test.Test3View>

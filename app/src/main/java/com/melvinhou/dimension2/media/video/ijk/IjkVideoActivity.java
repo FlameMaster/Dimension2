@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -113,6 +114,7 @@ public class IjkVideoActivity extends BaseActivity {
 //        showSystemUI();
         hideSystemUI();
 
+        getWindow().setStatusBarColor(Color.parseColor("#40000000"));
         //刘海屏适配
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -121,8 +123,8 @@ public class IjkVideoActivity extends BaseActivity {
         }
         getWindow().setAttributes(lp);
         //控制系统界面的工具
-//        windowInsetsController
-//                = ViewCompat.getWindowInsetsController(getWindow().getDecorView());
+        windowInsetsController
+                = ViewCompat.getWindowInsetsController(getWindow().getDecorView());
 //        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
     }
 
@@ -142,8 +144,8 @@ public class IjkVideoActivity extends BaseActivity {
 
     private void hideSystemUI() {
         if (windowInsetsController != null) {
-            windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
-        } else {
+//            windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
+//        } else {
             getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |//粘性沉浸模式
                             View.SYSTEM_UI_FLAG_IMMERSIVE |//沉浸模式
@@ -160,10 +162,16 @@ public class IjkVideoActivity extends BaseActivity {
     }
 
     private void showToolsUI() {
+        if (windowInsetsController != null) {
+            windowInsetsController.show(WindowInsetsCompat.Type.statusBars());
+        }
         mVideoToolsGroup.setVisibility(View.VISIBLE);
     }
 
     private void hideToolsUI() {
+        if (windowInsetsController != null) {
+            windowInsetsController.hide(WindowInsetsCompat.Type.statusBars());
+        }
         mVideoToolsGroup.setVisibility(View.GONE);
     }
 
@@ -245,11 +253,12 @@ public class IjkVideoActivity extends BaseActivity {
         //初始化屏幕旋转的参数
         initGravitySener();
 
-        //状态栏变化的监听
+        //状态栏变化的监听,暂时不使用
+        if (mVidoe==null)
         getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(visibility -> {
             Log.e("状态栏变化", "visibility=" + visibility);
             cleaHideTimer();
-            if (visibility == View.SYSTEM_UI_FLAG_VISIBLE) {//状态栏显示
+            if (visibility == View.SYSTEM_UI_FLAG_VISIBLE) {//状态栏显示SYSTEM_UI_FLAG_HIDE_NAVIGATION
 //                showToolsUI();
                 startSystemHideTimer();
             } else {//状态栏隐藏
