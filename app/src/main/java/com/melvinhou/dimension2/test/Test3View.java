@@ -198,17 +198,20 @@ public class Test3View extends ViewGroup implements NestedScrollingParent2 {
         int targetY = mSideContainerTop - dyUnconsumed;//目标位置
         //阻力判断
         if (targetY > mSideContainerInitialTop) {
-            if (type == ViewCompat.TYPE_TOUCH) {
-                //阻力值
-                float proportion = 1f - (float) (targetY - mSideContainerInitialTop) / (float) maxDownSideHeight;
-                unDy = (int) ((float) dyUnconsumed * proportion * proportion);
-            } else {
-                if (mSideContainerTop > mSideContainerInitialTop) return;
-                unDy += (targetY - mSideContainerInitialTop);
+            if (targetY<(mSideContainerInitialTop+maxDownSideHeight)){
+                if (type == ViewCompat.TYPE_TOUCH) {
+                    //阻力值
+                    float proportion = 1f - (float) (targetY - mSideContainerInitialTop) / (float) maxDownSideHeight;
+                    unDy = (int) ((float) dyUnconsumed * proportion * proportion);
+                } else {
+                    if (mSideContainerTop > mSideContainerInitialTop) return;
+                    unDy += (targetY - mSideContainerInitialTop);
+                }
             }
         }
         mSideContainerTop -= unDy;
         if (mSideContainerTop < mSideContainerMinTop) mSideContainerTop = mSideContainerMinTop;
+        if (mSideContainerTop>getBottom()) mSideContainerTop = getBottom();
         moveLayout();
     }
 
