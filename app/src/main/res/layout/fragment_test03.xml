@@ -23,6 +23,16 @@
     </com.melvinhou.dimension2.test.NestedScrollChildView>
 <!--    个人信息-->
     <include layout="@layout/inset_fragment_test3"/>
+    <TextView
+        android:id="@+id/mIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:text="这是指示器"
+        android:textColor="@color/black"
+        android:background="#ccc"
+        />
 <!--    主区域-->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/mScroll"

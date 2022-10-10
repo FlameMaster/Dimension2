@@ -67,8 +67,8 @@ public class Test3View extends ViewGroup implements NestedScrollingParent2 {
     private float mvelocityY = 0;
 
     private NestedScrollingParentHelper mNestedScrollingParentHelper;
-    //所需控件:封面，主容器，个人信息，标题栏
-    private View mCoverView, mContainerView, mInfoView, mBarView;
+    //所需控件:封面，主容器，个人信息，标题栏,指示器
+    private View mCoverView, mContainerView, mInfoView, mBarView, mIndicator;
     //主容器的位置，初始位置，最高位置，当前,下滑最大值(会回弹),0点位置
     private int mSideContainerInitialTop, mSideContainerMinTop, mSideContainerTop, maxDownSideHeight, mSideContainerZeroTop;
     //手指是否抬起,是否有惯性滑动
@@ -80,7 +80,7 @@ public class Test3View extends ViewGroup implements NestedScrollingParent2 {
         isSideFling = false;
         maxDownSideHeight = 0;
         mSideContainerInitialTop = 0;
-        mSideContainerTop = 0;
+        mSideContainerTop = -1;
         mSideContainerZeroTop = 0;
         mSideContainerMinTop = 0;
     }
@@ -95,7 +95,8 @@ public class Test3View extends ViewGroup implements NestedScrollingParent2 {
         //初始化控件引用
         findViews();
         //初始化自动义参数
-        initParameter();
+        if (mSideContainerTop < 0)
+            initParameter();
 
     }
 
@@ -105,6 +106,7 @@ public class Test3View extends ViewGroup implements NestedScrollingParent2 {
         mContainerView = findViewById(R.id.mScroll);
         mInfoView = findViewById(R.id.mInformation);
         mBarView = findViewById(R.id.bar_root);
+        mIndicator = findViewById(R.id.mIndicator);
     }
 
     /*初始化各项参数*/
@@ -130,26 +132,27 @@ public class Test3View extends ViewGroup implements NestedScrollingParent2 {
             coverTop += (mSideContainerTop - mSideContainerInitialTop) / 2;
         }
         mCoverView.layout(getLeft(), coverTop, getRight(), getBottom());
-        mContainerView.layout(getLeft(), mSideContainerTop, getRight(), getBottom());
+        mIndicator.layout(getLeft(), mSideContainerTop, getRight(), mSideContainerTop + mIndicator.getMeasuredHeight());
+        mContainerView.layout(getLeft(), mSideContainerTop + mIndicator.getMeasuredHeight(), getRight(), getBottom());
         //个人资料
         mInfoView.layout(getLeft(), mSideContainerTop - mSideContainerInitialTop, getRight(), mSideContainerTop);
         float pre = mSideContainerTop - mSideContainerInitialTop;
-        if (pre>0){
-            float alpha = 1f - pre /(getBottom()-mSideContainerInitialTop);
-            if (alpha>1) alpha=1;
+        if (pre > 0) {
+            float alpha = 1f - pre / (getBottom() - mSideContainerInitialTop);
+            if (alpha > 1) alpha = 1;
             mInfoView.setAlpha(alpha);
         }
         //标题栏
-        mBarView.layout(getLeft(),getTop(),getRight(),mSideContainerZeroTop);
-        if (mSideContainerTop <= mSideContainerMinTop)  mBarView.setAlpha(0.9f);
+        mBarView.layout(getLeft(), getTop(), getRight(), mSideContainerZeroTop);
+        if (mSideContainerTop <= mSideContainerMinTop) mBarView.setAlpha(0.9f);
         else mBarView.setAlpha(0);
 
 
-        Log.d("t_o", new StringBuffer("moveLayout\t")
-                .append("mSideContainerTop=[").append(mSideContainerTop).append("]\t")
-                .append("mSideContainerMinTop=[").append(mSideContainerMinTop).append("]\t")
-                .append("mSideContainerInitialTop=[").append(mSideContainerInitialTop).append("]\t")
-                .toString());
+//        Log.d("t_o", new StringBuffer("moveLayout\t")
+//                .append("mSideContainerTop=[").append(mSideContainerTop).append("]\t")
+//                .append("mSideContainerMinTop=[").append(mSideContainerMinTop).append("]\t")
+//                .append("mSideContainerInitialTop=[").append(mSideContainerInitialTop).append("]\t")
+//                .toString());
     }
 
 //////////////////////————————————————————嵌套滑动——————————————————————//////////////////////
@@ -198,7 +201,7 @@ public class Test3View extends ViewGroup implements NestedScrollingParent2 {
         int targetY = mSideContainerTop - dyUnconsumed;//目标位置
         //阻力判断
         if (targetY > mSideContainerInitialTop) {
-            if (targetY<(mSideContainerInitialTop+maxDownSideHeight)){
+            if (targetY < (mSideContainerInitialTop + maxDownSideHeight)) {
                 if (type == ViewCompat.TYPE_TOUCH) {
                     //阻力值
                     float proportion = 1f - (float) (targetY - mSideContainerInitialTop) / (float) maxDownSideHeight;
@@ -211,7 +214,7 @@ public class Test3View extends ViewGroup implements NestedScrollingParent2 {
         }
         mSideContainerTop -= unDy;
         if (mSideContainerTop < mSideContainerMinTop) mSideContainerTop = mSideContainerMinTop;
-        if (mSideContainerTop>getBottom()) mSideContainerTop = getBottom();
+        if (mSideContainerTop > getBottom()) mSideContainerTop = getBottom();
         moveLayout();
     }
 
@@ -241,9 +244,9 @@ public class Test3View extends ViewGroup implements NestedScrollingParent2 {
     @Override
     public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
         mvelocityY = velocityY;
-        Log.w("onNestedPreFling", new StringBuffer("===\t")
-                .append("velocityY=[").append(velocityY).append("]\t")
-                .toString());
+//        Log.w("onNestedPreFling", new StringBuffer("===\t")
+//                .append("velocityY=[").append(velocityY).append("]\t")
+//                .toString());
         //过界不让滚动
         if (mSideContainerTop > mSideContainerInitialTop) {
             return true;

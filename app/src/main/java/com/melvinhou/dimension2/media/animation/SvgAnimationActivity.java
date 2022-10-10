@@ -3,6 +3,7 @@ package com.melvinhou.dimension2.media.animation;
 import android.graphics.Color;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +73,14 @@ public class SvgAnimationActivity extends BaseActivity {
     }
 
     @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.activity_slide_out_top);
+    }
+
+    @Override
     protected void initWindowUI() {
+        overridePendingTransition(R.anim.activity_slide_in_top,0);
 //        super.initWindowUI();
 
         getWindow().getDecorView().setSystemUiVisibility(
@@ -245,4 +253,7 @@ public class SvgAnimationActivity extends BaseActivity {
         button.setOnClickListener(clickListener);
         inputs.addView(button);
     }
+
+
+
 }

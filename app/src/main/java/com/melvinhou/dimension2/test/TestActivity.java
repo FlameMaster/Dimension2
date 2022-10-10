@@ -32,7 +32,7 @@ import androidx.viewpager2.widget.ViewPager2;
 public class TestActivity extends BaseActivity {
     private SparseArray<BindFragment>  fragments =  new SparseArray();
     private TabLayoutMediator mediator = null;
-    private String[] tabs = {"测试1", "测试2", "测试3"};
+    private String[] tabs = {"测试1", "测试2", "测试3", "测试4"};
 
     private ViewPager2 mViewPager;
     private TabLayout mIndicator;
@@ -100,6 +100,7 @@ public class TestActivity extends BaseActivity {
         fragments.put(0,new TestFragment01());
         fragments.put(1,new TestFragment02());
         fragments.put(2,new TestFragment03());
+        fragments.put(3,new TestFragment04());
     }
 
 
