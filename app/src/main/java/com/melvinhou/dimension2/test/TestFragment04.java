@@ -1,6 +1,9 @@
 package com.melvinhou.dimension2.test;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.MediaRecorder;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,10 @@ import com.melvinhou.kami.adapter.RecyclerHolder;
 import com.melvinhou.kami.mvvm.BaseModel;
 import com.melvinhou.kami.mvvm.BindFragment;
 import com.melvinhou.kami.util.FcUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.annotation.RetentionPolicy;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -84,5 +91,22 @@ public class TestFragment04 extends BindFragment<FragmentTest04Binding, BaseMode
 
     }
 
+    private MediaRecorder mediaRecorder = new MediaRecorder();
+    private File audioFile;
+    private boolean isRecording = false;
+    public void recorder_Media(){
+        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        try {
+            audioFile = File.createTempFile("recording",".3gp",getContext().getCacheDir());
+            mediaRecorder.setOutputFile(audioFile.getAbsolutePath());
+            mediaRecorder.prepare();
+            mediaRecorder.start();
+            isRecording = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
