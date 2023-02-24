@@ -1,26 +1,21 @@
 package com.melvinhou.dimension2.test;
 
-import android.content.Context;
 import android.content.Intent;
 import android.media.MediaRecorder;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.FragmentTest04Binding;
 import com.melvinhou.dimension2.media.animation.SvgAnimationActivity;
 import com.melvinhou.kami.adapter.RecyclerAdapter;
 import com.melvinhou.kami.adapter.RecyclerHolder;
-import com.melvinhou.kami.mvvm.BaseModel;
+import com.melvinhou.kami.mvvm.BaseViewModel;
 import com.melvinhou.kami.mvvm.BindFragment;
-import com.melvinhou.kami.util.FcUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.annotation.RetentionPolicy;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -37,7 +32,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
  * = 分 类 说 明：
  * ================================================
  */
-public class TestFragment04 extends BindFragment<FragmentTest04Binding, BaseModel> {
+public class TestFragment04 extends BindFragment<FragmentTest04Binding, BaseViewModel> {
 
     @Override
     protected FragmentTest04Binding openViewBinding(LayoutInflater inflater, ViewGroup container) {
@@ -45,8 +40,8 @@ public class TestFragment04 extends BindFragment<FragmentTest04Binding, BaseMode
     }
 
     @Override
-    protected Class<BaseModel> openModelClazz() {
-        return BaseModel.class;
+    protected Class<BaseViewModel> openModelClazz() {
+        return BaseViewModel.class;
     }
 
 

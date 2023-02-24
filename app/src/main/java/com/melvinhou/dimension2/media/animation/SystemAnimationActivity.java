@@ -27,7 +27,7 @@ import com.melvinhou.dimension2.R;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
-import com.melvinhou.kami.view.BaseActivity;
+import com.melvinhou.kami.view.activities.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;

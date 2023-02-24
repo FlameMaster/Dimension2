@@ -221,7 +221,7 @@ public class PermissionUtil {
     }
 
 
-    /*显示解释弹窗*/
+    /**显示解释弹窗*/
     private static void shouldShowRationale(final Activity activity, final int requestCode, final String requestPermission, PermissionGrant permissionGrant) {
         String[] permissionsHint = activity.getResources().getStringArray(R.array.permissions);
         showMessageOKCancel(activity, permissionsHint[requestCode],
@@ -236,7 +236,7 @@ public class PermissionUtil {
                 }, permissionGrant);
     }
 
-    /*显示解释弹窗*/
+    /**显示解释弹窗*/
     private static void showMessageOKCancel(final Activity context, String message,
                                             DialogInterface.OnClickListener okListener,
                                             final PermissionGrant permissionGrant) {

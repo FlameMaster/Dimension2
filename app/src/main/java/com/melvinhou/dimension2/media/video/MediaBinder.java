@@ -6,9 +6,9 @@ import android.os.Binder;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
-import com.melvinhou.kami.model.EventMessage;
-import com.melvinhou.kami.util.IOUtils;
-import com.melvinhou.rxjava.RxBus;
+import com.melvinhou.kami.io.IOUtils;
+import com.melvinhou.rxjava.rxbus.RxBus;
+import com.melvinhou.rxjava.rxbus.RxBusMessage;
 
 import java.io.Serializable;
 import java.util.List;
@@ -87,7 +87,10 @@ public class MediaBinder extends Binder implements Serializable, MediaPlayer.OnC
 //        // 自动播放下一首
 //        next();
         //通知ui变更
-        RxBus.get().post(new EventMessage(EventMessage.EventType.ALL, "tv_completion", nowMediaPosition));
+        RxBus.instance().post(RxBusMessage.Builder
+                .instance("tv_completion")
+                .attach(nowMediaPosition)
+                .build());
     }
 
     /*媒体准备完成*/
@@ -98,7 +101,10 @@ public class MediaBinder extends Binder implements Serializable, MediaPlayer.OnC
         if (nowProgress > 0) {    //如果不是从头播放
             seekTo(nowProgress);
         }
-        RxBus.get().post(new EventMessage(EventMessage.EventType.ALL, "tv_loading", false));
+        RxBus.instance().post(RxBusMessage.Builder
+                .instance("tv_loading")
+                .attach(false)
+                .build());
     }
 
     /*如果正在播放则返回true*/
@@ -109,7 +115,10 @@ public class MediaBinder extends Binder implements Serializable, MediaPlayer.OnC
     /*播放*/
     @SuppressLint("CheckResult")
     public void play(int position) {
-        RxBus.get().post(new EventMessage(EventMessage.EventType.ALL, "tv_loading", true));
+        RxBus.instance().post(RxBusMessage.Builder
+                .instance("tv_loading")
+                .attach(true)
+                .build());
 
         //列表循环
         if (position < 0) position = mMedias.size() - 1;
@@ -117,7 +126,10 @@ public class MediaBinder extends Binder implements Serializable, MediaPlayer.OnC
 
         nowMediaPosition = position;
         //通知ui变更
-        RxBus.get().post(new EventMessage(EventMessage.EventType.ALL, "tv_play", position));
+        RxBus.instance().post(RxBusMessage.Builder
+                .instance("tv_play")
+                .attach(position)
+                .build());
 
         String url = mMedias.get(position).getUrl();
         //判断是否过期
@@ -142,7 +154,9 @@ public class MediaBinder extends Binder implements Serializable, MediaPlayer.OnC
                     } else {
                         mMediaPlayer.stop();
                         //通知ui变更
-                        RxBus.get().post(new EventMessage(EventMessage.EventType.ALL, "tv_expired"));
+                        RxBus.instance().post(RxBusMessage.Builder
+                                .instance("tv_expired")
+                                .build());
                     }
                 });
     }
@@ -151,7 +165,9 @@ public class MediaBinder extends Binder implements Serializable, MediaPlayer.OnC
     public void pause() {
         if (mMediaPlayer != null && isPlaying()) {
             //通知ui变更
-            RxBus.get().post(new EventMessage(EventMessage.EventType.ALL, "tv_pause"));
+            RxBus.instance().post(RxBusMessage.Builder
+                    .instance("tv_pause")
+                    .build());
             mMediaPlayer.pause();
         }
     }
@@ -161,7 +177,9 @@ public class MediaBinder extends Binder implements Serializable, MediaPlayer.OnC
         if (mMediaPlayer != null && !isPlaying()) {
             mMediaPlayer.start();
             //通知ui变更
-            RxBus.get().post(new EventMessage(EventMessage.EventType.ALL, "tv_start"));
+            RxBus.instance().post(RxBusMessage.Builder
+                    .instance("tv_start")
+                    .build());
         }
     }
 
@@ -172,7 +190,9 @@ public class MediaBinder extends Binder implements Serializable, MediaPlayer.OnC
             //通知ui变更
             mMediaPlayer.stop();
             try {
-                RxBus.get().post(new EventMessage(EventMessage.EventType.ALL, "tv_stop"));
+                RxBus.instance().post(RxBusMessage.Builder
+                        .instance("tv_stop")
+                        .build());
                 mMediaPlayer.prepare(); // 在调用stop后如果需要再次通过start进行播放,需要之前调用prepare函数
             } catch (Exception e) {
                 e.printStackTrace();

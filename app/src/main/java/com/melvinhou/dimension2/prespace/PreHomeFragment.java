@@ -3,7 +3,6 @@ package com.melvinhou.dimension2.prespace;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -16,30 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
-import com.bumptech.glide.Glide;
 import com.melvinhou.dimension2.R;
-import com.melvinhou.dimension2.databinding.ActivityListBinding;
 import com.melvinhou.dimension2.databinding.FragmentSpacePreBinding;
-import com.melvinhou.dimension2.databinding.ItemAlbumBinding;
-import com.melvinhou.dimension2.net.AssetsFileKey;
-import com.melvinhou.dimension2.utils.LoadUtils;
-import com.melvinhou.kami.adapter.BindRecyclerAdapter;
-import com.melvinhou.kami.adapter.BindViewHolder;
-import com.melvinhou.kami.adapter.RecyclerAdapter;
 import com.melvinhou.kami.mvvm.BindFragment;
-import com.melvinhou.kami.util.DimenUtils;
-import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
 
 import java.io.File;
 
 import androidx.activity.result.ActivityResult;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import cc.shinichi.library.ImagePreview;
-import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
 
 
 /**
@@ -76,7 +58,7 @@ public class PreHomeFragment extends BindFragment<FragmentSpacePreBinding, Space
     }
 
     @Override
-    public void back() {
+    public void backward() {
         mModel.page.postValue(-1);
     }
 

@@ -1,0 +1,58 @@
+<resources>
+
+    <style name="KamiTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 应用的主要色调，actionBar默认使用该颜色，Toolbar导航栏的底色 -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <!-- 应用的主要暗色调，statusBarColor默认使用该颜色 -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!-- 窗口背景颜色-->
+        <item name="android:windowBackground">@color/windowBackground</item>
+        <!-- 控件选中颜色-->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- 默认控件颜色-->
+        <item name="colorControlNormal">@color/colorControlNormal</item>
+        <!-- 控件按压时的色调-->
+        <item name="colorControlHighlight">@color/colorControlHighlight</item>
+        <!-- 控件选中时的颜色，默认使用colorAccent-->
+        <item name="colorControlActivated">@color/colorControlActivated</item>
+        <!-- 默认按钮的背景颜色 -->
+        <item name="colorButtonNormal">@color/colorButtonNormal</item>
+        <!-- 默认EditView输入框字体的颜色 -->
+        <item name="editTextColor">@color/editTextColor</item>
+        <!-- Button，textView的文字颜色 -->
+        <item name="android:textColor">@color/textColor</item>
+        <!-- RadioButton checkbox等控件的文字 -->
+        <item name="android:textColorPrimaryDisableOnly">@color/textColorPrimaryDisableOnly</item>
+        <!-- 应用的主要文字颜色，actionBar的标题文字默认使用该颜色 -->
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <!-- 底部ico的默认颜色-->
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        <!-- switch thumbs 默认状态的颜色. (switch off)-->
+        <item name="colorSwitchThumbNormal">@color/colorSwitchThumbNormal</item>
+    </style>
+
+
+
+
+    <style name="KamiDialog" parent="android:Theme.Holo.Light.Dialog">
+        <!--背景透明-->
+        <item name="android:windowBackground">@color/transparent</item>
+        <!--背景透明-->
+        <item name="android:background">@color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 浮于Activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 边框 -->
+        <!--<item name="android:windowFrame">@null</item>-->
+        <!-- Dialog以外的区域模糊效果 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- Dialog进入及退出动画 -->
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    </style>
+
+
+</resources>

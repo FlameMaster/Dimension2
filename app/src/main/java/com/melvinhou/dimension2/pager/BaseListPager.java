@@ -7,8 +7,7 @@ import com.melvinhou.dimension2.databinding.ItemMoreBD;
 import com.melvinhou.dimension2.databinding.VpListBD;
 import com.melvinhou.kami.adapter.DataBindingHolder;
 import com.melvinhou.kami.adapter.DataBindingRecyclerAdapter;
-import com.melvinhou.kami.model.StateModel;
-import com.melvinhou.kami.net.EmptyState;
+import com.melvinhou.kami.net.RequestState;
 import com.melvinhou.kami.util.FcUtils;
 
 import androidx.databinding.DataBindingUtil;
@@ -122,7 +121,7 @@ public abstract class BaseListPager<D, H extends DataBindingHolder> extends Base
         if (mLoadMoreBinding == null) {
             mLoadMoreBinding = DataBindingUtil.inflate(LayoutInflater.from(
                     FcUtils.getContext()), R.layout.item_loadmore, null, false);
-            mLoadMoreBinding.setState(new StateModel(EmptyState.PROGRESS));
+            mLoadMoreBinding.setState(RequestState.RUNNING);
         }
         //显示加载更多布局
         if (getAdapter().getTailSize() <= 0)
@@ -178,7 +177,7 @@ public abstract class BaseListPager<D, H extends DataBindingHolder> extends Base
         if (isLoading) return;
         if (getAdapter().getDatas().size() <= 0) {
             isLoading = true;
-            updataEmptyState(EmptyState.PROGRESS, "数据加载中...");
+            updateRequestState(RequestState.RUNNING);
             addTailLayout();
             setPage(1);
             loadData(mSize, mPage++);
@@ -199,7 +198,7 @@ public abstract class BaseListPager<D, H extends DataBindingHolder> extends Base
     public void loadMore() {
         if (isLoading) return;
         //加载更多布局出现的时候开始加载更多
-        updataTailState(EmptyState.PROGRESS, "加载更多...");
+        updataTailState(RequestState.RUNNING);
         loadData(mSize, mPage++);
     }
 
@@ -213,26 +212,19 @@ public abstract class BaseListPager<D, H extends DataBindingHolder> extends Base
     }
 
     @Override
-    public void updataEmptyState(int emptyState, String message) {
-        if (getBinding().getState() != null)
-            getBinding().getState().setEmptyState(emptyState);
-        else
-            getBinding().setState(new StateModel(emptyState));
-
-        //文字设置
-        getBinding().getState().setUserText(message);
+    public void updateRequestState(@RequestState int state) {
+        getBinding().setState(state);
     }
 
     /**
      * 更新加载更多的状态
      *
-     * @param emptyState
+     * @param state
      */
-    public void updataTailState(@EmptyState int emptyState, String message) {
+    public void updataTailState(@RequestState int state) {
         if (mLoadMoreBinding == null) return;
-
         //改变状态
-        mLoadMoreBinding.getState().setUserText(message).setEmptyState(emptyState);
+        mLoadMoreBinding.setState(state);
     }
 
 

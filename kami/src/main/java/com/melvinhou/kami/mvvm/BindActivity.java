@@ -1,14 +1,14 @@
 package com.melvinhou.kami.mvvm;
 
+import android.app.Activity;
 import android.content.Intent;
 
-import com.melvinhou.kami.view.BaseActivity2;
+import com.melvinhou.kami.view.activities.BaseActivity2;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewbinding.ViewBinding;
 
@@ -25,7 +25,7 @@ import androidx.viewbinding.ViewBinding;
  * = 分 类 说 明：mvvm的基类
  * ================================================
  */
-public abstract class BindActivity<VB extends ViewBinding, M extends BaseModel> extends BaseActivity2 {
+public abstract class BindActivity<VB extends ViewBinding, M extends BaseViewModel> extends BaseActivity2 {
 
     //新版本的意图打开
     private ActivityResultLauncher<Intent> startActivity;
@@ -70,7 +70,7 @@ public abstract class BindActivity<VB extends ViewBinding, M extends BaseModel> 
     protected void onDestroy() {
         super.onDestroy();
         if (mModel != null)
-            mModel.unRegister();
+            mModel.cancel();
     }
 
 
@@ -108,5 +108,11 @@ public abstract class BindActivity<VB extends ViewBinding, M extends BaseModel> 
         //此处进行数据接收（接收回调）
         if (result.getResultCode() == RESULT_OK) {
         }
+    }
+
+
+    public <T extends Activity> void toActivity(Class<T> clazz) {
+        Intent intent = new Intent(this, clazz);
+        toActivity(intent);
     }
 }

@@ -10,12 +10,10 @@ import android.util.LruCache;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.ar.d3.D3Activity;
 import com.melvinhou.dimension2.ar.d3.D3Config;
-import com.melvinhou.dimension2.pager.PagerActivity;
-import com.melvinhou.kami.model.EventMessage;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
-import com.melvinhou.rxjava.RxBus;
-import com.melvinhou.rxjava.RxMsgParameters;
+import com.melvinhou.rxjava.rxbus.RxBus;
+import com.melvinhou.rxjava.rxbus.RxBusMessage;
 
 import java.io.File;
 import java.io.IOException;
@@ -160,10 +158,11 @@ public class D3ObjGroup implements D3Object {
             objs.add(d3Object);
         }
         //通知ui变更
-        RxBus.get().post(new EventMessage(EventMessage.EventType.ASSIGN,
-                D3Activity.class.getName()
-                        + RxMsgParameters.DATA_REFRESH,
-                null));
+        RxBus.instance().post(RxBusMessage.Builder
+                .instance(RxBusMessage.CommonType.DATA_REFRESH)
+                .client(D3Activity.class.getName())
+                .attach(null)
+                .build());
 
     }
 
@@ -212,10 +211,11 @@ public class D3ObjGroup implements D3Object {
      */
     private InputStream getAssetsIs(String path) throws IOException {
         Log.e("加载资源文件", "文件：" + path);
-        RxBus.get().post(new EventMessage(EventMessage.EventType.ASSIGN,
-                D3Activity.class.getName()
-                        + RxMsgParameters.DATA_REFRESH,
-                "加载：" + path));
+        RxBus.instance().post(RxBusMessage.Builder
+                .instance(RxBusMessage.CommonType.DATA_REFRESH)
+                .client(D3Activity.class.getName())
+                .attach("加载：" + path)
+                .build());
         return FcUtils.getContext().getAssets().open(path);
     }
 

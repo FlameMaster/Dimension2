@@ -6,6 +6,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.view.inputmethod.InputMethodManager;
 
+import com.melvinhou.kami.util.FcUtils;
+
 import java.util.Map;
 
 import androidx.collection.ArrayMap;
@@ -25,35 +27,10 @@ import androidx.collection.ArrayMap;
  */
 public abstract class BaseApplication extends Application {
 
-    /*打开的activity**/
+    /**打开的activity**/
     private Map<String,Activity> activities;
-    /*应用实例**/
+    /**应用实例**/
     private static BaseApplication instance;
-
-    /*本应用的全局上下文*/
-    private static Context mContext;
-    /*主线程已经初始化之后的handler*/
-    private static Handler mHandler;
-    /*主线程id*/
-    private static int mainThreadID;
-    /*输入帮助*/
-    private static InputMethodManager mInputMannager;
-
-    public static Context getContext() {
-        return mContext;
-    }
-
-    public static Handler getHandler() {
-        return mHandler;
-    }
-
-    public static int getMainThreadID() {
-        return mainThreadID;
-    }
-
-    public static InputMethodManager getmInputMannager() {
-        return mInputMannager;
-    }
 
 
     @Override
@@ -73,10 +50,12 @@ public abstract class BaseApplication extends Application {
     private void initGldbelParameter() {
         activities = new ArrayMap<>();
         instance = this;
-        mContext= getApplicationContext();
-        mHandler = new Handler();
-        mainThreadID = android.os.Process.myTid();
-        mInputMannager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        //向FcUtils注入参数
+        FcUtils.inject(getApplicationContext(),
+                android.os.Process.myTid(),
+                new Handler(),
+                (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE));
     }
 
     /**
@@ -86,21 +65,21 @@ public abstract class BaseApplication extends Application {
 
     }
 
-    /*获取一个异常处理类*/
+    /**获取一个异常处理类*/
     protected abstract BaseException getException();
 
-    /*获得实例*/
+    /**获得实例*/
     public static BaseApplication getInstance(){
         return instance;
     }
 
-    /*新建了一个activity*/
+    /**新建了一个activity*/
     public void putActivity(Activity activity){
         String tag = activity.getClass().getName();
         activities.put(tag,activity);
     }
 
-    /*删除了一个activity*/
+    /**删除了一个activity*/
     public void removeActivity(Activity activity){
 //        String tag = activity.getClass().getName();
         if (activity!=null) {
@@ -108,7 +87,7 @@ public abstract class BaseApplication extends Application {
         }
     }
 
-    /*结束指定的Activity*/
+    /**结束指定的Activity*/
     public void closeActivity(Activity activity){
         if (activity!=null) {
             this.activities.remove(activity);
@@ -117,7 +96,7 @@ public abstract class BaseApplication extends Application {
         }
     }
 
-    /*应用退出，结束所有的activity*/
+    /**应用退出，结束所有的activity*/
     public void exit(){
         for (Activity activity : activities.values()) {
             if (activity!=null) {
@@ -128,7 +107,7 @@ public abstract class BaseApplication extends Application {
         System.exit(0);
     }
 
-    /*关闭Activity列表中的所有Activity*/
+    /**关闭Activity列表中的所有Activity*/
     public void closeActivities(){
         for (Activity activity : activities.values()) {
             if (null != activity) {

@@ -5,8 +5,8 @@ import com.melvinhou.dimension2.net.HttpConstant;
 import com.melvinhou.dimension2.user.User;
 import com.melvinhou.kami.BaseApplication;
 import com.melvinhou.kami.BaseException;
-import com.melvinhou.kami.manager.ThreadManager;
-import com.melvinhou.kami.util.SharePrefUtil;
+import com.melvinhou.kami.tool.ThreadManager;
+import com.melvinhou.kami.io.SharePrefUtil;
 
 /**
  * ===============================================
@@ -38,7 +38,7 @@ public class Dimension2Application extends BaseApplication {
             public void run() {
                 boolean isUserCreated =SharePrefUtil.getBoolean("user_sql",false);
                 if (!isUserCreated){
-                    SqlManager.addUsers(getContext(),
+                    SqlManager.addUsers(getApplicationContext(),
                             createUser(10001l,"拜拜风尘子",
                                     HttpConstant.SERVER_RES +"image/portrait/01.jpg"),
                             createUser(10002l,"车厘子",

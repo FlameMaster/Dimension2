@@ -25,10 +25,10 @@ import com.melvinhou.kami.adapter.RecyclerHolder;
 import com.melvinhou.kami.mvvm.DataBindingActivity;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.ImageUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
-import com.melvinhou.kami.wiget.PhotoCutterView;
+import com.melvinhou.kami.view.wiget.PhotoCutterView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -135,12 +135,12 @@ public class AlbumActivity extends DataBindingActivity<ActAlbumBD> {
     }
 
     @Override
-    public void back() {
+    public void backward() {
         if (getViewDataBinding().expandedImage.getVisibility() == View.VISIBLE) {
             zoomImageFromExpanded();
             return;
         }
-        super.back();
+        super.backward();
     }
 
     /**

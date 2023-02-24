@@ -165,7 +165,7 @@ class MediaListAdapter extends DataBindingRecyclerAdapter<MediaItemEntity, Media
             });
             ((TextView) viewHolder.itemView).setText(data.getTitle());
             //加载图片
-            if (StringCompareUtils.noNull(data.getIconUrl()) && StringCompareUtils.isImageUrl(data.getIconUrl()))
+            if (StringCompareUtils.nonEmpty(data.getIconUrl()) && StringCompareUtils.isImageFile(data.getIconUrl()))
                 Glide.with(FcUtils.getContext())
                         .load(data.getIconUrl())
                         .apply(options)

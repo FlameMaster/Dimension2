@@ -3,7 +3,7 @@ package com.melvinhou.dimension2.prespace;
 import android.app.Application;
 import android.net.Uri;
 
-import com.melvinhou.kami.mvvm.BaseModel;
+import com.melvinhou.kami.mvvm.BaseViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -21,7 +21,7 @@ import androidx.lifecycle.MutableLiveData;
  * = 分 类 说 明：
  * ================================================
  */
-public class SpacePreModel extends BaseModel {
+public class SpacePreModel extends BaseViewModel {
     public SpacePreModel(@NonNull Application application) {
         super(application);
     }

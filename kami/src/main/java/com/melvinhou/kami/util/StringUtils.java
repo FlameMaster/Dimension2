@@ -1,14 +1,12 @@
 package com.melvinhou.kami.util;
 
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,15 +31,14 @@ import androidx.annotation.NonNull;
 public class StringUtils {
 
 
-    //非空判断*/
-    public static boolean noNull(String str) {
-        if (str == null || str.equals("") || str.equals("null"))
-            return false;
-        return true;
+    //非空判断
+    public static boolean nonEmpty(String str) {
+        return !isEmpty(str) && !str.equals("") && !str.equals("null");
     }
 
-    public static boolean isEmpty(String str) {
-        return TextUtils.isEmpty(str);
+    //空字符判断
+    public static boolean isEmpty(CharSequence s) {
+        return s == null || s.length() == 0;
     }
 
     //流转字符串
@@ -62,12 +59,12 @@ public class StringUtils {
 
     }
 
-    //替换操作*/
+    //替换操作
     public static String rereplace(@NonNull String root, @NonNull String oldS, String newS) {
         return root.replace(oldS, newS);
     }
 
-    //替换操作*/
+    //比较操作
     public static boolean equals(@NonNull String oldS, @NonNull String newS) {
         return oldS.equals(newS);
     }
@@ -119,19 +116,18 @@ public class StringUtils {
         return md5StrBuff.toString();
     }
 
-
     //string转float
     public static float getFloat(String number) {
-        if (StringUtils.noNull(number))
+        if (StringUtils.nonEmpty(number))
             return Float.valueOf(number);
         else return -1;
     }
 
-    //string转int*/
+    //string转int
     public static int getInteger(String number, int defaultValue) {
         int value = defaultValue;
         try {
-            if (StringUtils.noNull(number))
+            if (StringUtils.nonEmpty(number))
                 value = Integer.valueOf(number);
         } finally {
             return value;
@@ -171,7 +167,7 @@ public class StringUtils {
             // 构造URL 键值对的格式
             StringBuilder buf = new StringBuilder();
             for (Map.Entry<String, String> item : infoIds) {
-                if (noNull(item.getKey())) {
+                if (nonEmpty(item.getKey())) {
                     String key = item.getKey();
                     String val = item.getValue();
                     if (urlEncode) {
@@ -195,44 +191,5 @@ public class StringUtils {
         } finally {
             return buff;
         }
-    }
-
-    /**
-     * 格式化时间：1970年0点为0
-     * @param date 时间
-     * @param pattern 转换后的格式
-     * @return
-     */
-    public static String formatDuration(long date, String pattern) {
-        return new SimpleDateFormat(pattern)
-                .format(date);
-    }
-
-    private static final int HOUR = 60 * 60 * 1000;
-    private static final int MIN = 60 * 1000;
-    private static final int SEC = 1000;
-
-    /**
-     * 将时间戳转换为 01:01:01 或 01:01 的格式
-     */
-    public static String formatDuration(int duartion) {
-        // 计算小时数
-        int hour = duartion / HOUR;
-
-        // 计算分钟数
-        int min = duartion % HOUR / MIN;
-
-        // 计算秒数
-        int sec = duartion % MIN / SEC;
-
-        // 生成格式化字符串
-        if (hour == 0) {
-            // 不足一小时 01：01
-            return String.format("%02d:%02d", min, sec);
-        } else if (hour < 24) {
-            // 大于一小时 01:01:01
-            return String.format("%02d:%02d:%02d", hour, min, sec);
-        } else
-            return "max";//超出24小时的一般都是直播
     }
 }

@@ -24,9 +24,9 @@ import com.google.zxing.qrcode.QRCodeReader;
 import com.melvinhou.dimension2.ui.widget.CameraXCustomTouchView;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
-import com.melvinhou.kami.view.BaseActivity;
+import com.melvinhou.kami.view.activities.BaseActivity;
 
 import java.io.File;
 import java.nio.ByteBuffer;
@@ -109,7 +109,7 @@ public class CameraActivity extends BaseActivity {
     protected void initActivity(int layoutId) {
         super.initActivity(layoutId);
         // 请求摄像头权限
-        if (allPermissionsGranted()) {
+        if (checkPermission()) {
             startCamera();
         } else {
             ActivityCompat.requestPermissions(
@@ -122,7 +122,7 @@ public class CameraActivity extends BaseActivity {
      *
      * @return
      */
-    private boolean allPermissionsGranted() {
+    private boolean checkPermission() {
         return ContextCompat.checkSelfPermission(
                 FcUtils.getContext(), REQUIRED_PERMISSIONS[0]) == PackageManager.PERMISSION_GRANTED;
     }
@@ -139,7 +139,7 @@ public class CameraActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
+            if (checkPermission()) {
                 startCamera();
             } else {
                 Toast.makeText(this,

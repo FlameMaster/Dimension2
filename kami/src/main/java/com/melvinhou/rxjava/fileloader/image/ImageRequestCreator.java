@@ -1,6 +1,6 @@
 package com.melvinhou.rxjava.fileloader.image;
 
-import com.melvinhou.kami.util.FileUtils;
+import com.melvinhou.kami.io.FileUtils;
 import com.melvinhou.rxjava.fileloader.RequestCreator;
 
 /**

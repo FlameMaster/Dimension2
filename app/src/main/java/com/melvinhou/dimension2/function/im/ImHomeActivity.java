@@ -16,21 +16,19 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.db.SqlManager;
-import com.melvinhou.dimension2.user.User;
 import com.melvinhou.dimension2.net.HttpConstant;
+import com.melvinhou.dimension2.user.User;
 import com.melvinhou.kami.adapter.RecyclerAdapter;
 import com.melvinhou.kami.adapter.RecyclerHolder;
-import com.melvinhou.kami.manager.ThreadManager;
-import com.melvinhou.kami.model.EventMessage;
+import com.melvinhou.kami.view.activities.BaseActivity;
+import com.melvinhou.kami.io.IOUtils;
+import com.melvinhou.kami.io.SharePrefUtil;
+import com.melvinhou.kami.tool.ThreadManager;
 import com.melvinhou.kami.util.DateUtils;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
-import com.melvinhou.kami.util.SharePrefUtil;
-import com.melvinhou.kami.util.StringUtils;
-import com.melvinhou.kami.view.BaseActivity;
-import com.melvinhou.rxjava.RxBus;
-import com.melvinhou.rxjava.RxMsgParameters;
+import com.melvinhou.rxjava.rxbus.RxBus;
+import com.melvinhou.rxjava.rxbus.RxBusMessage;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -212,13 +210,15 @@ public class ImHomeActivity extends BaseActivity {
                     ImFriendEntity friendEntity = ImSqlManager.getImFriend(ip);
                     if (friendEntity != null) {
                         ImChatMessageEntity info = new ImChatMessageEntity();
-                        long date = DateUtils.getNowTime();
+                        long date = DateUtils.getCurrentTime();
                         info.setUuid(date);
                         info.setUserId(friendEntity.getUserId());
                         info.setMessage(msg);
-                        info.setDate(StringUtils.formatDuration(date, "yyyyMMdd_HHmmss"));
-                        RxBus.get().post(new EventMessage(EventMessage.EventType.ALL,
-                                RxMsgParameters.IM_MESSAGE_RECEIVE, info));
+                        info.setDate(DateUtils.formatDuration(date, "yyyyMMdd_HHmmss"));
+                        RxBus.instance().post(RxBusMessage.Builder
+                                .instance(":[Message]receive")
+                                .client(RxBusMessage.OFFSCREEN_CLIENT_DEFAULT)
+                                .build());
                     }
                 }
             } catch (IOException e) {

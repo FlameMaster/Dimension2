@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="windowBackground">#F8F8F8</color>
+    <color name="statusBarColor">@color/colorPrimaryDark</color>
+    <color name="navigationBarColor">#F8F8F8</color>
+    <color name="colorForeground">#000000</color>
+    <color name="colorBackground">#f00</color>
+    <color name="colorAccent">#000000</color>
+    <color name="colorControlNormal">#80000000</color>
+    <color name="colorControlHighlight">#80000000</color>
+    <color name="colorControlActivated">@color/colorAccent</color>
+    <color name="colorButtonNormal">#80000000</color>
+    <color name="editTextColor">#000000</color>
+    <color name="textColor">#000000</color>
+    <color name="textColorPrimaryDisableOnly">#000000</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="textColorSecondary">#80000000</color>
+    <color name="colorSwitchThumbNormal">#80000000</color>
+
     <!--常用颜色-->
     <color name="transparent">#00000000</color><!--透明-->
     <!--<color name="white">#ffffff</color>-->

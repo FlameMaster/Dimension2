@@ -7,10 +7,9 @@ import android.view.ViewGroup;
 
 import com.melvinhou.kami.R;
 import com.melvinhou.kami.databinding.ViewLoadingBD;
-import com.melvinhou.kami.model.StateModel;
-import com.melvinhou.kami.net.EmptyState;
+import com.melvinhou.kami.net.RequestState;
 import com.melvinhou.kami.util.DimenUtils;
-import com.melvinhou.kami.view.BaseActivity2;
+import com.melvinhou.kami.view.activities.BaseActivity2;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
@@ -112,13 +111,13 @@ public abstract class DataBindingActivity<DB extends ViewDataBinding> extends Ba
     /**
      * 改变加载布局状态
      *
-     * @param code
-     * @param message
      */
     @Override
-    public void changeLoadingState(@EmptyState int code, String message) {
-        if (mLoadingBD != null) {
-            mLoadingBD.setState(new StateModel(code).setUserText(message));
+    public void changeRequestState(@RequestState int state) {
+        if (mLoadingBD!=null){
+            mLoadingBD.setState(state);
+            mLoadingBD.imgResult.setImageDrawable(getRequestStateImage(state));
+            mLoadingBD.textState.setText(getRequestStateMessage(state));
         }
     }
 
@@ -127,8 +126,8 @@ public abstract class DataBindingActivity<DB extends ViewDataBinding> extends Ba
      *
      * @param view
      */
-    public void nullClick(View view) {
-        nullClick();
+    public void emptyClick(View view) {
+        emptyClick();
     }
 
 
@@ -138,7 +137,7 @@ public abstract class DataBindingActivity<DB extends ViewDataBinding> extends Ba
      * @param view
      */
     public void back(View view) {
-        back();
+        backward();
     }
 
 

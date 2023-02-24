@@ -19,11 +19,12 @@ import android.widget.TextView;
 
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.net.HttpConstant;
-import com.melvinhou.kami.net.EmptyState;
+import com.melvinhou.kami.net.RequestState;
+import com.melvinhou.kami.net.ResultState;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.ImageUtils;
-import com.melvinhou.kami.view.BaseActivity2;
+import com.melvinhou.kami.view.activities.BaseActivity2;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -152,7 +153,7 @@ public class PdfActivity extends BaseActivity2 {
 
     @Override
     protected void initListener() {
-        findViewById(R.id.tablet_back).setOnClickListener(v -> back());
+        findViewById(R.id.tablet_back).setOnClickListener(v -> backward());
         findViewById(R.id.tablet_save).setOnClickListener(v -> saveSignature());
         //初始化ViewPager的适配器并绑定
         mAdapter = new MyAdapter();
@@ -207,7 +208,7 @@ public class PdfActivity extends BaseActivity2 {
     @Override
     protected void onLoading() {
         showLoadingView(true);
-        changeLoadingState(EmptyState.PROGRESS, "加载中...");
+        changeRequestState(RequestState.RUNNING);
         downloadPdf(mUrl, FILE_NAME, new Observer<String>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -227,7 +228,7 @@ public class PdfActivity extends BaseActivity2 {
 
             @Override
             public void onError(Throwable e) {
-                changeLoadingState(EmptyState.USER_DEFINED, "加载失败");
+                changeRequestState(ResultState.FAILED);
             }
 
             @Override
@@ -238,12 +239,12 @@ public class PdfActivity extends BaseActivity2 {
     }
 
     @Override
-    public void back() {
+    public void backward() {
         if (mTabletGroup.getVisibility() == View.VISIBLE) {
             mTabletView.startSignature();
             mTabletGroup.setVisibility(View.GONE);
         } else
-            super.back();
+            super.backward();
     }
 
     public File getCacheFile(String fileName) {
@@ -417,7 +418,7 @@ public class PdfActivity extends BaseActivity2 {
         if (finalBitmap != null) {
             mBitmaps.set(currentPosition, finalBitmap);
             mAdapter.notifyItemChanged(currentPosition);
-            back();
+            backward();
         }
     }
 

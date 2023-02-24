@@ -30,7 +30,7 @@ import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
 import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException;
 import com.melvinhou.dimension2.R;
-import com.melvinhou.kami.view.BaseActivity;
+import com.melvinhou.kami.view.activities.BaseActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;

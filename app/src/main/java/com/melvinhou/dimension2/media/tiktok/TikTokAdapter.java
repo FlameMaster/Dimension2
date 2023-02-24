@@ -10,7 +10,7 @@ import android.view.View;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ItemTiktokBD;
 import com.melvinhou.kami.adapter.DataBindingRecyclerAdapter;
-import com.melvinhou.kami.manager.ThreadManager;
+import com.melvinhou.kami.tool.ThreadManager;
 import com.melvinhou.kami.util.FcUtils;
 
 import androidx.databinding.ViewDataBinding;

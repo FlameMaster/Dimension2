@@ -8,8 +8,8 @@ import com.melvinhou.dimension2.net.AssetsFileKey;
 import com.melvinhou.dimension2.CYEntity;
 import com.melvinhou.dimension2.utils.LoadUtils;
 import com.melvinhou.kami.mvp.BaseModel;
-import com.melvinhou.kami.net.EmptyState;
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.net.ResultState;
+import com.melvinhou.kami.io.IOUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public class TiktokModel extends BaseModel<TiktokCotract.Presenter> implements T
     @SuppressLint("CheckResult")
     @Override
     public void loadNetWorkData() {
-        getPresenter().startLoading(null);
+        getPresenter().startLoading();
         Observable.create((ObservableOnSubscribe<ArrayList<TiktokEntity>>) emitter -> {
             ArrayList<TiktokEntity> list = LoadUtils.getData(
                     LoadUtils.SOURCE_ASSETS,//资源位置
@@ -60,7 +60,7 @@ public class TiktokModel extends BaseModel<TiktokCotract.Presenter> implements T
                 .compose(IOUtils.setThread())
                 .subscribe(list -> {
                     getListDatas().postValue(list);
-                    getPresenter().endLoading(EmptyState.NORMAL,null);
+                    getPresenter().endLoading(ResultState.SUCCESS);
                 });
     }
 

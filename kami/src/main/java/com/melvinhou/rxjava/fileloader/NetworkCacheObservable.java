@@ -1,7 +1,6 @@
 package com.melvinhou.rxjava.fileloader;
 
-import com.melvinhou.kami.model.BaseCacheModel;
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.io.IOUtils;
 
 import java.io.InputStream;
 

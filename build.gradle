@@ -1,30 +1,28 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-
     //指定当前的项目工程可以从哪些仓库上去拉取依赖库给当前项目使用
-    repositories {
-//        google()//谷歌自己的库
-//        mavenCentral()
+    repositories {//仓库
+        gradlePluginPortal()
+        mavenCentral()
+        //http库加载问题
+        //1、allowInsecureProtocol = true
+        //2、或将 http 协议更换为 https 协议
+        maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url "https://mirrors.tencent.com/nexus/repository/maven-public/" }
+        google()//谷歌自己的库
 //        jcenter()//停止维护
 //        mavenLocal()
-
-        maven {
-            url "https://maven.aliyun.com/nexus/content/groups/public/"
-        }
-        mavenCentral()
-        google()
-        jcenter()
         maven { url 'https://repo1.maven.org/maven2/' }//um
         maven { url 'https://jitpack.io' }
         maven { url "https://oss.jfrog.org/libs-snapshot" }
+        //1.添加MobSDK Maven地址
         maven { url "https://mvn.mob.com/android" }
         maven { url 'https://developer.huawei.com/repo/' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.3.0'
-        
-
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.21'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -32,15 +30,10 @@ buildscript {
 
 allprojects {
     repositories {
-//        google()
-//        mavenCentral()
-//        jcenter()
-//        mavenLocal()
-
-        maven {
-            url "https://maven.aliyun.com/nexus/content/groups/public/"
-        }
+        //按顺序加载，前面的加载失败后面的不会加载
         mavenCentral()
+        maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url "https://mirrors.tencent.com/nexus/repository/maven-public/" }
         google()
         jcenter()
         maven { url 'https://repo1.maven.org/maven2/' }//um
@@ -54,3 +47,5 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+apply from: "config.gradle"

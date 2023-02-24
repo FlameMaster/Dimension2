@@ -1,9 +1,9 @@
 package com.melvinhou.dimension2.media.tiktok;
 
 import com.melvinhou.dimension2.Comment;
-import com.melvinhou.kami.mvp.MvpModel;
-import com.melvinhou.kami.mvp.MvpPresenter;
-import com.melvinhou.kami.mvp.MvpView;
+import com.melvinhou.kami.mvp.interfaces.MvpModel;
+import com.melvinhou.kami.mvp.interfaces.MvpPresenter;
+import com.melvinhou.kami.mvp.interfaces.MvpView;
 
 import java.util.List;
 
@@ -72,7 +72,7 @@ public class TiktokCotract {
         //监听视频点击
         TikTokAdapter.OnItemDoubleClickListener getItemDoubleClickListener();
 
-        void back();
+        void backward();
     }
 
     /**

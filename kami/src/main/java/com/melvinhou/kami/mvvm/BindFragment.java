@@ -8,11 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.melvinhou.kami.BaseApplication;
-import com.melvinhou.kami.view.BaseFragment2;
+import com.melvinhou.kami.view.fragments.BaseFragment2;
 
 import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -33,7 +31,7 @@ import androidx.viewbinding.ViewBinding;
  * = 分 类 说 明：mvvm的基类
  * ================================================
  */
-public abstract class BindFragment<VB extends ViewBinding, M extends BaseModel> extends BaseFragment2 {
+public abstract class BindFragment<VB extends ViewBinding, M extends BaseViewModel> extends BaseFragment2 {
 
     //新版本的意图打开
     private ActivityResultLauncher<Intent> startActivity;
@@ -95,7 +93,7 @@ public abstract class BindFragment<VB extends ViewBinding, M extends BaseModel> 
     public void onDestroy() {
         super.onDestroy();
         if (mModel != null)
-            mModel.unRegister();
+            mModel.cancel();
     }
 
 

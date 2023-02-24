@@ -6,11 +6,16 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.Log;
+
+import com.melvinhou.kami.BaseApplication;
+
+import androidx.core.content.ContextCompat;
 
 /**
  * ===============================================
@@ -22,10 +27,18 @@ import android.util.Log;
  * <p>
  * = 时 间：2020/6/24 19:35
  * <p>
- * = 分 类 说 明：
+ * = 分 类 说 明：App的全局工具
  * ================================================
  */
 public class AppUtils {
+
+
+    /**
+     * 结束app
+     */
+    public static void closeApp() {
+        BaseApplication.getInstance().exit();
+    }
 
 
     /**
@@ -71,7 +84,7 @@ public class AppUtils {
      */
     public static String getMachineID() {
         String id = null;
-        if (!FcUtils.lacksPermission(Manifest.permission.READ_PHONE_STATE)) {
+        if (!lackPermission(Manifest.permission.READ_PHONE_STATE)) {
             id = getDeviceId();
         } else {
             id = Settings.System.getString(FcUtils.getContext().getContentResolver(), Settings.System.ANDROID_ID);
@@ -85,12 +98,15 @@ public class AppUtils {
 
     /**
      * 获取deviceID
+     *
      * @return
      */
     @SuppressLint("MissingPermission")
     public static String getDeviceId() {
         TelephonyManager tm = (TelephonyManager) FcUtils.getContext().getSystemService(Context.TELEPHONY_SERVICE);
-        return tm.getDeviceId();
+        if (lackPermission(Manifest.permission.READ_PHONE_STATE))
+            return tm.getDeviceId();
+        else return null;
     }
 
 
@@ -120,6 +136,44 @@ public class AppUtils {
             e.printStackTrace();
         } finally {
             return channelName;
+        }
+    }
+
+
+
+    /** 判断是否缺少权限*/
+    public static boolean lackPermission(String permission) {
+        return ContextCompat.checkSelfPermission(FcUtils.getContext(), permission) ==
+                PackageManager.PERMISSION_DENIED;
+    }
+
+
+    /**
+     *判断是否有网
+     * @return
+     */
+    public static boolean isNetworkConnected() {
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) FcUtils.getContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+        if (mNetworkInfo != null) {
+            //mNetworkInfo.isAvailable();
+            return true;//有网
+        }
+        return false;//没有网
+    }
+
+
+    //检测该包名所对应的应用是否存在
+    public static boolean checkPackage(String packageName) {
+        if (packageName == null || "".equals(packageName))
+            return false;
+        try {
+            FcUtils.getContext().getPackageManager().getApplicationInfo(packageName, PackageManager
+                    .GET_UNINSTALLED_PACKAGES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
     }
 }

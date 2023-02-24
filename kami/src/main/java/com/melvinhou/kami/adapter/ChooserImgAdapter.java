@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.melvinhou.kami.R;
-import com.melvinhou.kami.model.UriFileInfo;
+import com.melvinhou.kami.bean.UriFileInfo;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
 

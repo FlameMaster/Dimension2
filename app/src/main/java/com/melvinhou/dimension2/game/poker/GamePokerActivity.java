@@ -16,8 +16,8 @@ import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.net.HttpConstant;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
-import com.melvinhou.kami.view.BaseActivity;
+import com.melvinhou.kami.io.IOUtils;
+import com.melvinhou.kami.view.activities.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;

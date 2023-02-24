@@ -1,7 +1,7 @@
 package com.melvinhou.dimension2;
 
 
-import com.melvinhou.kami.model.BaseEntity;
+import com.melvinhou.kami.net.BaseEntity;
 
 /**
  * ===========================================================
@@ -36,7 +36,7 @@ public class CYEntity<D> implements BaseEntity<D> {
     }
 
     @Override
-    public long getDate() {
+    public long getTimer() {
         return date;
     }
 

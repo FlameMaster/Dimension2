@@ -44,7 +44,7 @@ public class Movie {
         this.owner = owner;
     }
 
-    public long getDate() {
+    public long getTimer() {
         return date;
     }
 

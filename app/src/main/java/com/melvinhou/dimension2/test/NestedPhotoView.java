@@ -21,7 +21,7 @@ import android.view.ViewTreeObserver;
 
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
-import com.melvinhou.kami.wiget.RotateGestureDetector;
+import com.melvinhou.kami.view.wiget.RotateGestureDetector;
 
 import java.io.IOException;
 

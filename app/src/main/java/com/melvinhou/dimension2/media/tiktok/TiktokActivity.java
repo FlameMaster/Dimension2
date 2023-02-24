@@ -235,7 +235,7 @@ public class TiktokActivity extends MvpActivity2<TiktokCotract.Presenter, ActTik
     }
 
     @Override
-    public void back() {
-        getPresenter().back();
+    public void backward() {
+        getPresenter().backward();
     }
 }

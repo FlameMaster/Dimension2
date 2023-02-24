@@ -44,11 +44,11 @@ public class ImChatModel extends AndroidViewModel {
      */
     ImChatMessageEntity createChatMessage(long userId, String message) {
         ImChatMessageEntity entity = new ImChatMessageEntity();
-        long date = DateUtils.getNowTime();
+        long date = DateUtils.getCurrentTime();
         entity.setUuid(date);
         entity.setUserId(userId);
         entity.setMessage(message);
-        entity.setDate(StringUtils.formatDuration(date, "yyyyMMdd_HHmmss"));
+        entity.setDate(DateUtils.formatDuration(date, "yyyyMMdd_HHmmss"));
         return entity;
     }
 

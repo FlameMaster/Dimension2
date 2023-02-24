@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ActMusicPlayerBD;
 import com.melvinhou.kami.mvvm.DataBindingActivity;
+import com.melvinhou.kami.util.DateUtils;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.StringUtils;
@@ -116,7 +117,7 @@ public class MusicPlayerActivity extends DataBindingActivity<ActMusicPlayerBD> {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 getViewDataBinding().playerProgressText.setText(
-                        StringUtils.formatDuration((int) progress));
+                        DateUtils.formatDuration((int) progress));
             }
 
             @Override
@@ -195,7 +196,7 @@ public class MusicPlayerActivity extends DataBindingActivity<ActMusicPlayerBD> {
         String backgroundUri = mediaMetadata.getString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI);
 
         getViewDataBinding().playerProgressMaxText.setText(
-                StringUtils.formatDuration((int) duration));
+                DateUtils.formatDuration((int) duration));
         getViewDataBinding().playerProgress.setMax((int) duration);
         getViewDataBinding().bar.setTitle(title);
         //专辑封面

@@ -7,16 +7,16 @@ import android.view.View;
 import com.melvinhou.dimension2.PairEntity;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ActPagerBD;
-import com.melvinhou.kami.model.EventMessage;
 import com.melvinhou.kami.mvvm.DataBindingActivity;
-import com.melvinhou.rxjava.RxBus;
-import com.melvinhou.rxjava.RxBusClient;
-import com.melvinhou.rxjava.RxMsgParameters;
+import com.melvinhou.rxjava.rxbus.RxBus;
+import com.melvinhou.rxjava.rxbus.RxBusClient;
+import com.melvinhou.rxjava.rxbus.RxBusMessage;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 
 /**
@@ -48,7 +48,7 @@ public class PagerActivity extends DataBindingActivity<ActPagerBD> {
     @Override
     protected void onDestroy() {
         if (mRxBusClient != null) {
-            mRxBusClient.unregister();
+            mRxBusClient.cancel();
             mRxBusClient = null;
         }
         super.onDestroy();
@@ -135,13 +135,13 @@ public class PagerActivity extends DataBindingActivity<ActPagerBD> {
     }
 
     @Override
-    public void back() {
+    public void backward() {
         if (mPagerAdapter != null) {
             int position = getViewDataBinding().container.getCurrentItem();
-            if (!mPagerAdapter.getPager(position).back())
-                super.back();
+            if (!mPagerAdapter.getPager(position).backward())
+                super.backward();
         } else
-            super.back();
+            super.backward();
     }
 
 
@@ -149,28 +149,26 @@ public class PagerActivity extends DataBindingActivity<ActPagerBD> {
      * 注册绑定rxbus
      */
     private void bindRxBus() {
-        mRxBusClient = new RxBusClient(getClass().getName()) {
+        mRxBusClient = new RxBusClient(RxBusClient.getClientId(getClass().getName())) {
             @Override
-            protected void onEvent(int type, String message, Object data) {
-                PagerActivity.this.onEvent(type, message, data);
+            protected void onEvent(@NonNull String eventType, Object attach) {
+                PagerActivity.this.onEvent(eventType, attach);
             }
         };
         //告诉别人我这里初始化了
-        RxBus.get().post(new EventMessage(getClass().getName()
-                + RxMsgParameters.ACTIVITY_LAUNCHED));
+        RxBus.instance().post(RxBusMessage.Builder
+                .instance(RxBusMessage.CommonType.ACTIVITY_LAUNCHED)
+                .build());
     }
 
     /**
      * 事件处理
      *
      * @param type    类型
-     * @param message 信息
      * @param data    数据
      */
-    public void onEvent(@EventMessage.EventType int type, String message, Object data) {
-        if (type == EventMessage.EventType.ASSIGN
-                && message.contains(getClass().getName())) {
-            if (message.contains(RxMsgParameters.ACTIVITY_LAUNCH)) {//打开新页面
+    public void onEvent(@NonNull String type, Object data) {
+            if (type.contains(RxBusMessage.CommonType.ACTIVITY_LAUNCH)) {//打开新页面
                 if (data instanceof Intent) {
                     Intent intent = (Intent) data;
                     toActivity(intent);
@@ -178,12 +176,12 @@ public class PagerActivity extends DataBindingActivity<ActPagerBD> {
                     PairEntity entity = (PairEntity) data;
                     toActivity((View) entity.getKey(), (Intent) entity.getValue());
                 }
-            } else if (message.contains(RxMsgParameters.ACTIVITY_FINISH)) {//关闭页面
+            } else if (type.contains(RxBusMessage.CommonType.ACTIVITY_FINISH)) {//关闭页面
                 close();
-            } else if (message.contains(RxMsgParameters.DATA_REFRESH)) {//刷新数据
-                showLoadingView();
+            } else if (type.contains(RxBusMessage.CommonType.DATA_REFRESH)) {//刷新数据
+                showLoadingView(false);
                 //页面初始化
-            } else if (message.contains(RxMsgParameters.Pager.PAGER_INIT)) {
+            } else if (type.contains(":{Pager}init")) {
                 List<BasePager> listPagers = null;
                 if (data instanceof List) {
                     listPagers = (List<BasePager>) data;
@@ -198,6 +196,5 @@ public class PagerActivity extends DataBindingActivity<ActPagerBD> {
                 if (listPagers != null)
                     initPager(listPagers);
             }
-        }
     }
 }

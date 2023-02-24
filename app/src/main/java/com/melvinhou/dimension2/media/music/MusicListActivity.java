@@ -82,7 +82,7 @@ public class MusicListActivity extends DataBindingActivity<ActMusicListBD> {
     protected void onStart() {
         super.onStart();
         // 请求音乐播放权限
-        if (allPermissionsGranted()) {
+        if (checkPermission()) {
             MediaBrowserHelper.registerCallback(myMusicCallback);
         } else {
             ActivityCompat.requestPermissions(
@@ -109,7 +109,7 @@ public class MusicListActivity extends DataBindingActivity<ActMusicListBD> {
      *
      * @return
      */
-    private boolean allPermissionsGranted() {
+    private boolean checkPermission() {
         return ContextCompat.checkSelfPermission(
                 FcUtils.getContext(), REQUIRED_PERMISSIONS[1]) == PackageManager.PERMISSION_GRANTED;
     }
@@ -126,7 +126,7 @@ public class MusicListActivity extends DataBindingActivity<ActMusicListBD> {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
+            if (checkPermission()) {
                 MediaBrowserHelper.registerCallback(myMusicCallback);
             } else {
                 Toast.makeText(this,

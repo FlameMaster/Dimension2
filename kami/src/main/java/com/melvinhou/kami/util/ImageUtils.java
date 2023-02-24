@@ -212,7 +212,7 @@ public class ImageUtils {
         } finally {
             try {
                 retriever.release();
-            } catch (RuntimeException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return bitmap;

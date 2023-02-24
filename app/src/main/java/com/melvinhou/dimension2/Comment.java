@@ -90,7 +90,7 @@ public class Comment {
         this.subComments = subComments;
     }
 
-    public long getDate() {
+    public long getTimer() {
         return date;
     }
 

@@ -22,13 +22,14 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.melvinhou.dimension2.R;
+import com.melvinhou.kami.util.DateUtils;
 import com.melvinhou.kami.util.DeviceUtils;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
 import com.melvinhou.kami.util.StringUtils;
-import com.melvinhou.kami.view.BaseActivity;
+import com.melvinhou.kami.view.activities.BaseActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -228,7 +229,7 @@ public class VideoActivity2 extends BaseActivity {
         if (isMovieMode) rotationVideo(null);
         //加载传入的数据
         String url = getIntent().getStringExtra("url");
-        if (StringUtils.noNull(url)) {
+        if (StringUtils.nonEmpty(url)) {
             //视频加载
             mVidoe.setVideoURI(Uri.parse(url));
             mVidoe.setLooping(false);
@@ -360,7 +361,7 @@ public class VideoActivity2 extends BaseActivity {
     private void updataProgress() {
         int progress = mVidoe.getProgress();
         mProgress.setProgress(progress);
-        mTextProgress.setText(StringUtils.formatDuration(progress));
+        mTextProgress.setText(DateUtils.formatDuration(progress));
     }
 
 
@@ -388,9 +389,9 @@ public class VideoActivity2 extends BaseActivity {
         //播放图标
         if (currentState == FCVidoeView.STATE_PLAYING||
                 currentState == FCVidoeView.STATE_BUFFERING_PLAYING) {
-            mPlayButton.setImageResource(R.drawable.ic_tv_pause);
+            mPlayButton.setImageResource(R.drawable.ic_media_pause_02);
         } else
-            mPlayButton.setImageResource(R.drawable.ic_tv_play);
+            mPlayButton.setImageResource(R.drawable.ic_media_play_02);
     }
 
     /**
@@ -399,7 +400,7 @@ public class VideoActivity2 extends BaseActivity {
     private void onResourcePrepared() {
         int maxProgress = mVidoe.getMaxProgress();
         mProgress.setMax(maxProgress);
-        mTextMaxProgress.setText("/" + StringUtils.formatDuration(maxProgress));
+        mTextMaxProgress.setText("/" + DateUtils.formatDuration(maxProgress));
         //开始更新进度条
         if (mProgressDisposable != null) mProgressDisposable.dispose();
         mProgressDisposable = Observable.interval(0, 1, TimeUnit.SECONDS)

@@ -28,7 +28,7 @@ import android.webkit.WebViewClient;
 
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ActWebBD;
-import com.melvinhou.kami.manager.DialogCheckBuilder;
+import com.melvinhou.kami.view.dialog.DialogCheckBuilder;
 import com.melvinhou.kami.mvvm.DataBindingActivity;
 import com.melvinhou.kami.util.DateUtils;
 import com.melvinhou.kami.util.FcUtils;
@@ -119,7 +119,7 @@ public class WebActivity extends DataBindingActivity<ActWebBD> {
                                 + ".getAttribute('title-type');",
                         value -> {
                             //js 返回的结果
-                            if (!StringUtils.noNull(value)) return;
+                            if (!StringUtils.nonEmpty(value)) return;
                             int code = Integer.valueOf(value.replace("\"", ""), -1);
                             Log.e("title-type", "code=" + code);
 
@@ -399,7 +399,7 @@ public class WebActivity extends DataBindingActivity<ActWebBD> {
         super.onStart();
         //调用js刷新页面
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (StringUtils.noNull(mUrl) && mUrl.contains("Idle/IdleList")) return;
+            if (StringUtils.nonEmpty(mUrl) && mUrl.contains("Idle/IdleList")) return;
             getViewDataBinding().web.evaluateJavascript("RefreshWeb()", new ValueCallback<String>() {
                 @Override
                 public void onReceiveValue(String value) {
@@ -631,7 +631,7 @@ public class WebActivity extends DataBindingActivity<ActWebBD> {
     private void takePhoto() {
         File fileUri = new File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                DateUtils.getNowTime() + ".jpg");
+                DateUtils.getCurrentTime() + ".jpg");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             //通过FileProvider创建一个content类型的Uri
             imageUri = FileProvider.getUriForFile(FcUtils.getContext(),
@@ -660,9 +660,9 @@ public class WebActivity extends DataBindingActivity<ActWebBD> {
 
 
     @Override
-    public void back() {
+    public void backward() {
         if (TextUtils.isEmpty(mUrl) || mUrl.equals(getViewDataBinding().web.getUrl()))
-            super.back();
+            super.backward();
         else
             getViewDataBinding().web.goBack();
     }

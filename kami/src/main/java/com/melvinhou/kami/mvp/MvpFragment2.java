@@ -1,5 +1,7 @@
 package com.melvinhou.kami.mvp;
 
+import com.melvinhou.kami.mvp.interfaces.MvpPresenter;
+import com.melvinhou.kami.mvp.interfaces.MvpView;
 import com.melvinhou.kami.mvvm.DataBindingFragment;
 
 import androidx.databinding.ViewDataBinding;

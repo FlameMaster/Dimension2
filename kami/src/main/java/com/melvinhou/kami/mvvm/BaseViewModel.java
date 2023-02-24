@@ -1,76 +1,100 @@
 package com.melvinhou.kami.mvvm;
 
+import android.app.Application;
 
-import android.util.Log;
+import com.melvinhou.kami.net.BaseEntity;
+import com.melvinhou.kami.net.HttpCallBack;
+import com.melvinhou.kami.net.RequestCallback;
+import com.melvinhou.kami.net.RequestState;
+import com.melvinhou.kami.net.ResultState;
 
-import com.melvinhou.kami.model.BaseEntity;
-import com.melvinhou.kami.model.StateModel;
-import com.melvinhou.kami.net.BaseHttpObserver;
-import com.melvinhou.kami.net.EmptyState;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
+import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 /**
  * ===============================================
  * = 作 者：风 尘
  * <p>
- * = 版 权 所 有：7416064@qq.com
+ * = 版 权 所 有：melvinhou@163.com
  * <p>
  * = 地 点：中 国 北 京 市 朝 阳 区
  * <p>
- * = 时 间：2017/5/24 14:16
+ * = 时 间：2022/8/11 0011 15:30
  * <p>
- * = 分 类 说 明：处理视图和数据的交互
+ * = 分 类 说 明：mvvm-vm
  * ================================================
  */
-public abstract class BaseViewModel<D,E extends BaseEntity<D>> extends BaseHttpObserver<D,E> {
+public class BaseViewModel extends AndroidViewModel {
+    public BaseViewModel(@NonNull Application application) {
+        super(application);
+    }
 
 
-    private StateModel mStateModel;
+//***********************************状态管理*********************************************//
 
-    public StateModel getStateModel() {
-        return mStateModel;
+    //网络访问状态
+    protected MutableLiveData<Integer> state = new MutableLiveData<>();
+    @RequestState
+    public int getState() {
+        return state.getValue();
+    }
+    public void updateState(@RequestState int state){
+        this.state.setValue(state);
+    }
+
+
+//***********************************网络请求*********************************************//
+
+    //管理进程的
+    private CompositeDisposable mDisposable = new CompositeDisposable();
+
+    //注册初始化
+    public void register() {
+        mDisposable = new CompositeDisposable();
+        updateState(RequestState.READY);
+    }
+
+    //注销
+    public void cancel() {
+        if (mDisposable != null) {
+//            mDisposable.dispose();
+            mDisposable.clear();
+            mDisposable = null;
+        }
     }
 
     /**
-     * 初始化
-     * @param emptyState 加载状态
+     * 网络请求
+     *
+     * @param observable 请求数据
+     * @param callback   回调
+     * @param <T>        返回数据的类型
      */
-    public void initViewModel(@EmptyState int emptyState){
-        mStateModel = new StateModel();
-        mStateModel.setEmptyState(emptyState);
-        dataBinding();
-        initListener();
-        initData();
-    }
+    public <T> void requestData(Observable<BaseEntity<T>> observable, RequestCallback<T> callback) {
+        if (mDisposable == null) register();
+        updateState(RequestState.RUNNING);
+        observable.subscribe(new HttpCallBack<T>() {
+            @Override
+            protected void onSuccees(T data) {
+                updateState(ResultState.SUCCESS);
+                callback.onSuceess(data);
+            }
 
+            @Override
+            protected void onFailure(@ResultState int state, String message) {
+                updateState(state);
+                callback.onFailure(state, message);
+            }
 
-    /*数据绑定*/
-    protected abstract void dataBinding();
-
-    /*初始化监听*/
-    protected abstract void initListener();
-
-    /*初始化数据*/
-    protected abstract void initData();
-
-    /*刷新数据*/
-    protected  void updateData(D data){
-
-    }
-
-    protected void onSuccees(E entity){
-        mStateModel.setEmptyState(EmptyState.NORMAL);
-        updateData(entity.getData());
-    }
-
-    protected void onFailure(Throwable e, boolean isNetWorkError){
-        //判断是否是网络错误
-        if (isNetWorkError){
-            //提醒用户重新连接网络
-            mStateModel.setEmptyState(EmptyState.NET_ERROR);
-        }else {
-            //这tm就等死吧
-            mStateModel.setEmptyState(EmptyState.EMPTY);
-        }
-        Log.e("onFailure*****",mStateModel.getEmptyState()+"/"+isNetWorkError+"/"+e.getMessage());
+            @Override
+            public void onSubscribe(Disposable d) {
+                super.onSubscribe(d);
+                mDisposable.add(d);
+            }
+        });
     }
 }

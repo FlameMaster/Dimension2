@@ -19,17 +19,16 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ActivityListBinding;
-import com.melvinhou.dimension2.databinding.ItemAlbumBinding;
 import com.melvinhou.dimension2.databinding.ItemVideoBinding;
-import com.melvinhou.dimension2.media.video.ijk.IjkVideoActivity;
+import com.melvinhou.medialibrary.video.ijk.IjkVideoActivity;
 import com.melvinhou.kami.adapter.BindRecyclerAdapter;
 import com.melvinhou.kami.adapter.BindViewHolder;
 import com.melvinhou.kami.adapter.RecyclerAdapter;
 import com.melvinhou.kami.mvvm.BindFragment;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.FileUtils;
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.io.FileUtils;
+import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.StringCompareUtils;
 
 import java.io.File;
@@ -40,7 +39,6 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import cc.shinichi.library.ImagePreview;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.disposables.CompositeDisposable;
@@ -85,7 +83,7 @@ public class PreVideoFragment extends BindFragment<ActivityListBinding, SpacePre
     private static final String DIRECTORY_VIDEO = ".video";
 
     @Override
-    public void back() {
+    public void backward() {
         mModel.page.postValue(SpacePreActivity.PAGE_HOME);
     }
 
@@ -198,7 +196,7 @@ public class PreVideoFragment extends BindFragment<ActivityListBinding, SpacePre
         DocumentFile documentFile = DocumentFile.fromTreeUri(getContext(), uri);
         DocumentFile[] documentFiles = documentFile.listFiles();
         for (DocumentFile file : documentFiles) {
-            if (file.isFile() && file.canRead() && StringCompareUtils.isVideoUrl(file.getName())) {
+            if (file.isFile() && file.canRead() && StringCompareUtils.isVideoFile(file.getName())) {
                 String path = file.getUri().toString();
                 Log.e("文件", "file=" + path);
                 mAdapter.addData(path);

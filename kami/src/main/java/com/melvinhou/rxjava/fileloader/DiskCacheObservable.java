@@ -1,10 +1,9 @@
 package com.melvinhou.rxjava.fileloader;
 
 import com.jakewharton.disklrucache.DiskLruCache;
-import com.melvinhou.kami.model.BaseCacheModel;
 import com.melvinhou.kami.util.AppUtils;
-import com.melvinhou.kami.util.FileUtils;
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.io.FileUtils;
+import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.StringUtils;
 
 import java.io.File;

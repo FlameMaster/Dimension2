@@ -4,11 +4,17 @@
 
     <data class="ViewLoadingBD">
 
+<!--        <variable-->
+<!--            name="state"-->
+<!--            type="com.melvinhou.kami.net.RequestState" />-->
+
         <variable
             name="state"
-            type="com.melvinhou.kami.model.StateModel" />
+            type="Integer"/>
 
         <import type="android.view.View" />
+        <import type="com.melvinhou.kami.net.RequestState" />
+        <import type="com.melvinhou.kami.net.ResultState" />
     </data>
 
     <LinearLayout
@@ -22,7 +28,7 @@
         android:clipToPadding="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="@{state.empty?View.VISIBLE:View.GONE}"
+        android:visibility="@{(state != RequestState.EMPTY||state != ResultState.SUCCESS)?View.VISIBLE:View.GONE}"
         app:layout_constraintTop_toBottomOf="@id/bar">
 
         <!--进度条-->
@@ -33,15 +39,16 @@
             android:layout_centerInParent="true"
             android:background="@color/transparent"
             android:indeterminateTint="@color/black"
-            android:visibility="@{state.isProgress?View.VISIBLE:View.GONE}" />
-
+            android:visibility="@{(state == RequestState.RUNNING)?View.VISIBLE:View.GONE}"
+            />
+|
         <!--加载失败的图片-->
         <ImageView
-            android:id="@+id/img_err"
+            android:id="@+id/img_result"
             android:layout_width="100dp"
             android:layout_height="86dp"
-            android:src="@android:drawable/ic_dialog_alert"
-            android:visibility="@{state.isProgress?View.GONE:View.VISIBLE}" />
+            android:visibility="@{(state == ResultState.SUCCESS || state == ResultState.FAILED || state == ResultState.NETWORK_ERROR || state == ResultState.CONVERT_ERROR || state == ResultState.RELOGIN)?View.VISIBLE:View.GONE}"
+            />
 
         <!--说明文字-->
         <TextView
@@ -49,9 +56,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
-            android:text="@{state.getCurrentStateLabel()}"
             android:textColor="?attr/colorAccent"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            />
 
         <!--重新加载-->
         <TextView
@@ -68,6 +75,7 @@
             android:textColor="?attr/colorPrimary"
             android:textSize="14sp"
             android:onClick="refresh"
-            android:visibility="@{state.isProgress?View.GONE:View.VISIBLE}" />
+            android:visibility="@{(state == ResultState.NETWORK_ERROR)?View.GONE:View.VISIBLE}"
+            />
     </LinearLayout>
 </layout>

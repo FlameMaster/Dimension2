@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-/**
+/***
  * ===============================================
  * = 作 者：风 尘
  * <p>
@@ -28,50 +28,50 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
  */
 public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends RecyclerView.Adapter<RecyclerHolder> {
 
-    /*正常布局*/
+    /**正常布局*/
     public static final int TYPE_NORMAL = -1;
 
     //——————————————————————————————————————————————————————————————————————————————————————//
 
-    /*数据集合*/
+    /**数据集合*/
     private List<T> mDatas;
-    /*头条目集合*/
-    private List<View> mHeaderViews;
-    /*尾条目集合*/
+    /**头条目集合*/
+    private List<View> mHeadViews;
+    /**尾条目集合*/
     private List<View> mTailViews;
-    /*条目点击事件*/
+    /**条目点击事件*/
     private OnItemClickListener mListener;
 
     public RecyclerAdapter() {
         mDatas = new ArrayList<>();
-        mHeaderViews = new ArrayList<>();
+        mHeadViews = new ArrayList<>();
 //        mInsertViews = new SparseArray<>();
         mTailViews = new ArrayList<>();
     }
 
-    /*设置条目点击事件*/
+    /**设置条目点击事件*/
     public void setOnItemClickListener(OnItemClickListener<T, VH> li) {
         mListener = li;
     }
 
 //////////////////////////////////////普通布局///////////////////////////////////////////////////////
 
-    /* 根据位置返回保存的数据*/
+    /** 根据位置返回保存的数据*/
     public T getData(int position) {
         return mDatas.get(position);
     }
 
-    /*返回所有数据的集合*/
+    /**返回所有数据的集合*/
     public List<T> getDatas() {
         return mDatas;
     }
 
-    /*添加数据*/
+    /**添加数据*/
     public void addDatas(List datas) {
 
         if (datas == null || datas.size() <= 0) return;
 
-        int start = getHeaderSize() + getDatas().size();
+        int start = getHeadSize() + getDatas().size();
         mDatas.addAll(datas);//添加数据
         //执行item动画
         if (getDatas().size() == datas.size()) notifyDataSetChanged();
@@ -79,33 +79,33 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends Recy
 //        notifyDataSetChanged();
     }
 
-    /*添加数据*/
+    /**添加数据*/
     public void addData(T data) {
         if (data == null) return;
-        int start = getHeaderSize() + getDatas().size();
+        int start = getHeadSize() + getDatas().size();
         mDatas.add(data);
         //执行item动画
         notifyItemInserted(start);
 //        notifyItemInserted(start);
     }
 
-    /*添加数据到前排*/
+    /**添加数据到前排*/
     public void addTopData(T data) {
         if (data == null) return;
         mDatas.add(0, data);
-        notifyItemInserted(getHeaderSize());
+        notifyItemInserted(getHeadSize());
     }
 
 
-    /*删除一个*/
+    /**删除一个*/
     public void removedData(int position) {
         if (position >= 0 && position < getDatas().size()) {
             getDatas().remove(position);
-            notifyItemRemoved(getHeaderSize() + position);
+            notifyItemRemoved(getHeadSize() + position);
         }
     }
 
-    /*数据长度*/
+    /**数据长度*/
     public int getDatasSize() {
         return getDatas().size();
     }
@@ -117,24 +117,24 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends Recy
      * <p>
      * 每次添加都会把上一次的头挤下去
      */
-    public void addHeaderView(View View) {
+    public void addHeadView(View View) {
         if (View == null) return;
-        mHeaderViews.add(0, View);
+        mHeadViews.add(0, View);
         notifyItemInserted(0);
     }
 
     /**
      * @return 头布局数量
      */
-    public int getHeaderSize() {
-        return mHeaderViews.size();
+    public int getHeadSize() {
+        return mHeadViews.size();
     }
 
     /**
      * 删除顶部头布局
      */
-    public void removedTopHeader() {
-        mHeaderViews.remove(0);
+    public void removedTopHead() {
+        mHeadViews.remove(0);
         notifyItemRemoved(0);
     }
 
@@ -150,7 +150,7 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends Recy
         mTailViews.add(View);
         //执行item动画
 //        滚动中不能调用
-        notifyItemInserted(getHeaderSize() + getDatas().size() + getTailSize());
+        notifyItemInserted(getHeadSize() + getDatas().size() + getTailSize());
     }
 
     /**
@@ -160,7 +160,7 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends Recy
      */
     public void removedTail(int position) {
         mTailViews.remove(position);
-        notifyItemRemoved(getHeaderSize() + getDatas().size() + position);
+        notifyItemRemoved(getHeadSize() + getDatas().size() + position);
     }
 
     /**
@@ -170,7 +170,7 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends Recy
         return mTailViews.size();
     }
 
-    /*获取尾布局*/
+    /**获取尾布局*/
     public View getTailView(int position) {
         if (position < getTailSize() && position >= 0)
             return mTailViews.get(position);
@@ -184,20 +184,20 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends Recy
      */
     public void clearDatas() {
 
-        int size = getDatasSize() + getHeaderSize() + getTailSize();
-        mHeaderViews.clear();
+        int size = getDatasSize() + getHeadSize() + getTailSize();
+        mHeadViews.clear();
         mTailViews.clear();
         clearData();
         //执行item动画
         notifyItemRangeRemoved(0, size);
     }
 
-    /*直接删除Data所有数据*/
+    /**直接删除Data所有数据*/
     public void clearData() {
         int size = getDatasSize();
         mDatas.clear();
         //执行item动画
-        notifyItemRangeRemoved(getHeaderSize(), size);
+        notifyItemRangeRemoved(getHeadSize(), size);
     }
 
 ////////////////——————————————————上面是对数据的操作，下面是对ui的操作————————————————————////////////////
@@ -216,11 +216,11 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends Recy
      */
     public View getCustomView(int position) {
         //头
-        if (position < mHeaderViews.size())
-            return mHeaderViews.get(position);
+        if (position < mHeadViews.size())
+            return mHeadViews.get(position);
             //尾
-        else if (position >= mHeaderViews.size() + mDatas.size())
-            return mTailViews.get(position - mHeaderViews.size() - mDatas.size());
+        else if (position >= mHeadViews.size() + mDatas.size())
+            return mTailViews.get(position - mHeadViews.size() - mDatas.size());
         //镶嵌布局
         return null;
     }
@@ -235,11 +235,11 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends Recy
     public int getItemViewType(int position) {
 
         //没有镶嵌布局时返回正常布局类型-1
-        if (mHeaderViews.size() <= 0 && mTailViews.size() <= 0) return TYPE_NORMAL;
+        if (mHeadViews.size() <= 0 && mTailViews.size() <= 0) return TYPE_NORMAL;
 
         //镶嵌布局返回所在位置
-        if (position < mHeaderViews.size()
-                || position >= mHeaderViews.size() + mDatas.size())
+        if (position < mHeadViews.size()
+                || position >= mHeadViews.size() + mDatas.size())
             return position;
 
         //默认布局
@@ -265,7 +265,7 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends Recy
         return onCreate(view, viewType);
     }
 
-    /* 初始化对应条目数据*/
+    /** 初始化对应条目数据*/
     @Override
     public void onBindViewHolder(final RecyclerHolder viewHolder, int position) {
         //判断布局类型执行相关超作
@@ -287,7 +287,7 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends Recy
         }
     }
 
-    /*使Grid布局时头布局独占一行*/
+    /**使Grid布局时头布局独占一行*/
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
@@ -305,20 +305,20 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends Recy
         }
     }
 
-    /*使用瀑布流时使头布局独占一行*/
+    /**使用瀑布流时使头布局独占一行*/
     @Override
     public void onViewAttachedToWindow(RecyclerHolder holder) {
         super.onViewAttachedToWindow(holder);
         ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
         if (lp != null && lp instanceof StaggeredGridLayoutManager.LayoutParams//判断布局类型是瀑布流
-                && (getHeaderSize() > 0 | getTailSize() > 0)) {//判断是否包含头布局和尾布局
+                && (getHeadSize() > 0 | getTailSize() > 0)) {//判断是否包含头布局和尾布局
             StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
             boolean fullSpan = false;
             //头布局
-            if (holder.getLayoutPosition() < getHeaderSize())
+            if (holder.getLayoutPosition() < getHeadSize())
                 fullSpan = true;
             //尾布局
-            if (holder.getLayoutPosition() >= getHeaderSize() + getDatasSize())
+            if (holder.getLayoutPosition() >= getHeadSize() + getDatasSize())
                 fullSpan = true;
             p.setFullSpan(fullSpan);
         }
@@ -333,40 +333,40 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends Recy
     public int getRealPosition(RecyclerHolder holder) {
         int position = holder.getLayoutPosition();
         //减去头布局数量
-        int realPosition = position - getHeaderSize();
+        int realPosition = position - getHeadSize();
         return realPosition;
     }
 
-    /*返回总共的条目数*/
+    /**返回总共的条目数*/
     @Override
     public int getItemCount() {
-        return mDatas.size() + mHeaderViews.size() + mTailViews.size();
+        return mDatas.size() + mHeadViews.size() + mTailViews.size();
     }
 
 
 ////////////////————————————————————————子类去实现的一些方法——————————————————————————////////////////
 
 
-    /* 对条目数据初始化*/
+    /** 对条目数据初始化*/
     public abstract void bindData(VH viewHolder, int position, T data);
 
-    /*对特殊条目的初始化*/
+    /**对特殊条目的初始化*/
     protected void bindCustomData(RecyclerHolder viewHolder, int position, int itemViewType) {
     }
 
-    /*布局引用*/
+    /**布局引用*/
     public abstract int getItemLayoutId(int viewType);
 
-    /*初始化*/
+    /**初始化*/
     protected abstract VH onCreate(View view, int viewType);
 
-    /*可以被继承的特殊条目初始化*/
+    /**可以被继承的特殊条目初始化*/
     public RecyclerHolder onCustomCreate(View insertView, int viewType) {
         return new RecyclerHolder(insertView);
     }
 
 
-    /*条目点击事件接口*/
+    /**条目点击事件接口*/
     public interface OnItemClickListener<T, VH extends RecyclerHolder> {
         void onItemClick(VH viewHolder, int position, T data);
     }

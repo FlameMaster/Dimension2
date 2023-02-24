@@ -13,9 +13,10 @@ import com.melvinhou.dimension2.CYEntity;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.VpVideoLiveBD;
 import com.melvinhou.dimension2.pager.BasePager;
+import com.melvinhou.kami.net.RequestState;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.StringUtils;
 
 import java.io.BufferedReader;
@@ -62,7 +63,7 @@ public class VideoLivePager extends BasePager<VpVideoLiveBD> {
     }
 
     @Override
-    public void updataEmptyState(int emptyState, String message) {
+    public void updateRequestState(@RequestState int state) {
 
     }
 
@@ -123,7 +124,7 @@ public class VideoLivePager extends BasePager<VpVideoLiveBD> {
         if (editView != null)
             input = editView.getText().toString();
         //哔哩哔哩
-        if (StringUtils.noNull(input)) {
+        if (StringUtils.nonEmpty(input)) {
             final String api =
                     "https://api.live.bilibili.com/room/v1/Room/playUrl?cid="
                             + input

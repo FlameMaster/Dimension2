@@ -1,3 +1,5 @@
 rootProject.name='Dimension2'
 include ':app'
 include ':kami'
+include ':knight'
+include ':medialibrary'

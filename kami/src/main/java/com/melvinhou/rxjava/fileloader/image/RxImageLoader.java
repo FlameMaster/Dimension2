@@ -2,9 +2,6 @@ package com.melvinhou.rxjava.fileloader.image;
 
 import android.widget.ImageView;
 
-import com.melvinhou.kami.model.BitmapCacheModel;
-import com.melvinhou.kami.model.ImageParameter;
-
 import androidx.annotation.NonNull;
 import io.reactivex.Observable;
 import io.reactivex.Observer;

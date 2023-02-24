@@ -5,9 +5,11 @@
 
         <variable
             name="state"
-            type="com.melvinhou.kami.model.StateModel"/>
+            type="Integer"/>
 
         <import type="android.view.View"/>
+        <import type="com.melvinhou.kami.net.RequestState" />
+        <import type="com.melvinhou.kami.net.ResultState" />
     </data>
     <!--加载更多-->
     <FrameLayout
@@ -28,10 +30,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="26dp"
-                android:text="@{state.getCurrentStateLabel()}"
+                android:text="@string/request_result_no_more"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="15sp"
-                android:visibility="@{state.isProgress?View.GONE:View.VISIBLE}"
+                android:visibility="@{(state == RequestState.RUNNING)?View.GONE:View.VISIBLE}"
                 />
             <!--进度条-->
             <ProgressBar
@@ -41,7 +43,7 @@
                 android:layout_centerInParent="true"
                 android:background="@color/transparent"
                 android:indeterminateTint="?attr/colorAccent"
-                android:visibility="@{state.isProgress?View.VISIBLE:View.GONE}"
+                android:visibility="@{(state == RequestState.RUNNING)?View.VISIBLE:View.GONE}"
                 />
         </LinearLayout>
 

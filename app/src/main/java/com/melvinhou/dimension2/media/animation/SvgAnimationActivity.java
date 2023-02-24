@@ -3,7 +3,6 @@ package com.melvinhou.dimension2.media.animation;
 import android.graphics.Color;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.view.BaseActivity;
+import com.melvinhou.kami.view.activities.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;

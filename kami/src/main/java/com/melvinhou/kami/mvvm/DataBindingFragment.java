@@ -9,10 +9,9 @@ import android.view.ViewGroup;
 
 import com.melvinhou.kami.R;
 import com.melvinhou.kami.databinding.ViewLoadingBD;
-import com.melvinhou.kami.model.StateModel;
-import com.melvinhou.kami.net.EmptyState;
+import com.melvinhou.kami.net.RequestState;
 import com.melvinhou.kami.util.DimenUtils;
-import com.melvinhou.kami.view.BaseFragment2;
+import com.melvinhou.kami.view.fragments.BaseFragment2;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -103,13 +102,14 @@ public abstract class DataBindingFragment<DB extends ViewDataBinding> extends Ba
     /**
      * 改变加载布局状态
      *
-     * @param code
-     * @param message
+     * @param state
      */
     @Override
-    public void changeLoadingState(@EmptyState int code, String message) {
+    public void changeRequestState(@RequestState int state) {
         if (mLoadingBD!=null){
-            mLoadingBD.setState(new StateModel(code).setUserText(message));
+            mLoadingBD.setState(state);
+            mLoadingBD.imgResult.setImageDrawable(getRequestStateImage(state));
+            mLoadingBD.textState.setText(getRequestStateMessage(state));
         }
     }
 
@@ -118,7 +118,7 @@ public abstract class DataBindingFragment<DB extends ViewDataBinding> extends Ba
     @Override
     protected View initLoadingView() {
         mLoadingBD = DataBindingUtil.bind(
-                View.inflate(getAct(), R.layout.view_loading_forbinding,null));
+                View.inflate(requireContext(), R.layout.view_loading_forbinding,null));
         ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT);
         mLoadingBD.getRoot().setLayoutParams(lp);
         mLoadingBD.getRoot().setTag("loading");

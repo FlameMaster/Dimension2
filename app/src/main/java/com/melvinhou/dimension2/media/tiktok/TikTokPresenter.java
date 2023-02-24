@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.melvinhou.dimension2.Comment;
 import com.melvinhou.kami.mvp.BasePresenter;
+import com.melvinhou.kami.net.ResultState;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class TikTokPresenter extends BasePresenter<TiktokCotract.View, TiktokCot
     }
 
     @Override
-    public void startLoading(String message) {
+    public void startLoading() {
         getModel().getListDatas().observe(getView().getLifecycleOwner(), new Observer<List<TiktokEntity>>() {
             @Override
             public void onChanged(List<TiktokEntity> tiktokEntities) {
@@ -51,7 +52,7 @@ public class TikTokPresenter extends BasePresenter<TiktokCotract.View, TiktokCot
     }
 
     @Override
-    public void endLoading(int code, String message) {
+    public void endLoading(@ResultState int state) {
 
     }
 
@@ -142,7 +143,7 @@ public class TikTokPresenter extends BasePresenter<TiktokCotract.View, TiktokCot
     }
 
     @Override
-    public void back() {
+    public void backward() {
         if (isOpenCommentDrawer) getView().closeCommentDrawer();
         else getView().close();
     }

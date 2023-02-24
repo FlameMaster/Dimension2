@@ -35,7 +35,7 @@ public class DataBindingUtils {
      */
     @BindingAdapter({"loadImageUrl", "loadImageWidth", "loadImageHeight"})
     public static void loadImageUrl(ImageView view, String url, int loadImageWidth, int loadImageHeight) {
-        if (view != null && StringCompareUtils.isImageUrl(url)) {
+        if (view != null && StringCompareUtils.isImageFile(url)) {
 //            ImageParameter imageParameter = new ImageParameter(url)
 //                    .setWidth(FCUtils.dp2px(loadImageWidth))
 //                    .setHeight(FCUtils.dp2px(loadImageHeight));

@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="Dimension2Theme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Dimension2Theme" parent="KamiTheme">
         <!-- ActionBar的背景色 -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <!-- 状态栏的背景色 -->
@@ -30,7 +30,7 @@
 
     <style name="Dimension2Bar2" parent="Dimension2Bar">
         <item name="colorControlNormal">@color/white</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_back2</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
         <item name="android:actionMenuTextColor">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
     </style>

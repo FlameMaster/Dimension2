@@ -2,6 +2,7 @@ package com.melvinhou.kami;
 
 import android.util.Log;
 
+import com.melvinhou.kami.util.AppUtils;
 import com.melvinhou.kami.util.FcUtils;
 
 /**
@@ -44,7 +45,7 @@ public class BaseException implements Thread.UncaughtExceptionHandler {
         }finally {
             Log.e(FcUtils.getContext().getPackageName(),"退出程序");
             //退出程序
-            FcUtils.closeApp();
+            AppUtils.closeApp();
         }
 
     }

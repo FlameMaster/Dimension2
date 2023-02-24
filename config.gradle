@@ -1,0 +1,12 @@
+ext {
+    //全局引用
+    global_config = [
+            compileSdkVersion: 33,
+            buildToolsVersion: "30.0.3",
+            minSdkVersion    : 14,
+            targetSdkVersion : 30,
+            applicationId    : "com.yunduan.kami",
+            versionCode      : 1,
+            versionName      : "1.0.0",
+    ]
+}

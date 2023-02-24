@@ -1,6 +1,6 @@
 package com.melvinhou.rxjava.fileloader;
 
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.io.IOUtils;
 
 import androidx.annotation.NonNull;
 import io.reactivex.Observable;

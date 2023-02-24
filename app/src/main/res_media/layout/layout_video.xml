@@ -108,7 +108,7 @@
             android:layout_height="0dp"
             android:onClick="changePlay"
             android:padding="12dp"
-            android:src="@drawable/ic_tv_play"
+            android:src="@drawable/ic_media_play_02"
             app:layout_constraintBottom_toBottomOf="@+id/tv_bottom"
             app:layout_constraintDimensionRatio="H,1:1"
             app:layout_constraintLeft_toLeftOf="@+id/tv_bottom"
@@ -195,7 +195,7 @@
             android:gravity="center"
             android:background="@mipmap/fc"
             android:visibility="gone"
-            android:onClick="nullClick"
+            android:onClick="emptyClick"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

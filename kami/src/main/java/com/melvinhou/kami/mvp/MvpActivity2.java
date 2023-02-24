@@ -1,5 +1,7 @@
 package com.melvinhou.kami.mvp;
 
+import com.melvinhou.kami.mvp.interfaces.MvpPresenter;
+import com.melvinhou.kami.mvp.interfaces.MvpView;
 import com.melvinhou.kami.mvvm.DataBindingActivity;
 
 import androidx.databinding.ViewDataBinding;
@@ -19,7 +21,7 @@ import androidx.lifecycle.LifecycleOwner;
  * ================================================
  */
 public abstract class MvpActivity2<P extends MvpPresenter, DB extends ViewDataBinding> extends DataBindingActivity<DB>
-        implements MvpView<P>{
+        implements MvpView<P> {
 
 
     /*mvp-p*/

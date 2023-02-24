@@ -12,15 +12,14 @@ import com.melvinhou.dimension2.PairEntity;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ItemIllustrationBD;
 import com.melvinhou.dimension2.pager.BaseListPager;
-import com.melvinhou.dimension2.pager.PagerActivity;
 import com.melvinhou.kami.adapter.DataBindingHolder;
-import com.melvinhou.kami.model.EventMessage;
-import com.melvinhou.kami.net.EmptyState;
+import com.melvinhou.kami.net.RequestState;
+import com.melvinhou.kami.net.ResultState;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
-import com.melvinhou.rxjava.RxBus;
-import com.melvinhou.rxjava.RxMsgParameters;
+import com.melvinhou.kami.io.IOUtils;
+import com.melvinhou.rxjava.rxbus.RxBus;
+import com.melvinhou.rxjava.rxbus.RxBusMessage;
 
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
@@ -94,8 +93,8 @@ public class IllustrationPager extends BaseListPager<IllustrationItem, Illustrat
                             if (entity.getList() != null) {
                                 getAdapter().addDatas(entity.getList());
                             }
-                            updataEmptyState(EmptyState.NORMAL, null);
-                            updataTailState(EmptyState.NOT_MORE_DATA, "暂无更多");
+                            updateRequestState(RequestState.EMPTY);
+                            updataTailState(ResultState.FAILED);
                             updateLoadingState(false);
                         }
                     });
@@ -107,9 +106,11 @@ public class IllustrationPager extends BaseListPager<IllustrationItem, Illustrat
         intent.putExtra("url", data.getUrl());
 //        toActivity( intent);
 
-        RxBus.get().post(new EventMessage(EventMessage.EventType.ASSIGN,
-                PagerActivity.class.getName() + RxMsgParameters.ACTIVITY_LAUNCH,
-                new PairEntity(viewHolder.itemView,intent)));
+        RxBus.instance().post(RxBusMessage.Builder
+                .instance(RxBusMessage.CommonType.ACTIVITY_LAUNCH)
+                .client(getClass().getName())
+                .attach(new PairEntity(viewHolder.itemView,intent))
+                .build());
     }
 
 

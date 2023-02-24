@@ -17,7 +17,7 @@
         android:layout_height="50dp"
         android:layout_margin="10dp"
         android:background="@color/transparent"
-        android:indeterminateTint="?attr/colorPrimary" />
+        android:indeterminateTint="?attr/colorAccent" />
 
     <TextView
         android:visibility="gone"
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:textColor="?attr/colorPrimary"
+        android:textColor="?attr/android:textColor"
         android:paddingHorizontal="10dp"
         android:textSize="12sp" />
 

@@ -1,6 +1,6 @@
 package com.melvinhou.dimension2.function.screenshare;
 
-import com.melvinhou.kami.view.BaseActivity;
+import com.melvinhou.kami.view.activities.BaseActivity;
 
 /**
  * ===============================================

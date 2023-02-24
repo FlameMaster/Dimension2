@@ -4,11 +4,10 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.melvinhou.kami.model.EventMessage;
-import com.melvinhou.kami.net.EmptyState;
+import com.melvinhou.kami.net.RequestState;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.rxjava.RxBus;
-import com.melvinhou.rxjava.RxMsgParameters;
+import com.melvinhou.rxjava.rxbus.RxBus;
+import com.melvinhou.rxjava.rxbus.RxBusMessage;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
@@ -138,9 +137,11 @@ public abstract class BasePager<T extends ViewDataBinding> {
      * @param intent
      */
     public void toActivity(Intent intent) {
-        RxBus.get().post(new EventMessage(EventMessage.EventType.ASSIGN,
-                PagerActivity.class.getName() + RxMsgParameters.ACTIVITY_LAUNCH,
-                intent));
+
+        RxBus.instance().post(RxBusMessage.Builder
+                .instance(RxBusMessage.CommonType.ACTIVITY_LAUNCH)
+                .client(PagerActivity.class.getName())
+                .build());
     }
 
 
@@ -151,7 +152,7 @@ public abstract class BasePager<T extends ViewDataBinding> {
      * 加载数据
      */
     public void loadData() {
-        updataEmptyState(EmptyState.PROGRESS,"数据加载中...");
+        updateRequestState(RequestState.RUNNING);
 
     }
 
@@ -160,15 +161,15 @@ public abstract class BasePager<T extends ViewDataBinding> {
      *
      * @return 是否拦截
      */
-    public boolean back() {
+    public boolean backward() {
         return false;
     }
 
     /**
      * 更新页面状态
-     * @param emptyState 状态码
+     * @param state 状态码
      */
-    public abstract void updataEmptyState(@EmptyState int emptyState, String message);
+    public abstract void updateRequestState(@RequestState int state);
 
     /**
      * 页面刷新

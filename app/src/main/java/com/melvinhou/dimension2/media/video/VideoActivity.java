@@ -39,13 +39,14 @@ import com.melvinhou.dimension2.databinding.ActVideoBD;
 import com.melvinhou.dimension2.utils.LoadUtils;
 import com.melvinhou.kami.adapter.DataBindingRecyclerAdapter;
 import com.melvinhou.kami.mvvm.DataBindingActivity;
+import com.melvinhou.kami.util.DateUtils;
 import com.melvinhou.kami.util.DeviceUtils;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
 import com.melvinhou.kami.util.StringUtils;
-import com.melvinhou.rxjava.RxBusClient;
+import com.melvinhou.rxjava.rxbus.RxBusClient;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -216,7 +217,7 @@ public class VideoActivity extends DataBindingActivity<ActVideoBD> {
         //初始化数据
         int surce = getIntent().getIntExtra("dataSource", -1);
         String path = getIntent().getStringExtra("dataPath");
-        if (surce >= 0 && StringUtils.noNull(path))
+        if (surce >= 0 && StringUtils.nonEmpty(path))
             initData(surce, path);
     }
 
@@ -289,25 +290,25 @@ public class VideoActivity extends DataBindingActivity<ActVideoBD> {
 
 ///////////////////////——————————————————————播放回调—————————————————————————///////////////////////
 
-    RxBusClient mRxBusClient = new RxBusClient(VideoActivity.class.getName()) {
+    RxBusClient mRxBusClient = new RxBusClient(RxBusClient.getClientId(getClass().getName())) {
         @Override
-        protected void onEvent(int type, String message, Object data) {
-            if (StringUtils.noNull(message)) {
-                Log.d("收到消息:", "messge=" + message);
-                if (message.contains("tv_play"))
+        protected void onEvent(@NonNull String eventType, Object data) {
+            if (StringUtils.nonEmpty(eventType)) {
+                Log.d("收到消息:", "messge=" + eventType);
+                if (eventType.contains("tv_play"))
                     onMediaPlay((Integer) data);
-                else if (message.contains("tv_start"))
+                else if (eventType.contains("tv_start"))
                     onMediaStart();
-                else if (message.contains("tv_pause"))
+                else if (eventType.contains("tv_pause"))
                     onMediaPause();
-                else if (message.contains("tv_stop"))
+                else if (eventType.contains("tv_stop"))
                     onMediaStop();
-                else if (message.contains("tv_completion"))
+                else if (eventType.contains("tv_completion"))
                     onMediaCompletion((Integer) data);
-                else if (message.contains("tv_loading")) {
+                else if (eventType.contains("tv_loading")) {
                     getViewDataBinding().tv.tvLoadProgress.setVisibility((Boolean) data ? View.VISIBLE : View.GONE);
                     getViewDataBinding().tv.expired.setVisibility(View.GONE);
-                } else if (message.contains("tv_expired")) {
+                } else if (eventType.contains("tv_expired")) {
                     getViewDataBinding().tv.tvLoadProgress.setVisibility(View.GONE);
                     getViewDataBinding().tv.expired.setVisibility(View.VISIBLE);
                 }
@@ -320,7 +321,7 @@ public class VideoActivity extends DataBindingActivity<ActVideoBD> {
         if (position >= 0 &&
                 mMediaBinder != null &&
                 mMediaBinder.getMediaData(position) != null &&
-                StringUtils.noNull(mMediaBinder.getMediaData(position).getUrl()))
+                StringUtils.nonEmpty(mMediaBinder.getMediaData(position).getUrl()))
             mMediaBinder.play(position);
     }
 
@@ -328,7 +329,7 @@ public class VideoActivity extends DataBindingActivity<ActVideoBD> {
     private void onMediaPlay(int position) {
         //设置标题
         //初始化各种参数
-        getViewDataBinding().tv.tvProgressMaxText.setText(StringUtils.formatDuration(mMediaBinder.getDuration()));
+        getViewDataBinding().tv.tvProgressMaxText.setText(DateUtils.formatDuration(mMediaBinder.getDuration()));
         getViewDataBinding().tv.tvProgress.setMax(mMediaBinder.getDuration());
         getViewDataBinding().tv.tvTitle.setText(getViewDataBinding().getMovie().getMovies().get(position).getTitle());
         //改变title
@@ -348,7 +349,7 @@ public class VideoActivity extends DataBindingActivity<ActVideoBD> {
         mProgressDisposable = Observable.interval(0, 1, TimeUnit.SECONDS)
                 .map(aLong -> {
 //                    Log.e("apply", "aLong=" + aLong);
-//                    return FcUtils.getNowTime();
+//                    return FcUtils.getCurrentTime();
                     return aLong;
                 })
                 .compose(IOUtils.setThread())
@@ -360,19 +361,19 @@ public class VideoActivity extends DataBindingActivity<ActVideoBD> {
 
     /*播放*/
     private void onMediaStart() {
-        getViewDataBinding().tv.tvProgressMaxText.setText(StringUtils.formatDuration(mMediaBinder.getDuration()));
+        getViewDataBinding().tv.tvProgressMaxText.setText(DateUtils.formatDuration(mMediaBinder.getDuration()));
         getViewDataBinding().tv.tvProgress.setMax(mMediaBinder.getDuration());
-        getViewDataBinding().tv.tvPlay.setImageResource(R.drawable.ic_tv_pause);
+        getViewDataBinding().tv.tvPlay.setImageResource(R.drawable.ic_media_pause_02);
     }
 
     /*暂停*/
     private void onMediaPause() {
-        getViewDataBinding().tv.tvPlay.setImageResource(R.drawable.ic_tv_play);
+        getViewDataBinding().tv.tvPlay.setImageResource(R.drawable.ic_media_play_02);
     }
 
     /*结束*/
     private void onMediaStop() {
-        getViewDataBinding().tv.tvPlay.setImageResource(R.drawable.ic_tv_play);
+        getViewDataBinding().tv.tvPlay.setImageResource(R.drawable.ic_media_play_02);
     }
 
     /*播放完成*/
@@ -384,7 +385,7 @@ public class VideoActivity extends DataBindingActivity<ActVideoBD> {
     private void updataProgress() {
         int position = mMediaBinder.getCurrentPosition();
         getViewDataBinding().tv.tvProgress.setProgress(position);
-        getViewDataBinding().tv.tvProgressText.setText(StringUtils.formatDuration(position));
+        getViewDataBinding().tv.tvProgressText.setText(DateUtils.formatDuration(position));
     }
 
 ///////////////////////——————————————————————屏幕切换—————————————————————————///////////////////////
@@ -449,7 +450,7 @@ public class VideoActivity extends DataBindingActivity<ActVideoBD> {
     protected void onDestroy() {
         super.onDestroy();
         //注销rxbus
-        mRxBusClient.unregister();
+        mRxBusClient.cancel();
         if (mProgressDisposable != null) mProgressDisposable.dispose();
         //解除屏幕变化开关的监听
         FcUtils.getContext().getContentResolver()
@@ -636,7 +637,7 @@ public class VideoActivity extends DataBindingActivity<ActVideoBD> {
                         if (movie.getMovies().size() > 1) {
                             getViewDataBinding().other.list.setItemAnimator(new DefaultItemAnimator());
                             for (MediaModel model : movie.getMovies()) {
-                                if (StringUtils.noNull(model.getUrl()))
+                                if (StringUtils.nonEmpty(model.getUrl()))
 //                                    addMediaTab(model);
                                     mListAdaper.datas.add(model);
                             }
@@ -710,7 +711,7 @@ public class VideoActivity extends DataBindingActivity<ActVideoBD> {
         });
     }
 
-    public void nullClick(View view) {
+    public void emptyClick(View view) {
     }
 
     class ListAdaper extends RecyclerView.Adapter<ListHolder> {

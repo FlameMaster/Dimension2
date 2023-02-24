@@ -25,23 +25,58 @@ import androidx.core.content.ContextCompat;
  * <p>
  * = 时 间：2020/6/24 19:29
  * <p>
- * = 分 类 说 明：比较通用的工具类
+ * = 分 类 说 明：常用的工具类
  * ================================================
  */
 public class FcUtils {
 
     /**
+     * 本应用的全局上下文
+     */
+    private static Context mContext;
+    /**
+     * 主线程已经初始化之后的handler
+     */
+    private static Handler mHandler;
+    /**
+     * 主线程id
+     */
+    private static int mMainThreadID;
+    /**
+     * 输入帮助
+     */
+    private static InputMethodManager mInputMannager;
+
+
+    /**
+     * 使用工具类需要先注入全局数据
+     * 防止使用别人application时参数无法调用
+     *
+     * @param context
+     * @param mainThreadId
+     * @param handler
+     * @param inputMethodManager
+     */
+    public static void inject(Context context, int mainThreadId, Handler handler, InputMethodManager inputMethodManager) {
+        mContext = context;
+        mMainThreadID = mainThreadId;
+        mHandler = handler;
+        mInputMannager = inputMethodManager;
+    }
+
+
+    /**
      * @return 获取全局的Context
      */
     public static Context getContext() {
-        return BaseApplication.getContext();
+        return mContext;
     }
 
     /**
      * @return 获取主线程的handler
      */
     public static Handler getHandler() {
-        return BaseApplication.getHandler();
+        return mHandler;
     }
 
     /**
@@ -50,15 +85,7 @@ public class FcUtils {
      * @return 主线程id
      */
     public static int getMainThreadID() {
-        return BaseApplication.getMainThreadID();
-    }
-
-
-    /**
-     * 结束app
-     */
-    public static void closeApp() {
-        BaseApplication.getInstance().exit();
+        return mMainThreadID;
     }
 
     /**
@@ -78,29 +105,7 @@ public class FcUtils {
      * @return
      */
     public static InputMethodManager getmInputMannager() {
-        return BaseApplication.getmInputMannager();
-    }
-
-    /* 判断是否缺少权限*/
-    public static boolean lacksPermission(String permission) {
-        return ContextCompat.checkSelfPermission(getContext(), permission) ==
-                PackageManager.PERMISSION_DENIED;
-    }
-
-
-    /**
-     *判断是否有网
-     * @return
-     */
-    public static boolean isNetworkConnected() {
-        ConnectivityManager mConnectivityManager = (ConnectivityManager) getContext()
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
-        if (mNetworkInfo != null) {
-            //mNetworkInfo.isAvailable();
-            return true;//有网
-        }
-        return false;//没有网
+        return mInputMannager;
     }
 
     /**
@@ -134,19 +139,4 @@ public class FcUtils {
             getHandler().post(r);
         }
     }
-
-
-
-    /**
-     * 加载资源目录的布局转成view
-     *
-     * @param R_ID 布局id
-     * @return view
-     */
-    public static View inflate(int R_ID) {
-        return View.inflate(getContext(), R_ID, null);
-    }
-
-
-
 }

@@ -26,8 +26,8 @@ import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.ui.widget.CameraXCustomTouchView;
 import com.melvinhou.dimension2.web.WebActivity;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
-import com.melvinhou.kami.view.BaseActivity;
+import com.melvinhou.kami.io.IOUtils;
+import com.melvinhou.kami.view.activities.BaseActivity;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.ExecutorService;
@@ -103,7 +103,7 @@ public class ScanActivity extends BaseActivity {
     protected void initActivity(int layoutId) {
         super.initActivity(layoutId);
         // 请求摄像头权限
-        if (allPermissionsGranted()) {
+        if (checkPermission()) {
             startCamera();
         } else {
             ActivityCompat.requestPermissions(
@@ -116,7 +116,7 @@ public class ScanActivity extends BaseActivity {
      *
      * @return
      */
-    private boolean allPermissionsGranted() {
+    private boolean checkPermission() {
         return ContextCompat.checkSelfPermission(
                 FcUtils.getContext(), REQUIRED_PERMISSIONS[0]) == PackageManager.PERMISSION_GRANTED;
     }
@@ -133,7 +133,7 @@ public class ScanActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
+            if (checkPermission()) {
                 startCamera();
             } else {
                 Toast.makeText(this,

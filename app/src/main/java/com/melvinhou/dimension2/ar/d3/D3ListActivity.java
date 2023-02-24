@@ -24,13 +24,13 @@ import com.melvinhou.dimension2.net.AssetsFileKey;
 import com.melvinhou.dimension2.utils.LoadUtils;
 import com.melvinhou.kami.adapter.RecyclerAdapter;
 import com.melvinhou.kami.adapter.RecyclerHolder;
-import com.melvinhou.kami.helper.DownloadHelper;
-import com.melvinhou.kami.manager.DialogCheckBuilder;
+import com.melvinhou.kami.io.DownloadHelper;
+import com.melvinhou.kami.view.dialog.DialogCheckBuilder;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
-import com.melvinhou.kami.view.BaseActivity2;
+import com.melvinhou.kami.view.activities.BaseActivity2;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -91,7 +91,7 @@ public class D3ListActivity extends BaseActivity2 {
     @Override
     protected void onResume() {
         super.onResume();
-        if (allPermissionsGranted(REQUIRED_PERMISSIONS))
+        if (checkPermission(REQUIRED_PERMISSIONS))
             loadData();
     }
 
@@ -142,7 +142,7 @@ public class D3ListActivity extends BaseActivity2 {
                 intent.putExtra("objName", data.getFileName() + ".obj");
                 intent.putExtra("objPath", data.getDirectoryPath());
                 startActivity(intent);
-            } else if (allPermissionsGranted(REQUIRED_PERMISSIONS)) {
+            } else if (checkPermission(REQUIRED_PERMISSIONS)) {
 
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R || Environment.isExternalStorageManager())
                     downloadObj(data);
@@ -165,7 +165,7 @@ public class D3ListActivity extends BaseActivity2 {
         mAdapter.addTailView(view);
         view.setVisibility(View.INVISIBLE);
         //权限申请
-        if (allPermissionsGranted(REQUIRED_PERMISSIONS))
+        if (checkPermission(REQUIRED_PERMISSIONS))
             loadData();
         else
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);

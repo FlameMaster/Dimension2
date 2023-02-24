@@ -16,21 +16,19 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.melvinhou.dimension2.Dimension2Application;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.db.SqlManager;
 import com.melvinhou.dimension2.user.User;
 import com.melvinhou.dimension2.net.HttpConstant;
 import com.melvinhou.kami.adapter.RecyclerAdapter;
 import com.melvinhou.kami.adapter.RecyclerHolder;
-import com.melvinhou.kami.manager.ThreadManager;
-import com.melvinhou.kami.model.EventMessage;
+import com.melvinhou.kami.tool.ThreadManager;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
-import com.melvinhou.kami.view.BaseActivity;
-import com.melvinhou.rxjava.RxBus;
-import com.melvinhou.rxjava.RxBusClient;
-import com.melvinhou.rxjava.RxMsgParameters;
+import com.melvinhou.kami.io.IOUtils;
+import com.melvinhou.kami.view.activities.BaseActivity;
+import com.melvinhou.rxjava.rxbus.RxBus;
+import com.melvinhou.rxjava.rxbus.RxBusClient;
+import com.melvinhou.rxjava.rxbus.RxBusMessage;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -91,26 +89,27 @@ public class ImChatActivity extends BaseActivity {
 
     /*注册绑定rxbus*/
     private void bindRxBus() {
-        mRxBusClient = new RxBusClient(ImChatActivity.this.getClass().getName()) {
+        mRxBusClient = new RxBusClient(RxBusClient.getClientId(getClass().getName())) {
             @Override
-            protected void onEvent(int type, String message, Object data) {
-                ImChatActivity.this.onEvent(type, message, data);
+            protected void onEvent(@NonNull String eventType, Object attach) {
+                ImChatActivity.this.onEvent(eventType, attach);
             }
         };
         //告诉别人我这里初始化了
-        RxBus.get().post(new EventMessage(ImChatActivity.this.getClass().getName()
-                + RxMsgParameters.ACTIVITY_LAUNCHED));
+        RxBus.instance().post(RxBusMessage.Builder
+                .instance(RxBusMessage.CommonType.ACTIVITY_LAUNCHED)
+                .client(RxBusMessage.OFFSCREEN_CLIENT_DEFAULT)
+                .build());
     }
 
     /**
      * 接受消息
      *
      * @param type
-     * @param message
      * @param data
      */
-    private void onEvent(int type, String message, Object data) {
-        if (message.contains(RxMsgParameters.IM_MESSAGE_RECEIVE)
+    private void onEvent(String type, Object data) {
+        if (type.contains(":[Message]receive")
                 && data instanceof ImChatMessageEntity) {//收到消息
             ImChatMessageEntity info = (ImChatMessageEntity) data;
             //判断是否是当前的聊天对象
@@ -130,13 +129,13 @@ public class ImChatActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                back();
+                backward();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void back() {
+    public void backward() {
         //finish()不会执行动画所以使用finishAfterTransition()
         finishAfterTransition();
     }
@@ -151,7 +150,7 @@ public class ImChatActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            back();
+            backward();
             return true;
         }
         return false;
@@ -265,7 +264,7 @@ public class ImChatActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        mRxBusClient.unregister();
+        mRxBusClient.cancel();
         super.onDestroy();
     }
 

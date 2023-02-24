@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Rect;
 import android.net.Uri;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,31 +17,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.reflect.TypeToken;
-import com.melvinhou.dimension2.CYEntity;
 import com.melvinhou.dimension2.R;
-import com.melvinhou.dimension2.ar.d3.D3Entity;
 import com.melvinhou.dimension2.databinding.ActivityListBinding;
 import com.melvinhou.dimension2.databinding.ItemAlbumBinding;
-import com.melvinhou.dimension2.net.AssetsFileKey;
-import com.melvinhou.dimension2.utils.LoadUtils;
 import com.melvinhou.kami.adapter.BindRecyclerAdapter;
 import com.melvinhou.kami.adapter.BindViewHolder;
 import com.melvinhou.kami.adapter.RecyclerAdapter;
 import com.melvinhou.kami.mvvm.BindFragment;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.FileUtils;
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.io.FileUtils;
+import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.StringCompareUtils;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Map;
 
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
-import androidx.collection.ArrayMap;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -92,7 +83,7 @@ public class PrePictureFragment extends BindFragment<ActivityListBinding, SpaceP
     private static final String DIRECTORY_PICTURES = ".picture";
 
     @Override
-    public void back() {
+    public void backward() {
         mModel.page.postValue(SpacePreActivity.PAGE_HOME);
     }
 
@@ -147,7 +138,7 @@ public class PrePictureFragment extends BindFragment<ActivityListBinding, SpaceP
                 ImagePreview
                         .getInstance()
                         // 上下文，必须是activity，不需要担心内存泄漏，本框架已经处理好；
-                        .setContext(getAct())
+                        .setContext(requireContext())
                         // 设置从第几张开始看（索引从0开始）
                         .setIndex(0)
                         //=================================================================================================
@@ -225,7 +216,7 @@ public class PrePictureFragment extends BindFragment<ActivityListBinding, SpaceP
         DocumentFile documentFile = DocumentFile.fromTreeUri(getContext(), uri);
         DocumentFile[] documentFiles = documentFile.listFiles();
         for (DocumentFile file : documentFiles) {
-            if (file.isFile() && file.canRead() && StringCompareUtils.isImageUrl(file.getName())) {
+            if (file.isFile() && file.canRead() && StringCompareUtils.isImageFile(file.getName())) {
                 String path = file.getUri().toString();
                 Log.e("文件", "file=" + path);
                 mAdapter.addData(path);

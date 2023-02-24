@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout android:id="@id/loading"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -16,11 +15,12 @@
     <!--android:visibility="@{state.empty?View.VISIBLE:View.GONE}"-->
 
     <!--加载失败的图片-->
-    <ImageView
-        android:id="@+id/img_err"
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/img_result"
         android:layout_width="100dp"
         android:layout_height="86dp"
-        android:src="@android:drawable/ic_dialog_alert"
+        android:src="@drawable/ic_error_outline_24"
+        android:tint="?attr/colorAccent"
         android:visibility="gone" />
 
     <!--进度条-->
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="26dp"
         android:text="加载中..."
-        android:textColor="?attr/colorPrimary"
+        android:textColor="?attr/colorAccent"
         android:textSize="15sp" />
 
     <!--重新加载-->
@@ -48,13 +48,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:background="@drawable/bg_load_dialog_bg"
+        android:background="@drawable/bg_round"
+        android:backgroundTint="?attr/colorPrimary"
         android:paddingBottom="6dp"
         android:paddingLeft="18dp"
         android:paddingRight="18dp"
         android:paddingTop="6dp"
         android:text="重新加载"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="14sp"
         android:visibility="gone" />
+
 </LinearLayout>

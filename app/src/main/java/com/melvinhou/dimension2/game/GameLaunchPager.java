@@ -10,7 +10,7 @@ import com.melvinhou.dimension2.game.klotski.GameKlotskiActivity;
 import com.melvinhou.dimension2.game.poker.GamePokerActivity;
 import com.melvinhou.dimension2.pager.BaseListPager;
 import com.melvinhou.kami.adapter.DataBindingHolder;
-import com.melvinhou.kami.net.EmptyState;
+import com.melvinhou.kami.net.RequestState;
 import com.melvinhou.kami.util.FcUtils;
 
 import java.util.Collections;
@@ -104,8 +104,8 @@ public class GameLaunchPager extends BaseListPager<GameLaunchItem, GameLaunchPag
 
     @Override
     public void loadData(int size, int page) {
-        updataEmptyState(EmptyState.NORMAL, null);
-        updataTailState(EmptyState.USER_DEFINED, null);
+        updateRequestState(RequestState.EMPTY);
+        updataTailState(RequestState.EMPTY);
         getAdapter().addData(new GameLaunchItem("FC斗地主", null));
         getAdapter().addData(new GameLaunchItem("华容道FC", null));
         getAdapter().addData(new GameLaunchItem("风尘的冒险", null));
@@ -117,7 +117,7 @@ public class GameLaunchPager extends BaseListPager<GameLaunchItem, GameLaunchPag
     }
 
     @Override
-    public void updataEmptyState(int emptyState, String message) {
+    public void updateRequestState(@RequestState int state) {
 
     }
 

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="KamiTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 应用的主要色调，actionBar默认使用该颜色，Toolbar导航栏的底色 -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <!-- 应用的主要暗色调，statusBarColor默认使用该颜色 -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!-- 窗口背景颜色-->
+        <item name="android:windowBackground">@color/windowBackground</item>
+        <!-- 状态栏颜色，默认使用colorPrimaryDark-->
+        <item name="android:statusBarColor">@color/statusBarColor</item>
+        <!-- 导航栏颜色颜色-->
+        <item name="android:navigationBarColor">@color/navigationBarColor</item>
+        <!-- 应用的前景色，ListView的分割线，switch滑动区默认使用该颜色 -->
+        <item name="android:colorForeground">@color/colorForeground</item>
+        <!-- 应用的背景色，popMenu的背景默认使用该颜色 -->
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <!-- 控件选中颜色-->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- 默认控件颜色-->
+        <item name="colorControlNormal">@color/colorControlNormal</item>
+        <!-- 控件按压时的色调-->
+        <item name="colorControlHighlight">@color/colorControlHighlight</item>
+        <!-- 控件选中时的颜色，默认使用colorAccent-->
+        <item name="colorControlActivated">@color/colorControlActivated</item>
+        <!-- 默认按钮的背景颜色 -->
+        <item name="colorButtonNormal">@color/colorButtonNormal</item>
+        <!-- 默认EditView输入框字体的颜色 -->
+        <item name="editTextColor">@color/editTextColor</item>
+        <!-- Button，textView的文字颜色 -->
+        <item name="android:textColor">@color/textColor</item>
+        <!-- RadioButton checkbox等控件的文字 -->
+        <item name="android:textColorPrimaryDisableOnly">@color/textColorPrimaryDisableOnly</item>
+        <!-- 应用的主要文字颜色，actionBar的标题文字默认使用该颜色 -->
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <!-- 底部ico的默认颜色-->
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        <!-- switch thumbs 默认状态的颜色. (switch off)-->
+        <item name="colorSwitchThumbNormal">@color/colorSwitchThumbNormal</item>
+    </style>
+</resources>

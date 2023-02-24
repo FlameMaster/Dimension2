@@ -103,12 +103,4 @@
             android:background="#ccc"
             />
     </com.melvinhou.dimension2.test.TestView>
-
-
-    <com.melvinhou.dimension2.media.video.ijk.IjkVideoView
-        android:id="@+id/video"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
 </androidx.constraintlayout.widget.ConstraintLayout>

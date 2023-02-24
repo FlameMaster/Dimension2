@@ -5,12 +5,15 @@
     <string name="inputType_unChinese">
         ._0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ
     </string>
-    <string name="loading_err">加载失败</string>
-    <string name="no_data">列表数据为空</string>
-    <string name="no_more_data">已经没有更多数据了</string>
-    <string name="net_err">没有网络</string>
-    <string name="please_check_net_state">加载中...</string>
-    <string name="server_not_avaliabe">服务器无响应</string>
+
+
+    <string name="request_runing">加载中...</string>
+    <string name="request_again">重新加载</string>
+    <string name="request_result_success">加载成功</string>
+    <string name="request_result_relogin">重新登录</string>
+    <string name="request_result_failed">暂时没有数据</string>
+    <string name="request_result_no_more">暂无更多数据</string>
+    <string name="request_result_network_error">网络错误</string>
 
 
 

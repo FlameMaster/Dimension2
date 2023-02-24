@@ -11,9 +11,9 @@ import android.util.AttributeSet;
 import android.view.Surface;
 import android.view.TextureView;
 
-import com.melvinhou.kami.model.EventMessage;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.rxjava.RxBus;
+import com.melvinhou.rxjava.rxbus.RxBus;
+import com.melvinhou.rxjava.rxbus.RxBusMessage;
 
 /**
  * ===========================================================
@@ -502,7 +502,10 @@ public class FCVidoeView extends TextureView implements TextureView.SurfaceTextu
             = new MediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(MediaPlayer mp) {
-            RxBus.get().post(new EventMessage("FCVidoe_Start_" + getId(), mp.getDuration()));
+            RxBus.instance().post(RxBusMessage.Builder
+                    .instance("FCVidoe_Start_" + getId())
+                    .attach(mp.getDuration())
+                    .build());
             mMediaPlayer.setLooping(isLooping);
             mMediaPlayer.setVolume(isOpenSound ? 1 : 0f, isOpenSound ? 1 : 0f);
             mp.start();

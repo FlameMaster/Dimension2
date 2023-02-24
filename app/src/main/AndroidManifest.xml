@@ -45,6 +45,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".test.SampleActivity"
+            android:theme="@style/KamiTheme"
+            android:exported="true"/>
+        <activity
             android:name=".web.WebActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
@@ -69,7 +73,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".media.video.ijk.IjkVideoActivity"
+            android:name="com.melvinhou.medialibrary.video.ijk.IjkVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />

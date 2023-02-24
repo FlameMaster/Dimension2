@@ -12,10 +12,11 @@ import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.NullBoxBD;
 import com.melvinhou.dimension2.pager.BaseListPager;
 import com.melvinhou.kami.adapter.DataBindingHolder;
-import com.melvinhou.kami.net.EmptyState;
+import com.melvinhou.kami.net.RequestState;
+import com.melvinhou.kami.net.ResultState;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
 import com.melvinhou.kami.util.StringUtils;
 
@@ -89,7 +90,7 @@ public class TVListPager extends BaseListPager<MapEntity, TVListPager.TVHolder> 
                         .replaceAll("\r|\n", "");
                 String[] datas = text.split(REGEX_LIST);
                 for (String data : datas) {
-                    if (StringUtils.noNull(data)) {
+                    if (StringUtils.nonEmpty(data)) {
                         String[] item = data.split(REGEX_ITEM);
                         if (item != null && item.length > 1)
                             entity.add(new MapEntity(item[0], item[1]));
@@ -102,8 +103,8 @@ public class TVListPager extends BaseListPager<MapEntity, TVListPager.TVHolder> 
                     .subscribe(entity -> {
                         if (entity != null) {
                             getAdapter().addDatas(entity);
-                            updataEmptyState(EmptyState.NORMAL, null);
-                            updataTailState(EmptyState.NOT_MORE_DATA, "暂无更多");
+                            updateRequestState(RequestState.EMPTY);
+                            updataTailState(ResultState.FAILED);
                             updateLoadingState(false);
                         }
                     });

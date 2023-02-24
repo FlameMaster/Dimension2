@@ -12,13 +12,13 @@ import com.melvinhou.dimension2.pager.BasePager;
 import com.melvinhou.dimension2.pager.PagerActivity;
 import com.melvinhou.dimension2.test.TestActivity;
 import com.melvinhou.dimension2.web.WebActivity;
-import com.melvinhou.kami.model.EventMessage;
 import com.melvinhou.kami.mvvm.DataBindingFragment;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.rxjava.RxBus;
-import com.melvinhou.rxjava.RxBusClient;
-import com.melvinhou.rxjava.RxMsgParameters;
+import com.melvinhou.rxjava.rxbus.RxBus;
+import com.melvinhou.rxjava.rxbus.RxBusClient;
+import com.melvinhou.rxjava.rxbus.RxBusMessage;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 
 /**
@@ -96,16 +96,15 @@ public class HomeFragment extends DataBindingFragment<FgtHomeBD> {
         Intent intent = new Intent(FcUtils.getContext(), PagerActivity.class);
         intent.putExtra("title", title);
 
-        new RxBusClient(PagerActivity.class.getName(),
-                RxMsgParameters.ACTIVITY_LAUNCHED) {
+        new RxBusClient(RxBusClient.getClientId(getClass().getName())) {
             @Override
-            protected void onEvent(int type, String message, Object data) {
+            protected void onEvent(@NonNull String eventType, Object attach) {
                 //发送
-                RxBus.get().post(new EventMessage(EventMessage.EventType.ASSIGN,
-                        PagerActivity.class.getName()
-                                + RxMsgParameters.Pager.PAGER_INIT,
-                        pagers));
-                unregister();
+                RxBus.instance().post(RxBusMessage.Builder
+                        .instance(":{Pager}init")
+                        .client(getClass().getName())
+                        .build());
+                cancel();
             }
         };
         toActivity(intent);

@@ -14,7 +14,7 @@ import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ActPictureBD;
 import com.melvinhou.kami.mvvm.DataBindingActivity;
 import com.melvinhou.kami.util.DimenUtils;
-import com.melvinhou.kami.wiget.PhotoCutterView;
+import com.melvinhou.kami.view.wiget.PhotoCutterView;
 
 /**
  * ===============================================

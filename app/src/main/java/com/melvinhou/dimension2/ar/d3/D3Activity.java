@@ -6,34 +6,28 @@ import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.ar.d3.model.D3ObjGroup;
-import com.melvinhou.dimension2.function.im.ImHomeActivity;
-import com.melvinhou.dimension2.net.HttpConstant;
-import com.melvinhou.kami.model.EventMessage;
-import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
-import com.melvinhou.kami.view.BaseActivity;
-import com.melvinhou.rxjava.RxBus;
-import com.melvinhou.rxjava.RxBusClient;
-import com.melvinhou.rxjava.RxMsgParameters;
+import com.melvinhou.kami.view.activities.BaseActivity;
+import com.melvinhou.rxjava.rxbus.RxBus;
+import com.melvinhou.rxjava.rxbus.RxBusClient;
+import com.melvinhou.rxjava.rxbus.RxBusMessage;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import de.javagl.obj.Obj;
 import de.javagl.obj.ObjReader;
@@ -228,7 +222,7 @@ public class D3Activity extends BaseActivity {
     protected void onDestroy() {
         mDisposable.clear();
         if (mRxBusClient != null) {
-            mRxBusClient.unregister();
+            mRxBusClient.cancel();
             mRxBusClient = null;
         }
         super.onDestroy();
@@ -244,15 +238,17 @@ public class D3Activity extends BaseActivity {
      * 注册绑定rxbus
      */
     private void bindRxBus() {
-        mRxBusClient = new RxBusClient(getClass().getName()) {
+        mRxBusClient = new RxBusClient(RxBusClient.getClientId(getClass().getName())) {
             @Override
-            protected void onEvent(int type, String message, Object data) {
-                D3Activity.this.onEvent(type, message, data);
+            protected void onEvent(@NonNull String eventType, Object attach) {
+                D3Activity.this.onEvent(eventType, attach);
             }
         };
         //告诉别人我这里初始化了
-        RxBus.get().post(new EventMessage(getClass().getName()
-                + RxMsgParameters.ACTIVITY_LAUNCHED));
+        RxBus.instance().post(RxBusMessage.Builder
+                .instance(RxBusMessage.CommonType.ACTIVITY_LAUNCHED)
+                .client(RxBusMessage.OFFSCREEN_CLIENT_DEFAULT)
+                .build());
     }
 
 
@@ -260,21 +256,17 @@ public class D3Activity extends BaseActivity {
      * 事件处理
      *
      * @param type    类型
-     * @param message 信息
      * @param data    数据
      */
-    public void onEvent(@EventMessage.EventType int type, String message, Object data) {
-        if (type == EventMessage.EventType.ASSIGN
-                && message.contains(getClass().getName())) {
-            if (message.contains(RxMsgParameters.DATA_REFRESH)) {
-                FcUtils.runOnUIThread(() -> {
-                    if (data != null) {
-                        showTextProcess(data.toString());
-                    } else {
-                        mProcess.setVisibility(View.GONE);
-                    }
-                });
-            }
+    public void onEvent(@NonNull String type, Object data) {
+        if (type.contains(RxBusMessage.CommonType.DATA_REFRESH)) {
+            FcUtils.runOnUIThread(() -> {
+                if (data != null) {
+                    showTextProcess(data.toString());
+                } else {
+                    mProcess.setVisibility(View.GONE);
+                }
+            });
         }
     }
 
@@ -304,42 +296,42 @@ public class D3Activity extends BaseActivity {
         dialog.findViewById(R.id.tv01).setOnClickListener(view -> {
             dialog.dismiss();
             showProgressDialog(1, ((TextView) view).getText().toString(),
-                    (int)mConfig.eye_x, -100, 100);
+                    (int) mConfig.eye_x, -100, 100);
         });
         dialog.findViewById(R.id.tv02).setOnClickListener(view -> {
             dialog.dismiss();
             showProgressDialog(2, ((TextView) view).getText().toString(),
-                    (int)mConfig.eye_y, -100, 100);
+                    (int) mConfig.eye_y, -100, 100);
         });
         dialog.findViewById(R.id.tv03).setOnClickListener(view -> {
             dialog.dismiss();
             showProgressDialog(3, ((TextView) view).getText().toString(),
-                    (int)mConfig.eye_z, 2, 100);
+                    (int) mConfig.eye_z, 2, 100);
         });
         dialog.findViewById(R.id.tv04).setOnClickListener(view -> {
             dialog.dismiss();
             showProgressDialog(4, ((TextView) view).getText().toString(),
-                    (int)mConfig.view_center_x, -100, 100);
+                    (int) mConfig.view_center_x, -100, 100);
         });
         dialog.findViewById(R.id.tv05).setOnClickListener(view -> {
             dialog.dismiss();
             showProgressDialog(5, ((TextView) view).getText().toString(),
-                    (int)mConfig.view_center_y, -100, 100);
+                    (int) mConfig.view_center_y, -100, 100);
         });
         dialog.findViewById(R.id.tv06).setOnClickListener(view -> {
             dialog.dismiss();
             showProgressDialog(6, ((TextView) view).getText().toString(),
-                    (int)mConfig.view_center_z, -100, 100);
+                    (int) mConfig.view_center_z, -100, 100);
         });
 
         dialog.findViewById(R.id.tv_submit).setOnClickListener(view -> {
             dialog.dismiss();
-                mConfig.eye_x = 0;
-                mConfig.eye_y = 0;
-                mConfig.eye_z = 10;
-                mConfig.view_center_x = 0;
-                mConfig.view_center_y = 0;
-                mConfig.view_center_z = 0;
+            mConfig.eye_x = 0;
+            mConfig.eye_y = 0;
+            mConfig.eye_z = 10;
+            mConfig.view_center_x = 0;
+            mConfig.view_center_y = 0;
+            mConfig.view_center_z = 0;
             mSurfaceView.requestRender();
         });
         dialog.show();

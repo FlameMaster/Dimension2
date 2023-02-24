@@ -1,29 +1,15 @@
 package com.melvinhou.dimension2.prespace;
 
-import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.melvinhou.dimension2.R;
-import com.melvinhou.dimension2.databinding.ActivityListBinding;
 import com.melvinhou.dimension2.databinding.ActivityLockBinding;
-import com.melvinhou.dimension2.databinding.FragmentSpacePreBinding;
-import com.melvinhou.dimension2.media.video.ijk.IjkVideoActivity;
-import com.melvinhou.kami.mvvm.BaseModel;
+import com.melvinhou.kami.mvvm.BaseViewModel;
 import com.melvinhou.kami.mvvm.BindFragment;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.view.BaseFragment2;
-
-import java.io.File;
-
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 
 /**
  * ===============================================
@@ -38,15 +24,15 @@ import androidx.core.app.ActivityCompat;
  * = 分 类 说 明：隐私空间
  * ================================================
  */
-public class SpacePreFragment extends BindFragment<ActivityLockBinding, BaseModel> {
+public class SpacePreFragment extends BindFragment<ActivityLockBinding, BaseViewModel> {
     @Override
     protected ActivityLockBinding openViewBinding(LayoutInflater inflater, ViewGroup container) {
         return ActivityLockBinding.inflate(inflater, container, false);
     }
 
     @Override
-    protected Class<BaseModel> openModelClazz() {
-        return BaseModel.class;
+    protected Class<BaseViewModel> openModelClazz() {
+        return BaseViewModel.class;
     }
 
 

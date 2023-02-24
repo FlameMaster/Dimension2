@@ -1,16 +1,12 @@
 package com.melvinhou.dimension2.ar.d3;
 
 import android.content.Context;
-import android.graphics.Matrix;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-
-import com.melvinhou.kami.wiget.PhotoCutterView;
 
 /**
  * ===============================================

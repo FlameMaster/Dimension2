@@ -4,7 +4,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.melvinhou.dimension2.databinding.FragmentTest03Binding;
-import com.melvinhou.kami.mvvm.BaseModel;
+import com.melvinhou.kami.mvvm.BaseViewModel;
 import com.melvinhou.kami.mvvm.BindFragment;
 
 /**
@@ -20,7 +20,7 @@ import com.melvinhou.kami.mvvm.BindFragment;
  * = 分 类 说 明：
  * ================================================
  */
-public class TestFragment03 extends BindFragment<FragmentTest03Binding, BaseModel> {
+public class TestFragment03 extends BindFragment<FragmentTest03Binding, BaseViewModel> {
 
     @Override
     protected FragmentTest03Binding openViewBinding(LayoutInflater inflater, ViewGroup container) {
@@ -28,8 +28,8 @@ public class TestFragment03 extends BindFragment<FragmentTest03Binding, BaseMode
     }
 
     @Override
-    protected Class<BaseModel> openModelClazz() {
-        return BaseModel.class;
+    protected Class<BaseViewModel> openModelClazz() {
+        return BaseViewModel.class;
     }
 
 

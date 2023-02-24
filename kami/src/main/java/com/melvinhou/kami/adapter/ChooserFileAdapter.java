@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.melvinhou.kami.R;
-import com.melvinhou.kami.model.UriFileInfo;
+import com.melvinhou.kami.bean.UriFileInfo;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.StringCompareUtils;
@@ -119,7 +119,7 @@ public class ChooserFileAdapter extends RecyclerAdapter<UriFileInfo, ChooserFile
         public void updata(int position, UriFileInfo data) {
             mTextView.setText(data.getFileName());
             if (data.getUri() != null) {
-                if (StringCompareUtils.isImageUrl(data.getFileName())) {
+                if (StringCompareUtils.isImageFile(data.getFileName())) {
                     RequestOptions options = new RequestOptions()
                             .override(DimenUtils.dp2px(100), DimenUtils.dp2px(100))
 //                            .placeholder(R.mipmap.icon_hint_empty)
@@ -132,7 +132,7 @@ public class ChooserFileAdapter extends RecyclerAdapter<UriFileInfo, ChooserFile
                             .into(mImageView);
                 }
             } else if (data.getFilePath() != null) {
-                if (StringCompareUtils.isImageUrl(data.getFileName())) {
+                if (StringCompareUtils.isImageFile(data.getFileName())) {
                     RequestOptions options = new RequestOptions()
                             .override(DimenUtils.dp2px(100), DimenUtils.dp2px(100))
 //                            .placeholder(R.mipmap.icon_hint_empty)

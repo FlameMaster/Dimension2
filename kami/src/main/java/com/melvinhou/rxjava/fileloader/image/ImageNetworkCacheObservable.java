@@ -2,8 +2,6 @@ package com.melvinhou.rxjava.fileloader.image;
 
 import android.graphics.Bitmap;
 
-import com.melvinhou.kami.model.BitmapCacheModel;
-import com.melvinhou.kami.model.ImageParameter;
 import com.melvinhou.kami.util.ImageUtils;
 import com.melvinhou.rxjava.fileloader.NetworkCacheObservable;
 

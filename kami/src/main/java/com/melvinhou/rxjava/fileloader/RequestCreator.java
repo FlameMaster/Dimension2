@@ -1,8 +1,6 @@
 package com.melvinhou.rxjava.fileloader;
 
 
-import com.melvinhou.kami.model.BaseCacheModel;
-
 import androidx.annotation.NonNull;
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;

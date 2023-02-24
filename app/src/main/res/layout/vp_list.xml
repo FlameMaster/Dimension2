@@ -7,9 +7,10 @@
 
     <data class="VpListBD">
 
+
         <variable
             name="state"
-            type="com.melvinhou.kami.model.StateModel" />
+            type="Integer"/>
     </data>
 
     <!--带下来刷新的列表-->

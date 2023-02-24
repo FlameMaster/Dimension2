@@ -2,12 +2,16 @@ package com.melvinhou.kami.mvp;
 
 import android.content.Intent;
 
-import com.melvinhou.kami.model.EventMessage;
-import com.melvinhou.kami.net.EmptyState;
-import com.melvinhou.rxjava.RxBus;
-import com.melvinhou.rxjava.RxBusClient;
-import com.melvinhou.rxjava.RxMsgParameters;
+import com.melvinhou.kami.mvp.interfaces.MvpModel;
+import com.melvinhou.kami.mvp.interfaces.MvpPresenter;
+import com.melvinhou.kami.mvp.interfaces.MvpView;
+import com.melvinhou.kami.net.RequestState;
+import com.melvinhou.kami.net.ResultState;
+import com.melvinhou.rxjava.rxbus.RxBus;
+import com.melvinhou.rxjava.rxbus.RxBusClient;
+import com.melvinhou.rxjava.rxbus.RxBusMessage;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.OnLifecycleEvent;
@@ -25,7 +29,7 @@ import androidx.lifecycle.OnLifecycleEvent;
  * = 分 类 说 明：实现mvp-p中需要实现的方法
  * ============================================================
  */
-public abstract class BasePresenter<V extends MvpView,M extends MvpModel> implements LifecycleObserver, MvpPresenter<V,M> {
+public abstract class BasePresenter<V extends MvpView, M extends MvpModel> implements LifecycleObserver, MvpPresenter<V, M> {
 
     //mvp
     private V mView;
@@ -80,74 +84,75 @@ public abstract class BasePresenter<V extends MvpView,M extends MvpModel> implem
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     public void onDestroy() {
         if (mRxBusClient != null) {
-            mRxBusClient.unregister();
+            mRxBusClient.cancel();
             mRxBusClient = null;
         }
     }
 
 
-
-
-
-
-
-
-
-    /*注册绑定rxbus*/
+    /**注册绑定rxbus*/
     private void bindRxBus() {
-        mRxBusClient = new RxBusClient(getView().getClass().getName()) {
+        mRxBusClient = new RxBusClient(getRxBusClientId()) {
             @Override
-            protected void onEvent(int type, String message, Object data) {
-                if (type == EventMessage.EventType.ALL) {
-                    BasePresenter.this.onEvent(type, message, data);
-                } else if (type == EventMessage.EventType.ASSIGN
-                        && message.contains(getView().getClass().getName())) {
-                    BasePresenter.this.onEvent(type, message, data);
-                }
+            protected void onEvent(@NonNull String eventType, Object attach) {
+                BasePresenter.this.onEvent(eventType, attach);
+            }
+
+            @Override
+            protected void onGlobalEvent(@NonNull String eventType, Object attach) {
+                BasePresenter.this.onGlobalEvent(eventType, attach);
             }
         };
         //告诉别人我这里初始化了
-        RxBus.get().post(new EventMessage(getView().getClass().getName()
-                + RxMsgParameters.ACTIVITY_LAUNCHED));
+        RxBus.instance().post(RxBusMessage.Builder
+                .instance(RxBusMessage.CommonType.ACTIVITY_LAUNCHED)
+                .client(RxBusMessage.OFFSCREEN_CLIENT_DEFAULT)
+                .build());
+    }
+
+    /**
+     * rxbus的客户端id，默认使用全局的
+     *
+     * @return
+     */
+    protected int getRxBusClientId() {
+        return RxBusClient.getClientId(getClass().getName());
     }
 
     /**
      * 全局消息处理
      *
      * @param type
-     * @param message
-     * @param data
+     * @param attach
      */
-    private void onGlobalEvent(@EventMessage.EventType int type, String message, Object data) {
-        if (message.contains(RxMsgParameters.NETWORK_CHANGE_LINK))//网络状态改变
-            changeNetworkState((boolean) data);
+    private void onGlobalEvent(@NonNull String type, Object attach) {
+        if (RxBusMessage.CommonType.NETWORK_CHANGE_LINK.equals(type)
+                && attach instanceof Boolean)//网络状态改变
+            changeNetworkState((boolean) attach);
     }
 
     /**
      * rxbus消息传递接收处理
      *
      * @param type
-     * @param message
-     * @param data
+     * @param attach
      */
-    public void onEvent(@EventMessage.EventType int type, String message, Object data) {
-        if (type == EventMessage.EventType.ASSIGN
-                && message.contains(getView().getClass().getName())) {
-
-            if (message.contains(RxMsgParameters.ACTIVITY_LAUNCH)
-                    && data instanceof Intent) {//打开新页面
-                Intent intent = (Intent) data;
-                getView().startActivity(intent);
-            } else if (message.contains(RxMsgParameters.ACTIVITY_FINISH)) {//关闭页面
-                getView().close();
-            } else if (message.contains(RxMsgParameters.DATA_REFRESH))//刷新数据
-                refreshData();
+    public void onEvent(@NonNull String type, Object attach) {
+        //打开新页面
+        if (RxBusMessage.CommonType.ACTIVITY_LAUNCH.equals(type)
+                && attach instanceof Intent) {
+            Intent intent = (Intent) attach;
+            getView().toActivity(intent);
+        }
+        //关闭页面
+        if (RxBusMessage.CommonType.ACTIVITY_FINISH.equals(type)) {
+            getView().close();
+        }
+        //刷新数据
+        if (RxBusMessage.CommonType.DATA_REFRESH.equals(type)) {
+            refreshData();
         }
     }
-
-
-
-
 
 
     /**
@@ -167,16 +172,16 @@ public abstract class BasePresenter<V extends MvpView,M extends MvpModel> implem
     }
 
     @Override
-    public void startLoading(String message) {
+    public void startLoading() {
         getView().showLoadingView(true);
-        getView().changeLoadingState(EmptyState.PROGRESS, message);
+        getView().changeRequestState(RequestState.RUNNING);
     }
 
 
     @Override
-    public void endLoading(@EmptyState int code,String message) {
-        getView().changeLoadingState(code, null);//加载改变状态
-        if (code == EmptyState.NORMAL)
+    public void endLoading(@RequestState int state) {
+        getView().changeRequestState(state);//加载改变状态
+        if (state == ResultState.SUCCESS)
             getView().hideLoadingView();//正常时隐藏加载
     }
 }

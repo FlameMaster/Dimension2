@@ -4,7 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.melvinhou.kami.R;
-import com.melvinhou.kami.model.InsertItemEntity;
+import com.melvinhou.kami.bean.InsertItemEntity;
 import com.melvinhou.kami.util.FcUtils;
 
 import java.util.ArrayList;

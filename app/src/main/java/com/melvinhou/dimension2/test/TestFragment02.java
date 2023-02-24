@@ -14,7 +14,7 @@ import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ActivityListBinding;
 import com.melvinhou.kami.adapter.RecyclerAdapter;
 import com.melvinhou.kami.adapter.RecyclerHolder;
-import com.melvinhou.kami.mvvm.BaseModel;
+import com.melvinhou.kami.mvvm.BaseViewModel;
 import com.melvinhou.kami.mvvm.BindFragment;
 import com.melvinhou.kami.util.FcUtils;
 
@@ -34,7 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * = 分 类 说 明：
  * ================================================
  */
-public class TestFragment02 extends BindFragment<ActivityListBinding, BaseModel> {
+public class TestFragment02 extends BindFragment<ActivityListBinding, BaseViewModel> {
 
     @Override
     protected ActivityListBinding openViewBinding(LayoutInflater inflater, ViewGroup container) {
@@ -42,8 +42,8 @@ public class TestFragment02 extends BindFragment<ActivityListBinding, BaseModel>
     }
 
     @Override
-    protected Class<BaseModel> openModelClazz() {
-        return BaseModel.class;
+    protected Class<BaseViewModel> openModelClazz() {
+        return BaseViewModel.class;
     }
 
     int verticalScrolloffset = 0;

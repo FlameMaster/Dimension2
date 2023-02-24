@@ -2,8 +2,6 @@ package com.melvinhou.rxjava.fileloader;
 
 import android.util.LruCache;
 
-import com.melvinhou.kami.model.BaseCacheModel;
-
 /**
  * ===============================================
  * = 作 者：风 尘

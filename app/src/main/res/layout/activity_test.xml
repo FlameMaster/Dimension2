@@ -7,19 +7,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
+    android:background="@color/white"
     >
 
-    <RadioGroup
-        android:id="@+id/tabhost"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        >
-
-    </RadioGroup>
+    <include
+        android:id="@id/bar_root"
+        layout="@layout/inset_bar_full2" />
 
 
     <com.google.android.material.tabs.TabLayout
@@ -31,20 +24,37 @@
         app:tabIndicatorHeight="2dp"
         app:tabIndicatorFullWidth="false"
         app:tabMode="scrollable"
-        app:tabIndicatorColor="#0084EE"
+        app:tabIndicatorColor="?attr/colorAccent"
         app:tabIndicator="@drawable/shape_tab_indicator"
         app:tabRippleColor="@null"
         android:overScrollMode="never"
         android:scrollbars="none"
-        app:tabSelectedTextColor="#0084EE"
+        app:tabSelectedTextColor="@color/black"
         app:tabTextColor="@color/gray"
         android:background="@color/white"
         />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:openDrawer="start">
+        <fragment
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/test_navigation" />
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/nav_header_test"
+            />
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 </LinearLayout>

@@ -18,7 +18,7 @@ import android.widget.EditText;
 
 import com.google.gson.reflect.TypeToken;
 import com.melvinhou.dimension2.media.picture.ScanActivity;
-import com.melvinhou.dimension2.media.video.ijk.IjkVideoActivity;
+import com.melvinhou.medialibrary.video.ijk.IjkVideoActivity;
 import com.melvinhou.dimension2.net.AssetsFileKey;
 import com.melvinhou.dimension2.CYEntity;
 import com.melvinhou.dimension2.GlobalParameters;
@@ -39,17 +39,16 @@ import com.melvinhou.dimension2.media.video.VideoActivity2;
 import com.melvinhou.dimension2.media.video.VideoLivePager;
 import com.melvinhou.dimension2.pager.BasePager;
 import com.melvinhou.dimension2.pager.PagerActivity;
-import com.melvinhou.kami.model.EventMessage;
 import com.melvinhou.kami.mvvm.DataBindingFragment;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
 import com.melvinhou.kami.util.StringCompareUtils;
-import com.melvinhou.kami.wiget.PhotoCutterView;
-import com.melvinhou.rxjava.RxBus;
-import com.melvinhou.rxjava.RxBusClient;
-import com.melvinhou.rxjava.RxMsgParameters;
+import com.melvinhou.kami.view.wiget.PhotoCutterView;
+import com.melvinhou.rxjava.rxbus.RxBus;
+import com.melvinhou.rxjava.rxbus.RxBusClient;
+import com.melvinhou.rxjava.rxbus.RxBusMessage;
 
 import java.util.ArrayList;
 
@@ -373,16 +372,15 @@ public class MediaFragment extends DataBindingFragment<FgtMediaBD> {
         Intent intent = new Intent(FcUtils.getContext(), PagerActivity.class);
         intent.putExtra("title", title);
 
-        new RxBusClient(PagerActivity.class.getName(),
-                RxMsgParameters.ACTIVITY_LAUNCHED) {
+        new RxBusClient(RxBusClient.getClientId(getClass().getName())) {
             @Override
-            protected void onEvent(int type, String message, Object data) {
+            protected void onEvent(@NonNull String eventType, Object attach) {
                 //发送
-                RxBus.get().post(new EventMessage(EventMessage.EventType.ASSIGN,
-                        PagerActivity.class.getName()
-                                + RxMsgParameters.Pager.PAGER_INIT,
-                        pagers));
-                unregister();
+                RxBus.instance().post(RxBusMessage.Builder
+                        .instance(":{Pager}init")
+                        .client(getClass().getName())
+                        .build());
+                cancel();
             }
         };
         toActivity(intent);
@@ -398,7 +396,7 @@ public class MediaFragment extends DataBindingFragment<FgtMediaBD> {
     }
 
     private void openLinkDialog() {
-        Dialog dialog = new Dialog(getAct(), R.style.Dimension2Dialog);
+        Dialog dialog = new Dialog(requireActivity(), R.style.Dimension2Dialog);
         dialog.setContentView(R.layout.dialog_open_link);
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
@@ -415,7 +413,7 @@ public class MediaFragment extends DataBindingFragment<FgtMediaBD> {
         dialogWindow.setGravity(Gravity.CENTER);
         EditText edit = dialog.findViewById(R.id.edit);
         dialog.findViewById(R.id.submit).setOnClickListener(view -> {
-            if (edit != null && StringCompareUtils.isImageUrl(edit.getText().toString())) {
+            if (edit != null && StringCompareUtils.isImageFile(edit.getText().toString())) {
                 dialog.dismiss();
                 Intent intent = new Intent(FcUtils.getContext(), PictureActivity.class);
                 intent.putExtra("url", edit.getText().toString());

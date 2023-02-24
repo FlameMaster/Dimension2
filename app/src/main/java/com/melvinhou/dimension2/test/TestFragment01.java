@@ -1,31 +1,17 @@
 package com.melvinhou.dimension2.test;
 
-import android.animation.Animator;
-import android.animation.ValueAnimator;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.animation.LinearInterpolator;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.FragmentTest01Binding;
-import com.melvinhou.dimension2.media.video.ijk.IjkVideoView;
 import com.melvinhou.kami.adapter.RecyclerAdapter;
 import com.melvinhou.kami.adapter.RecyclerHolder;
-import com.melvinhou.kami.mvvm.BaseModel;
+import com.melvinhou.kami.mvvm.BaseViewModel;
 import com.melvinhou.kami.mvvm.BindFragment;
 import com.melvinhou.kami.util.FcUtils;
-
-import androidx.annotation.NonNull;
-import androidx.core.view.WindowCompat;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
-import io.reactivex.disposables.Disposable;
 
 /**
  * ===============================================
@@ -40,7 +26,7 @@ import io.reactivex.disposables.Disposable;
  * = 分 类 说 明：
  * ================================================
  */
-public class TestFragment01 extends BindFragment<FragmentTest01Binding, BaseModel> {
+public class TestFragment01 extends BindFragment<FragmentTest01Binding, BaseViewModel> {
 
     @Override
     protected FragmentTest01Binding openViewBinding(LayoutInflater inflater, ViewGroup container) {
@@ -48,8 +34,8 @@ public class TestFragment01 extends BindFragment<FragmentTest01Binding, BaseMode
     }
 
     @Override
-    protected Class<BaseModel> openModelClazz() {
-        return BaseModel.class;
+    protected Class<BaseViewModel> openModelClazz() {
+        return BaseViewModel.class;
     }
 
 

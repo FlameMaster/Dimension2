@@ -14,11 +14,11 @@ import android.widget.TextView;
 
 import com.melvinhou.dimension2.R;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.FileUtils;
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.io.FileUtils;
+import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
 import com.melvinhou.kami.util.StringUtils;
-import com.melvinhou.kami.view.BaseActivity;
+import com.melvinhou.kami.view.activities.BaseActivity;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

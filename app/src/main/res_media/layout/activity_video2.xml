@@ -50,7 +50,7 @@
         app:layout_constraintLeft_toLeftOf="@id/video_container"
         app:layout_constraintRight_toRightOf="@id/video_container"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/fg_video_container"
+        android:background="@drawable/fg_video_shade"
         />
 
     <!--返回-->
@@ -59,7 +59,7 @@
         android:layout_width="?attr/actionBarSize"
         android:layout_height="?attr/actionBarSize"
         android:padding="12dp"
-        android:src="@drawable/ic_back2"
+        android:src="@drawable/ic_back"
         android:elevation="3dp"
         app:layout_constraintDimensionRatio="H,1:1"
         app:layout_constraintTop_toTopOf="@id/video_shade"
@@ -92,7 +92,7 @@
         android:layout_width="?attr/actionBarSize"
         android:layout_height="?attr/actionBarSize"
         android:padding="16dp"
-        android:src="@drawable/ic_tv_play"
+        android:src="@drawable/ic_media_play_02"
         android:elevation="3dp"
         app:layout_constraintLeft_toLeftOf="@id/video_container"
         app:layout_constraintBottom_toBottomOf="@id/video_container"

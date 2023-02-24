@@ -1,6 +1,8 @@
 package com.melvinhou.kami.mvp;
 
-import com.melvinhou.kami.view.BaseFragment2;
+import com.melvinhou.kami.view.fragments.BaseFragment2;
+import com.melvinhou.kami.mvp.interfaces.MvpPresenter;
+import com.melvinhou.kami.mvp.interfaces.MvpView;
 
 import androidx.lifecycle.LifecycleOwner;
 
@@ -17,7 +19,7 @@ import androidx.lifecycle.LifecycleOwner;
  * = 分 类 说 明：mvp-v
  * ================================================
  */
-public abstract class MvpFragment<P extends MvpPresenter> extends BaseFragment2 implements MvpView<P>{
+public abstract class MvpFragment<P extends MvpPresenter> extends BaseFragment2 implements MvpView<P> {
 
     /*mvp-p*/
     private P mPresenter;

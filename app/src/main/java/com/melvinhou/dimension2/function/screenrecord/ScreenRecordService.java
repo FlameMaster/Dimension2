@@ -24,9 +24,8 @@ import android.util.Log;
 import android.view.Surface;
 
 import com.melvinhou.dimension2.R;
-import com.melvinhou.kami.util.DateUtils;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.FileUtils;
+import com.melvinhou.kami.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;

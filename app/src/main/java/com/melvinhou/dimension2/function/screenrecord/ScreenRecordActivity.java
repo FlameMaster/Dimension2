@@ -21,10 +21,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,13 +32,12 @@ import com.bumptech.glide.request.RequestOptions;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.media.video.VideoActivity2;
 import com.melvinhou.kami.adapter.RecyclerAdapter;
-import com.melvinhou.kami.adapter.RecyclerAdapter2;
 import com.melvinhou.kami.adapter.RecyclerHolder;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.util.IOUtils;
+import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
-import com.melvinhou.kami.view.BaseActivity;
+import com.melvinhou.kami.view.activities.BaseActivity;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -149,7 +146,7 @@ public class ScreenRecordActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (allPermissionsGranted(REQUIRED_PERMISSIONS))
+        if (checkPermission(REQUIRED_PERMISSIONS))
             loadData();
     }
 
@@ -159,7 +156,7 @@ public class ScreenRecordActivity extends BaseActivity {
         mAdapter.addTailView(view);
         view.setVisibility(View.INVISIBLE);
         //权限申请
-        if (allPermissionsGranted(REQUIRED_PERMISSIONS))
+        if (checkPermission(REQUIRED_PERMISSIONS))
             loadData();
         else
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);

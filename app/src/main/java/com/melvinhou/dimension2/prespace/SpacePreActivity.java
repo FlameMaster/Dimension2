@@ -56,15 +56,15 @@ public class SpacePreActivity extends BindActivity<ActivityViewpagerBinding, Spa
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            fragments.get(mBinding.container.getCurrentItem()).back();
+            fragments.get(mBinding.container.getCurrentItem()).backward();
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
 
     @Override
-    public void back() {
-        fragments.get(mBinding.container.getCurrentItem()).back();
+    public void backward() {
+        fragments.get(mBinding.container.getCurrentItem()).backward();
     }
 
     @Override
@@ -105,7 +105,7 @@ public class SpacePreActivity extends BindActivity<ActivityViewpagerBinding, Spa
     @Override
     protected void initData() {
         //权限申请
-        if (allPermissionsGranted(REQUIRED_PERMISSIONS)) {
+        if (checkPermission(REQUIRED_PERMISSIONS)) {
             loadData();
         } else
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
