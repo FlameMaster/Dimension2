@@ -71,7 +71,7 @@ public class LoadUtils {
     public static String readAssetsTxt(String fileName) {
         String text = null;
         try {
-            InputStream is = FcUtils.getContext().getAssets().open(fileName + ".txt");
+            InputStream is = FcUtils.getContext().getAssets().open(fileName + ".json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);

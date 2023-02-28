@@ -7,7 +7,7 @@
         android:id="@android:id/background">
             <shape>
                 <!--<corners android:radius="5dp"/>-->
-                <solid android:color="@color/gray"/>
+                <solid android:color="@color/white"/>
             </shape>
     </item>
     <!-- 进度条 -->
@@ -15,7 +15,7 @@
         android:id="@android:id/progress">
         <clip>
             <shape>
-                <solid android:color="@color/white"/>
+                <solid android:color="?attr/colorPrimary"/>
             </shape>
         </clip>
     </item>
@@ -24,7 +24,7 @@
         android:id="@android:id/secondaryProgress">
         <clip>
             <shape>
-                <solid android:color="#5FFF"/>
+                <solid android:color="?attr/colorPrimaryDark"/>
             </shape>
         </clip>
     </item>

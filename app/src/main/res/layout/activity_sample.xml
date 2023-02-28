@@ -14,16 +14,24 @@
 
 
     <com.melvinhou.medialibrary.video.ijk.IjkVideoView
-        android:id="@+id/video"
+        android:id="@+id/video1"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         />
+    <FrameLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="#f00"
+        >
+        <com.melvinhou.medialibrary.video.FCVideoView
+            android:id="@+id/video2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            />
+    </FrameLayout>
 
-    <com.melvinhou.medialibrary.video.TimVideoView
-        android:id="@+id/video2"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        />
+    <include layout="@layout/inset_video_group"/>
 
 
 </LinearLayout>

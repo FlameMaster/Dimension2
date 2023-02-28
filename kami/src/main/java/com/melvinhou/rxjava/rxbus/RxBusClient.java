@@ -65,7 +65,7 @@ public abstract class RxBusClient {
     /*指定接收器*/
     /*事件注册*/
     public RxBusClient(@RxBusMessage.OffscreenClient int clientId) {
-        if (mClientId < 1 && mClientId != RxBusMessage.OFFSCREEN_CLIENT_DEFAULT) {
+        if (clientId < 1 && mClientId != RxBusMessage.OFFSCREEN_CLIENT_DEFAULT) {
             throw new IllegalArgumentException(
                     "client id must be OFFSCREEN_CLIENT_DEFAULT or a number > 0");
         }

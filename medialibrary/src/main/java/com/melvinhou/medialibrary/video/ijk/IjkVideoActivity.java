@@ -42,6 +42,7 @@ import java.util.concurrent.TimeUnit;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Group;
 import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import io.reactivex.Observable;
@@ -107,8 +108,17 @@ public class IjkVideoActivity extends BaseActivity {
 
     @Override
     protected void initWindowUI() {
-//        showSystemUI();
-        hideSystemUI();
+
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |//粘性沉浸模式
+                        View.SYSTEM_UI_FLAG_IMMERSIVE |//沉浸模式
+                        //两行全屏
+                        View.SYSTEM_UI_FLAG_FULLSCREEN |
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                        //以下防止布局随着系统栏的隐藏和显示调整大小
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
 
         getWindow().setStatusBarColor(Color.parseColor("#40000000"));
         //刘海屏适配
@@ -116,45 +126,13 @@ public class IjkVideoActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             lp.layoutInDisplayCutoutMode
                     = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+            getWindow().setAttributes(lp);
         }
-        getWindow().setAttributes(lp);
         //控制系统界面的工具
         windowInsetsController
-                = ViewCompat.getWindowInsetsController(getWindow().getDecorView());
-//        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-    }
-
-    private void showSystemUI() {
-        if (windowInsetsController != null) {
-            //导航栏和状态栏的颜色（黑白）
-            windowInsetsController.setAppearanceLightStatusBars(false);
-            windowInsetsController.setAppearanceLightNavigationBars(false);
-            windowInsetsController.show(WindowInsetsCompat.Type.systemBars());
-        } else {
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-                            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-        }
-    }
-
-    private void hideSystemUI() {
-        if (windowInsetsController != null) {
-//            windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
-//        } else {
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |//粘性沉浸模式
-                            View.SYSTEM_UI_FLAG_IMMERSIVE |//沉浸模式
-                            //两行全屏
-                            View.SYSTEM_UI_FLAG_FULLSCREEN |
-                            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                            //以下防止布局随着系统栏的隐藏和显示调整大小
-                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-                            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-            //带有layout的是伪全屏，会覆盖在视图上
-//            getWindow().setStatusBarColor(0x40000000);
-        }
+                = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView().getRootView());
+        windowInsetsController.setAppearanceLightStatusBars(false);
+        windowInsetsController.setAppearanceLightNavigationBars(false);
     }
 
     private void showToolsUI() {
@@ -165,18 +143,11 @@ public class IjkVideoActivity extends BaseActivity {
     }
 
     private void hideToolsUI() {
-        if (windowInsetsController != null) {
-            windowInsetsController.hide(WindowInsetsCompat.Type.statusBars());
-        }
-        mVideoToolsGroup.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            hideSystemUI();
-            hideToolsUI();
+        if (mMediaController.isPlaying()) {
+            if (windowInsetsController != null) {
+                windowInsetsController.hide(WindowInsetsCompat.Type.statusBars());
+            }
+            mVideoToolsGroup.setVisibility(View.GONE);
         }
     }
 
@@ -217,6 +188,8 @@ public class IjkVideoActivity extends BaseActivity {
         ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) mVideoShade.getLayoutParams();
         lp.topMargin = DimenUtils.getStatusHeight();
         mVideoShade.setLayoutParams(lp);
+        //显示ui
+        showToolsUI();
     }
 
     @Override
@@ -250,18 +223,17 @@ public class IjkVideoActivity extends BaseActivity {
         //初始化屏幕旋转的参数
         initGravitySener();
 
-        //状态栏变化的监听,暂时不使用
-        if (mVidoe==null)
-        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(visibility -> {
-            Log.e("状态栏变化", "visibility=" + visibility);
-            cleaHideTimer();
-            if (visibility == View.SYSTEM_UI_FLAG_VISIBLE) {//状态栏显示SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        //todo 状态栏变化的监听,暂时不使用
+        if (mVidoe == null)
+            getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(visibility -> {
+                Log.e("状态栏变化", "visibility=" + visibility);
+                cleaHideTimer();
+                if (visibility == View.SYSTEM_UI_FLAG_VISIBLE) {//状态栏显示SYSTEM_UI_FLAG_HIDE_NAVIGATION
 //                showToolsUI();
-                startSystemHideTimer();
-            } else {//状态栏隐藏
+                } else {//状态栏隐藏
 //                hideToolsUI();
-            }
-        });
+                }
+            });
 
         //界面的一些手势监听
         mGestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
@@ -275,6 +247,7 @@ public class IjkVideoActivity extends BaseActivity {
                 }
                 return true;
             }
+
             //双击
             @Override
             public boolean onDoubleTap(MotionEvent e) {
@@ -309,6 +282,8 @@ public class IjkVideoActivity extends BaseActivity {
             mVidoe.setLocalProxyEnable(true);
             mVidoe.setVideoPath(url);
             changePlay(null);
+            //隐藏ui
+            startToolsTimer();
         }
     }
 
@@ -375,13 +350,6 @@ public class IjkVideoActivity extends BaseActivity {
      */
     private void cleaHideTimer() {
         if (mChangeOrientationDisposable != null) mChangeOrientationDisposable.dispose();
-    }
-
-    private void startSystemHideTimer() {
-        cleaHideTimer();
-        mChangeOrientationDisposable = Observable.timer(1, TimeUnit.SECONDS)
-                .compose(IOUtils.setThread())
-                .subscribe(aLong -> hideSystemUI());
     }
 
     private void startToolsTimer() {
@@ -550,8 +518,6 @@ public class IjkVideoActivity extends BaseActivity {
      */
     @Override
     public void setRequestedOrientation(int requestedOrientation) {
-        startSystemHideTimer();
-        startToolsTimer();
         if (requestedOrientation == SCREEN_DIRECTION_UNDEFINED | requestedOrientation == mScreenDirection)
             return;
         super.setRequestedOrientation(requestedOrientation);

@@ -3,9 +3,11 @@ package com.melvinhou.dimension2.test;
 import android.net.Uri;
 
 import com.melvinhou.dimension2.R;
+import com.melvinhou.medialibrary.video.FCVideoLayout;
 import com.melvinhou.medialibrary.video.ijk.IjkVideoView;
 import com.melvinhou.kami.view.activities.BaseActivity2;
-import com.melvinhou.medialibrary.video.TimVideoView;
+import com.melvinhou.medialibrary.video.FCVideoView;
+import com.melvinhou.medialibrary.video.proxy.IPlayer;
 
 /**
  * ===============================================
@@ -30,13 +32,18 @@ public class SampleActivity extends BaseActivity2 {
     protected void initView() {
         String uri = "https://uploadstatic.mihoyo.com/hk4e/upload/officialsites/202012/zhongli_gameplayPV_final_V3_fix.mp4";
         uri = "https://webstatic.bh3.com/video/bh3.com/pv/CG_OP_1800.mp4";
-        IjkVideoView videoView =findViewById(R.id.video);
-        videoView.setVideoPath(uri);
-        videoView.getController().start();
+        IjkVideoView videoView =findViewById(R.id.video1);
+//        videoView.setVideoPath(uri);
+//        videoView.getController().start();
 
-        TimVideoView videoView2 =findViewById(R.id.video2);
-        videoView2.setVideoURI(Uri.parse(uri));
+        uri = "content://com.android.externalstorage.documents/tree/primary%3ADCIM%2FScreenRecorder/document/primary%3ADCIM%2FScreenRecorder%2FScreenrecorder-2023-02-15-17-52-59-31.mp4";
+        FCVideoView videoView2 =findViewById(R.id.video2);
+//        videoView2.setVideoURI(Uri.parse(uri));
 //        videoView2.start();
+
+
+        FCVideoLayout videoView3 =findViewById(R.id.video_layout);
+        videoView3.setVideoURI(Uri.parse(uri));
     }
 
     @Override

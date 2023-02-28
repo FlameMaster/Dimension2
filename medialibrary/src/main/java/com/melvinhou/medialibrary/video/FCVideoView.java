@@ -1,6 +1,7 @@
 package com.melvinhou.medialibrary.video;
 
 import android.content.Context;
+import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -16,10 +17,11 @@ import com.melvinhou.medialibrary.video.proxy.IPlayer;
 import com.melvinhou.medialibrary.video.proxy.MediaPlayerProxy;
 import com.melvinhou.medialibrary.video.util.ScreenUtil;
 
-public class TimVideoView extends TextureView {
+public class FCVideoView extends TextureView {
 
-    private static final String TAG = TimVideoView.class.getSimpleName();
+    private static final String TAG = FCVideoView.class.getSimpleName();
 
+    //播放器状态
     private static int STATE_ERROR = -1;
     private static int STATE_IDLE = 0;
     private static int STATE_PREPARING = 1;
@@ -29,17 +31,23 @@ public class TimVideoView extends TextureView {
     private static int STATE_PLAYBACK_COMPLETED = 5;
     private static int STATE_STOPPED = 6;
 
+    //当前状态
     private int mCurrentState = STATE_IDLE;
 
     private Context mContext;
+    //显示器
     private Surface mSurface;
+    //播放器
     private MediaPlayerProxy mMediaPlayer;
 
+    //地址
     private Uri mUri;
+    //宽高和旋转参数
     private int mVideoWidth;
     private int mVideoHeight;
     private int mVideoRotationDegree;
 
+    //播放器监听
     private IPlayer.OnPreparedListener mOutOnPreparedListener;
     private IPlayer.OnErrorListener mOutOnErrorListener;
     private IPlayer.OnCompletionListener mOutOnCompletionListener;
@@ -103,6 +111,8 @@ public class TimVideoView extends TextureView {
             }
         }
     };
+
+    //显示器监听
     private SurfaceTextureListener mSurfaceTextureListener = new SurfaceTextureListener() {
 
         @Override
@@ -129,27 +139,6 @@ public class TimVideoView extends TextureView {
         }
     };
 
-    public TimVideoView(Context context) {
-        super(context);
-        initVideoView(context);
-    }
-
-    public TimVideoView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initVideoView(context);
-    }
-
-    public TimVideoView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initVideoView(context);
-    }
-
-    private void initVideoView(Context context) {
-        Log.i(TAG, "initVideoView");
-        mContext = context;
-        setSurfaceTextureListener(mSurfaceTextureListener);
-        mCurrentState = STATE_IDLE;
-    }
 
     public void setOnPreparedListener(IPlayer.OnPreparedListener l) {
         mOutOnPreparedListener = l;
@@ -167,6 +156,39 @@ public class TimVideoView extends TextureView {
         mOutOnCompletionListener = l;
     }
 
+
+
+
+
+
+
+    public FCVideoView(Context context) {
+        super(context);
+        initVideoView(context);
+    }
+
+    public FCVideoView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initVideoView(context);
+    }
+
+    public FCVideoView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initVideoView(context);
+    }
+
+    private void initVideoView(Context context) {
+        Log.i(TAG, "initVideoView");
+        mContext = context;
+        setSurfaceTextureListener(mSurfaceTextureListener);
+        mCurrentState = STATE_IDLE;
+    }
+
+    /**
+     * 根据视频宽高控制控件大小
+     * @param widthMeasureSpec
+     * @param heightMeasureSpec
+     */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         //  TUIChatLog.i(TAG, "onMeasure(" + MeasureSpec.toString(widthMeasureSpec) + ", "
