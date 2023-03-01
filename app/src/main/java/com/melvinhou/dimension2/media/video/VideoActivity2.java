@@ -84,7 +84,7 @@ public class VideoActivity2 extends BaseActivity {
     };
 
 
-    private FCVidoeView mVidoe;
+    private TextureVidoeView mVidoe;
     private Group mVideoToolsGroup;
     private ImageView mPlayButton;
     private SeekBar mProgress;
@@ -222,7 +222,7 @@ public class VideoActivity2 extends BaseActivity {
                 .getConfiguration().orientation;
         isLandscape = ResourcesUtils.getResources()
                 .getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-        mVidoe.changeDisplayerType(FCVidoeView.TYPE_DISPLAYER_INSIDE);
+        mVidoe.changeDisplayerType(TextureVidoeView.TYPE_DISPLAYER_INSIDE);
         //标题
         mTitle.setText(getIntent().getStringExtra("title"));
         //电影模式直接横屏
@@ -252,7 +252,7 @@ public class VideoActivity2 extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (mVidoe != null && mVidoe.getCurrentState() == FCVidoeView.STATE_PAUSED)
+        if (mVidoe != null && mVidoe.getCurrentState() == TextureVidoeView.STATE_PAUSED)
             mVidoe.start();
         //开启屏幕常亮
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -261,7 +261,7 @@ public class VideoActivity2 extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (mVidoe != null && mVidoe.getCurrentState() == FCVidoeView.STATE_PLAYING)
+        if (mVidoe != null && mVidoe.getCurrentState() == TextureVidoeView.STATE_PLAYING)
             mVidoe.pause();
         //关闭屏幕常亮
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -347,7 +347,7 @@ public class VideoActivity2 extends BaseActivity {
      * 切换播放状态
      */
     public void changePlay(View view) {
-        if (mVidoe.getCurrentState() == FCVidoeView.STATE_PLAYING) {
+        if (mVidoe.getCurrentState() == TextureVidoeView.STATE_PLAYING) {
             mVidoe.pause();
         } else {
             mVidoe.start();
@@ -373,22 +373,22 @@ public class VideoActivity2 extends BaseActivity {
      * @param currentState
      */
     private void onVideoStateChanged(int currentState) {
-        if (currentState == FCVidoeView.STATE_IDLE ||
-                currentState == FCVidoeView.STATE_PREPARING ||
-                currentState == FCVidoeView.STATE_BUFFERING_PLAYING ||
-                currentState == FCVidoeView.STATE_BUFFERING_PAUSED) {
+        if (currentState == TextureVidoeView.STATE_IDLE ||
+                currentState == TextureVidoeView.STATE_PREPARING ||
+                currentState == TextureVidoeView.STATE_BUFFERING_PLAYING ||
+                currentState == TextureVidoeView.STATE_BUFFERING_PAUSED) {
             if (mLoadProgress.getVisibility() == View.GONE)
                 mLoadProgress.setVisibility(View.VISIBLE);
         } else if (mLoadProgress.getVisibility() != View.GONE)
             mLoadProgress.setVisibility(View.GONE);
 
         //播放准备完毕
-        if (currentState == FCVidoeView.STATE_PREPARED)
+        if (currentState == TextureVidoeView.STATE_PREPARED)
             onResourcePrepared();
 
         //播放图标
-        if (currentState == FCVidoeView.STATE_PLAYING||
-                currentState == FCVidoeView.STATE_BUFFERING_PLAYING) {
+        if (currentState == TextureVidoeView.STATE_PLAYING||
+                currentState == TextureVidoeView.STATE_BUFFERING_PLAYING) {
             mPlayButton.setImageResource(R.drawable.ic_media_pause_02);
         } else
             mPlayButton.setImageResource(R.drawable.ic_media_play_02);

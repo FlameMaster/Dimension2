@@ -19,7 +19,7 @@ import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.melvinhou.dimension2.R;
-import com.melvinhou.dimension2.media.music.BlurTransformation;
+import com.melvinhou.kami.tool.GlideBlurTransformation;
 import com.melvinhou.dimension2.utils.PinYinUtil;
 import com.melvinhou.kami.adapter.RecyclerAdapter;
 import com.melvinhou.kami.adapter.RecyclerHolder;
@@ -88,7 +88,7 @@ public class DesktopActivity extends BaseActivity {
     @Override
     protected void initData() {
         //高斯模糊
-        MultiTransformation mation4 = new MultiTransformation(new BlurTransformation(50));
+        MultiTransformation mation4 = new MultiTransformation(new GlideBlurTransformation(50));
         Glide.with(FcUtils.getContext())
                 .load("https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/background/baskground001.jpg")
                 .apply(new RequestOptions()

@@ -1,4 +1,4 @@
-package com.melvinhou.dimension2.media.music;
+package com.melvinhou.dimension2.media.music.proxy;
 
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;

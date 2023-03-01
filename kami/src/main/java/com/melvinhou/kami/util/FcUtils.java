@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.melvinhou.kami.BaseApplication;
@@ -100,6 +101,31 @@ public class FcUtils {
     }
 
     /**
+     * 打印toast
+     * @param message
+     * @param isLong
+     */
+    private static void showToast(final String message, boolean isLong) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast toast = Toast.makeText(getContext(), message,
+                        isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
+                // 解决各个手机系统 toast 文字对齐方式不一致的问题
+                View view = toast.getView();
+                // 红米手机上可能为空
+                if (view != null) {
+                    TextView textView = view.findViewById(android.R.id.message);
+                    if (textView != null) {
+                        textView.setGravity(Gravity.CENTER);
+                    }
+                }
+                toast.show();
+            }
+        });
+    }
+
+    /**
      * 获取输入管理
      *
      * @return
@@ -113,7 +139,7 @@ public class FcUtils {
      *
      * @return 判断结果
      */
-    public static boolean isRunOnUIThread() {
+    public static boolean isrunOnUiThread() {
 
         // 获取当前线程id
         int myTid = android.os.Process.myTid();
@@ -130,8 +156,8 @@ public class FcUtils {
      *
      * @param r 需要运行的runnable
      */
-    public static void runOnUIThread(Runnable r) {
-        if (isRunOnUIThread()) {
+    public static void runOnUiThread(Runnable r) {
+        if (isrunOnUiThread()) {
             // 已经是主线程, 直接运行
             r.run();
         } else {

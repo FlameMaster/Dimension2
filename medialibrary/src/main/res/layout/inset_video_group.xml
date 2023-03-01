@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 *  布局说明：给视频播放器添加基础功能的布局,可以自己修改样式和位置
-*  所属分类：com.melvinhou.medialibrary.video.FCVideoLayout
+*  所属分类：com.melvinhou.medialibrary.video.FcVideoLayout
 -->
-<com.melvinhou.medialibrary.video.FCVideoLayout
+<com.melvinhou.medialibrary.video.FcVideoLayout
     android:id="@+id/video_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -26,7 +26,7 @@
 
 
 
-    <com.melvinhou.medialibrary.video.FCVideoView
+    <com.melvinhou.medialibrary.video.FcVideoView
         android:id="@+id/video"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -160,4 +160,4 @@
         android:visibility="gone"
         />
 
-</com.melvinhou.medialibrary.video.FCVideoLayout>
+</com.melvinhou.medialibrary.video.FcVideoLayout>

@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 
 import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.DateUtils;
-import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.medialibrary.R;
 import com.melvinhou.medialibrary.video.proxy.IPlayer;
 
@@ -40,16 +38,16 @@ import io.reactivex.disposables.Disposable;
  * = 分 类 说 明：基础播放功能的播放器
  * ================================================
  */
-public class FCVideoLayout extends ConstraintLayout {
-    public FCVideoLayout(@NonNull Context context) {
+public class FcVideoLayout extends ConstraintLayout {
+    public FcVideoLayout(@NonNull Context context) {
         super(context);
     }
 
-    public FCVideoLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public FcVideoLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public FCVideoLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public FcVideoLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -57,7 +55,7 @@ public class FCVideoLayout extends ConstraintLayout {
     private View mLoadingView, mForegroundView, mControllerGroup;
     private TextView mCurrentPositionText, mDurationText,mMessageView;
     private SeekBar mProgressBar;
-    private FCVideoView mVideoView;
+    private FcVideoView mVideoView;
     private ImageView mPlayButton, mFullScreenButton, mBackgroundView;
     //显示工具条计时，开始进度条计时
     private Disposable mChangeOrientationDisposable, mProgressDisposable;
@@ -184,7 +182,7 @@ public class FCVideoLayout extends ConstraintLayout {
     public void showController() {
         if (mForegroundView != null) mForegroundView.setVisibility(VISIBLE);
         if (mControllerGroup != null) mControllerGroup.setVisibility(VISIBLE);
-        if (mPlayButton != null) mPlayButton.setVisibility(VISIBLE);
+        if (mPlayButton != null && mVideoView.isPrepared()) mPlayButton.setVisibility(VISIBLE);
         if (mVideoControllerUIListener!=null)
             mVideoControllerUIListener.onShowControllerUI();
     }
@@ -400,6 +398,22 @@ public class FCVideoLayout extends ConstraintLayout {
             start();
             startToolsTimer();
         }
+    }
+
+    //清空
+    public void cancel() {
+        cleaHideTimer();
+        if (mProgressDisposable != null) mProgressDisposable.dispose();
+        stop_l();
+    }
+
+    /**
+     * 屏幕是否全屏
+     * @param isFull
+     */
+    public void  setFullScreen(boolean isFull){
+        if (mFullScreenButton!=null)
+            mFullScreenButton.setSelected(isFull);
     }
 
 

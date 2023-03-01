@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<LinearLayout
+    android:id="@+id/root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center"
+    >
+
+    <!--上一个-->
+    <ImageView
+        android:id="@+id/player_previous"
+        android:layout_width="?android:attr/actionBarSize"
+        android:layout_height="?android:attr/actionBarSize"
+        android:src="@drawable/ic_media_backward_01"
+        android:padding="12dp"
+        />
+
+
+    <!--播放暂停-->
+    <ImageView
+        android:id="@+id/player_play"
+        android:layout_width="?android:attr/actionBarSize"
+        android:layout_height="?android:attr/actionBarSize"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:src="@drawable/selector_player_state_02"
+        android:layout_marginHorizontal="10dp"
+        />
+
+    <!--下一个-->
+    <ImageView
+        android:id="@+id/player_next"
+        android:layout_width="?android:attr/actionBarSize"
+        android:layout_height="?android:attr/actionBarSize"
+        android:src="@drawable/ic_media_forward_01"
+        android:padding="12dp"
+        />
+
+</LinearLayout>

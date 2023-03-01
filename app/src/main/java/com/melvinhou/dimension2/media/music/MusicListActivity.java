@@ -18,10 +18,13 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ActMusicListBD;
+import com.melvinhou.dimension2.media.music.proxy.MediaBrowserCallback;
+import com.melvinhou.dimension2.media.music.proxy.MediaBrowserHelper;
 import com.melvinhou.dimension2.net.HttpConstant;
 import com.melvinhou.kami.adapter.RecyclerAdapter2;
 import com.melvinhou.kami.adapter.RecyclerHolder;
 import com.melvinhou.kami.mvvm.DataBindingActivity;
+import com.melvinhou.kami.tool.GlideBlurTransformation;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
@@ -208,7 +211,7 @@ public class MusicListActivity extends DataBindingActivity<ActMusicListBD> {
                 .asBitmap()
                 .load(backgroundUri)
                 .apply(RequestOptions.bitmapTransform(
-                        new BlurTransformation(25, 1)))
+                        new GlideBlurTransformation(25, 1)))
                 .into(getViewDataBinding().musicTopCover);
 
     }

@@ -1,4 +1,4 @@
-package com.melvinhou.dimension2.media.music;
+package com.melvinhou.kami.tool;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -24,7 +24,7 @@ import androidx.annotation.NonNull;
  * = 分 类 说 明：Glide加载高斯模糊
  * ================================================
  */
-public class BlurTransformation extends BitmapTransformation {
+public class GlideBlurTransformation extends BitmapTransformation {
 
     private static final int VERSION = 1;
     private static final String ID = "BlurTransformation." + VERSION;
@@ -35,19 +35,20 @@ public class BlurTransformation extends BitmapTransformation {
     private int radius;
     private int sampling;
 
-    public BlurTransformation() {
+    public GlideBlurTransformation() {
         this(MAX_RADIUS, DEFAULT_DOWN_SAMPLING);
     }
 
-    public BlurTransformation(int radius) {
+    public GlideBlurTransformation(int radius) {
         this(radius, DEFAULT_DOWN_SAMPLING);
     }
 
-    public BlurTransformation(int radius, int sampling) {
+    public GlideBlurTransformation(int radius, int sampling) {
         this.radius = radius;
         this.sampling = sampling;
     }
 
+    //图片变换
     @Override
     protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
         int width = toTransform.getWidth();
@@ -72,9 +73,9 @@ public class BlurTransformation extends BitmapTransformation {
     }
 
     @Override public boolean equals(Object o) {
-        return o instanceof BlurTransformation &&
-                ((BlurTransformation) o).radius == radius &&
-                ((BlurTransformation) o).sampling == sampling;
+        return o instanceof GlideBlurTransformation &&
+                ((GlideBlurTransformation) o).radius == radius &&
+                ((GlideBlurTransformation) o).sampling == sampling;
     }
 
     @Override public int hashCode() {
@@ -87,6 +88,7 @@ public class BlurTransformation extends BitmapTransformation {
 
 
     /**
+     * 高斯模糊公式
      * @param sentBitmap       需用的图片
      * @param radius           半径
      * @param canReuseInBitmap 是否可以重用此图片

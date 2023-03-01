@@ -260,7 +260,7 @@ public class D3Activity extends BaseActivity {
      */
     public void onEvent(@NonNull String type, Object data) {
         if (type.contains(RxBusMessage.CommonType.DATA_REFRESH)) {
-            FcUtils.runOnUIThread(() -> {
+            FcUtils.runOnUiThread(() -> {
                 if (data != null) {
                     showTextProcess(data.toString());
                 } else {

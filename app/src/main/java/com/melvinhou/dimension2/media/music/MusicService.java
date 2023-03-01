@@ -12,6 +12,7 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 
+import com.melvinhou.dimension2.media.music.proxy.PlaybackInfoListener;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.io.IOUtils;
 

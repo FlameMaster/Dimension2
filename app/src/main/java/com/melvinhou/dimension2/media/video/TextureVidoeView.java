@@ -28,7 +28,7 @@ import com.melvinhou.rxjava.rxbus.RxBusMessage;
  * = 分 类 说 明：自定义视频播放器，使用TextureView来显示，MediaPlayer控制媒体
  * ============================================================
  */
-public class FCVidoeView extends TextureView implements TextureView.SurfaceTextureListener {
+public class TextureVidoeView extends TextureView implements TextureView.SurfaceTextureListener {
 
 
     public static final int STATE_ERROR = -1;          // 播放错误
@@ -88,15 +88,15 @@ public class FCVidoeView extends TextureView implements TextureView.SurfaceTextu
         return mCurrentState;
     }
 
-    public FCVidoeView(Context context) {
+    public TextureVidoeView(Context context) {
         this(context, null);
     }
 
-    public FCVidoeView(Context context, AttributeSet attrs) {
+    public TextureVidoeView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public FCVidoeView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TextureVidoeView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

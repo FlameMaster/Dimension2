@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import com.jeffmony.videocache.model.VideoCacheInfo;
 import com.melvinhou.medialibrary.R;
-import com.melvinhou.medialibrary.video.MediaController;
+import com.melvinhou.medialibrary.video.listener.MediaController;
 import com.melvinhou.kami.util.DateUtils;
 import com.melvinhou.kami.util.DeviceUtils;
 import com.melvinhou.kami.util.DimenUtils;
@@ -34,14 +34,12 @@ import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
 import com.melvinhou.kami.util.StringUtils;
 import com.melvinhou.kami.view.activities.BaseActivity;
-import com.melvinhou.medialibrary.video.ijk.IjkVideoView;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Group;
-import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;

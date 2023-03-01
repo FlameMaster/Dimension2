@@ -1,13 +1,16 @@
 package com.melvinhou.dimension2.test;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.view.View;
 
 import com.melvinhou.dimension2.R;
-import com.melvinhou.medialibrary.video.FCVideoLayout;
+import com.melvinhou.kami.util.FcUtils;
+import com.melvinhou.medialibrary.music.ui.FcMusicActivity;
+import com.melvinhou.medialibrary.video.FcVideoLayout;
 import com.melvinhou.medialibrary.video.ijk.IjkVideoView;
 import com.melvinhou.kami.view.activities.BaseActivity2;
-import com.melvinhou.medialibrary.video.FCVideoView;
-import com.melvinhou.medialibrary.video.proxy.IPlayer;
+import com.melvinhou.medialibrary.video.FcVideoView;
 
 /**
  * ===============================================
@@ -37,12 +40,21 @@ public class SampleActivity extends BaseActivity2 {
 //        videoView.getController().start();
 
         uri = "content://com.android.externalstorage.documents/tree/primary%3ADCIM%2FScreenRecorder/document/primary%3ADCIM%2FScreenRecorder%2FScreenrecorder-2023-02-15-17-52-59-31.mp4";
-        FCVideoView videoView2 =findViewById(R.id.video2);
+        FcVideoView videoView2 =findViewById(R.id.video2);
 //        videoView2.setVideoURI(Uri.parse(uri));
 //        videoView2.start();
+        videoView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FcUtils.getContext(), FcMusicActivity.class);
+                intent.putExtra("url", "https://webstatic.bh3.com/video/bh3.com/pv/CG_OP_1800.mp4");
+                intent.putExtra("title", "岩王帝君-钟离");
+                toActivity(intent);
+            }
+        });
 
 
-        FCVideoLayout videoView3 =findViewById(R.id.video_layout);
+        FcVideoLayout videoView3 =findViewById(R.id.video_layout);
         videoView3.setVideoURI(Uri.parse(uri));
     }
 

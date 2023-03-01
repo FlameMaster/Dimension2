@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package com.melvinhou.dimension2.media.music;
+package com.melvinhou.dimension2.media.music.proxy;
 
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+
+import com.melvinhou.dimension2.media.music.MusicService;
+import com.melvinhou.dimension2.media.music.PlayerAdapter;
 
 /**
  * 提供从 {@link PlayerAdapter} (播放器) 到 {@link MusicService} 包含 {@link MediaSessionCompat}的状态更新的监听器.

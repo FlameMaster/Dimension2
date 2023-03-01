@@ -38,7 +38,7 @@ public class MainActivity extends DataBindingActivity<ActMainBD> {
 
     @Override
     protected int getLayoutID() {
-        return R.layout.inset_video_group;
+        return R.layout.activity_main;
     }
 
     @Override

@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <com.melvinhou.dimension2.media.video.FCVidoeView
+    <com.melvinhou.dimension2.media.video.TextureVidoeView
         android:id="@+id/video"
         android:layout_width="0dp"
         android:layout_height="0dp"

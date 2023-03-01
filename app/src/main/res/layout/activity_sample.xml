@@ -23,7 +23,7 @@
         android:layout_height="100dp"
         android:background="#f00"
         >
-        <com.melvinhou.medialibrary.video.FCVideoView
+        <com.melvinhou.medialibrary.video.FcVideoView
             android:id="@+id/video2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

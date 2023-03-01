@@ -14,7 +14,7 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.load.resource.bitmap.VideoDecoder;
 import com.bumptech.glide.request.RequestOptions;
 import com.melvinhou.dimension2.databinding.ItemTiktokBD;
-import com.melvinhou.dimension2.media.video.FCVidoeView;
+import com.melvinhou.dimension2.media.video.TextureVidoeView;
 import com.melvinhou.kami.adapter.DataBindingHolder;
 import com.melvinhou.kami.util.FcUtils;
 
@@ -39,7 +39,7 @@ public class TikTokHolder extends DataBindingHolder<ItemTiktokBD> {
 
     public TikTokHolder(ItemTiktokBD binding) {
         super(binding);
-        getBinding().tv.setInitDisplayerType(FCVidoeView.TYPE_DISPLAYER_CROP);
+        getBinding().tv.setInitDisplayerType(TextureVidoeView.TYPE_DISPLAYER_CROP);
     }
 
     /**
@@ -106,7 +106,7 @@ public class TikTokHolder extends DataBindingHolder<ItemTiktokBD> {
      * 播放
      */
     public void play() {
-        if (getBinding().tv.getCurrentState() != FCVidoeView.STATE_PLAYING) {
+        if (getBinding().tv.getCurrentState() != TextureVidoeView.STATE_PLAYING) {
             getBinding().tv.start();
             showPlayButton(false);
         }
@@ -119,7 +119,7 @@ public class TikTokHolder extends DataBindingHolder<ItemTiktokBD> {
     }
 
     public void switchVideoState() {
-        if (getBinding().tv.getCurrentState() != FCVidoeView.STATE_PLAYING) {
+        if (getBinding().tv.getCurrentState() != TextureVidoeView.STATE_PLAYING) {
             play();
         } else {
             pause();

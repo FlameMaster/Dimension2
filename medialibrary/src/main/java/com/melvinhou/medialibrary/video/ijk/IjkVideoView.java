@@ -14,7 +14,7 @@ import com.danikula.videocache.CacheListener;
 import com.danikula.videocache.HttpProxyCacheServer;
 import com.jeffmony.videocache.listener.IVideoCacheListener;
 import com.jeffmony.videocache.utils.ProxyCacheUtils;
-import com.melvinhou.medialibrary.video.MediaController;
+import com.melvinhou.medialibrary.video.listener.MediaController;
 
 import java.io.IOException;
 import java.util.List;

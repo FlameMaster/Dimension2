@@ -1,6 +1,7 @@
 package com.melvinhou.kami.io;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -43,6 +44,115 @@ import androidx.core.content.FileProvider;
 public class FileUtils {
 
 
+//***********************************文件名和路径*********************************************//
+
+
+    // 应用公共文件夹
+    public static final String ROOT_NAME = Environment.getExternalStorageDirectory().getPath();
+    private static String appDir = "";
+    // 照片
+    public static final String TYPE_PATH_IMAGE = "image";
+    // 录像
+    public static final String TYPE_PATH_VIDEO = "vidoe";
+    // 缓存
+    public static final String TYPE_PATH_CACHE = "cache";
+
+    // jpg
+    public static final String MEDIA_TYPE_JPEG = ".jpg";
+    // png
+    public static final String MEDIA_TYPE_PNG = ".png";
+    // 录像
+    public static final String MEDIA_TYPE_VIDEO = ".mp4";
+    // app安装包
+    public static final String MEDIA_TYPE_APK = ".apk";
+
+    public static final String RECORD_DIR_SUFFIX = "/record/";
+    public static final String RECORD_DOWNLOAD_DIR_SUFFIX = "/record/download/";
+    public static final String VIDEO_DOWNLOAD_DIR_SUFFIX = "/video/download/";
+    public static final String IMAGE_BASE_DIR_SUFFIX = "/image/";
+    public static final String IMAGE_DOWNLOAD_DIR_SUFFIX = "/image/download/";
+    public static final String MEDIA_DIR_SUFFIX = "/media/";
+    public static final String FILE_DOWNLOAD_DIR_SUFFIX = "/file/download/";
+    public static final String CRASH_LOG_DIR_SUFFIX = "/crash/";
+
+
+    /**
+     * 根据当前时间获取
+     *
+     * @return
+     */
+    public static String getFileNameForDate() {
+//        "'fengchen'_yyyyMMdd_HHmmss"
+        return new SimpleDateFormat("yyyyMMdd_HHmmss")
+                .format(DateUtils.getCurrentTime());
+    }
+
+
+    /**
+     * 默认存储目录
+     *
+     * @return
+     */
+    public static String getDefaultAppDir() {
+        if (TextUtils.isEmpty(appDir)) {
+            appDir = FcUtils.getContext().getFilesDir().getAbsolutePath();
+        }
+        return appDir;
+    }
+
+    /**
+     * 获取文件存储路径
+     *
+     * @param path
+     * @return
+     */
+    public static String getAppFileDir(String path) {
+        return getDefaultAppDir() + path;
+    }
+
+
+    //获取缓存路径
+    public static File getDiskCacheDir(String uniqueName) {
+        String cachePath;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+                || !Environment.isExternalStorageRemovable()) {
+            cachePath = FcUtils.getContext().getExternalCacheDir().getPath();
+        } else {
+            cachePath = FcUtils.getContext().getCacheDir().getPath();
+        }
+        return new File(cachePath + File.separator + uniqueName);
+    }
+
+    /**
+     * 获取uri的文件名
+     *
+     * @param uri
+     * @return
+     */
+    public static String getRealFileName(final Uri uri) {
+        if (null == uri) return null;
+        final String scheme = uri.getScheme();
+        String data = null;
+        if (scheme == null)
+            data = uri.getPath();
+        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
+            data = uri.getPath();
+        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+            String[] filePathColumn = {MediaStore.MediaColumns.DATA, MediaStore.MediaColumns.DISPLAY_NAME};
+            Cursor cursor = FcUtils.getContext().getContentResolver()
+                    .query(uri, filePathColumn, null, null, null);
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndexOrThrow(filePathColumn[1]);
+                    if (index > -1) {
+                        data = cursor.getString(index);
+                    }
+                }
+                cursor.close();
+            }
+        }
+        return data;
+    }
 
 
 //***********************************本地文件操作*********************************************//
@@ -158,7 +268,7 @@ public class FileUtils {
 
     //复制文件
     public static void copyfile(Uri fromUri, File toFile, Boolean rewrite) {
-        Log.e("文件复制","in="+fromUri+"\r\tout="+toFile.getPath());
+        Log.e("文件复制", "in=" + fromUri + "\r\tout=" + toFile.getPath());
         if (fromUri == null) {
             return;
         }
@@ -170,7 +280,7 @@ public class FileUtils {
         }
         //当文件不存时，canWrite一直返回的都是false
 //        if (!toFile.canWrite()) {
-//            FcUtils.runOnUIThread(() -> FcUtils.showToast("不能够写将要复制的目标文件"));
+//            FcUtils.runOnUiThread(() -> FcUtils.showToast("不能够写将要复制的目标文件"));
 //            return;
 //        }
         try {
@@ -219,85 +329,6 @@ public class FileUtils {
                 e.printStackTrace();
             }
         }
-    }
-
-
-
-//***********************************文件名和路径*********************************************//
-
-
-    // 应用公共文件夹
-    public static final String ROOT_NAME = Environment.getExternalStorageDirectory().getPath();
-    // 照片
-    public static final String TYPE_PATH_IMAGE = "image";
-    // 录像
-    public static final String TYPE_PATH_VIDEO = "vidoe";
-    // 缓存
-    public static final String TYPE_PATH_CACHE = "cache";
-
-    // jpg
-    public static final String MEDIA_TYPE_JPEG = ".jpg";
-    // png
-    public static final String MEDIA_TYPE_PNG = ".png";
-    // 录像
-    public static final String MEDIA_TYPE_VIDEO = ".mp4";
-    // app安装包
-    public static final String MEDIA_TYPE_APK = ".apk";
-
-
-
-    /**
-     * 根据当前时间获取
-     *
-     * @return
-     */
-    public static String getFileNameForDate() {
-//        "'fengchen'_yyyyMMdd_HHmmss"
-        return new SimpleDateFormat("yyyyMMdd_HHmmss")
-                .format(DateUtils.getCurrentTime());
-    }
-
-
-    //获取缓存路径
-    public static File getDiskCacheDir(String uniqueName) {
-        String cachePath;
-        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
-                || !Environment.isExternalStorageRemovable()) {
-            cachePath = FcUtils.getContext().getExternalCacheDir().getPath();
-        } else {
-            cachePath = FcUtils.getContext().getCacheDir().getPath();
-        }
-        return new File(cachePath + File.separator + uniqueName);
-    }
-
-    /**
-     * 获取uri的文件名
-     * @param uri
-     * @return
-     */
-    public static String getRealFileName(final Uri uri) {
-        if (null == uri) return null;
-        final String scheme = uri.getScheme();
-        String data = null;
-        if (scheme == null)
-            data = uri.getPath();
-        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
-            data = uri.getPath();
-        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
-            String[] filePathColumn = {MediaStore.MediaColumns.DATA, MediaStore.MediaColumns.DISPLAY_NAME};
-            Cursor cursor = FcUtils.getContext().getContentResolver()
-                    .query(uri, filePathColumn, null, null, null);
-            if (null != cursor) {
-                if (cursor.moveToFirst()) {
-                    int index = cursor.getColumnIndexOrThrow(filePathColumn[1]);
-                    if (index > -1) {
-                        data = cursor.getString(index);
-                    }
-                }
-                cursor.close();
-            }
-        }
-        return data;
     }
 
 

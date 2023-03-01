@@ -1,7 +1,6 @@
 package com.melvinhou.medialibrary.video;
 
 import android.content.Context;
-import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -14,12 +13,12 @@ import android.view.TextureView;
 import androidx.annotation.Nullable;
 
 import com.melvinhou.medialibrary.video.proxy.IPlayer;
-import com.melvinhou.medialibrary.video.proxy.MediaPlayerProxy;
+import com.melvinhou.medialibrary.video.proxy.VideoPlayerProxy;
 import com.melvinhou.medialibrary.video.util.ScreenUtil;
 
-public class FCVideoView extends TextureView {
+public class FcVideoView extends TextureView {
 
-    private static final String TAG = FCVideoView.class.getSimpleName();
+    private static final String TAG = FcVideoView.class.getSimpleName();
 
     //播放器状态
     private static int STATE_ERROR = -1;
@@ -38,7 +37,7 @@ public class FCVideoView extends TextureView {
     //显示器
     private Surface mSurface;
     //播放器
-    private MediaPlayerProxy mMediaPlayer;
+    private VideoPlayerProxy mMediaPlayer;
 
     //地址
     private Uri mUri;
@@ -159,20 +158,17 @@ public class FCVideoView extends TextureView {
 
 
 
-
-
-
-    public FCVideoView(Context context) {
+    public FcVideoView(Context context) {
         super(context);
         initVideoView(context);
     }
 
-    public FCVideoView(Context context, AttributeSet attrs) {
+    public FcVideoView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initVideoView(context);
     }
 
-    public FCVideoView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public FcVideoView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initVideoView(context);
     }
@@ -283,7 +279,7 @@ public class FCVideoView extends TextureView {
 
         stop_l();
         try {
-            mMediaPlayer = new MediaPlayerProxy();
+            mMediaPlayer = new VideoPlayerProxy();
             mMediaPlayer.setOnPreparedListener(mOnPreparedListener);
             mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
             mMediaPlayer.setOnErrorListener(mOnErrorListener);

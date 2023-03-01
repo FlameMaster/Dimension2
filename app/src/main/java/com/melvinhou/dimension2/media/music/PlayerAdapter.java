@@ -10,6 +10,8 @@ import android.os.SystemClock;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 
+import com.melvinhou.dimension2.media.music.proxy.PlaybackInfoListener;
+
 /**
  * ===============================================
  * = 作 者：风 尘

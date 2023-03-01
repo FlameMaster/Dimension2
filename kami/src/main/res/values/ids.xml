@@ -2,5 +2,7 @@
 <resources>
     <item name="back" type="id"/>
     <item name="bar" type="id"/>
+    <item name="title" type="id"/>
+    <item name="bar_root" type="id"/>
     <item name="loading" type="id"/>
 </resources>

@@ -115,7 +115,7 @@ public class ImChatActivity extends BaseActivity {
             //判断是否是当前的聊天对象
             if (info.getUserId() != mCurrentUserId) return;
             Log.w("收到服务器的消息", info.getMessage());
-            FcUtils.runOnUIThread(() -> {
+            FcUtils.runOnUiThread(() -> {
                 mAdapter.addData(info);
                 //TODO 这里应该放在服务端使用
                 //数据库更新
@@ -384,7 +384,7 @@ public class ImChatActivity extends BaseActivity {
 //                        DataOutputStream writer = new DataOutputStream(mOutputStream);
 //                        writer.writeUTF(msg); // 写一个UTF-8的信息
 //                    }
-                    FcUtils.runOnUIThread(() -> {
+                    FcUtils.runOnUiThread(() -> {
                         mAdapter.addData(mModel.createChatMessage(mCurrentUserId, msg));
                     });
                 }

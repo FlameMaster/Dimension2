@@ -22,13 +22,13 @@ import java.io.IOException;
  * = 分 类 说 明：播放器的选择
  * ================================================
  */
-public class MediaPlayerProxy implements IPlayer {
+public class VideoPlayerProxy implements IPlayer {
 
-    private static final String TAG = MediaPlayerProxy.class.getSimpleName();
+    private static final String TAG = VideoPlayerProxy.class.getSimpleName();
 
     private IPlayer mMediaPlayer;
 
-    public MediaPlayerProxy() {
+    public VideoPlayerProxy() {
         try {
             Class.forName("tv.danmaku.ijk.media.player.IjkMediaPlayer").newInstance();
             mMediaPlayer = new IjkMediaPlayerWrapper();

@@ -4,6 +4,29 @@
 
     <application
         android:allowBackup="true"
-        android:supportsRtl="true" />
+        android:supportsRtl="true" >
+        <activity
+            android:name=".video.ijk.IjkVideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".video.FcVideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".music.ui.FcMusicActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+
+        <service android:name=".music.component.FcMusicService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
+        </service>
+    </application>
 
 </manifest>
