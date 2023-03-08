@@ -1,31 +1,46 @@
 package com.melvinhou.medialibrary.music.ui;
 
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.melvinhou.kami.util.DateUtils;
 import com.melvinhou.kami.util.DimenUtils;
+import com.melvinhou.kami.util.ImageUtils;
 import com.melvinhou.kami.view.activities.BaseActivity;
 import com.melvinhou.medialibrary.R;
+import com.melvinhou.medialibrary.music.component.FcMusicConnection;
 import com.melvinhou.medialibrary.music.component.FcMusicService;
-import com.melvinhou.medialibrary.music.proxy.MediaBrowserCallback2;
 
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
+
+import static androidx.media.MediaBrowserServiceCompat.BrowserRoot.EXTRA_RECENT;
 
 /**
  * ===============================================
@@ -46,78 +61,17 @@ public class FcMusicActivity extends BaseActivity {
     private View mBarLayout, mPlayButton, mBackwardButton, mForwardButton;
     private SeekBar mProgressBar;
     private TextView mTitleView, mCurrentPositionText, mDurationText, mMessageView;
-
-    private MediaBrowserCompat mediaBrowser;
-
-    //播放器回调
-    private MediaBrowserCallback2 mMediaBrowserCallback = new MediaBrowserCallback2() {
-        @Override
-        public void onMediaListLoaded(List<MediaBrowserCompat.MediaItem> list) {
-
-        }
-
-        @Override
-        public void onPlaybackStateChanged(PlaybackStateCompat playbackState) {
-
-        }
-
-        @Override
-        public void onMetadataChanged(MediaMetadataCompat mediaMetadata) {
-
-        }
-
-        @Override
-        public void onPlayProgressChanged(int progress) {
-
-        }
-    };
-    //保存指向控制器的链接，以便处理媒体按钮
-    private final MediaBrowserCompat.ConnectionCallback connectionCallbacks =
-            new MediaBrowserCompat.ConnectionCallback() {
-                @Override
-                public void onConnected() {
-
-                    // 获取MediaSession的令牌
-                    MediaSessionCompat.Token token = mediaBrowser.getSessionToken();
-
-                    // 创建MediaControllerCompat
-                    MediaControllerCompat mediaController =
-                            new MediaControllerCompat(FcMusicActivity.this, // Context
-                                    token);
-
-                    // 保存控制器
-                    MediaControllerCompat.setMediaController(FcMusicActivity.this, mediaController);
-
-                    // Finish building the UI
-                    buildTransportControls();
-                }
-
-                @Override
-                public void onConnectionSuspended() {
-                    // 服务崩溃了。禁用传输控制，直到它自动重新连接
-                }
-
-                @Override
-                public void onConnectionFailed() {
-                    // 服务处拒绝了我们的连接
-                }
-            };
-    //媒体会话的状态或元数据每次发生更改时从媒体会话接收回调
-    private final MediaControllerCompat.Callback controllerCallback =
-            new MediaControllerCompat.Callback() {
-                @Override
-                public void onMetadataChanged(MediaMetadataCompat metadata) {
-                }
-
-                @Override
-                public void onPlaybackStateChanged(PlaybackStateCompat state) {
-                }
-            };
-
+    private boolean isPlaying = false;
+    //进度条动画
+    private ValueAnimator mProgressAnimator;
 
     @Override
     protected int getLayoutID() {
         return R.layout.activity_music_fc;
+    }
+
+    private FcMusicConnection provideMusicServiceConnection() {
+        return FcMusicConnection.getInstance(this);
     }
 
     @Override
@@ -168,24 +122,109 @@ public class FcMusicActivity extends BaseActivity {
             @SuppressLint("CheckResult")
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                provideMusicServiceConnection().transportControls.seekTo(seekBar.getProgress());
+            }
+        });
+        mPlayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 由于这是一个播放/暂停按钮，您需要测试当前状态并相应地选择操作
+                if (isPlaying) {
+                    provideMusicServiceConnection().transportControls.pause();
+                } else {
+                    provideMusicServiceConnection().transportControls.play();
+                }
+            }
+        });
+        mForwardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                provideMusicServiceConnection().transportControls.skipToNext();
+            }
+        });
+        mBackwardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                provideMusicServiceConnection().transportControls.skipToPrevious();
             }
         });
     }
 
     @Override
     protected void initData() {
-        // Create MediaBrowserServiceCompat
-        mediaBrowser = new MediaBrowserCompat(this,
-                new ComponentName(this, FcMusicService.class),
-                connectionCallbacks,
-                null); // optional Bundle
 
+        provideMusicServiceConnection().nowPlaying.observe(this, new Observer<MediaMetadataCompat>() {
+            @Override
+            public void onChanged(MediaMetadataCompat mediaMetadataCompat) {
+                String title = mediaMetadataCompat.getString(MediaMetadataCompat.METADATA_KEY_TITLE);
+                String artist = mediaMetadataCompat.getString(MediaMetadataCompat.METADATA_KEY_ARTIST);
+                long duration = mediaMetadataCompat.getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
+//                int drationInt = (int)TimeUnit.SECONDS.convert(duration, TimeUnit.MILLISECONDS);
+//                String coverUri = mediaMetadataCompat.getString(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON_URI);
+//                String backgroundUri = mediaMetadataCompat.getString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI);
+                Bitmap albumArt = mediaMetadataCompat.getBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART);
+                Bitmap displayIcon = mediaMetadataCompat.getBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON);
+                //ui更新
+                mTitleView.setText(title);
+                if (displayIcon!=null)
+                    mCoverView.setImageBitmap(displayIcon);
+                if (albumArt!=null) {
+//                    mBackgroundView.setImageURI(Uri.parse(backgroundUri));
+                    mBackgroundView.setImageBitmap(ImageUtils.doBlur(albumArt, 25, false));
+                }
+                //进度条
+                mProgressBar.setMax((int) duration);
+                mDurationText.setText(DateUtils.formatDuration((int) duration));
+            }
+        });
+        provideMusicServiceConnection().playbackState.observe(this, new Observer<PlaybackStateCompat>() {
+            @Override
+            public void onChanged(PlaybackStateCompat playbackStateCompat) {
+                int pbState = playbackStateCompat != null ? playbackStateCompat.getState() : PlaybackStateCompat.STATE_NONE;
+                isPlaying = pbState == PlaybackStateCompat.STATE_PLAYING;
+                mPlayButton.setSelected(isPlaying);
+                final int max = mProgressBar.getMax();
+                final int progress = playbackStateCompat != null
+                        ? (int) playbackStateCompat.getPosition()
+                        : 0;
+                mProgressBar.setProgress(progress);
+                //清除进度
+                if (mProgressAnimator != null) {
+                    mProgressAnimator.cancel();
+                    mProgressAnimator = null;
+                }
+                if (isPlaying) {
+                    //根据播放倍数控制动画
+                    final int timeToEnd = (int) ((max - progress) / playbackStateCompat.getPlaybackSpeed());
+                    mProgressAnimator = ValueAnimator
+                            .ofInt(progress, max)
+                            .setDuration(timeToEnd);
+                    mProgressAnimator.setInterpolator(new LinearInterpolator());
+                    mProgressAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(@NonNull ValueAnimator valueAnimator) {
+                            //用动画数值来更新进度
+                            final int animatedIntValue = (int) valueAnimator.getAnimatedValue();
+                            if (!mProgressBar.isFocusableInTouchMode())
+                                mProgressBar.setProgress(animatedIntValue);
+                        }
+                    });
+                    mProgressAnimator.start();
+                }
+            }
+        });
+        provideMusicServiceConnection().isConnected.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isConnected) {
+                if (isConnected) buildTransportControls();
+            }
+        });
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mediaBrowser.connect();
+//        mediaBrowser.connect();
     }
 
     @Override
@@ -197,39 +236,39 @@ public class FcMusicActivity extends BaseActivity {
     @Override
     public void onStop() {
         super.onStop();
-        // (see "stay in sync with the MediaSession")
-        if (MediaControllerCompat.getMediaController(FcMusicActivity.this) != null) {
-            MediaControllerCompat.getMediaController(FcMusicActivity.this).unregisterCallback(controllerCallback);
-        }
-        mediaBrowser.disconnect();
+        // (参见“与MediaSession保持同步”)
+//        if (MediaControllerCompat.getMediaController(FcMusicActivity.this) != null) {
+//            MediaControllerCompat.getMediaController(FcMusicActivity.this).unregisterCallback(controllerCallback);
+//        }
+//        mediaBrowser.disconnect();
 
     }
 
-    //将您的界面连接到媒体控制器
-    void buildTransportControls() {
-        // 将侦听器附加到按钮
-        mPlayButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 由于这是一个播放/暂停按钮，您需要测试当前状态并相应地选择操作
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        provideMusicServiceConnection().transportControls.pause();
+        String mediaId = provideMusicServiceConnection().rootMediaId;
+        provideMusicServiceConnection().unsubscribe(mediaId, null);
+        FcMusicConnection.disconnect();
+    }
 
-                int pbState = MediaControllerCompat.getMediaController(FcMusicActivity.this).getPlaybackState().getState();
-                if (pbState == PlaybackStateCompat.STATE_PLAYING) {
-                    MediaControllerCompat.getMediaController(FcMusicActivity.this).getTransportControls().pause();
-                } else {
-                    MediaControllerCompat.getMediaController(FcMusicActivity.this).getTransportControls().play();
-                }
+    //将您的界面连接到媒体控制器
+    private void buildTransportControls() {
+
+        String mediaId = provideMusicServiceConnection().rootMediaId;
+        provideMusicServiceConnection().subscribe(mediaId, new MediaBrowserCompat.SubscriptionCallback() {
+            //children 即为Service发送回来的媒体数据集合,在onChildrenLoaded可以执行刷新列表UI的操作
+            @Override
+            public void onChildrenLoaded(@NonNull String parentId, @NonNull List<MediaBrowserCompat.MediaItem> children) {
+                // 将这个简单示例的所有媒体项排队。使用队列需要添加FLAG_HANDLES_QUEUE_COMMANDS
+                provideMusicServiceConnection().clearPlayQueue();
+                provideMusicServiceConnection().addPlayQueue(children);
+                // 现在准备好了，按下播放键就可以播放了。
+                provideMusicServiceConnection().transportControls.prepare();
+
             }
         });
-
-        MediaControllerCompat mediaController = MediaControllerCompat.getMediaController(FcMusicActivity.this);
-
-        // 显示初始状态
-        MediaMetadataCompat metadata = mediaController.getMetadata();
-        PlaybackStateCompat pbState = mediaController.getPlaybackState();
-
-        // 注册一个Callback以保持同步
-        mediaController.registerCallback(controllerCallback);
     }
 
 }

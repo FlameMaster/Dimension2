@@ -1,9 +1,11 @@
 package com.melvinhou.kami.util;
 
 import android.annotation.TargetApi;
+import android.content.ContentResolver;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 
 /**
@@ -124,5 +126,21 @@ public class ResourcesUtils {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static Drawable getThemeDrawable(Resources.Theme currentTheme, int R_ID) {
         return getResources().getDrawable(R_ID, currentTheme);
+    }
+
+    /**
+     * 获取资源文件的uri
+     * @param id
+     * @return
+     */
+    public static  Uri getResourceUri(int id) {
+        try {
+            return Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
+                    + getResources().getResourcePackageName(id) + '/'
+                    + getResources().getResourceTypeName(id) + '/'
+                    + getResources().getResourceEntryName(id));
+        } catch (Resources.NotFoundException e) {
+            return null;
+        }
     }
 }

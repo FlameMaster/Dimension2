@@ -1,7 +1,9 @@
 package com.melvinhou.medialibrary.music.proxy;
 
 import android.content.Context;
+import android.media.PlaybackParams;
 import android.net.Uri;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 
@@ -21,8 +23,13 @@ import java.io.IOException;
  * ================================================
  */
 public interface IMusicPlayer {
+    //普通音量
+    float MEDIA_VOLUME_DEFAULT = 1.0f;//AudioAttributes.USAGE_MEDIA
+    //后台音量
+    float MEDIA_VOLUME_DUCK = 0.2f;
 
-    void setDataSource(Context context, Uri uri) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException;
+//    void setDataSource(Context context, Uri uri) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException;
+    void setDataSource(Context context, Uri uri);
 
     void prepareAsync();
 
@@ -36,15 +43,13 @@ public interface IMusicPlayer {
 
     boolean isPlaying();
 
-    int getVideoWidth();
-
-    int getVideoHeight();
+    void setVolume(float volume);
 
     void seekTo(int progress);
+
     int getCurrentPosition();
+
     int getDuration();
-
-
 
 
     void setOnPreparedListener(final OnPreparedListener l);
@@ -54,6 +59,12 @@ public interface IMusicPlayer {
     void setOnCompletionListener(final OnCompletionListener l);
 
     void setOnSeekCompleteListener(final OnSeekCompleteListener l);
+
+    void setOnPlaybackStateListener(final OnPlaybackStateListener l);
+
+    float getSpeed();
+
+    void setSpeed(float speed);
 
     //准备好的监听
     interface OnPreparedListener {
@@ -72,6 +83,11 @@ public interface IMusicPlayer {
 
     //进度跳转的监听
     interface OnSeekCompleteListener {
-        void OnSeekComplete(IMusicPlayer mp);
+        void onSeekComplete(IMusicPlayer mp);
+    }
+
+    //进度跳转的监听
+    interface OnPlaybackStateListener {
+        void onPlaybackStateChange(@PlaybackStateCompat.State int state);
     }
 }

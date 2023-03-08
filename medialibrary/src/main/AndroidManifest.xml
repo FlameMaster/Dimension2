@@ -21,12 +21,30 @@
             android:exported="true"
             android:screenOrientation="portrait" />
 
+        <!--
+             在API 21之前，MediaSession使用广播接收器与媒体会话通信。不一定非得是这个广播接收器,
+             但它必须处理行动"android.intent.action.MEDIA_BUTTON".
+             此外，这用于在接收到媒体按钮事件(如“play”)时从非活动状态恢复服务。
+             用于接受媒体播放的意图（MediaNotificationManager）
+             MusicService和MediaButtonReceiver必须添加MEDIA_BUTTON处理意图
+             exported必须为false，不然退出时无法关闭通知栏
+        -->
         <service android:name=".music.component.FcMusicService"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.media.browse.MediaBrowserService" />
+                <!-- 服务可以通过包含处理Intent.ACTION_MEDIA_BUTTON的intent过滤器来接收键事 -->
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </service>
+        <!-- 按键意图接收器 -->
+        <receiver
+            android:name="androidx.media.session.MediaButtonReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

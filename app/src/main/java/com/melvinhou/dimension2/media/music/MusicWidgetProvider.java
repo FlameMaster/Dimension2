@@ -191,10 +191,10 @@ public class MusicWidgetProvider extends AppWidgetProvider {
             if (pfd != null) fd = pfd.getFileDescriptor();
             bm = ImageUtils.decodeBitmapFromFileDescriptor(fd, reqWidth, reqHeight);
             if (bm == null)
-                bm = ImageUtils.getBitmapResources(R.mipmap.fc, reqWidth, reqHeight);
+                bm = ImageUtils.decodeBitmapResources(R.mipmap.fc, reqWidth, reqHeight);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            bm = ImageUtils.getBitmapResources(R.mipmap.fc, reqWidth, reqHeight);
+            bm = ImageUtils.decodeBitmapResources(R.mipmap.fc, reqWidth, reqHeight);
         } finally {
             return bm;
         }
