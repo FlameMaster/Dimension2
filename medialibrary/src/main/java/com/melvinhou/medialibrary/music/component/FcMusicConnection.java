@@ -93,6 +93,8 @@ public class FcMusicConnection {
     public MediaControllerCompat.TransportControls transportControls;
     //客户端
     private MediaBrowserCompat mediaBrowser;
+    //当前列表
+    public MutableLiveData<List<MediaSessionCompat.QueueItem>> nowPlayQueue = new MutableLiveData<>();
 
     //媒体会话的状态或元数据每次发生更改时从媒体会话接收回调
     private MediaControllerCompat.Callback mediaControllerCallback =
@@ -115,7 +117,7 @@ public class FcMusicConnection {
 
                 @Override
                 public void onQueueChanged(List<MediaSessionCompat.QueueItem> queue) {
-                    super.onQueueChanged(queue);
+                    nowPlayQueue.postValue(queue);
                 }
 
                 @Override

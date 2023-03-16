@@ -7,6 +7,7 @@ import android.view.View;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.medialibrary.music.ui.FcMusicActivity;
+import com.melvinhou.medialibrary.music.ui.FcMusicListActivity;
 import com.melvinhou.medialibrary.video.FcVideoLayout;
 import com.melvinhou.medialibrary.video.ijk.IjkVideoView;
 import com.melvinhou.kami.view.activities.BaseActivity2;
@@ -46,7 +47,7 @@ public class SampleActivity extends BaseActivity2 {
         videoView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FcUtils.getContext(), FcMusicActivity.class);
+                Intent intent = new Intent(FcUtils.getContext(), FcMusicListActivity.class);
                 intent.putExtra("url", "https://webstatic.bh3.com/video/bh3.com/pv/CG_OP_1800.mp4");
                 intent.putExtra("title", "岩王帝君-钟离");
                 toActivity(intent);

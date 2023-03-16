@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".music.ui.FcMusicListActivity">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ll_tool_bottom"
+        >
+
+        <!--继承自LinearLayout，设置唯一layout_scrollFlags响应滚动-->
+        <!--layout_scrollFlags说明：
+             scroll：响应滚动
+             scroll|enterAlways：下滑时优先滚动
+             scroll|exitUntilCollapsed：下滑时最后滚动
+             scroll|enterAlways|enterAlwaysCollapsed：三段滚法，优先到最低高度，再等到最后全滑出
+             snap：吸附效果-->
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/bar_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            >
+
+            <!--AppBarLayout的再封装，实现折叠效果，下的子view不能越过菜单栏-->
+            <!--layout_collapseMode:折叠模式-->
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/bar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minHeight="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:contentScrim="@color/white"
+                app:toolbarId="@id/bar"
+                app:title="FcMusic"
+                app:collapsedTitleGravity="right"
+                app:expandedTitleGravity="left|bottom"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_collapseMode="none"
+                    android:orientation="vertical"
+                    >
+
+                    <!--要把图片放在toolber前面，fits属性是控制图片渗透到状态栏，layout_collapse属性是让图片有那什么效果-->
+                    <ImageView
+                        android:id="@+id/iv_cover"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintDimensionRatio="16:9"
+                        android:src="@mipmap/default_cover"
+                        android:alpha="0.8"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!--标题栏,app:layout_collapseMode="pin"保持返回图标不变-->
+                <androidx.appcompat.widget.Toolbar
+                    app:layout_collapseMode="pin"
+                    android:layout_marginTop="24dp"
+                    android:id="@id/bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:animateLayoutChanges="true"
+                    android:theme="@style/KamiBar"
+                    app:popupTheme="@style/KamiPopup"
+                    app:title="会被覆盖的标题"
+                    app:subtitleTextColor="@color/white"
+                    app:titleTextColor="@color/white"
+                    />
+
+                <!--标题栏-->
+                <TextView
+                    app:layout_collapseMode="pin"
+                    android:layout_marginTop="24dp"
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    />
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="我就不滚动了，你们加油"
+                android:textColor="@color/black"
+                android:textSize="8sp"
+                />
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <Button
+            android:id="@+id/bt1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_anchor="@id/bar_root"
+            android:elevation="8dp"
+            app:layout_anchorGravity="bottom|end"
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+            android:button="@drawable/round_dp8"
+            android:layout_marginRight="16dp"
+            />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ll_tool_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="56dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/white"
+        android:elevation="4dp"
+        >
+
+        <!--播放暂停-->
+        <ImageView
+            android:id="@+id/player_play"
+            android:layout_width="?android:attr/actionBarSize"
+            android:layout_height="?android:attr/actionBarSize"
+            android:src="@drawable/selector_player_state_01"
+            android:layout_marginHorizontal="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorPrimary" />
+
+        <!--歌名-->
+        <TextView
+            android:id="@+id/player_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:text="FcMusic-Name"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/player_play"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="108dp"
+            />
+
+        <!--演唱者-->
+        <TextView
+            android:id="@+id/player_artist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="melvinhou"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@id/player_title"
+            app:layout_constraintRight_toRightOf="@id/player_title"
+            app:layout_constraintTop_toBottomOf="@id/player_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="4dp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--封面-->
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/player_cover"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@mipmap/default_cover"
+        android:transitionName="music_cover"
+        app:round="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="18dp"
+        android:layout_marginLeft="18dp"
+        android:foreground="@drawable/fg_music_cd"
+        android:elevation="8dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -270,7 +270,7 @@ public class MusicListActivity extends DataBindingActivity<ActMusicListBD> {
 
         @Override
         public int getItemLayoutId(int viewType) {
-            return R.layout.item_music;
+            return R.layout.item_music_fc;
         }
 
         @Override

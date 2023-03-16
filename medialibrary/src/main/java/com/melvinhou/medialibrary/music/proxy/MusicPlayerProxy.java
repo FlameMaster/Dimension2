@@ -46,8 +46,8 @@ public class MusicPlayerProxy implements IMusicPlayer {
     private MediaPlayer.OnPreparedListener mOnPreparedListener = new MediaPlayer.OnPreparedListener() {
         public void onPrepared(MediaPlayer mp) {
             Log.i(TAG, "onPrepared");
-            updateState(PlaybackStateCompat.STATE_STOPPED);
-            pause();
+//            updateState(PlaybackStateCompat.STATE_STOPPED);
+//            pause();
             if (mOutOnPreparedListener != null) {
                 mOutOnPreparedListener.onPrepared(MusicPlayerProxy.this);
             }
@@ -73,6 +73,7 @@ public class MusicPlayerProxy implements IMusicPlayer {
     private MediaPlayer.OnCompletionListener mOnCompletionListener = new MediaPlayer.OnCompletionListener() {
         public void onCompletion(MediaPlayer mp) {
             Log.i(TAG, "onCompletion");
+            seekTo(0);//防止重新播放时获取进度错误
             updateState(PlaybackStateCompat.STATE_STOPPED);
             if (mOutOnCompletionListener != null) {
                 mOutOnCompletionListener.onCompletion(MusicPlayerProxy.this);
@@ -94,12 +95,12 @@ public class MusicPlayerProxy implements IMusicPlayer {
 
     public MusicPlayerProxy() {
         //播放器
-        mMediaPlayer = new MediaPlayer();
-        mMediaPlayer.setOnPreparedListener(mOnPreparedListener);
-        mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
-        mMediaPlayer.setOnErrorListener(mOnErrorListener);
-        mMediaPlayer.setOnInfoListener(mOnInfoListener);
-        mMediaPlayer.setOnSeekCompleteListener(mOnSeekCompleteListener);
+//        mMediaPlayer = new MediaPlayer();
+//        mMediaPlayer.setOnPreparedListener(mOnPreparedListener);
+//        mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
+//        mMediaPlayer.setOnErrorListener(mOnErrorListener);
+//        mMediaPlayer.setOnInfoListener(mOnInfoListener);
+//        mMediaPlayer.setOnSeekCompleteListener(mOnSeekCompleteListener);
     }
 
     // 这是玩家状态机的主要减速机。
@@ -113,16 +114,24 @@ public class MusicPlayerProxy implements IMusicPlayer {
     @Override
     public void setDataSource(Context context, Uri uri) {
         Log.i(TAG, "setDataSource：" + uri.toString());
-        if (mMediaPlayer != null) {
-            try {
-                mMediaPlayer.reset();//把各项参数恢复到初始状态
-                mMediaPlayer.setDataSource(context, uri);
-                prepareAsync();
-            } catch (Exception ex) {
-                Log.w(TAG, "setDataSource: ex = " + ex.getMessage());
-                ex.printStackTrace();
-                updateState(PlaybackStateCompat.STATE_ERROR);
+        try {
+            if (mMediaPlayer != null) {
+                release();
             }
+            //使用MediaPlayer.create时不要使用prepare
+            mMediaPlayer = MediaPlayer.create(context, uri);
+//                mMediaPlayer.reset();//把各项参数恢复到初始状态
+//                mMediaPlayer.setDataSource(context, uri);
+//                prepareAsync();
+            mMediaPlayer.setOnPreparedListener(mOnPreparedListener);
+            mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
+            mMediaPlayer.setOnErrorListener(mOnErrorListener);
+            mMediaPlayer.setOnInfoListener(mOnInfoListener);
+            mMediaPlayer.setOnSeekCompleteListener(mOnSeekCompleteListener);
+        } catch (Exception ex) {
+            Log.w(TAG, "setDataSource: ex = " + ex.getMessage());
+            ex.printStackTrace();
+            updateState(PlaybackStateCompat.STATE_ERROR);
         }
     }
 

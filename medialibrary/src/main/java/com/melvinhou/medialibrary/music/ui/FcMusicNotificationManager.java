@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.os.SystemClock;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
@@ -22,7 +21,6 @@ import com.melvinhou.medialibrary.video.FcVideoActivity;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 import androidx.media.app.NotificationCompat.MediaStyle;
 import androidx.media.session.MediaButtonReceiver;
 
@@ -39,8 +37,8 @@ import androidx.media.session.MediaButtonReceiver;
  * = 分 类 说 明：播放器对通知栏的连接
  * ================================================
  */
-public class MusicNotificationConnection {
-    private static final String TAG = MusicNotificationConnection.class.getSimpleName();
+public class FcMusicNotificationManager {
+    private static final String TAG = FcMusicNotificationManager.class.getSimpleName();
 
 //    NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId);
 
@@ -53,7 +51,7 @@ public class MusicNotificationConnection {
     private final NotificationCompat.Action mNextAction;
     private final NotificationCompat.Action mPrevAction;
 
-    public MusicNotificationConnection(@NonNull Context context, @NonNull String channelId) {
+    public FcMusicNotificationManager(@NonNull Context context, @NonNull String channelId) {
         mContext = context;
         mChannelId = channelId;
         mPlayAction =
@@ -111,9 +109,13 @@ public class MusicNotificationConnection {
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
                 // 添加一个应用程序图标，并设置其强调色注意颜色
-                .setSmallIcon(R.drawable.ic_music_notific)
+                .setSmallIcon(R.mipmap.ic_music_notification)
                 .setColor(mContext.getColor(R.color.colorPrimaryDark))
+                .setColorized(true)
                 .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)
+                .setOngoing(true)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
 
                 //自定义时间
 //                .setWhen(SystemClock.currentThreadTimeMillis())
@@ -196,14 +198,14 @@ public class MusicNotificationConnection {
             NotificationChannel channel = new NotificationChannel(mChannelId, channelName, importance);
             // 配置通知通道。
             channel.setDescription(description);
-            channel.enableLights(true);
+//            channel.enableLights(true);
             // 如果设备支持此功能，则为发送到此通道的通知设置通知光的颜色。
-            channel.setLightColor(Color.RED);
-            channel.enableVibration(true);
+//            channel.setLightColor(Color.RED);
+//            channel.enableVibration(true);
 //            channel.enableLights(false);//如果使用中的设备支持通知灯，则说明此通知通道是否应显示灯
-            channel.setShowBadge(true);//是否显示角标
-            channel.setVibrationPattern(
-                    new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+//            channel.setShowBadge(true);//是否显示角标
+//            channel.setVibrationPattern(
+//                    new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
             nm.createNotificationChannel(channel);
             Log.i(TAG, "createChannel: New channel created");
         } else {
@@ -211,15 +213,17 @@ public class MusicNotificationConnection {
         }
     }
 
-    private static final int REQUEST_CODE = 501;
-
     //点击时打开页面
     private PendingIntent createContentIntent() {
-        //TODO 有报错懒得改
-        Intent openUI = new Intent(mContext, FcVideoActivity.class);
-        openUI.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        return PendingIntent.getActivity(
-                mContext, REQUEST_CODE, openUI, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_MUTABLE);
+        Intent startActivityIntent = new Intent(mContext, FcMusicActivity.class);
+        PendingIntent processInfoIntent;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            //31，Android11以上系统
+            processInfoIntent = PendingIntent.getActivity(mContext, 0, startActivityIntent, PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            processInfoIntent = PendingIntent.getActivity(mContext, 0, startActivityIntent, PendingIntent.FLAG_ONE_SHOT);
+        }
+        return processInfoIntent;
     }
 
 }

@@ -17,6 +17,7 @@ import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
@@ -31,6 +32,7 @@ import com.melvinhou.kami.view.activities.BaseActivity;
 import com.melvinhou.medialibrary.R;
 import com.melvinhou.medialibrary.music.component.FcMusicConnection;
 import com.melvinhou.medialibrary.music.component.FcMusicService;
+import com.melvinhou.medialibrary.music.model.FcMusicModel;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -56,6 +58,7 @@ import static androidx.media.MediaBrowserServiceCompat.BrowserRoot.EXTRA_RECENT;
  * ================================================
  */
 public class FcMusicActivity extends BaseActivity {
+    private static final String TAG = FcMusicActivity.class.getSimpleName();
 
     private ImageView mCoverView, mBackgroundView;
     private View mBarLayout, mPlayButton, mBackwardButton, mForwardButton;
@@ -64,6 +67,8 @@ public class FcMusicActivity extends BaseActivity {
     private boolean isPlaying = false;
     //进度条动画
     private ValueAnimator mProgressAnimator;
+    //判断是否是单独模式（单独模式需要启动播放服务
+    private boolean isOnlyMode = true;
 
     @Override
     protected int getLayoutID() {
@@ -152,7 +157,8 @@ public class FcMusicActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        //判断是否是需要初始化播放服务
+        isOnlyMode = Boolean.FALSE.equals(provideMusicServiceConnection().isConnected.getValue());
         provideMusicServiceConnection().nowPlaying.observe(this, new Observer<MediaMetadataCompat>() {
             @Override
             public void onChanged(MediaMetadataCompat mediaMetadataCompat) {
@@ -166,12 +172,13 @@ public class FcMusicActivity extends BaseActivity {
                 Bitmap displayIcon = mediaMetadataCompat.getBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON);
                 //ui更新
                 mTitleView.setText(title);
-                if (displayIcon!=null)
+                if (displayIcon != null)
                     mCoverView.setImageBitmap(displayIcon);
-                if (albumArt!=null) {
+                if (albumArt != null) {
 //                    mBackgroundView.setImageURI(Uri.parse(backgroundUri));
                     mBackgroundView.setImageBitmap(ImageUtils.doBlur(albumArt, 25, false));
                 }
+                Log.e(TAG, "duration=" + duration);
                 //进度条
                 mProgressBar.setMax((int) duration);
                 mDurationText.setText(DateUtils.formatDuration((int) duration));
@@ -193,6 +200,7 @@ public class FcMusicActivity extends BaseActivity {
                     mProgressAnimator.cancel();
                     mProgressAnimator = null;
                 }
+                Log.e(TAG, "max=" + max + "/progress=" + progress);
                 if (isPlaying) {
                     //根据播放倍数控制动画
                     final int timeToEnd = (int) ((max - progress) / playbackStateCompat.getPlaybackSpeed());
@@ -216,9 +224,16 @@ public class FcMusicActivity extends BaseActivity {
         provideMusicServiceConnection().isConnected.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isConnected) {
-                if (isConnected) buildTransportControls();
+                if (isConnected) {
+                    if (isOnlyMode) buildTransportControls();
+                    else
+                        //更新一下
+                        provideMusicServiceConnection()
+                                .sendCommand(FcMusicModel.KEY_COMMAND_STATE_UPDATE, null);
+                }
             }
         });
+
     }
 
     @Override
@@ -247,10 +262,12 @@ public class FcMusicActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        provideMusicServiceConnection().transportControls.pause();
-        String mediaId = provideMusicServiceConnection().rootMediaId;
-        provideMusicServiceConnection().unsubscribe(mediaId, null);
-        FcMusicConnection.disconnect();
+        if (isOnlyMode) {
+            provideMusicServiceConnection().transportControls.pause();
+            String mediaId = provideMusicServiceConnection().rootMediaId;
+            provideMusicServiceConnection().unsubscribe(mediaId, null);
+            FcMusicConnection.disconnect();
+        }
     }
 
     //将您的界面连接到媒体控制器
@@ -266,6 +283,8 @@ public class FcMusicActivity extends BaseActivity {
                 provideMusicServiceConnection().addPlayQueue(children);
                 // 现在准备好了，按下播放键就可以播放了。
                 provideMusicServiceConnection().transportControls.prepare();
+                //设置队列类型
+                provideMusicServiceConnection().transportControls.setRepeatMode(PlaybackStateCompat.REPEAT_MODE_ALL);
 
             }
         });

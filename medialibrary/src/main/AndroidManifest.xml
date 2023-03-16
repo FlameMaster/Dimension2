@@ -16,8 +16,15 @@
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".music.ui.FcMusicListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".music.ui.FcMusicActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
             android:exported="true"
             android:screenOrientation="portrait" />
 
@@ -44,6 +51,17 @@
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".music.ui.FcMusicWidgetProvider"
+            android:exported="false"
+            android:label="FcMusic">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/music_appwidget_fc" />
         </receiver>
     </application>
 

@@ -18,6 +18,7 @@ import android.widget.EditText;
 
 import com.google.gson.reflect.TypeToken;
 import com.melvinhou.dimension2.media.picture.ScanActivity;
+import com.melvinhou.medialibrary.music.ui.FcMusicListActivity;
 import com.melvinhou.medialibrary.video.ijk.IjkVideoActivity;
 import com.melvinhou.dimension2.net.AssetsFileKey;
 import com.melvinhou.dimension2.CYEntity;
@@ -466,7 +467,8 @@ public class MediaFragment extends DataBindingFragment<FgtMediaBD> {
     }
 
     private void openMusicList() {
-        Intent intent = new Intent(FcUtils.getContext(), MusicListActivity.class);
+//        Intent intent = new Intent(FcUtils.getContext(), MusicListActivity.class);
+        Intent intent = new Intent(FcUtils.getContext(), FcMusicListActivity.class);
         toActivity(intent);
     }
 

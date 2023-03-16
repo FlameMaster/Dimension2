@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
+import android.util.Log;
 
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.ImageUtils;
@@ -145,15 +146,15 @@ public class FcMusicLibrary {
      * 添加元数据
      *
      * @param mediaId
-     * @param title         标题
-     * @param artist        艺术家
-     * @param album         专辑
-     * @param genre         流派
-     * @param duration      时长
-     * @param durationUnit  时间单位
-     * @param url           文件路径
-     * @param albumArtResId 专辑封面id
-     * @param displayName   专辑封面名称
+     * @param title        标题
+     * @param artist       艺术家
+     * @param album        专辑
+     * @param genre        流派
+     * @param duration     时长
+     * @param durationUnit 时间单位
+     * @param url          文件路径
+     * @param albumId      专辑封面id
+     * @param displayName  文件名
      */
     private void putMediaMetadata(
             String mediaId,
@@ -164,11 +165,11 @@ public class FcMusicLibrary {
             long duration,
             TimeUnit durationUnit,
             String url,
-            long albumArtResId,
+            long albumId,
             String displayName) {
-        String albumUri = MusicUtil.getAlbumArtUri(mediaId);
+        String albumUri =  MusicUtil.getAlbumArtUri(mediaId);
         Bitmap albumArt =
-//                MusicUtil.getCoverByAlbumId(albumArtResId);
+//                MusicUtil.getCoverByAlbumId(albumId);
 //                MusicUtil.getCoverByMediaId(mediaId);
                 ImageUtils.decodeBitmapFromUri(Uri.parse(albumUri));
         if (albumArt == null) {
@@ -199,7 +200,7 @@ public class FcMusicLibrary {
                         //封面icon
                         .putBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, albumArt)
                         .build());
-        albumRes.put(mediaId, albumArtResId);//66640 8
+        albumRes.put(mediaId, albumId);//66640 8
         urls.put(mediaId, url);
     }
 

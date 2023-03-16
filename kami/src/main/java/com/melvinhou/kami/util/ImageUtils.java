@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -31,6 +32,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.HashMap;
+
+import androidx.palette.graphics.Palette;
 
 /**
  * ===============================================
@@ -572,7 +575,7 @@ public class ImageUtils {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(FcUtils.getContext().getContentResolver(), uri);
             return bitmap;
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return null;
         }
     }
@@ -931,4 +934,30 @@ public class ImageUtils {
         canvas.restore();
         return newmap;
     }
+
+
+    /**
+     * 获取图片相关颜色
+     * @param bitmap
+     * @param listener
+     */
+    public static void getBitmapColor(Bitmap bitmap,Palette.PaletteAsyncListener listener){
+        Palette.from(bitmap).generate(listener);
+    }
+
+    /**
+     * 判断图片明暗
+     * @param color
+     * @return
+     */
+    public static boolean isLightColor(int color) {
+        double darkness = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255;
+        if (darkness < 0.5) {
+            return true; // It's a light color
+        } else {
+            return false; // It's a dark color
+        }
+    }
+
+
 }

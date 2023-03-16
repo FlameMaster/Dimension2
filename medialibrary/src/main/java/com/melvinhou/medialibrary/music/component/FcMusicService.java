@@ -1,12 +1,12 @@
 package com.melvinhou.medialibrary.music.component;
 
 import android.app.NotificationManager;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.ResultReceiver;
@@ -17,11 +17,13 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 
 import com.melvinhou.medialibrary.music.model.FcMusicLibrary;
+import com.melvinhou.medialibrary.music.model.FcMusicModel;
 import com.melvinhou.medialibrary.music.proxy.IMusicPlayer;
 import com.melvinhou.medialibrary.music.proxy.MusicPlayerProxy;
-import com.melvinhou.medialibrary.music.ui.MusicNotificationConnection;
+import com.melvinhou.medialibrary.music.ui.FcMusicNotificationManager;
 
 import static androidx.media.MediaBrowserServiceCompat.BrowserRoot.EXTRA_RECENT;
 
@@ -30,7 +32,6 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.media.MediaBrowserServiceCompat;
 import androidx.media.session.MediaButtonReceiver;
 
@@ -65,7 +66,7 @@ public class FcMusicService extends MediaBrowserServiceCompat {
     private MediaSessionCompat mMediaSession;
     //播放器
     private IMusicPlayer mPlayer;
-    private MusicNotificationConnection mNotificationConnect;
+    private FcMusicNotificationManager mNotificationConnect;
     //是否获取播放焦点
     private boolean mResumeOnFocusGain = false;
     //焦点申请，android9之后使用
@@ -110,23 +111,45 @@ public class FcMusicService extends MediaBrowserServiceCompat {
     //todo 这个还么调整完
     //播放控制器回调
     private final MediaSessionCompat.Callback mMediaSessionCallback
-            = new MediaSessionCompat.Callback() {
-
-        //维护一个播放队列
-        private List<MediaSessionCompat.QueueItem> mPlaylist = new ArrayList<>();
-
-        //当前播放模式
-        private int mCurrentRepeatMode = PlaybackStateCompat.REPEAT_MODE_INVALID;
+            = new FcMusicModel() {
 
         @Override
-        public void onPrepare() {
-            if (mMediaSession.getController().getQueue().size() > 0) {
-                MediaDescriptionCompat index =
-//                        mPlaylist.get(0).getDescription();
-                        mMediaSession.getController().getQueue().get(0).getDescription();
-                mMediaSession.setMetadata(FcMusicLibrary.instance().getMetadata(index.getMediaId()));
-                mPlayer.setDataSource(getBaseContext(), index.getMediaUri());
+        public void onCommand(String command, Bundle extras, ResultReceiver cb) {
+            super.onCommand(command, extras, cb);
+            if (FcMusicModel.KEY_COMMAND_STATE_UPDATE.contains(command)) {
+                PlaybackStateCompat state = mMediaSession.getController().getPlaybackState();
+                mMediaSession.setPlaybackState(state);
             }
+        }
+
+        @Override
+        protected void onPrepare(MediaSessionCompat.QueueItem item) {
+            MediaDescriptionCompat index = item.getDescription();
+            mMediaSession.setMetadata(FcMusicLibrary.instance().getMetadata(index.getMediaId()));
+            mPlayer.setDataSource(getBaseContext(), index.getMediaUri());
+            //通知桌面控件
+            Intent intent = new Intent();
+            intent.putExtra("title", index.getTitle());
+            intent.putExtra("icon", index.getIconUri());
+            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            sendBroadcast(intent);
+        }
+
+        @Override
+        protected void onChangeQueue(List<MediaSessionCompat.QueueItem> list) {
+            mMediaSession.setQueue(list);
+        }
+
+        @Override
+        public void onSetRepeatMode(int repeatMode) {
+            super.onSetRepeatMode(repeatMode);
+            mMediaSession.setRepeatMode(repeatMode);
+        }
+
+        @Override
+        public void onSetShuffleMode(int shuffleMode) {
+            super.onSetShuffleMode(shuffleMode);
+            mMediaSession.setShuffleMode(shuffleMode);
         }
 
         @Override
@@ -232,10 +255,33 @@ public class FcMusicService extends MediaBrowserServiceCompat {
             final PlaybackStateCompat.Builder stateBuilder = new PlaybackStateCompat.Builder();
             stateBuilder.setActions(actions);
             stateBuilder.setState(state, reportPosition, speed, SystemClock.elapsedRealtime());
-            mMediaSession.setPlaybackState(stateBuilder.build());
+            PlaybackStateCompat stateCompat = stateBuilder.build();
+            mMediaSession.setPlaybackState(stateCompat);
+            //通知桌面控件
+            Intent intent = new Intent();
+            intent.putExtra("state", state);
+            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            sendBroadcast(intent);
         }
     };
-
+    //播放完成的监听
+    private final IMusicPlayer.OnCompletionListener mPlayCompletionListener = new IMusicPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(IMusicPlayer mp) {
+            int repeatMode = mMediaSession.getController().getRepeatMode();
+            int shuffleMode = mMediaSession.getController().getShuffleMode();
+            if (repeatMode == PlaybackStateCompat.REPEAT_MODE_ONE) {
+                //重复播放
+                mMediaSession.getController().getTransportControls().play();
+            } else if (repeatMode == PlaybackStateCompat.REPEAT_MODE_ALL
+                    || shuffleMode == PlaybackStateCompat.SHUFFLE_MODE_ALL
+                    || repeatMode == PlaybackStateCompat.REPEAT_MODE_GROUP
+                    || shuffleMode == PlaybackStateCompat.SHUFFLE_MODE_GROUP) {
+                //下一首
+                mMediaSession.getController().getTransportControls().skipToNext();
+            }
+        }
+    };
 
 
 //*******************服务本身逻辑*******************************//
@@ -269,17 +315,34 @@ public class FcMusicService extends MediaBrowserServiceCompat {
         //播放器
         mPlayer = new MusicPlayerProxy();
         mPlayer.setOnPlaybackStateListener(mPlaybackStateListener);
+        mPlayer.setOnCompletionListener(mPlayCompletionListener);
 
         //通知栏
-        mNotificationConnect = new MusicNotificationConnection(this, NOTIFICATION_CHANNEL_ID);
+        mNotificationConnect = new FcMusicNotificationManager(this, NOTIFICATION_CHANNEL_ID);
     }
 
 
     //处理按钮的意图传递
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //确保根据传入的KeyEvent触发对MediaSessionCompat.Callback的正确回调
-        MediaButtonReceiver.handleIntent(mMediaSession, intent);
+        KeyEvent keyEvent = intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT);
+        int code = keyEvent.getKeyCode();
+        if (code == PlaybackStateCompat.toKeyCode(PlaybackStateCompat.ACTION_PLAY)) {
+            //确保能正确执行播放（service未激活前台MediaButtonReceiver可能不生效
+            mMediaSession.getController().getTransportControls().play();
+        } else if (code == PlaybackStateCompat.toKeyCode(PlaybackStateCompat.ACTION_PAUSE) ||
+                code == PlaybackStateCompat.toKeyCode(PlaybackStateCompat.ACTION_PLAY_PAUSE)) {
+            mMediaSession.getController().getTransportControls().pause();
+        } else if (code == PlaybackStateCompat.toKeyCode(PlaybackStateCompat.ACTION_STOP)) {
+            mMediaSession.getController().getTransportControls().stop();
+        } else if (code == PlaybackStateCompat.toKeyCode(PlaybackStateCompat.ACTION_SKIP_TO_NEXT)) {
+            mMediaSession.getController().getTransportControls().skipToNext();
+        } else if (code == PlaybackStateCompat.toKeyCode(PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS)) {
+            mMediaSession.getController().getTransportControls().skipToPrevious();
+        } else {
+            //确保根据传入的KeyEvent触发对MediaSessionCompat.Callback的正确回调
+            MediaButtonReceiver.handleIntent(mMediaSession, intent);
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 

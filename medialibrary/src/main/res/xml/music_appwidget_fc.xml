@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/wiget_music_fc"
+    android:previewImage="@mipmap/img_widget_music_fc"
+    android:minHeight="40dp"
+    android:minWidth="320dp"
+    android:resizeMode="horizontal"
+    android:updatePeriodMillis="60000" />
+
+
+    <!-- android:updatePeriodMillis="0"
+    谷歌默认是每隔半个小时进行更新一次
+    设置更新时间为0.我们就可以自己控制这个时间
+    dp大小对应的cell 数如下表所示，
+    4x1的widget的 android:minWidth= "250dip和 android:minHeight= "40dip"
+    70xn-30   n格所用dp
+    initialLayout：小组件的初始化布局
+    minWidth：小组件最小宽度
+    minHeight：小组件最小高度
+    previewImage：小组件在应用组件列表中的预览图
+    resizeMode：是否可以调整大小，none|horizontal|vertical；固定大小|水平方向|垂直方向
+    updatePeriodMillis：更新间隔，多久更新一次，单位MS，官方限制30分钟，以减少耗电
+    widgetCategory：小组件可以展示在哪里，一般为主界面
+    -->

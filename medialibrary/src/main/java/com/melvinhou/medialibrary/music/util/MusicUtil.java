@@ -17,6 +17,7 @@ import com.melvinhou.medialibrary.music.model.FcMusicLibrary;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 /**
  * ===============================================
@@ -35,6 +36,30 @@ public class MusicUtil {
 
 //    MediaStore.Audio.Media.EXTERNAL_CONTENT_URI (content://media/external/audio/media)
 
+
+    /**
+     * 封面uri
+     *
+     * @return
+     */
+    public static String getAlbumArtUri(long albumId) {
+        String[] projection = new String[]{MediaStore.Audio.Albums._ID, MediaStore.Audio.Albums.ALBUM_ART};
+        String where = MediaStore.Audio.Albums._ID + "=" + albumId;
+        String uri = null;
+        try {
+            Cursor cursorAlbum = FcUtils.getContext().getContentResolver()
+                    .query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI, projection, where, null, null);
+            if (cursorAlbum != null && cursorAlbum.moveToFirst()) {
+                int index = cursorAlbum.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART);
+                uri = cursorAlbum.getString(index);
+                cursorAlbum.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return uri != null ? uri : getDeftAlbumArtUri();
+    }
+
     /**
      * 根据专辑ID获取专辑封面图
      *
@@ -42,21 +67,28 @@ public class MusicUtil {
      * @return
      */
     public static Bitmap getCoverByAlbumId(long album_id) {
-        String mUriAlbums = "content://media/external/audio/albums";
-        String[] projection = new String[]{"album_art"};
-        Cursor cur = FcUtils.getContext().getContentResolver()
-                .query(Uri.parse(mUriAlbums + "/" + album_id), projection, null, null, null);
+        //content://media/external/audio/albums/9
+        Uri albumUri = ContentUris.withAppendedId(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI, album_id);
+        String[] projection = new String[]{MediaStore.Audio.Albums.ALBUM_ART};
+        Cursor cur = null;
         String album_art = null;
-        if (cur.getCount() > 0 && cur.getColumnCount() > 0) {
-            cur.moveToNext();
-            album_art = cur.getString(0);
+        try {
+            cur = FcUtils.getContext().getContentResolver()
+                    .query(albumUri, projection, null, null, null);
+            if (cur != null && cur.getCount() > 0 && cur.getColumnCount() > 0) {
+                cur.moveToNext();
+                album_art = cur.getString(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cur != null) cur.close();
         }
-        cur.close();
         Bitmap bm = null;
         if (album_art != null) {
             bm = BitmapFactory.decodeFile(album_art);
         } else {
-            bm = BitmapFactory.decodeResource(FcUtils.getContext().getResources(), R.drawable.default_cover);
+            bm = getDeftAlbumArt();
         }
         return bm;
     }
@@ -68,25 +100,20 @@ public class MusicUtil {
      * @return
      */
     public static String getAlbumArtUri(String mediaId) {
-        if (TextUtils.isEmpty(mediaId)) {
-//            return ContentUris.withAppendedId(albumArtUri, getAlbumRes(mediaId)).toString();
-            return getDeftAlbumArtUri();
+        //"content://media/external/audio/media/"
+        //MediaStore.Audio.Media.EXTERNAL_CONTENT_URI + File.separator
+        Uri uri = Uri.parse("content://media/external/audio/media/" + mediaId + "/albumart");
+        //判断url是否存在
+        boolean bool = false;
+        if (null != uri) {
+            try {
+                InputStream inputStream = FcUtils.getContext().getContentResolver().openInputStream(uri);
+                inputStream.close();
+                bool = true;
+            } catch (Exception e) {
+            }
         }
-        return MediaStore.Audio.Media.EXTERNAL_CONTENT_URI+ File.separator + mediaId + "/albumart";
-    }
-
-    public static String getDeftAlbumArtUri(){
-        return ResourcesUtils.getResourceUri(R.mipmap.default_cover).toString();
-//        return ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
-//                FcUtils.getContext().getPackageName() + "/mipmap-hdpi/default_cover.jpg";
-    }
-
-    private static long getAlbumId(String mediaId) {
-        return FcMusicLibrary.instance().getAlbumId(mediaId);
-    }
-
-    private static String getMediaUrl(String mediaId) {
-        return FcMusicLibrary.instance().getMusicUrl(mediaId);
+        return bool ? uri.toString() : getDeftAlbumArtUri();
     }
 
 
@@ -98,26 +125,37 @@ public class MusicUtil {
      */
     public static Bitmap getCoverByMediaId(String mediaId) {
         Bitmap bm = null;
+        Uri uri = Uri.parse(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI + File.separator + mediaId + "/albumart");
+        ParcelFileDescriptor pfd = null;
         try {
-            FileDescriptor fd = null;
-            Uri uri = null;
-            if (TextUtils.isEmpty(mediaId))
-                uri = Uri.parse( MediaStore.Audio.Media.EXTERNAL_CONTENT_URI+ File.separator + mediaId + "/albumart");
-            else {
-                long albumid = FcMusicLibrary.instance().getAlbumId(mediaId);
-                //获取专辑封面的Uri
-                Uri albumArtUri = Uri.parse("content://media/external/audio/albumart");
-                uri = ContentUris.withAppendedId(albumArtUri, albumid);
-            }
-            ParcelFileDescriptor pfd = FcUtils.getContext().getContentResolver().openFileDescriptor(uri, "r");
-            if (pfd != null) fd = pfd.getFileDescriptor();
-
-            bm = BitmapFactory.decodeFileDescriptor(fd);
+            pfd = FcUtils.getContext().getContentResolver().openFileDescriptor(uri, "r");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } finally {
-            return bm;
         }
+        if (pfd != null) {
+            FileDescriptor fd = pfd.getFileDescriptor();
+            bm = BitmapFactory.decodeFileDescriptor(fd);
+        }
+        return bm != null ? bm : getDeftAlbumArt();
+    }
+
+
+    public static String getDeftAlbumArtUri() {
+        return ResourcesUtils.getResourceUri(R.mipmap.default_cover).toString();
+//        return ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+//                FcUtils.getContext().getPackageName() + "/mipmap-hdpi/default_cover.jpg";
+    }
+
+    public static Bitmap getDeftAlbumArt() {
+        return BitmapFactory.decodeResource(FcUtils.getContext().getResources(), R.mipmap.default_cover);
+    }
+
+    private static long getAlbumId(String mediaId) {
+        return FcMusicLibrary.instance().getAlbumId(mediaId);
+    }
+
+    private static String getMediaUrl(String mediaId) {
+        return FcMusicLibrary.instance().getMusicUrl(mediaId);
     }
 
 
