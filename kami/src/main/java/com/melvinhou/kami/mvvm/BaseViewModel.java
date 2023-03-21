@@ -74,7 +74,7 @@ public class BaseViewModel extends AndroidViewModel {
      * @param callback   回调
      * @param <T>        返回数据的类型
      */
-    public <T> void requestData(Observable<BaseEntity<T>> observable, RequestCallback<T> callback) {
+    public <T,E extends BaseEntity<T>> void requestData(@NonNull Observable<E> observable, RequestCallback<T> callback) {
         if (mDisposable == null) register();
         updateState(RequestState.RUNNING);
         observable.subscribe(new HttpCallBack<T>() {

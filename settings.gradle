@@ -1,5 +1,8 @@
 rootProject.name='Dimension2'
 include ':app'
+//基础
 include ':kami'
 include ':knight'
 include ':medialibrary'
+//实现
+include ':media-sample'

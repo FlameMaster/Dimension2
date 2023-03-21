@@ -10,11 +10,12 @@
         android:id="@+id/navigation_home"
         android:name="com.melvinhou.dimension2.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home"
+        />
 
     <fragment
         android:id="@+id/navigation_media"
-        android:name="com.melvinhou.dimension2.media.MediaFragment"
+        android:name="com.melvinhou.media_sample.MediaFragment"
         android:label="@string/title_media"
         tools:layout="@layout/fragment_media" />
 

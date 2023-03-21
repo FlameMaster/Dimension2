@@ -21,6 +21,8 @@
     <color name="colorSwitchThumbNormal">#80000000</color>
 
     <!--常用颜色-->
+    <color name="app_main">?attr/colorPrimary</color>
+    <color name="app_bg">#F8F8F8</color>
     <color name="transparent">#00000000</color><!--透明-->
     <!--<color name="white">#ffffff</color>-->
     <color name="white">#fefefe</color> <!-- 白色 -->
