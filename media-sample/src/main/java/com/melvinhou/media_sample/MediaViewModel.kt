@@ -104,7 +104,7 @@ class MediaViewModel(application: Application) : BaseViewModel(application) {
             440L->{
                 intent.setClass(getApplication(), AnimSvgActivity::class.java)
             }
-            290L->{
+            550L->{
                 intent.setClass(getApplication(), ScreenRecordActivity::class.java)
             }
         }

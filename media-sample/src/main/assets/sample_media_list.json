@@ -120,16 +120,16 @@
     },
     {
       "icon": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/background/media_tiktok.jpg",
-      "explain": "独立出来探索抖音小功能",
+      "explain": "多媒体录制",
       "list": [
         {
           "icon": "",
-          "title": "抖音",
-          "id": 290
+          "title": "屏幕录制",
+          "id": 550
         }
       ],
-      "title": "Tiktok",
-      "id": 290
+      "title": "Record",
+      "id": 500
     },
     {
       "icon": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/background/media_system.jpg",

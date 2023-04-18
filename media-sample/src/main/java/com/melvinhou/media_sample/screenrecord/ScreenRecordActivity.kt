@@ -14,12 +14,9 @@ import android.provider.Settings
 import android.view.*
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.melvinhou.kami.adapter.BindRecyclerAdapter
-import com.melvinhou.kami.adapter.RecyclerAdapter
-import com.melvinhou.kami.adapter.RecyclerHolder
 import com.melvinhou.kami.util.DimenUtils
 import com.melvinhou.kami.util.FcUtils
 import com.melvinhou.knight.loadImage
@@ -101,15 +98,15 @@ class ScreenRecordActivity : SecreenRecordView() {
                 parent: RecyclerView, state: RecyclerView.State
             ) {
                 val position = parent.getChildAdapterPosition(view)
-                outRect[if (position == 0) decoration else 0, decoration, decoration] = decoration
+                outRect[decoration, if (position == 0) decoration else 0, decoration] = decoration
             }
         })
         //点击事件
         adapter?.setOnItemClickListener { _, _, data ->
             val intent = Intent()
             intent.setClass(getApplication(), FcVideoActivity::class.java)
-            intent.putExtra("title",data.name)
-            intent.putExtra("url",data.absolutePath)
+            intent.putExtra("title", data.name)
+            intent.putExtra("url", data.absolutePath)
             startActivity(intent)
         }
     }
@@ -162,15 +159,17 @@ class ScreenRecordActivity : SecreenRecordView() {
         val manager = getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
         val screenCaptureIntent = manager.createScreenCaptureIntent()
         toResultActivity(screenCaptureIntent) {
-            startIntent = it.data;
-            //悬浮窗布局参数
-            initFloatWindowParams()
-            //倒计时
-            showDownTimer()
-            //跳桌面
-            toDesktop()
+            if (it.resultCode == RESULT_OK) {
+                startIntent = it.data;
+                //悬浮窗布局参数
+                initFloatWindowParams()
+                //倒计时
+                showDownTimer()
+                //跳桌面
+                toDesktop()
 //            //直接启动录制
 //            startRecord(it.data)
+            }
         }
     }
 
@@ -237,10 +236,10 @@ class ScreenRecordActivity : SecreenRecordView() {
             mParams!!.gravity = Gravity.TOP or Gravity.LEFT
             mStopView = TextView(FcUtils.getContext())
             mStopView?.setText("3")
-            val paddingh = DimenUtils.dp2px(8)
-            val paddingv = DimenUtils.dp2px(2)
+            val paddingh = DimenUtils.dp2px(10)
+            val paddingv = DimenUtils.dp2px(5)
             mStopView?.setPadding(paddingh, paddingv, paddingh, paddingv)
-            mStopView?.setBackgroundColor(Color.parseColor("#eeeeee"))
+            mStopView?.setBackgroundColor(Color.RED)
             mStopView?.setText("点击停止")
             mStopView?.setTextColor(Color.BLACK)
             mWindowManager!!.addView(mStopView, mParams)

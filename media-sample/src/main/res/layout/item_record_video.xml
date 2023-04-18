@@ -19,10 +19,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:src="#EEE"
+        android:background="#EEE"
         android:scaleType="fitCenter"
         app:layout_constraintDimensionRatio="9:16"
         app:round="8dp"
+        android:layout_margin="1dp"
         />
 
     <TextView

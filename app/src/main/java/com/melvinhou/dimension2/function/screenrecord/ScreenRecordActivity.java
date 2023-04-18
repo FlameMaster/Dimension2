@@ -406,7 +406,7 @@ public class ScreenRecordActivity extends BaseActivity {
 
         @Override
         public int getItemLayoutId(int viewType) {
-            return R.layout.item_record_video;
+            return R.layout.item_screen_record;
         }
 
         @Override
