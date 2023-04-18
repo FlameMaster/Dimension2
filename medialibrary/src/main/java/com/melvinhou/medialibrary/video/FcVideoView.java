@@ -10,25 +10,43 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 
+import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 
 import com.melvinhou.medialibrary.video.proxy.IPlayer;
 import com.melvinhou.medialibrary.video.proxy.VideoPlayerProxy;
 import com.melvinhou.medialibrary.video.util.ScreenUtil;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 public class FcVideoView extends TextureView {
 
     private static final String TAG = FcVideoView.class.getSimpleName();
 
+    @IntDef({
+            STATE_ERROR,
+            STATE_IDLE,
+            STATE_PREPARING,
+            STATE_PREPARED,
+            STATE_PLAYING,
+            STATE_PAUSED,
+            STATE_PLAYBACK_COMPLETED,
+            STATE_STOPPED,
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface PlayerState {
+    }
+
     //播放器状态
-    private static int STATE_ERROR = -1;
-    private static int STATE_IDLE = 0;
-    private static int STATE_PREPARING = 1;
-    private static int STATE_PREPARED = 2;
-    private static int STATE_PLAYING = 3;
-    private static int STATE_PAUSED = 4;
-    private static int STATE_PLAYBACK_COMPLETED = 5;
-    private static int STATE_STOPPED = 6;
+    public static final int STATE_ERROR = -1;
+    public static final int STATE_IDLE = 0;
+    public static final int STATE_PREPARING = 1;
+    public static final int STATE_PREPARED = 2;
+    public static final int STATE_PLAYING = 3;
+    public static final int STATE_PAUSED = 4;
+    public static final int STATE_PLAYBACK_COMPLETED = 5;
+    public static final int STATE_STOPPED = 6;
 
     //当前状态
     private int mCurrentState = STATE_IDLE;
@@ -53,7 +71,7 @@ public class FcVideoView extends TextureView {
     private IPlayer.OnSeekCompleteListener mOnSeekCompleteListener;
     private IPlayer.OnPreparedListener mOnPreparedListener = new IPlayer.OnPreparedListener() {
         public void onPrepared(IPlayer mp) {
-            mCurrentState = STATE_PREPARED;
+            updateState(STATE_PREPARED);
             mVideoHeight = mp.getVideoHeight();
             mVideoWidth = mp.getVideoWidth();
             Log.i(TAG, "onPrepared mVideoWidth: " + mVideoWidth
@@ -67,7 +85,7 @@ public class FcVideoView extends TextureView {
     private IPlayer.OnErrorListener mOnErrorListener = new IPlayer.OnErrorListener() {
         public boolean onError(IPlayer mp, int what, int extra) {
             Log.w(TAG, "onError: what/extra: " + what + "/" + extra);
-            mCurrentState = STATE_ERROR;
+            updateState(STATE_ERROR);
             stop_l();
             if (mOutOnErrorListener != null) {
                 mOutOnErrorListener.onError(mp, what, extra);
@@ -89,7 +107,7 @@ public class FcVideoView extends TextureView {
     private IPlayer.OnCompletionListener mOnCompletionListener = new IPlayer.OnCompletionListener() {
         public void onCompletion(IPlayer mp) {
             Log.i(TAG, "onCompletion");
-            mCurrentState = STATE_PLAYBACK_COMPLETED;
+            updateState(STATE_PLAYBACK_COMPLETED);
             if (mOutOnCompletionListener != null) {
                 mOutOnCompletionListener.onCompletion(mp);
             }
@@ -156,8 +174,6 @@ public class FcVideoView extends TextureView {
     }
 
 
-
-
     public FcVideoView(Context context) {
         super(context);
         initVideoView(context);
@@ -177,11 +193,12 @@ public class FcVideoView extends TextureView {
         Log.i(TAG, "initVideoView");
         mContext = context;
         setSurfaceTextureListener(mSurfaceTextureListener);
-        mCurrentState = STATE_IDLE;
+        updateState(STATE_IDLE);
     }
 
     /**
      * 根据视频宽高控制控件大小
+     *
      * @param widthMeasureSpec
      * @param heightMeasureSpec
      */
@@ -232,15 +249,30 @@ public class FcVideoView extends TextureView {
                 // neither the width nor the height are fixed, try to use actual video size
                 width = mVideoWidth;
                 height = mVideoHeight;
-                if (heightSpecMode == MeasureSpec.AT_MOST && height > heightSpecSize) {
-                    // too tall, decrease both width and height
-                    height = heightSpecSize;
-                    width = height * mVideoWidth / mVideoHeight;
-                }
-                if (widthSpecMode == MeasureSpec.AT_MOST && width > widthSpecSize) {
-                    // too wide, decrease both width and height
-                    width = widthSpecSize;
-                    height = width * mVideoHeight / mVideoWidth;
+                if (heightSpecMode == MeasureSpec.AT_MOST) {
+                    //视频宽高都比屏幕小的时候
+                    if (height < heightSpecSize && width < widthSpecSize) {
+                        float ws = (float)width/(float)widthSpecSize;
+                        float hs = (float)height/(float)heightSpecSize;
+                        if (ws>hs){
+                            width = widthSpecSize;
+                            height = width * mVideoHeight / mVideoWidth;
+                        }else {
+                            height = heightSpecSize;
+                            width = height * mVideoWidth / mVideoHeight;
+                        }
+                    } else {
+                        if (height > heightSpecSize) {
+                            // too tall, decrease both width and height
+                            height = heightSpecSize;
+                            width = height * mVideoWidth / mVideoHeight;
+                        }
+                        if (width > widthSpecSize) {
+                            // too wide, decrease both width and height
+                            width = widthSpecSize;
+                            height = width * mVideoHeight / mVideoWidth;
+                        }
+                    }
                 }
             }
         } else {
@@ -289,10 +321,10 @@ public class FcVideoView extends TextureView {
             mMediaPlayer.setSurface(mSurface);
             mMediaPlayer.setDataSource(getContext(), mUri);
             mMediaPlayer.prepareAsync();
-            mCurrentState = STATE_PREPARING;
+            updateState(STATE_PREPARING);
         } catch (Exception ex) {
             Log.w(TAG, "ex = " + ex.getMessage());
-            mCurrentState = STATE_ERROR;
+            updateState(STATE_ERROR);
         }
 
     }
@@ -301,7 +333,7 @@ public class FcVideoView extends TextureView {
         Log.i(TAG, "start mCurrentState:" + mCurrentState);
         if (mMediaPlayer != null) {
             mMediaPlayer.start();
-            mCurrentState = STATE_PLAYING;
+            updateState(STATE_PLAYING);
         }
         return true;
     }
@@ -316,7 +348,7 @@ public class FcVideoView extends TextureView {
         Log.i(TAG, "pause mCurrentState:" + mCurrentState);
         if (mMediaPlayer != null) {
             mMediaPlayer.pause();
-            mCurrentState = STATE_PAUSED;
+            updateState(STATE_PAUSED);
         }
         return true;
     }
@@ -326,7 +358,7 @@ public class FcVideoView extends TextureView {
             mMediaPlayer.stop();
             mMediaPlayer.release();
             mMediaPlayer = null;
-            mCurrentState = STATE_IDLE;
+            updateState(STATE_IDLE);
         }
     }
 
@@ -371,6 +403,12 @@ public class FcVideoView extends TextureView {
         return 0;
     }
 
+    private void updateState(@PlayerState int state) {
+        mCurrentState = state;
+        if (mPlayerStateListener != null)
+            mPlayerStateListener.onChanged(state);
+    }
+
 
     @Override
     public void setBackgroundDrawable(Drawable background) {
@@ -382,5 +420,19 @@ public class FcVideoView extends TextureView {
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
         super.setOnClickListener(l);
+    }
+
+
+    /**
+     * 播放器状态变化的监听
+     */
+    public interface PlayerStateListener {
+        void onChanged(@PlayerState int state);
+    }
+
+    private PlayerStateListener mPlayerStateListener;
+
+    public void setPlayerStateListener(PlayerStateListener l) {
+        mPlayerStateListener = l;
     }
 }

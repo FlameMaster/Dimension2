@@ -1,7 +1,15 @@
 <manifest package="com.melvinhou.kami"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <!--  api33,android13权限组  -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" /><!-- 读取图片权限 -->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/><!-- 通知权限 -->
+
 
     <application
         android:allowBackup="true"

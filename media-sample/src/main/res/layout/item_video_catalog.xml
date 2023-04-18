@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<LinearLayout
+    android:id="@+id/root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+
+    <TextView
+        android:id="@+id/tv_title_big"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="章节一: 标题一"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:drawableRight="@drawable/selector_drop02"
+        android:drawableTint="@color/black"
+        android:gravity="center_vertical"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_dp8"
+        android:backgroundTint="@color/app_bg"
+        android:layout_marginVertical="8dp"
+        android:layout_marginHorizontal="16dp"
+        >
+
+        <ImageView
+            android:id="@+id/iv_lock"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_lock"
+            android:padding="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginRight="8dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:maxWidth="275dp"
+            android:layout_height="wrap_content"
+            android:text="02 标题二"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="10dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            />
+        <TextView
+            android:id="@+id/tv_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="免费试看"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:paddingHorizontal="4dp"
+            android:background="@drawable/round_dp8"
+            android:backgroundTint="@color/gray"
+            app:layout_constraintTop_toTopOf="@id/tv_title"
+            app:layout_constraintLeft_toRightOf="@id/tv_title"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title"
+            android:layout_marginLeft="5dp"
+            />
+        <TextView
+            android:id="@+id/tv_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00分00秒"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="10dp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

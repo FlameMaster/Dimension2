@@ -63,6 +63,21 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/music_appwidget_fc" />
         </receiver>
+
+
+
+        <!--屏幕录制-->
+        <service
+            android:name=".record.ScreenRecordService"
+            android:foregroundServiceType="mediaProjection"/>
+
+        <receiver
+            android:name=".record.ScreenRecordReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="screen_record_stop" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

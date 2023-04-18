@@ -1,0 +1,39 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="240dp"
+    android:height="240dp"
+    android:viewportWidth="240"
+    android:viewportHeight="240">
+  <path
+      android:name="text01"
+      android:strokeWidth="4"
+      android:pathData="
+      M96,48
+      L96,96
+      H144
+      L144,48
+      L94,48
+      M120,150
+      L90,200
+      M120,150
+      L150,200
+"
+      android:strokeColor="#f0f"/>
+  <path
+      android:name="text02"
+      android:strokeWidth="4"
+      android:pathData="
+      M120,98
+      V110
+      M108,60
+      L108,70
+      M132,60
+      L132,70
+      M108,84
+      H132
+      M120,110
+      V150
+      M72,110
+      H168
+"
+      android:strokeColor="#0f0"/>
+</vector>

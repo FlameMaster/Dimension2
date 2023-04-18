@@ -1,8 +1,10 @@
 package com.melvinhou.kami.view.activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
@@ -16,12 +18,19 @@ import android.view.WindowManager;
 
 import com.melvinhou.kami.BaseApplication;
 import com.melvinhou.kami.R;
+import com.melvinhou.kami.mvvm.BindActivity;
+import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.view.dialog.DialogCheckBuilder;
 import com.melvinhou.kami.util.StringUtils;
 import com.melvinhou.kami.view.dialog.LoadDialog;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowCompat;
@@ -70,6 +79,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         BaseApplication.getInstance().putActivity(this);
         //初始化布局模型
         int layoutId = getLayoutID();
+        //启动器
+        startActivity = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(), this::onActivityBack);
         //初始化
         initActivity(layoutId);
     }
@@ -125,7 +137,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected int getLoadDialogThemeID() {
         return R.style.KamiDialog;
     }
-
 
 
     /**
@@ -275,6 +286,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             // Toolbar自有的Title,ActionBar.DISPLAY_SHOW_TITLE
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+        //状态栏高度
+        View barLayout = findViewById(R.id.bar_root);
+        if (barLayout instanceof ConstraintLayout) {
+            barLayout.setPadding(0, DimenUtils.getStatusBarHeight(), 0, 0);
+        }
     }
 
     /**
@@ -294,6 +310,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 返回
+     *
      * @param type
      */
     protected void onActivityBack(int type) {
@@ -372,10 +389,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     //权限请求
     public static final int REQUEST_CODE_PERMISSIONS = 14101;
+
     /**
      * @param permissions
      */
-    private void requestPermission(String[] permissions) {
+    protected void requestPermissions(String[] permissions) {
         //请求授予此应用程序的权限
         ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_PERMISSIONS);
     }
@@ -446,6 +464,55 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+
+//***********************************启动*********************************************//
+
+
+    //新版本的意图打开
+    private ActivityResultLauncher<Intent> startActivity;
+    private ActivityResultCallback<ActivityResult> activityResultCallback;
+
+    /**
+     * 打开有返回值的intent
+     *
+     * @param intent
+     */
+    protected void toResultActivity(Intent intent, ActivityResultCallback<ActivityResult> callback) {
+        activityResultCallback = callback;
+        startActivity.launch(intent);
+    }
+
+
+    /**
+     * 打开有返回值的intent
+     *
+     * @param intent
+     */
+    protected void toResultActivity(Intent intent) {
+        startActivity.launch(intent);
+    }
+
+    /**
+     * 替换早期的返回
+     */
+    protected void onActivityBack(ActivityResult result) {
+        //自由处理
+        if (activityResultCallback != null) {
+            activityResultCallback.onActivityResult(result);
+            activityResultCallback = null;
+            return;
+        }
+        //此处进行数据接收（接收回调）
+        if (result.getResultCode() == RESULT_OK) {
+        }
+    }
+
+
+    public <T extends Activity> void toActivity(Class<T> clazz) {
+        Intent intent = new Intent(this, clazz);
+        startActivity(intent);
     }
 
 }

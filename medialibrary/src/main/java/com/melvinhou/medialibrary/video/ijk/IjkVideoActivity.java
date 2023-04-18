@@ -184,7 +184,7 @@ public class IjkVideoActivity extends BaseActivity {
 
         //前置遮罩置于状态栏下
         ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) mVideoShade.getLayoutParams();
-        lp.topMargin = DimenUtils.getStatusHeight();
+        lp.topMargin = DimenUtils.getStatusBarHeight();
         mVideoShade.setLayoutParams(lp);
         //显示ui
         showToolsUI();

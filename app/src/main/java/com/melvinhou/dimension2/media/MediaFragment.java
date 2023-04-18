@@ -284,7 +284,7 @@ public class MediaFragment extends DataBindingFragment<FgtMediaBD> {
         group.getLocationInWindow(location); //获取在当前窗口内的绝对坐标
 //        img.getLocationOnScreen(location);//获取在整个屏幕内的绝对坐标
 //        -height/2+getHeight()/2表示控件在屏幕中心的位置
-        float dy = location[1] - DimenUtils.getActionBarSize() - DimenUtils.getStatusHeight()
+        float dy = location[1] - DimenUtils.getActionBarSize() - DimenUtils.getStatusBarHeight()
                 + group.getHeight() / 2 - height / 2;
         //添加滑动比例
         dy = dy * ratio;

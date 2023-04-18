@@ -1,0 +1,69 @@
+//主站
+const URL_INDEX=“https://www.bilibili.com”;
+const URL_INDEX_MOBILE=“https://m.bilibili.com/index.html”
+//主站分区排行
+const URL_MAIN_RANKING = “https://m.bilibili.com/ranking.html”;
+//排行榜 rid分区，day最近几天(3,7)
+const URL_RANKING_PARTITION =“https://api.bilibili.com/x/web-interface/ranking/region?rid={rid}&day={day}”;
+//首页轮播
+const URL_ROUND_SOWING = “https://api.bilibili.com/x/web-show/res/loc?pf=7&id=1695”;
+//热搜
+const URL_HOT_WORD = “https://s.search.bilibili.com/main/hotword”;
+//搜索
+// const URL_SEARCH=“https://api.bilibili.com/x/web-interface/search/all/v2”;
+const URL_SEARCH=“https://api.bilibili.com/x/web-interface/search/all/v2?keyword={keywd}&page={pg}&pagesize={pgsize}&search_type={stype}&order={order}”;
+const URL_SEARCH_1=“https://api.bilibili.com/x/web-interface/search/type?keyword={keywd}&page={pg}&pagesize={pgsize}&search_type={stype}&order={order}”;
+/**视频详情 aid是视频id(手机版接口统一)
+
+用URL_VIDEO_DETAIL查询出aid和cid
+*把aid和cid放进URL_VIDEO_PLAYURL里面查询播放地址
+把aid和cid放进URL_VIDEO_TYPE里面查询是什么视频（普通视频还是互动视频）(返回XML)
+互动视频有个graph_version参数是视频id（json）
+*互动视频的参数：aid：av号，edge_id：节点编号，1为开头（json）
+旧版下面接新版API，B站于2020年3月23更新
+*/
+const URL_VIDEO_DETAIL=“https://m.bilibili.com/video/av{aid}?p={p}”;
+const URL_VIDEO_DETAIL_NEW=“https://m.bilibili.com/video/BV1k7411R7kj”;//（BV1k7411R7kj是一个整体）
+const URL_VIDEO_PLAYURL=“https://api.bilibili.com/x/player/playurl?cid={cid}&qn=1&type=&otype=json&avid={aid}”;
+const URL_VIDEO_PLAYURL_NEW=“https://api.bilibili.com/x/player/playurl?cid={cid}&qn=1&type=&otype=json&avid={aid}”;
+const URL_VIDEO_PAGELIST=“https://api.bilibili.com/x/player/pagelist?bvid={bvid}&jsonp=jsonp”;
+const URL_VIDEO_TYPE=“https://api.bilibili.com/x/player.so?id=cid%3A{cid}&aid={av}”;
+const URL_VIDEO_TYPE_NEW=“https://api.bilibili.com/x/player.so?id=cid%3A{cid}&bvid={bvid}”;
+const URL_INTERACT_VIDEO=“https://api.bilibili.com/x/stein/edgeinfo_v2?aid={aid}&bvid=&edge_id={eid}&graph_version={gvid}”;
+const URL_INTERACT_VIDEO_NEW=“https://api.bilibili.com/x/stein/edgeinfo_v2?aid={aid}&bvid=&edge_id={eid}&graph_version={gvid}”;
+//番剧（时间线）点进去就放
+const URL_VIDEO_BANGUMI=“https://bangumi.bilibili.com/api/timeline_v2_global”;
+//视频弹幕
+const URL_DANMAKU=“https://api.bilibili.com/x/v1/dm/list.so?oid={oid}”;
+// 用户基本信息
+const URL_UP_USER_STATUS = “https://api.bilibili.com/x/space/acc/info?mid={uid}&jsonp=jsonp”;
+//用户顶置视频
+const URL_TOP_VIDEO=“https://api.bilibili.com/x/space/top/arc?vmid={uid}&jsonp=jsonp”;
+const URL_TOP_VIDEO_GUEST=“https://api.bilibili.com/x/space/masterpiece?vmid={uid}&jsonp=jsonp”;
+//用户上传的视频
+const URL_USER_UP_VIDER=“https://api.bilibili.com/x/space/arc/search?mid={uid}&pn=1&ps={ps}&jsonp=jsonp”;
+//我的关注
+const URL_USER_FOLLOW=“https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid={uid}&type=2&from=header”;
+//正在播放的番剧__PGC_USERSTATE__判断大会员
+
+//直播首页
+const URL_LIFE_INDEX=“https://api.live.bilibili.com/room/v2/AppIndex/getAllList”;
+// 分类
+const URL_LIVE_AREA = “https://api.live.bilibili.com/room/v1/AppIndex/getAreas?device=phone&;platform=ios&scale=3&build=1000”;
+// 直播地址
+const URL_LIVE_URL = “https://api.live.bilibili.com/room/v1/Room/playUrl?cid={roomid}&platform=h5&otype=json&quality=0”;
+// 礼物
+const URL_LIVE_GIFT = “https://api.live.bilibili.com/appIndex/getAllItem?scale=1”;
+// 房间列表
+const URL_ROOM_LIST = “https://api.live.bilibili.com/room/v2/Area/getRoomList”;
+// 房间信息
+const URL_ROOM_INFO = “https://api.live.bilibili.com/room/v1/Room/get_info?device=phone&;platform=ios&scale=3&build=10000&room_id={roomid}”;
+// 弹幕配置
+const URL_DANMMU_CONFIG = “https://api.live.bilibili.com/room/v1/Danmu/getConf?room_id={roomid}&platform=h5”;
+//评论区
+const URL_VIDEO_COMMENT=“https://api.bilibili.com/x/v2/reply?jsonp=jsonp&pn=1&type=1&oid={aid}&sort=0”;
+作者：ZHL821
+https://www.bilibili.com/read/cv5363590/
+————————————————
+版权声明：本文为CSDN博主「husky105」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/weixin_44795839/article/details/112254664

@@ -1,0 +1,155 @@
+{
+  "code": 200,
+  "data": [
+    {
+      "icon": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/background/media_picture.jpeg",
+      "explain": "图片预览和处理",
+      "list": [
+        {
+          "icon": "https://c-ssl.duitang.com/uploads/item/202005/12/20200512132039_ngwrr.jpg",
+          "title": "打开链接",
+          "id": 120
+        },
+        {
+          "icon": "",
+          "title": "相册",
+          "id": 130
+        },
+        {
+          "icon": "",
+          "title": "插画",
+          "id": 132
+        },
+        {
+          "icon": "",
+          "title": "图片裁剪",
+          "id": 170
+        },
+        {
+          "icon": "",
+          "title": "相机",
+          "id": 180
+        },
+        {
+          "icon": "",
+          "title": "扫描",
+          "id": 183
+        }
+      ],
+      "title": "Picture",
+      "id": 100
+    },
+    {
+      "icon": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/background/media_video.jpeg",
+      "explain": "视频播放相关整理",
+      "list": [
+        {
+          "icon": "",
+          "title": "播放列表",
+          "id": 211
+        },
+        {
+          "icon": "",
+          "title": "播放器",
+          "id": 220
+        },
+        {
+          "icon": "",
+          "title": "Ijk播放器",
+          "id": 222
+        },
+        {
+          "icon": "",
+          "title": "直播",
+          "id": 240
+        },
+        {
+          "icon": "",
+          "title": "电视",
+          "id": 230
+        }
+      ],
+      "title": "Video",
+      "id": 200
+    },
+    {
+      "icon": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/background/media_music.jpg",
+      "explain": "音频相关内容",
+      "list": [
+        {
+          "icon": "",
+          "title": "音乐列表",
+          "id": 310
+        },
+        {
+          "icon": "",
+          "title": "音乐播放器",
+          "id": 320
+        }
+      ],
+      "title": "Music",
+      "id": 300
+    },
+    {
+      "icon": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/background/media_animator.jpeg",
+      "explain": "包括全部动画在内的研究",
+      "list": [
+        {
+          "icon": "",
+          "title": "系统动画",
+          "id": 420
+        },
+        {
+          "icon": "",
+          "title": "交互动画",
+          "id": 430
+        },
+        {
+          "icon": "",
+          "title": "矢量动画",
+          "id": 440
+        },
+        {
+          "icon": "",
+          "title": "动画库",
+          "id": 410
+        }
+      ],
+      "title": "Animator",
+      "id": 400
+    },
+    {
+      "icon": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/background/media_tiktok.jpg",
+      "explain": "独立出来探索抖音小功能",
+      "list": [
+        {
+          "icon": "",
+          "title": "抖音",
+          "id": 290
+        }
+      ],
+      "title": "Tiktok",
+      "id": 290
+    },
+    {
+      "icon": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/background/media_system.jpg",
+      "explain": "就放在这里占位置",
+      "list": [
+        {
+          "icon": "",
+          "title": "ERROR",
+          "id": 0
+        },
+        {
+          "icon": "",
+          "title": "CONRTOL",
+          "id": 0
+        }
+      ],
+      "title": "System",
+      "id": 1
+    }
+  ],
+  "date": 0,
+  "message": "欢迎使用二刺猿"
+}

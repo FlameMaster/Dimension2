@@ -2,14 +2,18 @@ package com.melvinhou.kami.tool;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.melvinhou.kami.bean.FcEntity;
 import com.melvinhou.kami.net.BaseEntity;
 import com.melvinhou.kami.util.FcUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * ===============================================
@@ -26,27 +30,38 @@ import io.reactivex.ObservableOnSubscribe;
  */
 public class AssetsUtil {
 
-    public static <T, E extends BaseEntity<T>> Observable<E> loadData(String fileName) {
-        return Observable.create((ObservableOnSubscribe<E>) emitter -> {
-            Gson gson = new Gson();
-            TypeToken<E> typeToken = new TypeToken<E>() {
-            };
-            E entity = gson.fromJson(readText(fileName), typeToken.getType());
-            emitter.onNext(entity);
-            emitter.onComplete();
-        });
+    public static <T> Observable<FcEntity<T>> loadData(String filePath, Type... elementClass) {
+        return Observable.create((ObservableOnSubscribe<FcEntity<T>>) emitter -> {
+                    Gson gson = new Gson();
+                    String json = readText(filePath);
+                    TypeToken typeToken =null;
+                    for (Type rawType : elementClass){
+                        if (typeToken!=null){
+                            Type type = typeToken.getType();
+                            typeToken = TypeToken.getParameterized(rawType, type);
+                        }else {
+                            typeToken = TypeToken.get(rawType);
+                        }
+                    }
+                    typeToken = TypeToken.getParameterized(FcEntity.class, typeToken.getType());
+                    FcEntity<T> entity = gson.fromJson(json, typeToken.getType());
+                    emitter.onNext(entity);
+                    emitter.onComplete();
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
      * 读取assets下的txt文件，返回utf-8 String
      *
-     * @param fileName 包括后缀
+     * @param filePath 包括后缀
      * @return
      */
-    public static String readText(String fileName) {
+    public static String readText(String filePath) {
         String text = null;
         try {
-            InputStream is = FcUtils.getContext().getAssets().open(fileName);
+            InputStream is = FcUtils.getContext().getAssets().open(filePath);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);

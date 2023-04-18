@@ -1,5 +1,6 @@
 package com.melvinhou.medialibrary.music.ui;
 
+import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.ActivityOptions;
@@ -7,11 +8,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.os.Build;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
@@ -35,6 +38,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.lifecycle.MutableLiveData;
@@ -60,6 +64,14 @@ import androidx.recyclerview.widget.RecyclerView.ItemDecoration;
 public class FcMusicListActivity extends BaseActivity {
 
     private static final String TAG = FcMusicListActivity.class.getSimpleName();
+    /**
+     * 从Android 10 开始，应用即使申请了权限，也只能读写自己外部存储的私有目录，
+     * 就是Android/data/对应应用包名下的相关目目录。
+     * 除此之外任何目录的读写都会被拒绝，并提示android Permission denied。
+     * 需要在AndroidManifest.xml 文件中，在application标签中添加如下属性 android:requestLegacyExternalStorage="true"
+     */
+    private static final String[] REQUIRED_PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE};
+    private static final String[] REQUIRED_PERMISSIONS_33 = {Manifest.permission.READ_MEDIA_AUDIO};
 
     private ImageView mCoverView, mPlayerCoverView;
     private TextView mPlayerName, mPlayerSub;
@@ -124,9 +136,10 @@ public class FcMusicListActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        provideMusicServiceConnection().transportControls.pause();
+        if (isPlaying) provideMusicServiceConnection().transportControls.pause();
         String mediaId = provideMusicServiceConnection().rootMediaId;
-        provideMusicServiceConnection().unsubscribe(mediaId, null);
+        if (!TextUtils.isEmpty(mediaId))
+            provideMusicServiceConnection().unsubscribe(mediaId, null);
         FcMusicConnection.disconnect();
     }
 
@@ -168,7 +181,21 @@ public class FcMusicListActivity extends BaseActivity {
     }
 
     @Override
+    protected void onPermissionGranted(int requestCode) {
+        super.onPermissionGranted(requestCode);
+        //权限申请成功
+        initData();
+    }
+
+    @Override
     protected void initData() {
+        String[] permissions = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                ? REQUIRED_PERMISSIONS_33 : REQUIRED_PERMISSIONS;
+        // 请求音乐播放权限
+        if (!checkPermission(permissions)) {
+            requestPermissions(permissions);
+            return;
+        }
         provideMusicServiceConnection().nowPlaying.observe(this, new Observer<MediaMetadataCompat>() {
             @Override
             public void onChanged(MediaMetadataCompat mediaMetadataCompat) {

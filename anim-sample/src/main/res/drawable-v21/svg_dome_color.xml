@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="240dp"
+    android:height="240dp"
+    android:viewportHeight="1024"
+    android:viewportWidth="1024">
+<path
+    android:name="dome"
+    android:strokeWidth="20"
+    android:fillType="evenOdd"
+    android:strokeColor="#ff0"
+    android:fillColor="#595"
+    android:pathData="
+        M0,0
+        L1024,250
+        V720
+        H720
+        L360,1024
+        A360,360 0,0,0,0,500
+        z"
+    />
+</vector>

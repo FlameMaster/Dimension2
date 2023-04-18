@@ -89,19 +89,24 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends Recy
 //        notifyItemInserted(start);
     }
 
-    /**添加数据到前排*/
-    public void addTopData(T data) {
+
+    /*添加数据到前排*/
+    public void addData(int index, T data) {
         if (data == null) return;
-        mDatas.add(0, data);
-        notifyItemInserted(getHeadSize());
+        mDatas.add(index, data);
+        notifyItemInserted(getHeadSize() + index);
     }
 
 
-    /**删除一个*/
+    /*删除一个*/
     public void removedData(int position) {
         if (position >= 0 && position < getDatas().size()) {
             getDatas().remove(position);
-            notifyItemRemoved(getHeadSize() + position);
+            int start = getHeadSize() + position;
+            int end = getHeadSize() + getDatasSize() + getTailSize();
+            notifyItemRemoved(start);
+            if (end >= 0)
+                notifyItemRangeChanged(start, end - start);
         }
     }
 

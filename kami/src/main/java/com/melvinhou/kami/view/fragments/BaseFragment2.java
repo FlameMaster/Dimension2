@@ -6,24 +6,19 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.Pair;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.melvinhou.kami.R;
-import com.melvinhou.kami.view.activities.BaseActivity2;
 import com.melvinhou.kami.net.RequestState;
 import com.melvinhou.kami.net.ResultState;
-import com.melvinhou.kami.view.interfaces.BaseView;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
+import com.melvinhou.kami.view.interfaces.BaseView;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -42,10 +37,6 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
  * ================================================
  */
 public abstract class BaseFragment2 extends BaseFragment implements BaseView {
-
-    private Toolbar mToolbar;
-    /*工具栏菜单*/
-    private Menu mMenu;
     /*进度条view*/
     private View mLoadingView;
     /*是否在加载中*/
@@ -64,64 +55,6 @@ public abstract class BaseFragment2 extends BaseFragment implements BaseView {
     public void onDestroy() {
         super.onDestroy();
         hideLoadingView();
-    }
-
-    /**
-     * toolbar的菜单
-     *
-     * @return 菜单栏资源id
-     */
-    protected int upBarMenuID() {
-        return -1;
-    }
-
-    @Override
-    protected void initActionBar() {
-        mToolbar = getRootView().findViewById(R.id.bar);
-        if (mToolbar != null) {
-//            mToolbar.setTitle("标题");
-//            mToolbar.inflateMenu(R.menu.menu_add);
-//            setTitleCenter(mToolbar);
-//            mToolbar.setNavigationIcon(R.drawable.ic_bar_back);
-            if (upBarMenuID() > 0) {
-                mToolbar.inflateMenu(upBarMenuID());
-                mMenu = mToolbar.getMenu();
-                if (mMenu != null) {
-                    initMenu(mMenu);
-                    for (int i = 0; i < mMenu.size(); i++) {
-                        mMenu.getItem(i).setOnMenuItemClickListener(item -> onOptionsItemSelected(item));
-                    }
-                }
-            }
-            mToolbar.setNavigationOnClickListener(v -> backward());
-            mToolbar.setOnMenuItemClickListener(this::onOptionsItemSelected);
-        }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        mMenu = menu;
-        int barMenuID = upBarMenuID();
-        if (barMenuID > 0) {
-            menu.clear();
-            inflater.inflate(barMenuID, menu);
-            initMenu(menu);
-        }
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    protected void initMenu(Menu menu) {
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                backward();
-                break;
-            default:
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 //*******************弹窗*******************************//
@@ -251,14 +184,11 @@ public abstract class BaseFragment2 extends BaseFragment implements BaseView {
 
     @Override
     public void emptyClick() {
-        BaseActivity2 activity = getAct();
-        if (activity != null)
-            activity.emptyClick();
     }
 
     @Override
     public void backward() {
-
+        super.backward();
     }
 
     @Override

@@ -157,7 +157,7 @@ public class VideoActivity2 extends BaseActivity {
 
         //置于状态栏下
         ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) mVideoShade.getLayoutParams();
-        lp.topMargin = DimenUtils.getStatusHeight();
+        lp.topMargin = DimenUtils.getStatusBarHeight();
         mVideoShade.setLayoutParams(lp);
     }
 

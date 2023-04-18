@@ -193,7 +193,7 @@ public class FcVideoActivity extends BaseActivity {
         mTitle = findViewById(R.id.video_title);
 
         //前置遮罩置于状态栏下
-        mBarLayout.setPadding(0, DimenUtils.getStatusHeight(), 0, 0);
+        mBarLayout.setPadding(0, DimenUtils.getStatusBarHeight(), 0, 0);
         if (mVidoeLayout != null) {
             mVidoeLayout.showController();
             mVideoControllerUIListener.onShowControllerUI();

@@ -1,0 +1,63 @@
+{
+  "code": 200,
+  "data": {
+    "id": 1,
+    "title": "【测试】视频播放测试合集",
+    "explain": "用于测试使用。",
+    "user": {
+      "profile": "少年曾经说过，我从红尘走过，只为繁华中寻你，与我同乐。",
+      "nick_name": "江湖人称风尘子",
+      "head_picture": "https://i0.hdslb.com/bfs/face/59d7b014964dc31af6fbf319881f6231777f5f13.jpg"
+    },
+    "list": [
+      {
+        "id": 1,
+        "title": "mihoyo:CG集锦",
+        "list": [
+          {
+            "id": 1203,
+            "title": "崩坏3动画短片",
+            "url": "https://webstatic.bh3.com/video/bh3.com/pv/CG_OP_1800.mp4"
+          },
+          {
+            "id": 120,
+            "title": "岩王帝君-钟离",
+            "url": "https://uploadstatic.mihoyo.com/hk4e/upload/officialsites/202012/zhongli_gameplayPV_final_V3_fix.mp4",
+            "type": 1,
+            "status": 1
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "网易游戏:阴阳师",
+        "list": [
+          {
+            "id": 211,
+            "title": "鬼切动画短片",
+            "url": "https://yys.v.netease.com/2018/0725/ebefc466c32aa2c40aede8207956aae8qt.mp4"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "直播间:央视",
+        "list": [
+          {
+            "id": 306,
+            "title": "cctv6高清",
+            "url": "http://ivi.bupt.edu.cn/hls/cctv6phd.m3u8"
+          },
+          {
+            "id": 305,
+            "title": "cctv5-体育频道",
+            "url": "http://ivi.bupt.edu.cn/hls/cctv5phd.m3u8",
+            "type": 1
+          }
+        ]
+      }
+    ]
+  },
+  "date": 0,
+  "message": "欢迎使用二刺猿"
+}

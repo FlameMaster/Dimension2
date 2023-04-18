@@ -114,7 +114,7 @@ public class Test3View extends ViewGroup implements NestedScrollingParent2 {
         //主容器
         maxDownSideHeight = DimenUtils.dp2px(200);
         mSideContainerInitialTop = DimenUtils.dp2px(240);
-        mSideContainerZeroTop = DimenUtils.getStatusHeight() + DimenUtils.getActionBarSize();
+        mSideContainerZeroTop = DimenUtils.getStatusBarHeight() + DimenUtils.getActionBarSize();
         mSideContainerMinTop = mSideContainerZeroTop;
         mSideContainerTop = mSideContainerInitialTop;
     }

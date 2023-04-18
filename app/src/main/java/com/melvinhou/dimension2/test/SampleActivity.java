@@ -37,13 +37,12 @@ public class SampleActivity extends BaseActivity2 {
         String uri = "https://uploadstatic.mihoyo.com/hk4e/upload/officialsites/202012/zhongli_gameplayPV_final_V3_fix.mp4";
         uri = "https://webstatic.bh3.com/video/bh3.com/pv/CG_OP_1800.mp4";
         IjkVideoView videoView =findViewById(R.id.video1);
-//        videoView.setVideoPath(uri);
-//        videoView.getController().start();
+        videoView.setVideoPath(uri);
+        videoView.getController().start();
 
-        uri = "content://com.android.externalstorage.documents/tree/primary%3ADCIM%2FScreenRecorder/document/primary%3ADCIM%2FScreenRecorder%2FScreenrecorder-2023-02-15-17-52-59-31.mp4";
         FcVideoView videoView2 =findViewById(R.id.video2);
-//        videoView2.setVideoURI(Uri.parse(uri));
-//        videoView2.start();
+        videoView2.setVideoURI(Uri.parse(uri));
+        videoView2.start();
         videoView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

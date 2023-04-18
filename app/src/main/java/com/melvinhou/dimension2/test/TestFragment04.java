@@ -1,23 +1,26 @@
 package com.melvinhou.dimension2.test;
 
-import android.content.Intent;
-import android.media.MediaRecorder;
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.FragmentTest04Binding;
-import com.melvinhou.dimension2.media.animation.SvgAnimationActivity;
 import com.melvinhou.kami.adapter.RecyclerAdapter;
 import com.melvinhou.kami.adapter.RecyclerHolder;
+import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.mvvm.BaseViewModel;
 import com.melvinhou.kami.mvvm.BindFragment;
+import com.melvinhou.kami.util.FcUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
 
 /**
  * ===============================================
@@ -45,12 +48,18 @@ public class TestFragment04 extends BindFragment<FragmentTest04Binding, BaseView
     }
 
 
+    private RecyclerAdapter adapter;
+    private int page = 1;//页码
+    private boolean isMoreHas = true;//是否有更多
+
     @Override
     protected void initView() {
 
-        RecyclerAdapter adapter = new RecyclerAdapter<String, RecyclerHolder>() {
+        adapter = new RecyclerAdapter<String, RecyclerHolder>() {
             @Override
             public void bindData(RecyclerHolder viewHolder, int position, String data) {
+                TextView tv = viewHolder.itemView.findViewById(R.id.user_name);
+                tv.setText("位置：" + data);
             }
 
             @Override
@@ -65,43 +74,63 @@ public class TestFragment04 extends BindFragment<FragmentTest04Binding, BaseView
         };
         mBinding.listView.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.listView.setAdapter(adapter);
-        for (int i = 0; i < 10; i++)
-            adapter.addData("");
-        adapter.notifyDataSetChanged();
     }
 
     @Override
     protected void initListener() {
-        mBinding.root.setSwipeListener(new Test4View.SwipeListener() {
+        mBinding.root.setSwipeListener(new NestedSwipeLayout.SwipeListener() {
             @Override
             public void onRefresh() {
-                toActivity(new Intent(getContext(), SvgAnimationActivity.class));
-                mBinding.root.startTop2Original();
+                FcUtils.showToast("刷新数据~");
+                page = 1;
+                loadData();
+            }
+
+            @Override
+            public void onContinue() {
+                if (isMoreHas) {
+                    FcUtils.showToast(page + "/加载更多~");
+                    page++;
+                    loadData();
+                }
             }
         });
     }
 
     @Override
     protected void initData() {
-
+        page = 1;
+        loadData();
     }
 
-    private MediaRecorder mediaRecorder = new MediaRecorder();
-    private File audioFile;
-    private boolean isRecording = false;
-    public void recorder_Media(){
-        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        try {
-            audioFile = File.createTempFile("recording",".3gp",getContext().getCacheDir());
-            mediaRecorder.setOutputFile(audioFile.getAbsolutePath());
-            mediaRecorder.prepare();
-            mediaRecorder.start();
-            isRecording = true;
-        } catch (IOException e) {
-            e.printStackTrace();
+    @SuppressLint("CheckResult")
+    private void loadData() {
+        Observable.create((ObservableOnSubscribe<List<String>>) emitter -> {
+                    List<String> list = loadData(page, 10);
+                    emitter.onNext(list);
+                    emitter.onComplete();
+                })
+                .compose(IOUtils.setThread())
+                .subscribe(list -> {
+                    if (page == 1) {
+                        mBinding.root.finishTop();
+                        adapter.clearData();
+                        isMoreHas = true;
+                    }
+                    adapter.addDatas(list);
+                    if (list == null || list.isEmpty()) {
+                        isMoreHas = false;
+                    }
+                });
+    }
+
+    private List<String> loadData(int p, int size) {
+        List<String> list = new ArrayList<>();
+        if (p < 4) {
+            for (int i = 0; i < size; i++)
+                list.add(String.valueOf(p * size + i));
         }
+        return list;
     }
 
 }

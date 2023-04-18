@@ -3,16 +3,19 @@ package com.melvinhou.kami.view.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.melvinhou.kami.R;
-import com.melvinhou.kami.view.activities.BaseActivity2;
+import com.melvinhou.kami.util.DimenUtils;
+import com.melvinhou.kami.view.activities.BaseActivity;
 import com.melvinhou.kami.view.dialog.DialogCheckBuilder;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 /**
@@ -30,6 +33,9 @@ import androidx.fragment.app.Fragment;
  */
 public abstract class BaseFragment extends Fragment {
 
+    private Toolbar mToolbar;
+    //工具栏菜单
+    private Menu mMenu;
     //根布局
     private View mRootView;
 
@@ -81,21 +87,53 @@ public abstract class BaseFragment extends Fragment {
      * 一般是act不带工具栏，由fgt携带
      */
     protected void initActionBar() {
-        Toolbar toolbar = getRootView().findViewById(R.id.bar);
-        if (toolbar != null && getActivity() instanceof AppCompatActivity) {
-            setHasOptionsMenu(true);
-            AppCompatActivity activity = (AppCompatActivity) getActivity();
-            //初始bar
-//            activity.setSupportActionBar(toolbar);
-            // 给左上角图标的左边加上一个返回的图标，ActionBar.DISPLAY_HOME_AS_UP
-            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            //使左上角图标可点击，对应id为android.R.id.home，ActionBar.DISPLAY_SHOW_HOME
-            activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
-            // 使自定义的普通View能在title栏显示，即actionBar.setCustomView能起作用,ActionBar.DISPLAY_SHOW_CUSTOM
-            activity.getSupportActionBar().setDisplayShowCustomEnabled(true);
-            // Toolbar自有的Title,ActionBar.DISPLAY_SHOW_TITLE
-            activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mToolbar = getRootView().findViewById(R.id.bar);
+        if (mToolbar != null) {
+//            mToolbar.setTitle("标题");
+//            mToolbar.inflateMenu(R.menu.menu_add);
+//            setTitleCenter(mToolbar);
+//            mToolbar.setNavigationIcon(R.drawable.ic_bar_back);
+            if (upBarMenuID() > 0) {
+                mToolbar.inflateMenu(upBarMenuID());
+                mMenu = mToolbar.getMenu();
+                if (mMenu != null) {
+                    initMenu(mMenu);
+                    for (int i = 0; i < mMenu.size(); i++) {
+                        mMenu.getItem(i).setOnMenuItemClickListener(item -> onOptionsItemSelected(item));
+                    }
+                }
+            }
+            mToolbar.setNavigationOnClickListener(v -> backward());
+            mToolbar.setOnMenuItemClickListener(this::onOptionsItemSelected);
         }
+        //状态栏高度
+        View barLayout = getRootView().findViewById(R.id.bar_root);
+        if (barLayout instanceof ConstraintLayout){
+            barLayout.setPadding(0, DimenUtils.getStatusBarHeight(),0,0);
+        }
+    }
+
+    /**
+     * toolbar的菜单
+     *
+     * @return 菜单栏资源id
+     */
+    protected int upBarMenuID() {
+        return -1;
+    }
+
+    protected void initMenu(Menu menu) {
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                backward();
+                break;
+            default:
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -104,10 +142,10 @@ public abstract class BaseFragment extends Fragment {
      *
      * @return
      */
-    protected BaseActivity2 getAct() {
+    protected BaseActivity getAct() {
         Activity activity = getActivity();
-        if (activity instanceof BaseActivity2)
-            return (BaseActivity2) activity;
+        if (activity instanceof BaseActivity)
+            return (BaseActivity) activity;
         return null;
     }
 
@@ -121,29 +159,32 @@ public abstract class BaseFragment extends Fragment {
 //*******************弹窗*******************************//
 
     protected void showCheckView(DialogCheckBuilder builder) {
-        BaseActivity2 activity = getAct();
+        BaseActivity activity = getAct();
         if (activity != null)
             activity.showCheckView(builder);
     }
 
     protected void hideCheckView() {
-        BaseActivity2 activity = getAct();
+        BaseActivity activity = getAct();
         if (activity != null)
             activity.hideCheckView();
     }
 
     public void showProcess(String message) {
 
-        BaseActivity2 activity = getAct();
+        BaseActivity activity = getAct();
         if (activity != null)
             activity.showProcess(message);
     }
 
     public void hideProcess() {
-        BaseActivity2 activity = getAct();
+        BaseActivity activity = getAct();
         if (activity != null)
             activity.hideProcess();
     }
 
 
+    public void backward() {
+        requireActivity().finish();
+    }
 }

@@ -65,6 +65,16 @@
     </style>
 
 
+    <style name="Animation.Dialog.Bottom" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/anim_page_bottom_enter</item>
+        <item name="android:windowExitAnimation">@anim/anim_page_bottom_exit</item>
+    </style>
+    <style name="Animation.Dialog.Center" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/anim_page_center_enter</item>
+        <item name="android:windowExitAnimation">@anim/anim_page_center_exit</item>
+    </style>
+
+
     <style name="KamiPopup" parent="@style/ThemeOverlay.AppCompat.Light">
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:background">@color/transparent</item>

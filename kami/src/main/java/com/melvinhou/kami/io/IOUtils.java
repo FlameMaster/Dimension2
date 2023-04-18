@@ -10,7 +10,10 @@ import android.os.Environment;
 
 import com.melvinhou.kami.util.FcUtils;
 
+import java.io.BufferedReader;
 import java.io.Closeable;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -142,5 +145,37 @@ public class IOUtils {
                 ((ip >> 8) & 0xFF) + "." +
                 ((ip >> 16) & 0xFF) + "." +
                 (ip >> 24 & 0xFF);
+    }
+
+
+    /**
+     * 简单的网络请求
+     * @param path
+     * @return
+     */
+    public static String requestGet(String path) {
+        BufferedReader reader = null;
+        String result = null;
+        StringBuffer sbf = new StringBuffer();
+        try {
+            URL url = new URL(path);
+            HttpURLConnection connection = (HttpURLConnection) url
+                    .openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+            InputStream is = connection.getInputStream();
+            reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            String strRead = null;
+            while ((strRead = reader.readLine()) != null) {
+                sbf.append(strRead);
+                sbf.append("\r\n");
+            }
+            reader.close();
+            result = sbf.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            return result;
+        }
     }
 }

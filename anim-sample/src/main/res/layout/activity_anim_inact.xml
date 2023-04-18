@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    >
+    <include
+        android:id="@id/bar_root"
+        layout="@layout/inset_bar" />
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:src="@mipmap/default_cover"
+        android:scaleType="fitXY"
+        android:layout_margin="20dp"
+        android:transitionName="fc"
+        />
+
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph = "@navigation/navigation_anim_interaction"
+        android:layout_margin="20dp"
+        />
+<!--    等于true时，会成为层层返回形式的fragment-->
+<!--    app:defaultNavHost="true"-->
+
+
+</LinearLayout>

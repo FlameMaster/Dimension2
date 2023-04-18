@@ -2,16 +2,12 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
 }
-//当前gradle的配置引用
-ext {
-    minSdkVersion = 24
-}
 
 android {
     compileSdk global_config.compileSdkVersion
 
     defaultConfig {
-        minSdk minSdkVersion
+        minSdk 23
         targetSdk global_config.targetSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -29,6 +25,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 }
 

@@ -6,7 +6,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
@@ -16,7 +15,6 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 
 import com.melvinhou.medialibrary.R;
-import com.melvinhou.medialibrary.video.FcVideoActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -117,7 +115,7 @@ public class FcMusicNotificationManager {
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
 
-                //自定义时间
+        //自定义时间
 //                .setWhen(SystemClock.currentThreadTimeMillis())
 //                .setShowWhen(false)
 
@@ -150,17 +148,19 @@ public class FcMusicNotificationManager {
 
                     // 当用户单击通知时触发的意图。
 //                    .setContentIntent(controller.getSessionActivity())
-                    .setContentIntent(createContentIntent())
+                    .setContentIntent(createContentIntent());
 
-                    // 利用MediaStyle的特性
-                    .setStyle(new MediaStyle()
-                            .setMediaSession(mediaSession.getSessionToken())
-                            .setShowActionsInCompactView(0, 1, 2)//紧凑ui时显示哪几个button
-
-                            // 添加取消按钮,向后兼容Android L和更早
-                            .setShowCancelButton(true)
-                            .setCancelButtonIntent(MediaButtonReceiver.buildMediaButtonPendingIntent(mContext,
-                                    PlaybackStateCompat.ACTION_STOP)));
+            // 利用MediaStyle的特性
+            MediaStyle style = new MediaStyle()
+                    .setMediaSession(mediaSession.getSessionToken())
+                    .setShowActionsInCompactView(0, 1, 2)//紧凑ui时显示哪几个button
+                    // 添加取消按钮,向后兼容Android L和更早
+                    .setShowCancelButton(true)
+                    .setCancelButtonIntent(MediaButtonReceiver.buildMediaButtonPendingIntent(mContext,
+                            PlaybackStateCompat.ACTION_STOP));
+            //紧凑ui时显示哪几个button
+            if (state.getCustomActions().size() > 2) style.setShowActionsInCompactView(0, 1, 2);
+            mBuilder.setStyle(style);
 
             //按钮
             mBuilder.clearActions();

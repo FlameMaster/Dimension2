@@ -54,7 +54,7 @@ public class FcMusicConnection {
     }
 
     public static synchronized void disconnect() {
-        if (instance != null) {
+        if (instance != null && instance.mediaController != null) {
             instance.mediaController.unregisterCallback(instance.mediaControllerCallback);
             if (instance.mediaBrowser != null && instance.mediaBrowser.isConnected()) {
                 instance.mediaBrowser.disconnect();

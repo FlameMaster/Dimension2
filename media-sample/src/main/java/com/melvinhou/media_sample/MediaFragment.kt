@@ -1,25 +1,30 @@
 package com.melvinhou.media_sample
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Rect
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.AbsoluteSizeSpan
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.melvinhou.kami.adapter.BindRecyclerAdapter
-import com.melvinhou.kami.bean.FcEntity
 import com.melvinhou.kami.databinding.LayoutListBinding
 import com.melvinhou.kami.mvvm.BindFragment
 import com.melvinhou.kami.util.DimenUtils
 import com.melvinhou.kami.util.FcUtils
+import com.melvinhou.knight.loadImage
+import com.melvinhou.media_sample.bean.MediaItemEntity
 import com.melvinhou.media_sample.databinding.ItemMediaBinding
 import com.melvinhou.media_sample.databinding.ItemMediaTabBinding
-import io.reactivex.Observable
 
 
 /**
@@ -50,6 +55,7 @@ class MediaFragment : BindFragment<LayoutListBinding, MediaViewModel>() {
     }
 
     private lateinit var mParentAdapter: ParentAdapter
+
     //屏幕旋转监听的参数
     private var mSensorManager: SensorManager? = null
     private var mSensor: Sensor? = null
@@ -101,7 +107,7 @@ class MediaFragment : BindFragment<LayoutListBinding, MediaViewModel>() {
                 child.getLocationInWindow(location) //获取在当前窗口内的绝对坐标
 //                img.getLocationOnScreen(location);//获取在整个屏幕内的绝对坐标
 //                -height/2+getHeight()/2表示控件在屏幕中心的位置
-                var dy = (location[1] - DimenUtils.getActionBarSize() - DimenUtils.getStatusHeight()
+                var dy = (location[1] - DimenUtils.getActionBarSize() - DimenUtils.getStatusBarHeight()
                         + child.height / 2 - height / 2).toFloat()
                 //添加滑动比例
                 dy = dy * ratio
@@ -121,12 +127,10 @@ class MediaFragment : BindFragment<LayoutListBinding, MediaViewModel>() {
         //初始化重力感应
         initGravitySener()
         //
-        mParentAdapter.addData("")
-        mParentAdapter.addData("")
-        mParentAdapter.addData("")
-        mParentAdapter.addData("")
-        mParentAdapter.addData("")
-        mModel.fc()
+        mModel.getListData {
+            mParentAdapter.clearData()
+            mParentAdapter.addDatas(it)
+        }
     }
 
     override fun onStart() {
@@ -205,7 +209,7 @@ class MediaFragment : BindFragment<LayoutListBinding, MediaViewModel>() {
         )
     }
 
-    inner class ParentAdapter : BindRecyclerAdapter<String, ItemMediaBinding>() {
+    inner class ParentAdapter : BindRecyclerAdapter<MediaItemEntity, ItemMediaBinding>() {
 
         val decoration = DimenUtils.dp2px(8)
 
@@ -230,21 +234,40 @@ class MediaFragment : BindFragment<LayoutListBinding, MediaViewModel>() {
             return binding
         }
 
-        override fun bindData(binding: ItemMediaBinding, position: Int, data: String) {
+        override fun bindData(binding: ItemMediaBinding, position: Int, data: MediaItemEntity) {
+            binding.ivCover.loadImage(data.icon)
+            //标题
+            val builder = SpannableStringBuilder()
+            builder.append(data.title).append("\n")
+            val start = builder.length
+            builder.append(data.explain)
+            builder.setSpan(
+                AbsoluteSizeSpan(DimenUtils.sp2px(12)),
+                start,
+                builder.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            builder.setSpan(
+                ForegroundColorSpan(Color.parseColor("#DDDDDD")),
+                start, builder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            binding.tvTitle.text = builder
+            //列表
             val adapter = ChildAdapter()
             binding.rvTabs.adapter = adapter
-            adapter.addData("")
-            adapter.addData("")
-            adapter.addData("")
-            adapter.addData("")
-            adapter.addData("")
-            adapter.addData("")
+            adapter.addDatas(data.list)
+            adapter.setOnItemClickListener { viewHolder, position, data ->
+                mModel.toPage(data.id) {
+                    if (it.component != null)
+                        toActivity(it)
+                }
+            }
         }
 
 
     }
 
-    inner class ChildAdapter : BindRecyclerAdapter<String, ItemMediaTabBinding>() {
+    inner class ChildAdapter : BindRecyclerAdapter<MediaItemEntity, ItemMediaTabBinding>() {
 
         override fun getViewBinding(
             inflater: LayoutInflater,
@@ -254,8 +277,9 @@ class MediaFragment : BindFragment<LayoutListBinding, MediaViewModel>() {
             return binding
         }
 
-        override fun bindData(binding: ItemMediaTabBinding, position: Int, data: String) {
-
+        override fun bindData(binding: ItemMediaTabBinding, position: Int, data: MediaItemEntity) {
+            binding.ivCover.loadImage(data.icon)
+            binding.tvTitle.text = data.title
         }
 
 

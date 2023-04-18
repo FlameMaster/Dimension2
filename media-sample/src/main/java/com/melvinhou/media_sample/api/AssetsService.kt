@@ -65,7 +65,7 @@ class AssetsService {
                     }
                     //获取注解
                     val path = method.getAnnotation(AssetsPath::class.java)?.value
-                    //method=AssetsApi.getMediaList()/path=test_media_list.json
+                    //method=AssetsApi.getMediaList()/path=sample_media_list.json
                     //type=Observable/returnType=Observable<FcEntity<ArrayList<MediaItemEntity>>>
                     return loadAssetsData(path, TypeToken.get(entityType))
                 }

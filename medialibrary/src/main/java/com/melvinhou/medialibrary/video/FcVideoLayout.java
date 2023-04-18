@@ -53,7 +53,7 @@ public class FcVideoLayout extends ConstraintLayout {
 
     //布局所有控件
     private View mLoadingView, mForegroundView, mControllerGroup;
-    private TextView mCurrentPositionText, mDurationText,mMessageView;
+    private TextView mCurrentPositionText, mDurationText, mMessageView;
     private SeekBar mProgressBar;
     private FcVideoView mVideoView;
     private ImageView mPlayButton, mFullScreenButton, mBackgroundView;
@@ -153,12 +153,12 @@ public class FcVideoLayout extends ConstraintLayout {
             }
         });
         //全屏
-        if (mFullScreenButton !=null) mFullScreenButton.setOnClickListener(new OnClickListener() {
+        if (mFullScreenButton != null) mFullScreenButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean isFull = !view.isSelected();
                 view.setSelected(isFull);
-                if (mVideoControllerUIListener!=null)
+                if (mVideoControllerUIListener != null)
                     mVideoControllerUIListener.onFullScreen(isFull);
             }
         });
@@ -172,7 +172,7 @@ public class FcVideoLayout extends ConstraintLayout {
         if (mForegroundView != null) mForegroundView.setVisibility(GONE);
         if (mControllerGroup != null) mControllerGroup.setVisibility(GONE);
         if (mPlayButton != null) mPlayButton.setVisibility(GONE);
-        if (mVideoControllerUIListener!=null)
+        if (mVideoControllerUIListener != null)
             mVideoControllerUIListener.onHideControllerUI();
     }
 
@@ -183,7 +183,7 @@ public class FcVideoLayout extends ConstraintLayout {
         if (mForegroundView != null) mForegroundView.setVisibility(VISIBLE);
         if (mControllerGroup != null) mControllerGroup.setVisibility(VISIBLE);
         if (mPlayButton != null && mVideoView.isPrepared()) mPlayButton.setVisibility(VISIBLE);
-        if (mVideoControllerUIListener!=null)
+        if (mVideoControllerUIListener != null)
             mVideoControllerUIListener.onShowControllerUI();
     }
 
@@ -253,7 +253,7 @@ public class FcVideoLayout extends ConstraintLayout {
     private IPlayer.OnCompletionListener mOnCompletionListener = new IPlayer.OnCompletionListener() {
         public void onCompletion(IPlayer mp) {
             //播放完
-            if (mPlayButton != null){
+            if (mPlayButton != null) {
                 mPlayButton.setVisibility(VISIBLE);
                 mPlayButton.setSelected(false);
             }
@@ -294,6 +294,11 @@ public class FcVideoLayout extends ConstraintLayout {
 
     public void setVideoControllerUIListener(VideoControllerUIListener l) {
         mVideoControllerUIListener = l;
+    }
+
+    public void setPlayerStateListener(FcVideoView.PlayerStateListener l) {
+        if (mVideoView != null)
+            mVideoView.setPlayerStateListener(l);
     }
 
 
@@ -409,10 +414,11 @@ public class FcVideoLayout extends ConstraintLayout {
 
     /**
      * 屏幕是否全屏
+     *
      * @param isFull
      */
-    public void  setFullScreen(boolean isFull){
-        if (mFullScreenButton!=null)
+    public void setFullScreen(boolean isFull) {
+        if (mFullScreenButton != null)
             mFullScreenButton.setSelected(isFull);
     }
 
@@ -420,9 +426,11 @@ public class FcVideoLayout extends ConstraintLayout {
     /**
      * 当前布局的ui变化监听
      */
-    public interface VideoControllerUIListener{
+    public interface VideoControllerUIListener {
         void onShowControllerUI();
+
         void onHideControllerUI();
+
         void onFullScreen(boolean isFull);
     }
 

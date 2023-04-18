@@ -64,7 +64,7 @@ class MediaListAdapter extends DataBindingRecyclerAdapter<MediaItemEntity, Media
 
     @Override
     public int getItemLayoutId(int viewType) {
-        return R.layout.item_media;
+        return R.layout.item_media2;
     }
 
     @Override

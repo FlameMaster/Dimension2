@@ -1,5 +1,6 @@
 package com.melvinhou.medialibrary.music.ui;
 
+import android.Manifest;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
@@ -59,6 +60,8 @@ import static androidx.media.MediaBrowserServiceCompat.BrowserRoot.EXTRA_RECENT;
  */
 public class FcMusicActivity extends BaseActivity {
     private static final String TAG = FcMusicActivity.class.getSimpleName();
+    private static final String[] REQUIRED_PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE};
+    private static final String[] REQUIRED_PERMISSIONS_33 = {Manifest.permission.READ_MEDIA_AUDIO};
 
     private ImageView mCoverView, mBackgroundView;
     private View mBarLayout, mPlayButton, mBackwardButton, mForwardButton;
@@ -107,7 +110,7 @@ public class FcMusicActivity extends BaseActivity {
 
         //
         mBarLayout.setBackground(null);
-        mBarLayout.setPadding(0, DimenUtils.getStatusHeight(), 0, 0);
+        mBarLayout.setPadding(0, DimenUtils.getStatusBarHeight(), 0, 0);
     }
 
     @Override
@@ -156,7 +159,21 @@ public class FcMusicActivity extends BaseActivity {
     }
 
     @Override
+    protected void onPermissionGranted(int requestCode) {
+        super.onPermissionGranted(requestCode);
+        //权限申请成功
+        initData();
+    }
+
+    @Override
     protected void initData() {
+        String[] permissions = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                ? REQUIRED_PERMISSIONS_33 : REQUIRED_PERMISSIONS;
+        // 请求音乐播放权限
+        if (!checkPermission(permissions)) {
+            requestPermissions(permissions);
+            return;
+        }
         //判断是否是需要初始化播放服务
         isOnlyMode = Boolean.FALSE.equals(provideMusicServiceConnection().isConnected.getValue());
         provideMusicServiceConnection().nowPlaying.observe(this, new Observer<MediaMetadataCompat>() {
@@ -263,9 +280,10 @@ public class FcMusicActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (isOnlyMode) {
-            provideMusicServiceConnection().transportControls.pause();
+            if (isPlaying) provideMusicServiceConnection().transportControls.pause();
             String mediaId = provideMusicServiceConnection().rootMediaId;
-            provideMusicServiceConnection().unsubscribe(mediaId, null);
+            if (!TextUtils.isEmpty(mediaId))
+                provideMusicServiceConnection().unsubscribe(mediaId, null);
             FcMusicConnection.disconnect();
         }
     }

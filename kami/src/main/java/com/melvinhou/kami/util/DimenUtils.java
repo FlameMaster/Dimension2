@@ -83,7 +83,7 @@ public class DimenUtils {
      *
      * @return
      */
-    public static int getStatusHeight() {
+    public static int getStatusBarHeight() {
         int result = 0;
         int resourceId = FcUtils.getContext().getResources().getIdentifier("status_bar_height", "dimen",
                 "android");

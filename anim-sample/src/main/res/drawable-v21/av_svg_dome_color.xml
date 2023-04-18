@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:drawable="@drawable/svg_dome_color"
+    tools:ignore="NewApi">
+    <target
+        android:animation="@animator/dome_svg_fillcolor"
+        android:name="dome"/>
+    <target
+        android:animation="@animator/dome_svg_strokecolor"
+        android:name="dome"/>
+</animated-vector>

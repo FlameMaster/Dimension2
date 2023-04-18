@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.melvinhou.dimension2.test.Test4View
+<com.melvinhou.dimension2.test.NestedSwipeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,6 +17,7 @@
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="15sp"
+        android:background="@drawable/round_dp8_s1"
         />
     <TextView
         android:id="@+id/bottom_swipe_view"
@@ -26,6 +27,7 @@
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="15sp"
+        android:background="@drawable/round_dp8_s1"
         />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -37,4 +39,4 @@
         />
 
 
-</com.melvinhou.dimension2.test.Test4View>
+</com.melvinhou.dimension2.test.NestedSwipeLayout>
