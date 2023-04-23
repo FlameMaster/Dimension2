@@ -15,6 +15,7 @@ public class FcLog {
     public static final int LOG_LEVEL_WARN = 5;
     public static final int LOG_LEVEL_ERROR = 6;
 
+
     /**
      * 打印INFO级别日志
      *
@@ -106,5 +107,8 @@ public class FcLog {
         Log.e(strTag, strInfo + " exception : " + Log.getStackTraceString(tr));
     }
 
-    protected static native void nativeWriteLog(int level, String fileName, String funcName, int line, String logContent);
+//    protected static native void nativeWriteLog(int level, String fileName, String funcName, int line, String logContent);
+    protected static void nativeWriteLog(int level, String fileName, String funcName, int line, String logContent){
+        Log.println(level,fileName,logContent);
+    }
 }

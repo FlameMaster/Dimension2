@@ -14,7 +14,8 @@ import com.melvinhou.knight.FragmentContainActivity
 import com.melvinhou.media_sample.api.AssetsService
 import com.melvinhou.media_sample.bean.MediaItemEntity
 import com.melvinhou.media_sample.live.LiveFragment
-import com.melvinhou.media_sample.screenrecord.ScreenRecordActivity
+import com.melvinhou.media_sample.record.audio.AudioRecordActivity
+import com.melvinhou.media_sample.record.screen.ScreenRecordActivity
 import com.melvinhou.media_sample.video.VideoPageActivity
 import com.melvinhou.medialibrary.music.ui.FcMusicActivity
 import com.melvinhou.medialibrary.music.ui.FcMusicListActivity
@@ -103,6 +104,9 @@ class MediaViewModel(application: Application) : BaseViewModel(application) {
             }
             440L->{
                 intent.setClass(getApplication(), AnimSvgActivity::class.java)
+            }
+            520L->{
+                intent.setClass(getApplication(), AudioRecordActivity::class.java)
             }
             550L->{
                 intent.setClass(getApplication(), ScreenRecordActivity::class.java)

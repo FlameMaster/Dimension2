@@ -1,4 +1,4 @@
-package com.melvinhou.media_sample.screenrecord
+package com.melvinhou.media_sample.record.screen
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -19,9 +19,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.melvinhou.kami.adapter.BindRecyclerAdapter
 import com.melvinhou.kami.util.DimenUtils
 import com.melvinhou.kami.util.FcUtils
+import com.melvinhou.kami.util.StringCompareUtils
 import com.melvinhou.knight.loadImage
 import com.melvinhou.media_sample.R
 import com.melvinhou.media_sample.databinding.ItemRecordVideoBinding
+import com.melvinhou.media_sample.record.RecordModel
 import com.melvinhou.medialibrary.record.SecreenRecordView
 import com.melvinhou.medialibrary.video.FcVideoActivity
 import java.io.File
@@ -55,7 +57,7 @@ class ScreenRecordActivity : SecreenRecordView() {
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.RECORD_AUDIO
     )
-    private lateinit var mModel: ScreenRecordModel
+    private lateinit var mModel: RecordModel
 
     //列表
     private var adapter: MyAdapter? = null
@@ -76,7 +78,7 @@ class ScreenRecordActivity : SecreenRecordView() {
 
     override fun initView() {
         findViewById<TextView>(R.id.title)?.text = "屏幕录制"
-        mModel = ViewModelProvider(this).get(ScreenRecordModel::class.java)
+        mModel = ViewModelProvider(this).get(RecordModel::class.java)
         mModel.register()
         mContainer = findViewById(R.id.container)
         initList()
@@ -135,7 +137,11 @@ class ScreenRecordActivity : SecreenRecordView() {
         //加载列表
         mModel.loadListData {
             adapter?.clearData()
-            adapter?.addDatas(it)
+//            adapter?.addDatas(it)
+            it.forEach {
+                if (StringCompareUtils.isVideoFile(it.name))
+                    adapter?.addData(it)
+            }
         }
     }
 

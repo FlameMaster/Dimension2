@@ -53,7 +53,7 @@ public class AudioPlayer {
     public void startRecord(Callback callback) {
         mRecordCallback = callback;
         try {
-            mAudioRecordPath = CURRENT_RECORD_FILE + System.currentTimeMillis() + ".m4a";
+            mAudioRecordPath = CURRENT_RECORD_FILE + FileUtils.getFileNameForDate() + ".m4a";
             mRecorder = new MediaRecorder();
             mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             // 使用mp4容器并且后缀改为.m4a，来兼容小程序的播放

@@ -1,12 +1,9 @@
-package com.melvinhou.media_sample.screenrecord
+package com.melvinhou.media_sample.record
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.os.Environment
 import com.melvinhou.kami.io.FileUtils
 import com.melvinhou.kami.mvvm.BaseViewModel
-import com.melvinhou.kami.util.ResourcesUtils
-import com.melvinhou.media_sample.R
 import com.melvinhou.media_sample.bean.*
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
@@ -29,7 +26,7 @@ import java.io.File
  * = 分 类 说 明：
  * ================================================
  */
-class ScreenRecordModel(application: Application) : BaseViewModel(application) {
+class RecordModel(application: Application) : BaseViewModel(application) {
 
 
     /**

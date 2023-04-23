@@ -265,6 +265,7 @@ public class StringCompareUtils {
     public static boolean isAudioFile(String path) {
         if (TextUtils.isEmpty(path)) return false;
         else if (path.toLowerCase().endsWith(".mp3")
+                | path.toLowerCase().endsWith(".m4a")
                 | path.toLowerCase().endsWith(".aac")
                 | path.toLowerCase().endsWith(".wav")
                 | path.toLowerCase().endsWith(".wma")) return true;

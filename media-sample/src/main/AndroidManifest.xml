@@ -16,7 +16,11 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"/>
         <activity
-            android:name=".screenrecord.ScreenRecordActivity"
+            android:name=".record.screen.ScreenRecordActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"/>
+        <activity
+            android:name=".record.audio.AudioRecordActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"/>
     </application>

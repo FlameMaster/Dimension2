@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <include
+        android:id="@id/bar_root"
+        layout="@layout/inset_bar" />
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipChildren="true"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:background="@color/app_bg"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="点击录制"
+        android:paddingTop="16dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textStyle="bold|italic"
+        />
+
+    <ImageView
+        android:id="@+id/bt_play"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:src="@drawable/selector_player_state_02"
+        app:tint="@color/red"
+        android:layout_gravity="center_horizontal"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text=""
+        android:paddingBottom="30dp"
+        android:gravity="center"
+        android:textSize="14sp"
+        />
+
+
+
+</LinearLayout>
