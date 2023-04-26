@@ -1,6 +1,7 @@
 package com.melvinhou.knight
 
 import android.text.TextUtils
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -74,11 +75,20 @@ fun TextView.showMobile(mobileStr: String?) {
  * 设置图片
  */
 fun ImageView.loadImage(path: String?) {
+    Log.d("图片加载","width=${width},height=${height}")
+    loadImage(path,width,height)
+}
+
+
+/**
+ * 设置图片
+ */
+fun ImageView.loadImage(path: String?, width: Int, height: Int) {
     Glide.with(FcUtils.getContext())
         .load(path)
         .apply(
             RequestOptions()
-                .override(480, 480)
+                .override(width, height)
                 .placeholder(R.drawable.img_placeholder)
                 .error(R.drawable.img_error)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

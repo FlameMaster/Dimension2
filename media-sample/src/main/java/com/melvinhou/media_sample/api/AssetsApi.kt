@@ -2,6 +2,7 @@ package com.melvinhou.media_sample.api
 
 import com.melvinhou.kami.bean.FcEntity
 import com.melvinhou.kami.io.AssetsPath
+import com.melvinhou.media_sample.bean.IllustrationEntity
 import com.melvinhou.media_sample.bean.MediaItemEntity
 import com.melvinhou.media_sample.bean.VideoPageEntity
 import io.reactivex.Observable
@@ -29,4 +30,8 @@ interface AssetsApi {
     //视频页面
     @AssetsPath("sample_video_page.json")
     fun getVideoPage(): Observable<FcEntity<VideoPageEntity>>
+
+    //插图列表
+    @AssetsPath("sample_illustration.json")
+    fun getIllustrationList(): Observable<FcEntity<IllustrationEntity.Group>>
 }

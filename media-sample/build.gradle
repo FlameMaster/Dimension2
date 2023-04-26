@@ -39,5 +39,6 @@ dependencies {
     api project(':kami')
     api project(':knight')
     api project(':medialibrary')
+    api project(':cameralibrary')
     api project(':anim-sample')
 }

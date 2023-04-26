@@ -21,6 +21,7 @@ import java.net.MalformedURLException;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.URL;
+import java.nio.ByteBuffer;
 import java.util.Enumeration;
 
 import io.reactivex.Observable;
@@ -44,6 +45,13 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class IOUtils {
+
+    public static byte[] toByteArray(ByteBuffer buffer) {
+        buffer.rewind();
+        byte[] data = new byte[buffer.remaining()];
+        buffer.get(data);
+        return data;
+    }
 
     /**
      * 关闭流

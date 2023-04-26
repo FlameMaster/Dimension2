@@ -7,3 +7,4 @@ include ':medialibrary'
 //实现
 include ':media-sample'
 include ':anim-sample'
+include ':cameralibrary'

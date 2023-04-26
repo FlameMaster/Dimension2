@@ -65,4 +65,8 @@ class FragmentContainActivity : BindActivity<ActivityFragmentContainBinding, Bas
 
     }
 
+    override fun backward() {
+        super.backward()
+    }
+
 }

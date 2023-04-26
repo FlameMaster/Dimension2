@@ -959,5 +959,15 @@ public class ImageUtils {
         }
     }
 
-
+    /**
+     * 获取view的截图
+     * @param view
+     * @return
+     */
+    public static Bitmap getViewScreenShot(View view){
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(),view.getHeight(), Bitmap.Config.RGB_565);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        return bitmap;
+    }
 }

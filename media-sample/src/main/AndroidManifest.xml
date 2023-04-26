@@ -12,17 +12,26 @@
             android:name=".MainActivity"
             android:exported="true"/>
         <activity
+            android:name=".photo.PhotoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name=".photo.PictureActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name=".camera.CameraSampleActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name=".camera.ScanSampleActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
             android:name=".video.VideoPageActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"/>
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity
             android:name=".record.screen.ScreenRecordActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"/>
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity
             android:name=".record.audio.AudioRecordActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"/>
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
     </application>
 
 </manifest>

@@ -173,12 +173,34 @@ public class PhotoCutterView extends AppCompatImageView {
     }
 
     /**
+     * 获取盒子边距
+     * @return
+     */
+    public float[] getCheckBoxMargin() {
+        return new float[]{mCheckLeft, mCheckTop, mCheckRight, mCheckBottom};
+    }
+
+    /**
+     * 获取盒子大小
+     * @return
+     */
+    public int getCheckBoxSize() {
+        return getWidth() - mCheckLeft.intValue() - mCheckRight.intValue();
+    }
+
+
+    /**
      * 设置图片查看模式
      *
      * @param mode
      */
     public void setGestureMode(int mode) {
         mGestureMode = mode;
+    }
+
+    //当前模式
+    public int getGestureMode() {
+        return mGestureMode;
     }
 
     /**
@@ -378,18 +400,6 @@ public class PhotoCutterView extends AppCompatImageView {
         getDrawingRect(mDrawableRect);//这个相当于获取控件绘制区域
         float showWidth = getMeasuredWidth();
         float showHeigh = getMeasuredHeight();
-        //保证精确测量
-        if (showWidth == 0 || showHeigh == 0) {
-            getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                public boolean onPreDraw() {
-                    initImageMatrix(imgWidth, imgHeight);
-                    //赋值结束后，移除该监听函数
-                    PhotoCutterView.this.getViewTreeObserver().removeOnPreDrawListener(this);
-                    return true;
-                }
-            });
-            return;
-        }
         mImageWidth = imgWidth;
         mImageHeight = imgHeight;
         float[] values = new float[9];
