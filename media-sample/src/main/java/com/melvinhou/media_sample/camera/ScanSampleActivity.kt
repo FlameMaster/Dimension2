@@ -3,6 +3,8 @@ package com.melvinhou.media_sample.camera
 import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Intent
+import android.net.Uri
 import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
@@ -13,16 +15,15 @@ import com.google.zxing.*
 import com.google.zxing.common.HybridBinarizer
 import com.google.zxing.maxicode.MaxiCodeReader
 import com.google.zxing.qrcode.QRCodeReader
-import com.melvinhou.cameralibrary.CameraActivity
+import com.melvinhou.cameralibrary.FcCameraActivity
 import com.melvinhou.cameralibrary.CameraXCustomTouchView
 import com.melvinhou.kami.io.IOUtils
 import com.melvinhou.kami.util.FcUtils
-import com.melvinhou.kami.util.ImageUtils
 import com.melvinhou.kami.util.ResourcesUtils
 import com.melvinhou.media_sample.R
 import io.reactivex.Observable
-import io.reactivex.Observer
 import io.reactivex.ObservableEmitter
+import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -41,7 +42,7 @@ import java.util.concurrent.TimeUnit
  * = 分 类 说 明：扫描仪
  * ================================================
  */
-class ScanSampleActivity : CameraActivity() {
+class ScanSampleActivity : FcCameraActivity() {
 
     private lateinit var touchView: CameraXCustomTouchView
     private lateinit var viewFinder: PreviewView
@@ -61,6 +62,7 @@ class ScanSampleActivity : CameraActivity() {
     override fun getLayoutID(): Int = R.layout.activity_scan_sample
 
     override fun initView() {
+        findViewById<TextView>(R.id.title)?.text = "二维码/条形码"
         viewFinder = findViewById(R.id.view_finder)
         touchView = findViewById(R.id.view_touch)
         focusView = findViewById(R.id.focus)
@@ -104,7 +106,7 @@ class ScanSampleActivity : CameraActivity() {
 //        return FileUtils.getDiskCacheDir("");
     }
 
-    override fun upSurfaceProvider(): SurfaceProvider {
+    override fun bindSurfaceProvider(): SurfaceProvider {
         return viewFinder.surfaceProvider
     }
 
@@ -116,16 +118,19 @@ class ScanSampleActivity : CameraActivity() {
         //判断
         if (TextUtils.isEmpty(text)) {
         } else if (text.contains("http://") || text.contains("https://")) {
-//            val intent = Intent(FcUtils.getContext(), WebActivity::class.java)
+            val intent = Intent()
+//            intent.setClass(FcUtils.getContext(), WebActivity::class.java)
 //            intent.putExtra("title", "扫描结果")
 //            intent.putExtra("url", text)
-//            startActivity(intent)
-//            finish()
+            intent.setAction("android.intent.action.VIEW")
+            intent.setData(Uri.parse(text))
+            startActivity(intent)
+            finish()
         } else {
-            val cm = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+            val cm = getSystemService(CLIPBOARD_SERVICE) as? ClipboardManager
             //            cm.setText(text);
             val clip = ClipData.newPlainText(text, text)
-            cm.setPrimaryClip(clip)
+            cm?.setPrimaryClip(clip)
             FcUtils.showToast("已复制扫描结果：$text")
             finish()
         }
@@ -133,7 +138,7 @@ class ScanSampleActivity : CameraActivity() {
 
     //图片分析回调
     @SuppressLint("CheckResult")
-    override fun upImageAnalyzer(): ImageAnalysis.Analyzer =
+    override fun bindImageAnalyzer(): ImageAnalysis.Analyzer =
         ImageAnalysis.Analyzer { image ->
             if (isAnalyzing) {
                 image.close()

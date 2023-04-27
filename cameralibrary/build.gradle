@@ -38,6 +38,7 @@ dependencies {
     def camerax_version = "1.1.0"
     api "androidx.camera:camera-camera2:1.1.0"
     api "androidx.camera:camera-lifecycle:$camerax_version"
+    api "androidx.camera:camera-video:$camerax_version"
     api "androidx.camera:camera-view:$camerax_version"
 //    implementation 'com.rmtheis:tess-two:9.1.0'//文字识别
     api 'com.google.zxing:core:3.4.0'//二维码识别

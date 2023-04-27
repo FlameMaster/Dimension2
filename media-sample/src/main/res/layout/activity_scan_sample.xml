@@ -9,6 +9,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <androidx.camera.view.PreviewView
         android:id="@+id/view_finder"
         android:layout_width="match_parent"
@@ -18,7 +19,6 @@
         android:id="@+id/view_touch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:elevation="1dp"
         />
 
     <View
@@ -28,7 +28,6 @@
         android:background="@drawable/fg_camera_focus"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:elevation="2dp"
         android:visibility="invisible"
         />
 
@@ -51,7 +50,7 @@
         app:layout_constraintBottom_toTopOf="@id/view_scan"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="#8000"
+        android:background="#8FFF"
         />
     <View
         android:layout_width="0dp"
@@ -60,12 +59,12 @@
         app:layout_constraintTop_toBottomOf="@id/view_scan"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="#8000"
+        android:background="#8FFF"
         />
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#8000"
+        android:background="#8FFF"
         app:layout_constraintTop_toTopOf="@id/view_scan"
         app:layout_constraintBottom_toBottomOf="@id/view_scan"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -74,7 +73,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#8000"
+        android:background="#8FFF"
         app:layout_constraintTop_toTopOf="@id/view_scan"
         app:layout_constraintBottom_toBottomOf="@id/view_scan"
         app:layout_constraintRight_toRightOf="parent"
@@ -96,5 +95,23 @@
         app:layout_constraintWidth_percent="0.5"
         />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/view_scan"
+        android:textColor="@color/red"
+        android:textSize="12sp"
+        android:padding="8dp"
+        android:text="*条形码需要竖直扫描"
+        />
+
+
+
+    <include
+        android:id="@id/bar_root"
+        layout="@layout/inset_bar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
