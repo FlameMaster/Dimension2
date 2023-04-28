@@ -84,8 +84,9 @@ class MediaViewModel(application: Application) : BaseViewModel(application) {
         val intent = Intent()
         when (id) {
             120L -> {
-                intent.setClass(getApplication(), FragmentContainActivity::class.java)
-                intent.putExtra("fragment", PictureFragment::class.java)
+                intent.setClass(getApplication(), PictureActivity::class.java)
+//                intent.setClass(getApplication(), FragmentContainActivity::class.java)
+//                intent.putExtra("fragment", PictureFragment::class.java)
 //                intent.putExtra("url", "https://i0.hdslb.com/bfs/album/d7cfc41b79f63852b48b5072e4ccb6fc65a81038.jpg")
             }
             130L -> {

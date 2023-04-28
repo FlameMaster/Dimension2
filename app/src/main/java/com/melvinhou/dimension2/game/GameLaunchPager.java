@@ -78,7 +78,7 @@ public class GameLaunchPager extends BaseListPager<GameLaunchItem, GameLaunchPag
 
     @Override
     protected int getItemLayoutID(int viewType) {
-        return R.layout.item_game_launch;
+        return R.layout.item_game_launch2;
     }
 
     @Override

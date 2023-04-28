@@ -2,12 +2,15 @@ package com.melvinhou.dimension2.media.music;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,7 +57,7 @@ public class MusicListActivity extends DataBindingActivity<ActMusicListBD> {
 
     private MusicAdapter mAdapter;
     private static final String URL_BACKGROUND
-            = HttpConstant.SERVER_RES +"image/background/music_background.jpg";
+            = HttpConstant.SERVER_RES + "image/background/music_background.jpg";
     private static final int REQUEST_CODE_PERMISSIONS = 21;
     /**
      * 从Android 10 开始，应用即使申请了权限，也只能读写自己外部存储的私有目录，
@@ -104,7 +107,7 @@ public class MusicListActivity extends DataBindingActivity<ActMusicListBD> {
         super.onDestroy();
         //停止音乐播放服务
         FcUtils.getContext().stopService(
-                new Intent(FcUtils.getContext(),MusicService.class));
+                new Intent(FcUtils.getContext(), MusicService.class));
     }
 
     /**
@@ -229,7 +232,7 @@ public class MusicListActivity extends DataBindingActivity<ActMusicListBD> {
         try {
             long id = Long.parseLong(mediaItem.getDescription().getMediaId());
             MediaBrowserHelper.getTransportControls().skipToQueueItem(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -248,8 +251,10 @@ public class MusicListActivity extends DataBindingActivity<ActMusicListBD> {
      * @param view
      */
     private void toMusicPlayer(View view) {
-        Intent intent = new Intent(FcUtils.getContext(), MusicPlayerActivity.class);
-        toActivity(getViewDataBinding().musicBottomCover, intent);
+        Bundle options = ActivityOptions
+                .makeSceneTransitionAnimation(this, Pair.create(view,"fc"))
+                .toBundle();
+        toActivity(MusicPlayerActivity.class, options);
     }
 
 

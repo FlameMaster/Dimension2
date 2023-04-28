@@ -265,20 +265,6 @@ public abstract class BaseActivity2 extends BaseActivity implements BaseView {
      */
     @Override
     public void toActivity(Intent intent) {
-        startActivity(intent);
-    }
-
-
-    public void toActivity(View view, Intent intent) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            Pair<View, String> p = new Pair<>(view, view.getTransitionName());
-            ActivityOptions activityOptions =
-                    ActivityOptions.makeSceneTransitionAnimation(this, p);
-            startActivityForResult(intent, 0, activityOptions.toBundle());
-//            ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
-//                    0, view.getWidth(), view.getHeight());
-//            startActivity(intent, options.toBundle());
-        } else
-            startActivityForResult(intent, 0);
+        super.toActivity(intent);
     }
 }

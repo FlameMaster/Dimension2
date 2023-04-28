@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_klotski"
+    >
+
+    <com.melvinhou.game.klotski.GameKlotskiLayout
+        android:id="@+id/chessboard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintDimensionRatio="H,4:5"
+        android:layout_margin="8dp"
+        android:elevation="2dp"
+        android:background="#aaa"
+        >
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.25"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/zhangfei"
+            android:foreground="@drawable/fg_klotski_frame"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_placeholder"
+            tools:ignore="ContentDescription"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/caocao"
+            android:foreground="@drawable/fg_klotski_frame"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_placeholder"
+            tools:ignore="ContentDescription"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.25"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/zhaoyun"
+            android:foreground="@drawable/fg_klotski_frame"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_placeholder"
+            tools:ignore="ContentDescription"
+            />
+
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.25"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/caocao"
+            android:id="@+id/machao"
+            android:foreground="@drawable/fg_klotski_frame"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_placeholder"
+            tools:ignore="ContentDescription"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toBottomOf="@id/caocao"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/guanyu"
+            android:foreground="@drawable/fg_klotski_frame"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_placeholder"
+            tools:ignore="ContentDescription"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.25"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintTop_toBottomOf="@id/caocao"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/huangzhong"
+            android:foreground="@drawable/fg_klotski_frame"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_placeholder"
+            tools:ignore="ContentDescription"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.25"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toBottomOf="@id/guanyu"
+            app:layout_constraintLeft_toLeftOf="@id/guanyu"
+            android:id="@+id/bin01"
+            android:foreground="@drawable/fg_klotski_frame"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_placeholder"
+            tools:ignore="ContentDescription"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.25"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toBottomOf="@id/guanyu"
+            app:layout_constraintRight_toRightOf="@id/guanyu"
+            android:id="@+id/bin02"
+            android:foreground="@drawable/fg_klotski_frame"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_placeholder"
+            tools:ignore="ContentDescription"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.25"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/bin03"
+            android:foreground="@drawable/fg_klotski_frame"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_placeholder"
+            tools:ignore="ContentDescription"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.25"
+            app:layout_constraintHeight_percent="0.2"
+            android:id="@+id/bin04"
+            android:foreground="@drawable/fg_klotski_frame"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_placeholder"
+            tools:ignore="ContentDescription"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:elevation="8dp"
+            android:background="@color/white"
+            />
+
+    </com.melvinhou.game.klotski.GameKlotskiLayout >
+
+    <View
+        android:id="@+id/door"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/chessboard"
+        android:background="@color/red"
+        android:elevation="10dp"
+        app:layout_constraintWidth_percent="0.5"
+        />
+
+    <TextView
+        android:id="@+id/count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="所用步数：6"
+        android:textSize="16sp"
+        android:textColor="@color/teal"
+        app:layout_constraintLeft_toLeftOf="@id/chessboard"
+        app:layout_constraintBottom_toTopOf="@id/chessboard"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="16dp"
+        />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="横刀立马"
+        android:textSize="32sp"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold|italic"
+        android:letterSpacing="0.2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/chessboard"
+        android:layout_marginRight="36dp"
+        android:layout_marginTop="24dp"
+        />
+
+
+    <TextView
+        android:id="@+id/door_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="出口"
+        android:textSize="16sp"
+        android:textColor="@color/red"
+        app:layout_constraintLeft_toLeftOf="@id/door"
+        app:layout_constraintRight_toRightOf="@id/door"
+        app:layout_constraintTop_toBottomOf="@id/door"
+        android:layout_marginTop="8dp"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

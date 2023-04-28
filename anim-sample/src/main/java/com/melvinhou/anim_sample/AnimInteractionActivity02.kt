@@ -40,16 +40,10 @@ class AnimInteractionActivity02 : BindActivity<ActivityAnimInact02Binding, BaseV
 
     override fun initListener() {
         mBinding.ivAnim01.setOnClickListener {
-            Intent().apply {
-                setClass(getApplication(), AnimInteractionActivity::class.java)
-                startActivity(
-                    this, ActivityOptions.makeSceneTransitionAnimation(
-                        this@AnimInteractionActivity02,
-                        Pair(it, "fc")
-                    )
-                        .toBundle()
-                );
-            }
+            val options = ActivityOptions
+                .makeSceneTransitionAnimation(this, Pair.create(it, "fc"))
+                .toBundle()
+            toActivity(AnimInteractionActivity::class.java, options)
         }
         //揭露动画
         mBinding.tvAnim02.setOnClickListener {
@@ -86,27 +80,48 @@ class AnimInteractionActivity02 : BindActivity<ActivityAnimInact02Binding, BaseV
         mBinding.tvAnim04.setOnClickListener {
             val isCheck = !it.isSelected
             it.isSelected = isCheck
-            if (isCheck){
+            if (isCheck) {
                 TransitionManager.beginDelayedTransition(mBinding.cl03);
                 set02.applyTo(mBinding.cl03);
-            }else{
+            } else {
                 val transition = AutoTransition()
                 transition.setDuration(500)
-                TransitionManager.beginDelayedTransition(mBinding.cl03,transition)
+                TransitionManager.beginDelayedTransition(mBinding.cl03, transition)
                 set01.applyTo(mBinding.cl03)
             }
         }
         mBinding.tvAnim05.setOnClickListener {
             val isCheck = !it.isSelected
             it.isSelected = isCheck
-            if (isCheck){
-                set01.connect(mBinding.v01.id,ConstraintSet.LEFT,mBinding.tv01.id,ConstraintSet.RIGHT,10)
-                set01.connect(mBinding.v01.id,ConstraintSet.TOP,mBinding.tv01.id,ConstraintSet.BOTTOM,)
+            if (isCheck) {
+                set01.connect(
+                    mBinding.v01.id,
+                    ConstraintSet.LEFT,
+                    mBinding.tv01.id,
+                    ConstraintSet.RIGHT,
+                    10
+                )
+                set01.connect(
+                    mBinding.v01.id,
+                    ConstraintSet.TOP,
+                    mBinding.tv01.id,
+                    ConstraintSet.BOTTOM
+                )
                 TransitionManager.beginDelayedTransition(mBinding.cl03);
                 set01.applyTo(mBinding.cl03);
-            }else{
-                set01.connect(mBinding.v01.id,ConstraintSet.RIGHT,mBinding.cl03.id,ConstraintSet.RIGHT)
-                set01.connect(mBinding.v01.id,ConstraintSet.TOP,mBinding.cl03.id,ConstraintSet.TOP)
+            } else {
+                set01.connect(
+                    mBinding.v01.id,
+                    ConstraintSet.RIGHT,
+                    mBinding.cl03.id,
+                    ConstraintSet.RIGHT
+                )
+                set01.connect(
+                    mBinding.v01.id,
+                    ConstraintSet.TOP,
+                    mBinding.cl03.id,
+                    ConstraintSet.TOP
+                )
                 TransitionManager.beginDelayedTransition(mBinding.cl03);
                 set01.applyTo(mBinding.cl03)
             }

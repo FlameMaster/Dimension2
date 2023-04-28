@@ -1,12 +1,16 @@
 package com.melvinhou.dimension2.pager;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.melvinhou.dimension2.PairEntity;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ActPagerBD;
+import com.melvinhou.dimension2.media.music.MusicPlayerActivity;
 import com.melvinhou.kami.mvvm.DataBindingActivity;
 import com.melvinhou.rxjava.rxbus.RxBus;
 import com.melvinhou.rxjava.rxbus.RxBusClient;
@@ -174,7 +178,7 @@ public class PagerActivity extends DataBindingActivity<ActPagerBD> {
                     toActivity(intent);
                 } else if (data instanceof PairEntity) {
                     PairEntity entity = (PairEntity) data;
-                    toActivity((View) entity.getKey(), (Intent) entity.getValue());
+//                    toActivity((View) entity.getKey(), (Intent) entity.getValue());
                 }
             } else if (type.contains(RxBusMessage.CommonType.ACTIVITY_FINISH)) {//关闭页面
                 close();

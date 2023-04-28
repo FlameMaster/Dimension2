@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:overScrollMode="never"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:id="@+id/iv_banner"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:round="8dp"
+                android:src="#CCC"
+                android:scaleType="centerCrop"
+                android:layout_margin="16dp"
+                app:layout_constraintDimensionRatio="H,16:9"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            android:orientation="horizontal"
+            android:rowCount="2"
+            android:background="@color/white"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="12dp"
+            >
+            <!--            android:stretchColumns="1"-->
+            <TextView
+                android:id="@+id/tv_fun_lab"
+                android:text="实验室"
+                android:layout_width="0dp"
+                android:textColor="#282828"
+                android:textSize="12sp"
+                android:layout_columnWeight="1"
+                android:drawableTop="@mipmap/fc"
+                android:drawablePadding="12dp"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                />
+            <TextView
+                android:id="@+id/tv_fun_browser"
+                android:text="浏览器"
+                android:layout_width="0dp"
+                android:textColor="#282828"
+                android:textSize="12sp"
+                android:layout_columnWeight="1"
+                android:drawableTop="@mipmap/fc"
+                android:drawablePadding="12dp"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                />
+            <TextView
+                android:id="@+id/tv_fun_game"
+                android:text="游戏"
+                android:layout_width="0dp"
+                android:textColor="#282828"
+                android:textSize="12sp"
+                android:layout_columnWeight="1"
+                android:drawableTop="@mipmap/fc"
+                android:drawablePadding="12dp"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                />
+            <TextView
+                android:id="@+id/tv_fun_model"
+                android:text="3D模型"
+                android:layout_width="0dp"
+                android:textColor="#282828"
+                android:textSize="12sp"
+                android:layout_columnWeight="1"
+                android:drawableTop="@mipmap/fc"
+                android:drawablePadding="12dp"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                />
+        </GridLayout>
+
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

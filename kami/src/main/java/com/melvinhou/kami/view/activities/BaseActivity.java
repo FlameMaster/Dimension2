@@ -1,15 +1,18 @@
 package com.melvinhou.kami.view.activities;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +26,9 @@ import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.view.dialog.DialogCheckBuilder;
 import com.melvinhou.kami.util.StringUtils;
 import com.melvinhou.kami.view.dialog.LoadDialog;
+
+import java.util.List;
+import java.util.Map;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -82,6 +88,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         //启动器
         startActivity = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(), this::onActivityBack);
+        //文件打开
+        openFile = registerForActivityResult(
+                new ActivityResultContracts.OpenDocument(), this::onFileResult);
+        openFiles = registerForActivityResult(
+                new ActivityResultContracts.OpenMultipleDocuments(), this::onFileResult);
         //初始化
         initActivity(layoutId);
     }
@@ -396,6 +407,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void requestPermissions(String[] permissions) {
         //请求授予此应用程序的权限
         ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_PERMISSIONS);
+        registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+
+        }).launch(permissions);
     }
 
     /**
@@ -469,7 +483,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 //***********************************启动*********************************************//
 
-
     //新版本的意图打开
     private ActivityResultLauncher<Intent> startActivity;
     private ActivityResultCallback<ActivityResult> activityResultCallback;
@@ -481,9 +494,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected void toResultActivity(Intent intent, ActivityResultCallback<ActivityResult> callback) {
         activityResultCallback = callback;
-        startActivity.launch(intent);
+        toResultActivity(intent);
     }
-
 
     /**
      * 打开有返回值的intent
@@ -491,8 +503,36 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param intent
      */
     protected void toResultActivity(Intent intent) {
+        //判断重复
+        long time = System.currentTimeMillis();
+        if (time - lastLaunchTime < 500) {
+            return;
+        }
         startActivity.launch(intent);
     }
+
+    public <T extends Activity> void toResultActivity(Class<T> clazz) {
+        toResultActivity(new Intent(this, clazz));
+    }
+
+    public <T extends Activity> void toResultActivity(Class<T> clazz, Bundle bundle) {
+        Intent intent = new Intent(this, clazz);
+        if (bundle!=null)
+            intent.putExtras(bundle);
+        toResultActivity(intent);
+    }
+
+    public <T extends Activity> void toResultActivity(Class<T> clazz, ActivityResultCallback<ActivityResult> callback) {
+        toResultActivity(clazz, null,callback);
+    }
+
+    public <T extends Activity> void toResultActivity(Class<T> clazz, Bundle bundle, ActivityResultCallback<ActivityResult> callback) {
+        Intent intent = new Intent(this, clazz);
+        if (bundle!=null)
+            intent.putExtras(bundle);
+        toResultActivity(intent,callback);
+    }
+
 
     /**
      * 替换早期的返回
@@ -509,10 +549,90 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-
     public <T extends Activity> void toActivity(Class<T> clazz) {
+        toActivity(clazz, null);
+    }
+
+    public <T extends Activity> void toActivity(Class<T> clazz, Bundle bundle) {
         Intent intent = new Intent(this, clazz);
+        if (bundle!=null)
+            intent.putExtras(bundle);
+        toActivity(intent);
+    }
+
+    //上次启动时间
+    private long lastLaunchTime = 0;
+
+    public void toActivity(Intent intent) {
+        //判断重复
+        long time = System.currentTimeMillis();
+        if (time - lastLaunchTime < 500) {
+            return;
+        }
+        lastLaunchTime = time;
         startActivity(intent);
+    }
+
+
+//***********************************文件打开*********************************************//
+
+    //新版本的文件选择
+    private ActivityResultLauncher<String[]> openFile;
+    private ActivityResultLauncher<String[]> openFiles;
+    private ActivityResultCallback<Uri> openFileCallback;
+    private ActivityResultCallback<List<Uri>> openFilesCallback;
+
+
+    /**
+     * 选择文件
+     *
+     * @param types
+     */
+    protected void openFile(String[] types, ActivityResultCallback<Uri> callback) {
+        openFileCallback = callback;
+        openFile.launch(types);
+    }
+
+    /**
+     * 选择多个文件
+     *
+     * @param types
+     */
+    protected void openFiles(String[] types, ActivityResultCallback<List<Uri>> callback) {
+        openFilesCallback = callback;
+        openFiles.launch(types);
+    }
+
+    /**
+     * 文件选择返回
+     *
+     * @param uri
+     */
+    protected void onFileResult(Uri uri) {
+        if (openFileCallback != null) {
+            openFileCallback.onActivityResult(uri);
+            openFileCallback = null;
+            return;
+        }
+        Log.w("文件选择", uri.toString());
+    }
+
+    /**
+     * 文件选择返回
+     *
+     * @param uris
+     */
+    protected void onFileResult(List<Uri> uris) {
+        if (openFilesCallback != null) {
+            openFilesCallback.onActivityResult(uris);
+            openFilesCallback = null;
+            return;
+        }
+        StringBuilder buffer = new StringBuilder();
+        for (Uri uri : uris) {
+            buffer.append(uri.toString()).append(",");
+        }
+        Log.w("文件选择", buffer.toString());
     }
 
 }

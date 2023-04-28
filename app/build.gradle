@@ -69,7 +69,8 @@ android {
                             'src/main/res',
                             'src/main/res_media',
                             'src/main/res_game',
-                            'src/main/res_function'
+                            'src/main/res_function',
+                            'src/main/aaa'
                     ]
         }
     }
@@ -81,6 +82,7 @@ dependencies {
     api project(':knight')
     api project(':medialibrary')
     api project(':media-sample')
+    api project(':game-sample')
 
 
 

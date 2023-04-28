@@ -1,19 +1,18 @@
 plugins {
     id 'com.android.library'
-    id 'kotlin-android'
-//    id 'com.android.application'
-//    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
-    compileSdkVersion global_config.compileSdkVersion
-    buildToolsVersion global_config.buildToolsVersion
+    namespace 'com.melvinhou.game'
+    compileSdk global_config.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion global_config.targetSdkVersion
+        minSdk 23
+        targetSdk global_config.compileSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -29,7 +28,6 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
     buildFeatures {
         viewBinding = true
     }
@@ -38,7 +36,4 @@ android {
 dependencies {
     api project(':kami')
     api project(':knight')
-    api project(':medialibrary')
-    api project(':cameralibrary')
-    api project(':anim-sample')
 }

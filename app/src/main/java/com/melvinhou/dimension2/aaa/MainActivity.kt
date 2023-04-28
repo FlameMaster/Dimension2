@@ -1,4 +1,4 @@
-package com.melvinhou.dimension2
+package com.melvinhou.dimension2.aaa
 
 import android.view.Gravity
 import android.view.MenuItem
@@ -10,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.melvinhou.dimension2.R
 import com.melvinhou.dimension2.databinding.ActivityMainBinding
 import com.melvinhou.kami.mvvm.BaseViewModel
 import com.melvinhou.kami.mvvm.BindActivity

@@ -208,17 +208,6 @@ public abstract class BaseFragment2 extends BaseFragment implements BaseView {
 
     @Override
     public void toActivity(Intent intent) {
-        getActivity().startActivity(intent);
-    }
-
-
-    public void toActivity(View view, Intent intent) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            Pair<View, String> p = new Pair<>(view, view.getTransitionName());
-            ActivityOptions activityOptions =
-                    ActivityOptions.makeSceneTransitionAnimation(getActivity(), p);
-            startActivityForResult(intent, 0, activityOptions.toBundle());
-        } else
-            startActivityForResult(intent, 0);
+        super.toActivity(intent);
     }
 }
