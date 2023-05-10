@@ -35,7 +35,7 @@ public class UITools {
      *
      * @param activity
      */
-    public static void hideKeyboard(Activity activity) {
+    public static void hideSoftKeyboard(Activity activity) {
         if (activity != null) {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             if (imm != null && activity.getCurrentFocus() != null) {
@@ -53,7 +53,7 @@ public class UITools {
      *
      * @param dialog
      */
-    public static void hideKeyboard(Dialog dialog) {
+    public static void hideSoftKeyboard(Dialog dialog) {
         if (dialog != null) {
             InputMethodManager imm = (InputMethodManager) dialog.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             if (imm != null && dialog.getCurrentFocus() != null) {
@@ -74,7 +74,8 @@ public class UITools {
         if (editText != null) {
             InputMethodManager inputmanger = (InputMethodManager) editText.getContext()
                     .getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputmanger.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            if (inputmanger.isActive())
+                inputmanger.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 
@@ -94,7 +95,7 @@ public class UITools {
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                hideKeyboard(activity);
+                hideSoftKeyboard(activity);
             }
         });
         //窗口

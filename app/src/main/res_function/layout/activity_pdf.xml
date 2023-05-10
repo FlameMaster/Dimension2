@@ -73,7 +73,7 @@
         android:scaleType="fitCenter"
         />
 
-    <com.melvinhou.dimension2.function.pdf.SignatureImageView
+    <com.melvinhou.dimension2.aaa.function.document.pdf.SignatureImageView
         android:id="@+id/tablet"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -84,7 +84,7 @@
         android:elevation="2dp"
         />
 
-    <com.melvinhou.dimension2.function.pdf.SignatureImageView
+    <com.melvinhou.dimension2.aaa.function.document.pdf.SignatureImageView
         android:id="@+id/tablet_fg"
         android:layout_width="0dp"
         android:layout_height="0dp"

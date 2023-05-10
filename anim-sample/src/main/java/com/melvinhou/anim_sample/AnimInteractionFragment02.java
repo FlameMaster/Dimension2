@@ -8,9 +8,10 @@ import android.widget.Button;
 import android.widget.GridLayout;
 
 import com.melvinhou.anim_sample.databinding.FragmentAnimInact02Binding;
-import com.melvinhou.kami.mvvm.BaseViewModel;
+import com.melvinhou.kami.bean.PageInfo;
 import com.melvinhou.kami.mvvm.BindFragment;
 import com.melvinhou.kami.util.FcUtils;
+import com.melvinhou.knight.NavigaionFragmentModel;
 
 /**
  * ===============================================
@@ -25,15 +26,15 @@ import com.melvinhou.kami.util.FcUtils;
  * = 分 类 说 明：
  * ================================================
  */
-public class AnimInteractionFragment02 extends BindFragment<FragmentAnimInact02Binding, BaseViewModel> {
+public class AnimInteractionFragment02 extends BindFragment<FragmentAnimInact02Binding, NavigaionFragmentModel> {
     @Override
     protected FragmentAnimInact02Binding openViewBinding(LayoutInflater inflater, ViewGroup container) {
         return FragmentAnimInact02Binding.inflate(getLayoutInflater());
     }
 
     @Override
-    protected Class<BaseViewModel> openModelClazz() {
-        return BaseViewModel.class;
+    protected Class<NavigaionFragmentModel> openModelClazz() {
+        return NavigaionFragmentModel.class;
     }
 
     @Override
@@ -44,10 +45,10 @@ public class AnimInteractionFragment02 extends BindFragment<FragmentAnimInact02B
     @Override
     protected void initListener() {
         addButton(mBinding.btInputs, "普通", view -> {
-            mModel.page.postValue(R.id.action_anim_interaction_02201);
+            mModel.toFragment(R.id.action_anim_interaction_02201);
         });
         addButton(mBinding.btInputs, "揭露动画", view -> {
-            mModel.page.postValue(R.id.nav_anim_interaction01);
+            mModel.toFragment(R.id.nav_anim_interaction01);
         });
     }
 

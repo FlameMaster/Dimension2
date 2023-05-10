@@ -1,5 +1,6 @@
 package com.melvinhou.knight
 
+import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import androidx.annotation.NavigationRes
@@ -7,6 +8,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import com.melvinhou.kami.databinding.ActivityListBinding
 import com.melvinhou.kami.mvvm.BaseViewModel
 import com.melvinhou.kami.mvvm.BindActivity
 import com.melvinhou.knight.databinding.ActivityFragmentContainerBinding
@@ -25,11 +27,11 @@ import com.melvinhou.knight.databinding.ActivityFragmentContainerBinding
  * = 分 类 说 明：通用的Fragment导航容器
  * ================================================
  */
-abstract class NavigationFragmentActivity<M : BaseViewModel> :
-    BindActivity<ActivityFragmentContainerBinding, M>() {
+abstract class NavigationFragmentActivity<M : NavigaionFragmentModel> :
+    KindActivity<ActivityFragmentContainerBinding, M>() {
 
-    override fun openViewBinding(): ActivityFragmentContainerBinding =
-        ActivityFragmentContainerBinding.inflate(layoutInflater)
+    override val _ViewBinding: ActivityFragmentContainerBinding
+        get() = ActivityFragmentContainerBinding.inflate(layoutInflater)
 
     @get:NavigationRes
     protected abstract val _navigationRes: Int
@@ -42,6 +44,10 @@ abstract class NavigationFragmentActivity<M : BaseViewModel> :
         val navUp = navController.navigateUp()
         if (!navUp) finish()
         return navUp
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return onNavigateUp()
     }
 
     override fun backward() {
@@ -74,15 +80,15 @@ abstract class NavigationFragmentActivity<M : BaseViewModel> :
 
         //页面切换
         mModel.page.observe(this) {
-            if (it < 0) {
-                if (it < -1) {
-                    val num = it / -1
+            if (it.pageId < 0) {
+                if (it.pageId < -1) {
+                    val num = it.pageId / -1
                     for (i in 0 until num) {
                         backward()
                     }
                 } else backward()
             } else {
-                navController.navigate(it)
+                navController.navigate(it.pageId, it.pageArgs)
             }
         }
     }

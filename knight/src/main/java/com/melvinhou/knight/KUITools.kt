@@ -361,7 +361,7 @@ object KUITools {
         val etInput = dialog.window?.findViewById<EditText>(R.id.et_input)
         btSubmit?.setOnClickListener {
             callBack(etInput?.text.toString())
-            UITools.hideKeyboard(dialog)
+            UITools.hideSoftKeyboard(dialog)
             dialog.dismiss()
         }
         tvTitle?.text = title
@@ -392,12 +392,12 @@ object KUITools {
         val tvTitle = dialog.window?.findViewById<TextView>(R.id.tv_title)
         val etInput = dialog.window?.findViewById<EditText>(R.id.et_input)
         ivCancel?.setOnClickListener {
-            UITools.hideKeyboard(dialog)
+            UITools.hideSoftKeyboard(dialog)
             dialog.cancel()
         }
         btSubmit?.setOnClickListener {
             callBack(etInput?.text.toString())
-            UITools.hideKeyboard(dialog)
+            UITools.hideSoftKeyboard(dialog)
             dialog.cancel()
         }
         tvTitle?.text = title

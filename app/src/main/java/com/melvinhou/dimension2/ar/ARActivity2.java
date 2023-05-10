@@ -259,7 +259,7 @@ public class ARActivity2 extends BaseActivity  implements GLSurfaceView.Renderer
             pointCloudRenderer.createOnGlThread(this);
             //模型对象,可以设置多个纹理，懒得写
             virtualObject.createOnGlThread(this,
-                    "ar/models/redcar.obj", "ar/models/redcar.jpg");
+                    "ar/models/redcar.obj", "models/sample/redcar.jpg");
             virtualObject.setMaterialProperties(0.0f, 2.0f, 0.5f, 6.0f);
             //阴影
             virtualObjectShadow.createOnGlThread(

@@ -7,8 +7,10 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 
 import com.melvinhou.anim_sample.databinding.FragmentAnimInactBinding;
+import com.melvinhou.kami.bean.PageInfo;
 import com.melvinhou.kami.mvvm.BaseViewModel;
 import com.melvinhou.kami.mvvm.BindFragment;
+import com.melvinhou.knight.NavigaionFragmentModel;
 
 /**
  * ===============================================
@@ -23,20 +25,21 @@ import com.melvinhou.kami.mvvm.BindFragment;
  * = 分 类 说 明：
  * ================================================
  */
-public class AnimInteractionFragment extends BindFragment<FragmentAnimInactBinding, BaseViewModel> {
+public class AnimInteractionFragment extends BindFragment<FragmentAnimInactBinding, NavigaionFragmentModel> {
     @Override
     protected FragmentAnimInactBinding openViewBinding(LayoutInflater inflater, ViewGroup container) {
         return FragmentAnimInactBinding.inflate(getLayoutInflater());
     }
 
     @Override
-    protected Class<BaseViewModel> openModelClazz() {
-        return BaseViewModel.class;
+    protected Class<NavigaionFragmentModel> openModelClazz() {
+        return NavigaionFragmentModel.class;
     }
 
     @Override
     protected void initView() {
-        if (mModel.page.getValue() == R.id.nav_anim_interaction01) {
+        PageInfo pageInfo = mModel.getPage().getValue();
+        if (pageInfo != null && pageInfo.pageId == R.id.nav_anim_interaction01) {
             mBinding.getRoot().setVisibility(View.INVISIBLE);
             startAnim();
         }

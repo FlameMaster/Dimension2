@@ -38,6 +38,17 @@ public class DateUtils {
     }
 
 
+    /**
+     * 格式化时间：1970年0点为0
+     * @param pattern 转换后的格式
+     * @return
+     */
+    public static String formatDuration( String pattern) {
+        return new SimpleDateFormat(pattern)
+                .format(getCurrentTime());
+    }
+
+
     private static final int HOUR = 60 * 60 * 1000;
     private static final int MIN = 60 * 1000;
     private static final int SEC = 1000;

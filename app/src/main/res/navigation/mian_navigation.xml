@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/navigation_function"
-        android:name="com.melvinhou.dimension2.function.FunctionFragment"
+        android:name="com.melvinhou.dimension2.aaa.function.FunctionFragment"
         android:label="@string/title_function"
         tools:layout="@layout/fragment_function" />
 

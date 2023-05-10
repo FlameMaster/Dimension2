@@ -90,9 +90,6 @@ class GameLaunchActivity : KindActivity<ActivityListBinding, BaseViewModel>() {
             })
         //点击事件
         adapter?.setOnItemClickListener { tag, position, data ->
-            Bundle().apply {
-
-            }
             when (data) {
                 "FC斗地主"->toActivity<GamePokerActivity>()
                 "华容道FC"->toActivity<GameKlotskiActivity>()
@@ -148,12 +145,13 @@ class GameLaunchActivity : KindActivity<ActivityListBinding, BaseViewModel>() {
             data: String?
         ) {
             super.bindData(viewHolder, position, data)
-            viewHolder.itemView.setOnTouchListener { v, event ->
-                if (event.actionMasked == MotionEvent.ACTION_DOWN) {
-                    mDragStartListener.onStartDrag(viewHolder)
-                }
-                false
-            }
+            //设置滑动位移
+//            viewHolder.itemView.setOnTouchListener { v, event ->
+//                if (event.actionMasked == MotionEvent.ACTION_DOWN) {
+//                    mDragStartListener.onStartDrag(viewHolder)
+//                }
+//                false
+//            }
         }
 
         override fun bindData(

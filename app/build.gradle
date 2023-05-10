@@ -83,6 +83,8 @@ dependencies {
     api project(':medialibrary')
     api project(':media-sample')
     api project(':game-sample')
+    api project(':model3d-sample')
+    api project(':im-sample')
 
 
 
@@ -109,7 +111,7 @@ dependencies {
 
     //ar
     implementation 'com.google.ar:core:1.18.0'
-    implementation 'de.javagl:obj:0.3.0'
+//    implementation 'de.javagl:obj:0.3.0'
 
     //控制状态栏
 //    implementation 'androidx.core:core:1.6.0'

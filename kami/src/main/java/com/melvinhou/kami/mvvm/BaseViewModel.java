@@ -3,6 +3,7 @@ package com.melvinhou.kami.mvvm;
 import android.app.Application;
 import android.util.Log;
 
+import com.melvinhou.kami.bean.PageInfo;
 import com.melvinhou.kami.net.BaseEntity;
 import com.melvinhou.kami.net.HttpCallBack;
 import com.melvinhou.kami.net.RequestCallback;
@@ -37,10 +38,6 @@ public class BaseViewModel extends AndroidViewModel {
         super(application);
     }
 
-
-    //页面
-    public MutableLiveData<Integer> page = new MutableLiveData<>();
-
 //***********************************状态管理*********************************************//
 
     //网络访问状态
@@ -63,6 +60,11 @@ public class BaseViewModel extends AndroidViewModel {
 
     //管理进程的
     private CompositeDisposable mDisposable = new CompositeDisposable();
+
+    //添加进管理
+    protected void addDisposable(Disposable disposable){
+        mDisposable.add(disposable);
+    }
 
     //注册初始化
     public void register() {
@@ -107,7 +109,7 @@ public class BaseViewModel extends AndroidViewModel {
                     @Override
                     public void onSubscribe(Disposable d) {
                         super.onSubscribe(d);
-                        mDisposable.add(d);
+                        addDisposable(d);
                     }
                 });
     }

@@ -188,7 +188,10 @@ public abstract class BaseFragment2 extends BaseFragment implements BaseView {
 
     @Override
     public void backward() {
-        super.backward();
+        if (requireActivity() instanceof BaseView)
+            ((BaseView) requireActivity()).backward();
+        else
+            requireActivity().finish();
     }
 
     @Override

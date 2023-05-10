@@ -231,7 +231,7 @@ public abstract class BaseActivity2 extends BaseActivity implements BaseView {
     }
 
     @Override
-    protected void onActivityBack(int type) {
+    protected void onBackward(int type) {
         backward();
     }
 

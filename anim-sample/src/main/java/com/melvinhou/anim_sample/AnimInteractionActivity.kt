@@ -8,8 +8,8 @@ import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.melvinhou.anim_sample.databinding.ActivityAnimInactBinding
-import com.melvinhou.kami.mvvm.BaseViewModel
 import com.melvinhou.kami.mvvm.BindActivity
+import com.melvinhou.knight.NavigaionFragmentModel
 
 
 /**
@@ -25,13 +25,13 @@ import com.melvinhou.kami.mvvm.BindActivity
  * = 分 类 说 明：
  * ================================================
  */
- class AnimInteractionActivity : BindActivity<ActivityAnimInactBinding, BaseViewModel>() {
+ class AnimInteractionActivity : BindActivity<ActivityAnimInactBinding, NavigaionFragmentModel>() {
 
     override fun openViewBinding(): ActivityAnimInactBinding =
         ActivityAnimInactBinding.inflate(layoutInflater)
 
-    override fun openModelClazz(): Class<BaseViewModel> =
-        BaseViewModel::class.java
+    override fun openModelClazz(): Class<NavigaionFragmentModel> =
+        NavigaionFragmentModel::class.java
 
     private lateinit var navController: NavController
 
@@ -70,15 +70,15 @@ import com.melvinhou.kami.mvvm.BindActivity
     override fun initData() {
         //页面切换
         mModel.page.observe(this) {
-            if (it < 0) {
-                if (it < -1) {
-                    val num = it / -1
+            if (it.pageId < 0) {
+                if (it.pageId < -1) {
+                    val num = it.pageId / -1
                     for (i in 0 until num) {
                         backward()
                     }
                 } else backward()
             } else {
-                navController.navigate(it)
+                navController.navigate(it.pageId, it.pageArgs)
             }
         }
     }

@@ -202,7 +202,7 @@ public class FcVideoActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-        mBack.setOnClickListener(view -> onActivityBack(2));
+        mBack.setOnClickListener(view -> onBackward(2));
         if (mVidoeLayout != null) {
             mVidoeLayout.setOnCompletionListener(mOnCompletionListener);
             mVidoeLayout.setVideoControllerUIListener(mVideoControllerUIListener);
@@ -244,10 +244,10 @@ public class FcVideoActivity extends BaseActivity {
     }
 
     @Override
-    protected void onActivityBack(int type) {
+    protected void onBackward(int type) {
         if (isLandscape){
             fullScreen(false);
-        }else super.onActivityBack(type);
+        }else super.onBackward(type);
     }
 
     @Override

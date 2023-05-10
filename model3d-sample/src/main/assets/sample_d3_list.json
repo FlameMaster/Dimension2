@@ -1,0 +1,57 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "isDownload": true,
+            "explain": "文件大小：<1MB",
+            "fileName": "redcar",
+            "title": "小红车",
+            "directoryPath": "models/sample"
+        },
+        {
+            "cover": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/ar/model/keqing.jpg",
+            "explain": "下载大小：5.29MB",
+            "fileName": "keqing",
+            "title": "原神-刻晴",
+            "url": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/ar/model/keqing.zip"
+        },
+        {
+            "cover": "",
+            "explain": "下载大小：5.63MB",
+            "fileName": "ganyu",
+            "title": "原神-甘雨",
+            "url": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/ar/model/ganyu.zip"
+        },
+        {
+            "cover": "",
+            "explain": "下载大小：10.81MB",
+            "fileName": "raiden",
+            "title": "原神-雷电影",
+            "url": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/ar/model/raiden.zip"
+        },
+        {
+            "cover": "",
+            "explain": "下载大小：7.77MB",
+            "fileName": "fischl",
+            "title": "原神-菲谢尔皮肤",
+            "url": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/ar/model/fischl.zip"
+        },
+        {
+            "cover": "",
+            "explain": "下载大小：5.94MB",
+            "fileName": "hutao",
+            "title": "原神-胡桃",
+            "url": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/ar/model/hutao.zip"
+        },
+        {
+            "cover": "",
+            "explain": "下载大小：11.34MB",
+            "fileName": "sheele",
+            "title": "崩坏3-希儿",
+            "url": "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/ar/model/sheele.zip"
+        }
+
+    ],
+    "date": 0,
+    "message": "欢迎使用二刺猿"
+}

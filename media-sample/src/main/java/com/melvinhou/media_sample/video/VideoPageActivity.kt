@@ -72,9 +72,9 @@ class VideoPageActivity : BindActivity<ActivityVideoPageBinding, VideoPageModel>
         }
     }
 
-    override fun onActivityBack(type: Int) {
+    override fun onBackward(type: Int) {
         if (isLandscape) fullScreen(false)
-        else super.onActivityBack(type)
+        else super.onBackward(type)
     }
 
     override fun initView() {

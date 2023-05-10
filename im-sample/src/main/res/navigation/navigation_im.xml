@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/nav_im_contacts"
+    android:id="@+id/nav_im"
+    >
+
+    <fragment
+        android:id="@+id/nav_im_contacts"
+        android:name="com.sample.im_sample.ImContactsFragment"
+        android:label="通讯录"
+        tools:layout="@layout/fragment_im_contacts">
+        <action
+            android:id="@+id/action_im_contacts2chat"
+            app:destination="@id/nav_im_chat"
+            app:enterAnim="@anim/anim_page_right_enter"
+            app:exitAnim="@anim/anim_page_left_exit"
+            app:popEnterAnim="@anim/anim_page_left_enter"
+            app:popExitAnim="@anim/anim_page_right_exit"
+            />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_im_chat"
+        android:name="com.sample.im_sample.ImChatFragment"
+        android:label="聊天"
+        tools:layout="@layout/fragment_im_chat" >
+    </fragment>
+
+</navigation>

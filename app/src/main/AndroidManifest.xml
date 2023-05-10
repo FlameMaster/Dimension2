@@ -98,12 +98,6 @@
             android:name=".media.tiktok.TiktokActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".game.klotski.GameKlotskiActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".game.poker.GamePokerActivity"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".ar.ARActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
@@ -119,10 +113,10 @@
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".function.pdf.PdfActivity"
+            android:name=".aaa.function.document.pdf.PdfActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".function.desktop.DesktopActivity"
+            android:name=".aaa.function.desktop.DesktopActivity"
             android:screenOrientation="portrait">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -132,7 +126,7 @@
             <!--            </intent-filter>-->
         </activity>
         <activity
-            android:name=".function.zip.ZipActivity"
+            android:name=".aaa.function.document.zip.ZipActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".function.screenrecord.ScreenRecordActivity"

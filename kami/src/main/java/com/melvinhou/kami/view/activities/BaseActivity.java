@@ -21,6 +21,7 @@ import android.view.WindowManager;
 
 import com.melvinhou.kami.BaseApplication;
 import com.melvinhou.kami.R;
+import com.melvinhou.kami.io.FcLog;
 import com.melvinhou.kami.mvvm.BindActivity;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.view.dialog.DialogCheckBuilder;
@@ -34,12 +35,17 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.OnApplyWindowInsetsListener;
+import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
 /**
@@ -59,6 +65,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     //工具栏
     private Toolbar mToolbar;
+    private View mBarLayout;
     //工具栏菜单
     private Menu mMenu;
     //加载弹窗
@@ -121,7 +128,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 @Override
                 public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
                     if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-                        onActivityBack(1);
+                        onBackward(1);
                         return true;
                     }
                     return false;
@@ -277,6 +284,25 @@ public abstract class BaseActivity extends AppCompatActivity {
             //4.4版本颜色无法设置，只能通过view显示
         }
 
+        //监听布局距离变化
+        ViewCompat.setOnApplyWindowInsetsListener(getWindow().getDecorView(), (view, insets) -> {
+            Insets stableInsets = insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() |//状态栏
+                            WindowInsetsCompat.Type.displayCutout() |//刘海屏
+                            WindowInsetsCompat.Type.ime()//软键盘
+            );
+            onWindowInsetsChange(stableInsets);
+            return insets;
+        });
+    }
+
+    /**
+     * 界面布局的边距
+     * @param insets
+     */
+    protected void onWindowInsetsChange(Insets insets) {
+        if (mBarLayout != null)
+            mBarLayout.setPadding(0, insets.top, 0, 0);
     }
 
     /**
@@ -300,7 +326,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         //状态栏高度
         View barLayout = findViewById(R.id.bar_root);
         if (barLayout instanceof ConstraintLayout) {
-            barLayout.setPadding(0, DimenUtils.getStatusBarHeight(), 0, 0);
+            mBarLayout = barLayout;
         }
     }
 
@@ -324,7 +350,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      *
      * @param type
      */
-    protected void onActivityBack(int type) {
+    protected void onBackward(int type) {
         finish();
     }
 
@@ -373,7 +399,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            onActivityBack(2);
+            onBackward(2);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -389,7 +415,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            onActivityBack(1);
+            onBackward(1);
             return true;
         }
         return false;
@@ -517,20 +543,20 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public <T extends Activity> void toResultActivity(Class<T> clazz, Bundle bundle) {
         Intent intent = new Intent(this, clazz);
-        if (bundle!=null)
+        if (bundle != null)
             intent.putExtras(bundle);
         toResultActivity(intent);
     }
 
     public <T extends Activity> void toResultActivity(Class<T> clazz, ActivityResultCallback<ActivityResult> callback) {
-        toResultActivity(clazz, null,callback);
+        toResultActivity(clazz, null, callback);
     }
 
     public <T extends Activity> void toResultActivity(Class<T> clazz, Bundle bundle, ActivityResultCallback<ActivityResult> callback) {
         Intent intent = new Intent(this, clazz);
-        if (bundle!=null)
+        if (bundle != null)
             intent.putExtras(bundle);
-        toResultActivity(intent,callback);
+        toResultActivity(intent, callback);
     }
 
 
@@ -555,7 +581,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public <T extends Activity> void toActivity(Class<T> clazz, Bundle bundle) {
         Intent intent = new Intent(this, clazz);
-        if (bundle!=null)
+        if (bundle != null)
             intent.putExtras(bundle);
         toActivity(intent);
     }

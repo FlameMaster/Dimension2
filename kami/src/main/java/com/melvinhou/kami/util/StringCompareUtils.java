@@ -37,6 +37,7 @@ public class StringCompareUtils {
     public static final String REGEX_URL = "http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?";
     //正则表达式：验证IP地址*/
     public static final String REGEX_IP_ADDR = "(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)";
+    public static final String REGEX_IP_ADDR2 = "(?<=(\\b|\\D))(((\\d{1,2})|(1\\d{2})|(2[0-4]\\d)|(25[0-5]))\\.){3}((\\d{1,2})|(1\\d{2})|(2[0-4]\\d)|(25[0-5]))(?=(\\b|\\D))";
     //正则表达式：企业信用代码
     public static final String  REGEX_QYCODE = "[1-9NY]{1}[1-9]{1}[1-6]{1}[0-9]{5}[0123456789ABCDEFGHJKLMNPQRTUWXYabcsefghjklmnpqrtuwxy]{10}";
 
@@ -218,6 +219,11 @@ public class StringCompareUtils {
         } else {
             return false;
         }
+    }
+
+    //用正则表达式判断ip地址格式
+    public static boolean isIp(String str) {
+        return Pattern.matches(REGEX_IP_ADDR2, str);
     }
 
 

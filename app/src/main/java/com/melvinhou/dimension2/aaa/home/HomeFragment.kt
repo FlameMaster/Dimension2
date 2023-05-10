@@ -5,7 +5,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.melvinhou.dimension2.ar.d3.D3ListActivity
 import com.melvinhou.dimension2.databinding.FragmentHomeBinding
 import com.melvinhou.dimension2.test.TestActivity
 import com.melvinhou.dimension2.web.WebActivity
@@ -14,6 +13,7 @@ import com.melvinhou.kami.mvvm.BaseViewModel
 import com.melvinhou.kami.mvvm.BindFragment
 import com.melvinhou.kami.util.FcUtils
 import com.melvinhou.knight.KindFragment
+import com.melvinhou.model3d_sample.D3ListActivity
 
 
 /**
