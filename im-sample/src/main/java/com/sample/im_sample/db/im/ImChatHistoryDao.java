@@ -36,6 +36,10 @@ public interface ImChatHistoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insert(ImChatEntity message);
 
+    //插入
+    @Insert
+    void add(ImChatEntity message);
+
 
     //删除
     @Delete

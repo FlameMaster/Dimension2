@@ -3,14 +3,15 @@ package com.melvinhou.dimension2.aaa.function
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.melvinhou.dimension2.aaa.function.desktop.DesktopActivity
 import com.melvinhou.dimension2.aaa.function.document.pdf.PdfActivity
 import com.melvinhou.dimension2.aaa.function.document.zip.ZipActivity
 import com.melvinhou.dimension2.databinding.FragmentFunctionBinding
-import com.melvinhou.dimension2.function.im.ImHomeActivity
 import com.melvinhou.dimension2.net.HttpConstant
 import com.melvinhou.kami.mvvm.BaseViewModel
 import com.melvinhou.knight.FragmentContainActivity
 import com.melvinhou.knight.KindFragment
+import com.sample.im_sample.ImHomeActivity
 import com.sample.im_sample.tcp.ImTcpChatFragment
 
 
@@ -59,12 +60,11 @@ class FunctionFragment  : KindFragment<FragmentFunctionBinding, BaseViewModel>()
             }
         }
         mBinding.inFunSys.root.getChildAt(0).setOnClickListener {
-//            toActivity<DesktopActivity>()
+            toActivity<DesktopActivity>()
 //            Bundle().apply {
 //                putSerializable("fragment",ImContactsFragment::class.java)
 //                toActivity<FragmentContainActivity>(this)
 //            }
-            toActivity<com.sample.im_sample.ImHomeActivity>()
         }
     }
 }

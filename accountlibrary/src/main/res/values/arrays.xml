@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="photo_heads">
+        <item>https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/01.jpg</item>
+        <item>https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/02.jpeg</item>
+        <item>https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/03.jpg</item>
+        <item>https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/04.jpg</item>
+        <item>https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/image/portrait/05.jpeg</item>
+    </string-array>
+
+</resources>

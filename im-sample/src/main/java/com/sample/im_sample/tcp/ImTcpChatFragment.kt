@@ -280,11 +280,14 @@ class ImTcpChatFragment : KindFragment<FragmentImChatTcpBinding, ImViewModel>() 
      */
     inner class MyAdapter : BindRecyclerAdapter<ImChatEntity, ItemTitle01Binding>() {
 
+        val dp16 = DimenUtils.dp2px(16)
+        val dp8 = DimenUtils.dp2px(8)
         override fun getViewBinding(
             inflater: LayoutInflater, parent: ViewGroup
         ): ItemTitle01Binding {
             val binding = ItemTitle01Binding.inflate(inflater, parent, false)
             binding.itemValue.visibility = View.GONE
+            binding.root.setPadding(dp16, dp8, dp16, dp8)
             return binding
         }
 

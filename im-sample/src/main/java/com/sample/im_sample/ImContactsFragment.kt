@@ -9,6 +9,9 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.melvinhou.accountlibrary.bean.User
 import com.melvinhou.kami.adapter.BindRecyclerAdapter
 import com.melvinhou.kami.io.IOUtils
@@ -17,12 +20,15 @@ import com.melvinhou.kami.tool.ThreadManager
 import com.melvinhou.kami.tool.UITools
 import com.melvinhou.kami.util.DimenUtils
 import com.melvinhou.kami.util.FcUtils
+import com.melvinhou.kami.util.StringCompareUtils
 import com.melvinhou.knight.KindFragment
 import com.melvinhou.knight.loadImage
 import com.sample.im_sample.bean.ImContactEntity
 import com.sample.im_sample.databinding.FragmentImContactsBinding
 import com.sample.im_sample.databinding.ItemImContactBinding
 import com.sample.im_sample.model.ImViewModel
+import com.sample.im_sample.tcp.ImTcpServer
+import com.sample.im_sample.udp.ImUdpServer
 import java.io.DataInputStream
 import java.io.IOException
 import java.net.ServerSocket
@@ -54,9 +60,9 @@ class ImContactsFragment : KindFragment<FragmentImContactsBinding, ImViewModel>(
         get() = ImViewModel::class.java
 
 
-    private var mServerSocket: ServerSocket? = null
-    private var mSocket: Socket? = null
     private var adapter: MyAdapter? = null
+    private val mServerPort = 17432//默认服务器端口
+    private val mServer: ImUdpServer by lazy { ImUdpServer() }
 
 
     override fun upBarMenuID(): Int = R.menu.bar_im_contacts
@@ -118,23 +124,15 @@ class ImContactsFragment : KindFragment<FragmentImContactsBinding, ImViewModel>(
 
 
     override fun initData() {
-        //获取当前用户的userid
-        var userid = SharePrefUtil.getLong(User.USER_ID, -1)
-        if (userid < 0) {
-            userid = mModel.createUserId()
-            Thread {
-                val ip = IOUtils.getIPAddress()
-                mModel.addContact(userid, "用户$userid", ip, mPort.toString())
-                SharePrefUtil.saveLong(User.USER_ID, userid)
-                Log.e("获取ip", "当前ip=$ip")
-                FcUtils.runOnUiThread {
-                    initData()
-                }
-            }.start()
-            return
-        }
+        Thread{
+            val ip = IOUtils.getIPAddress()
+            Log.e("获取ip", "当前ip=$ip")
+            mBinding.tvIpMine.post {
+                mBinding.tvIpMine.text = "我的IP:${ip}"
+            }
+        }.start()
         //获取当前用户的id
-        mModel.currentUserId = userid
+        mModel.currentUserId = SharePrefUtil.getLong(User.USER_ID, -1)
         //加载列表数据
         mModel.getAllContacts().observe(this) {
             adapter?.clearData()
@@ -160,8 +158,19 @@ class ImContactsFragment : KindFragment<FragmentImContactsBinding, ImViewModel>(
             adapter?.addDatas(contacts)
         }
 
+        //开启服务
+        mServer.start(mServerPort) { ip, msg ->
+            ip?.let {
+                mModel.receiveChat(it,msg)
+            }
+        }
 
-        initSocketServer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mModel.clearChatDbs()
+        mServer.stop()
     }
 
 
@@ -199,82 +208,6 @@ class ImContactsFragment : KindFragment<FragmentImContactsBinding, ImViewModel>(
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
-        try {
-            mServerSocket?.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //TODO 这是服务器断开连接重新初始化，本来需要一个空闲线程轮询的
-        //启动服务线程
-        ThreadManager.getThreadPool().execute(mAwaitSocketAcceptRunnadle)
-    }
-
-    /**
-     * 等待被连接的Runnable
-     */
-    private val mAwaitSocketAcceptRunnadle = Runnable {
-        try {
-            val ip = IOUtils.getIPAddress()
-            Log.e("获取ip", "当前ip=$ip")
-            //等待客户端的连接，Accept会阻塞，直到建立连接
-            mSocket = mServerSocket?.accept()
-            Log.w("IM服务器", "已经连接成功:${mSocket?.localSocketAddress}/${mSocket?.remoteSocketAddress}");
-        } catch (e: IOException) {
-            e.printStackTrace()
-            return@Runnable
-        }
-        //启动消息接收线程
-        if (mSocket != null)
-            startReader()
-    }
-    private val mPort = 17432
-
-    /**
-     * 初始化socket服务器
-     */
-    private fun initSocketServer() {
-        try {
-            mServerSocket?.close()
-            mServerSocket = ServerSocket(mPort)
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
-    /**
-     * 启动消息遍历器
-     */
-    private fun startReader() {
-        ThreadManager.getThreadPool().execute {
-            val reader: DataInputStream
-            try {
-                // 获取读取流
-                reader = DataInputStream(mSocket!!.getInputStream())
-                while (mSocket != null) {
-                    Log.w("IM服务器", "等待消息中...")
-                    // 读取数据
-                    val msg = reader.readUTF()
-                    Log.w("IM服务器", "获取到客户端的信息1:$msg")
-                    //告知客户端消息收到
-//                    if (mCurrentSocket != null) {
-//                        DataOutputStream writer = new DataOutputStream(mCurrentSocket.getOutputStream());
-//                        writer.writeUTF(msg); // 写一个UTF-8的信息
-//                    }
-                    val ip = mSocket!!.inetAddress.hostAddress
-                }
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }
-    }
-
-
     /**
      * 列表适配器
      */
@@ -296,10 +229,20 @@ class ImContactsFragment : KindFragment<FragmentImContactsBinding, ImViewModel>(
             binding.tvExplain.text = "IP:\r\t${data.ip}\r\tProt:\r\t${data.port}"
             binding.tvTitle.text = data.initial.toString()
             binding.tvTitle.isVisible = data.initial.code > 0
+
             mModel.getUserInfo(data.userId) {
                 binding.tvNikename.text =
                     if (TextUtils.isEmpty(it.nickName)) it.name else it.nickName
-                binding.ivHeadpic.loadImage(it.photo)
+                Glide.with(FcUtils.getContext())
+                    .load(it.photo)
+                    .apply(
+                        RequestOptions()
+                            .override(binding.ivHeadpic.width, binding.ivHeadpic.height)
+                            .placeholder(R.drawable.ic_head_sample02)
+                            .error(R.drawable.ic_head_sample02)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    )
+                    .into(binding.ivHeadpic)
             }
         }
     }

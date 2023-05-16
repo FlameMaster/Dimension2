@@ -2,6 +2,8 @@ package com.sample.im_sample.model
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.util.Log
+import androidx.collection.arrayMapOf
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.melvinhou.kami.io.SharePrefUtil
@@ -13,6 +15,8 @@ import com.sample.im_sample.bean.ImChatEntity
 import com.sample.im_sample.bean.ImContactEntity
 import com.melvinhou.accountlibrary.bean.User
 import com.melvinhou.accountlibrary.db.SqlManager
+import com.melvinhou.kami.util.ResourcesUtils
+import com.sample.im_sample.R
 import com.sample.im_sample.db.im.ImChatDB
 import com.sample.im_sample.db.im.ImContactsDB
 import com.sample.im_sample.util.PinYinUtil
@@ -20,6 +24,7 @@ import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.util.Collections
 
 
 /**
@@ -40,7 +45,9 @@ class ImViewModel(application: Application) : NavigaionFragmentModel(application
     private var mContactsDb: ImContactsDB
 
     //数据库-聊天记录
-    private var mChatDb: ImChatDB? = null
+//    private var mChatDb: ImChatDB? = null
+    //聊天数据库
+    private val mChatDbs = arrayMapOf<Long, ImChatDB>()
 
     init {
         mContactsDb = Room.databaseBuilder(
@@ -55,18 +62,24 @@ class ImViewModel(application: Application) : NavigaionFragmentModel(application
     //软键盘显示
     var isShowKeyboard = false
 
-    //绑定聊天数据库
-    fun bindChat(userId: Long) {
-        mChatDb = Room.databaseBuilder(
-            getApplication(),
-            ImChatDB::class.java, "im_chat_$userId.db"
-        ).build()
+    fun getChatDb(userId: Long): ImChatDB {
+        var chatDB = mChatDbs.get(userId)
+        if (chatDB == null) {
+            chatDB = Room.databaseBuilder(
+                getApplication(),
+                ImChatDB::class.java, "im_chat_$userId.db"
+            ).build()
+            mChatDbs.put(userId, chatDB)
+        }
+        return chatDB
     }
 
     //解绑聊天数据库
-    fun unbindChat() {
-        mChatDb?.close()
-        mChatDb = null
+    fun clearChatDbs() {
+        mChatDbs.values.forEach {
+            if (it.isOpen) it.close()
+        }
+        mChatDbs.clear()
     }
 
     @SuppressLint("CheckResult")
@@ -75,7 +88,8 @@ class ImViewModel(application: Application) : NavigaionFragmentModel(application
             .create<User?> { emitter: ObservableEmitter<User?> ->
                 try {
                     val user = SqlManager.findUser(FcUtils.getContext(), userId)
-                    emitter.onNext(user)
+                    if (user != null)
+                        emitter.onNext(user)
                 } finally {
                     emitter.onComplete()
                 }
@@ -114,6 +128,7 @@ class ImViewModel(application: Application) : NavigaionFragmentModel(application
             val user = User()
             user.userId = id
             user.name = name
+            user.photo = ResourcesUtils.getStringArray(R.array.photo_heads)[(id % 5).toInt()]
             SqlManager.addUser(FcUtils.getContext(), user)
             //联系人
             val entity = ImContactEntity()
@@ -136,8 +151,12 @@ class ImViewModel(application: Application) : NavigaionFragmentModel(application
 
 
     //获取聊天记录,rxjava背压
-    fun getChat(callback: (List<ImChatEntity>) -> Unit) {
-        addDisposable(mChatDb?.chatHistoryDao()!!.all
+    fun getChat(userId: Long, callback: (List<ImChatEntity>) -> Unit) {
+        addDisposable(getChatDb(userId).chatHistoryDao()!!.all
+            .map {
+                Collections.reverse(it)//倒序排列
+                it
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { list ->
@@ -146,21 +165,41 @@ class ImViewModel(application: Application) : NavigaionFragmentModel(application
     }
 
     //添加聊天信息，rxjava
-    fun addChat(entity: ImChatEntity) {
-        mChatDb?.chatHistoryDao()!!.insert(entity)
+    fun addChat(userId: Long, entity: ImChatEntity) {
+        getChatDb(userId).chatHistoryDao().insert(entity)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe()
     }
 
+    //添加聊天信息
+    @SuppressLint("CheckResult")
+    @Synchronized
+    fun addChat2(userId: Long, entity: ImChatEntity) {
+        getChatDb(userId).chatHistoryDao().add(entity)
+    }
+
     //添加聊天
-    fun sendChat(message: String) {
+    fun sendChat(userId: Long, message: String) {
         val entity = ImChatEntity()
         entity.uuid = DateUtils.getCurrentTime()
         entity.userId = currentUserId ?: -1
         entity.message = message
         entity.date = DateUtils.formatDuration("yyyy-MM-dd  HH:mm:ss")
-        addChat(entity)
+        addChat(userId, entity)
+    }
+
+    //收到聊天
+    fun receiveChat(ip: String, message: String) {
+        val userId = mContactsDb.imContactsDao().query(ip).userId
+        if (userId > 0) {
+            val entity = ImChatEntity()
+            entity.uuid = DateUtils.getCurrentTime()
+            entity.userId = userId
+            entity.message = message
+            entity.date = DateUtils.formatDuration("yyyy-MM-dd  HH:mm:ss")
+            addChat2(userId, entity)
+        }
     }
 
 }

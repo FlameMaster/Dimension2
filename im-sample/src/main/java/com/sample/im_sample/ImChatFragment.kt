@@ -1,33 +1,31 @@
 package com.sample.im_sample
 
-import android.annotation.SuppressLint
 import android.graphics.Rect
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.melvinhou.accountlibrary.bean.User
 import com.melvinhou.kami.adapter.BindRecyclerAdapter
-import com.melvinhou.kami.io.IOUtils
-import com.melvinhou.kami.tool.ThreadManager
 import com.melvinhou.kami.tool.UITools
 import com.melvinhou.kami.util.DimenUtils
 import com.melvinhou.kami.util.FcUtils
 import com.melvinhou.kami.util.StringUtils
 import com.melvinhou.knight.KindFragment
+import com.melvinhou.knight.loadImage
 import com.sample.im_sample.bean.ImChatEntity
 import com.sample.im_sample.databinding.FragmentImChatBinding
 import com.sample.im_sample.databinding.ItemImChatMessageBinding
 import com.sample.im_sample.model.ImViewModel
-import io.reactivex.Observable
-import io.reactivex.ObservableEmitter
-import io.reactivex.ObservableOnSubscribe
+import com.sample.im_sample.tcp.ImTcpClient
+import com.sample.im_sample.udp.ImUdpClient
 import java.io.*
-import java.net.Socket
 
 
 /**
@@ -55,6 +53,7 @@ class ImChatFragment : KindFragment<FragmentImChatBinding, ImViewModel>() {
 
     private var userId: Long? = null
     private var adapter: MyAdapter? = null
+    private val mClient: ImUdpClient by lazy { ImUdpClient() }
 
 
     override fun upBarMenuID(): Int = R.menu.bar_im_contacts
@@ -78,19 +77,6 @@ class ImChatFragment : KindFragment<FragmentImChatBinding, ImViewModel>() {
     override fun initView() {
         mBinding.barRoot.title.text = "联系人"
         initList()
-        //布局变化
-//        ViewCompat.setOnApplyWindowInsetsListener(requireActivity().window.decorView) { view, insets ->
-//            val stableInsets =
-//                insets.getInsets(
-//                    WindowInsetsCompat.Type.systemBars() or//状态栏
-//                            WindowInsetsCompat.Type.displayCutout() or//刘海屏
-//                            WindowInsetsCompat.Type.ime()//软键盘
-//                )
-//            Log.e("TTTT", "高度：" + insets.systemWindowInsetTop + "\r\t高度：" + stableInsets.top)
-//            FcUtils.showToast("高度：" + insets.systemWindowInsetBottom + "\r\t高度：" + stableInsets.bottom)
-////            mBinding.root.setPadding(0,0,0,insets.systemWindowInsetBottom)
-//            insets
-//        }
     }
 
     /**
@@ -99,15 +85,17 @@ class ImChatFragment : KindFragment<FragmentImChatBinding, ImViewModel>() {
     private fun initList() {
         adapter = MyAdapter()
         mBinding.container.adapter = this.adapter
-        mBinding.container.layoutManager = LinearLayoutManager(requireContext())
+        mBinding.container.layoutManager =
+            LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, true)
         //设定边距
-        val decoration = DimenUtils.dp2px(1)
+        val decoration = DimenUtils.dp2px(10)
         mBinding.container.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(
                 outRect: Rect, view: View,
                 parent: RecyclerView, state: RecyclerView.State
             ) {
-                outRect[0, 0, 0] = decoration
+                val position = parent.getChildAdapterPosition(view)
+                outRect[0, 0, 0] = if (position == 0) decoration else 0
             }
         })
         //点击事件
@@ -144,30 +132,34 @@ class ImChatFragment : KindFragment<FragmentImChatBinding, ImViewModel>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mModel.unbindChat()
+        mClient.close()
     }
 
     override fun initData() {
         userId = arguments?.getLong(User.USER_ID)
         userId?.let { id ->
-            mModel.bindChat(id)
             mModel.getUserInfo(id) {
                 mBinding.barRoot.title.text =
                     if (TextUtils.isEmpty(it.nickName)) it.name else it.nickName
             }
-        }
-
-        //聊天记录
-        mModel.getChat {
-            adapter?.clearData()
-            adapter?.addDatas(it)
+            //聊天记录
+            mModel.getChat(id) {
+                adapter?.clearData()
+                adapter?.addDatas(it)
+                //滚动到底
+                mBinding.container.layoutManager?.smoothScrollToPosition(
+                    mBinding.container, RecyclerView.State(), 0
+                )
+            }
         }
 
 
         val ip = arguments?.getString("ip") ?: ""
         val port = arguments?.getInt("port") ?: 0
         //连接socket服务器
-        connect2ServerSocket("192.168.31.201", port)
+        mClient.connent(ip, port) { msg ->
+
+        }
     }
 
     /**
@@ -181,77 +173,10 @@ class ImChatFragment : KindFragment<FragmentImChatBinding, ImViewModel>() {
         if (StringUtils.isEmpty(text))
             return
         //发送
-        mModel.sendChat(text)
-
-        Thread {
-            try {
-                val writer = DataOutputStream(mOutStream)
-                writer.writeUTF(text)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }.start()
-    }
-
-
-    private var mSocket: Socket? = null
-    private var mInStream: InputStream? = null
-    private var mOutStream: OutputStream? = null
-
-    @SuppressLint("CheckResult")
-    private fun connect2ServerSocket(ip: String, port: Int) {
-        Observable
-            .create(ObservableOnSubscribe { emitter: ObservableEmitter<Socket> ->
-                try {
-                    val socket = Socket(ip, port)
-                    emitter.onNext(socket)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    FcUtils.showToast("无法连接对方,请稍后再试")
-                } finally {
-                    emitter.onComplete()
-                }
-            } as ObservableOnSubscribe<Socket>)
-            .compose(IOUtils.setThread())
-            .subscribe { socket: Socket ->
-                mSocket = socket
-                if (socket != null) {
-                    Log.w("IM服务器", "发送地址:${socket.localSocketAddress}/${socket.remoteSocketAddress}");
-                    mOutStream = socket.getOutputStream()
-                    mInStream = socket.getInputStream()
-                    //启动轮询
-                    startReader()
-                } else {
-                    mOutStream = null
-                    mInStream = null
-                }
-            }
-    }
-
-    /**
-     * 启动消息遍历器
-     */
-    private fun startReader() {
-        ThreadManager.getThreadPool().execute {
-            val reader: DataInputStream
-            try {
-                // 获取读取流
-                reader = DataInputStream(mInStream)
-                while (mInStream != null) {
-                    Log.w("IM服务器", "2等待消息中...");
-                    // 读取数据
-                    val msg = reader.readUTF()
-                    Log.w("IM服务器", "获取到客户端的信息2:" + msg);
-                    //告知客户端消息收到
-//                    if (mCurrentSocket != null) {
-//                        DataOutputStream writer = new DataOutputStream(mOutputStream);
-//                        writer.writeUTF(msg); // 写一个UTF-8的信息
-//                    }
-                }
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
+        userId?.let {
+            mModel.sendChat(it, text)
         }
+        mClient.send(text)
     }
 
     /**
@@ -278,6 +203,29 @@ class ImChatFragment : KindFragment<FragmentImChatBinding, ImViewModel>() {
             val isCurrent = data.userId == mModel.currentUserId
             binding.ivOppo.visibility = if (isCurrent) View.INVISIBLE else View.VISIBLE
             binding.ivMine.visibility = if (isCurrent) View.VISIBLE else View.INVISIBLE
+            //头像
+            mModel.getUserInfo(data.userId) {
+                Glide.with(FcUtils.getContext())
+                    .load(it.photo)
+                    .apply(
+                        RequestOptions()
+                            .override(binding.ivMine.width, binding.ivMine.height)
+                            .placeholder(R.drawable.ic_head_sample01)
+                            .error(R.drawable.ic_head_sample01)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    )
+                    .into(binding.ivMine)
+                Glide.with(FcUtils.getContext())
+                    .load(it.photo)
+                    .apply(
+                        RequestOptions()
+                            .override(binding.ivOppo.width, binding.ivOppo.height)
+                            .placeholder(R.drawable.ic_head_sample02)
+                            .error(R.drawable.ic_head_sample02)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    )
+                    .into(binding.ivOppo)
+            }
         }
     }
 }

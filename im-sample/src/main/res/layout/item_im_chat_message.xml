@@ -13,26 +13,26 @@
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
         android:id="@+id/iv_oppo"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@mipmap/ic_launcher"
-        app:round="24dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:src="@drawable/ic_head_sample02"
+        app:round="21dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="16dp"
         android:scaleType="centerCrop"
         />
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
         android:id="@+id/iv_mine"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@mipmap/ic_launcher"
-        app:round="24dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:src="@drawable/ic_head_sample01"
+        app:round="21dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="16dp"
         android:scaleType="centerCrop"
         />
@@ -44,15 +44,14 @@
         android:text="message"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
-        android:minHeight="48dp"
+        android:minHeight="42dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintLeft_toRightOf="@id/iv_oppo"
         app:layout_constraintRight_toLeftOf="@id/iv_mine"
         android:layout_marginHorizontal="8dp"
         android:background="@drawable/round_dp8"
-        android:elevation="2dp"
-        android:padding="16dp"
+        android:padding="10dp"
         android:lineSpacingExtra="2dp"
         android:letterSpacing="0.05"
         />
@@ -67,9 +66,8 @@
         app:layout_constraintTop_toBottomOf="@id/tv_content"
         app:layout_constraintRight_toRightOf="@id/tv_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

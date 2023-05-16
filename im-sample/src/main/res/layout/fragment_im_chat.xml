@@ -16,16 +16,23 @@
         android:id="@id/bar_root"
         layout="@layout/inset_bar" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/container"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:overScrollMode="never"
-        android:scrollbars="none"
         app:layout_constraintTop_toBottomOf="@id/bar_root"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <LinearLayout
