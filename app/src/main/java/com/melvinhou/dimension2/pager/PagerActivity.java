@@ -10,7 +10,6 @@ import android.view.View;
 import com.melvinhou.dimension2.PairEntity;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.dimension2.databinding.ActPagerBD;
-import com.melvinhou.dimension2.media.music.MusicPlayerActivity;
 import com.melvinhou.kami.mvvm.DataBindingActivity;
 import com.melvinhou.rxjava.rxbus.RxBus;
 import com.melvinhou.rxjava.rxbus.RxBusClient;

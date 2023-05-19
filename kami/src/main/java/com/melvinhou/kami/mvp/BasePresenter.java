@@ -13,8 +13,11 @@ import com.melvinhou.rxjava.rxbus.RxBusMessage;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
+import androidx.lifecycle.ViewModelProvider;
 
 /**
  * ===========================================================
@@ -29,7 +32,7 @@ import androidx.lifecycle.OnLifecycleEvent;
  * = 分 类 说 明：实现mvp-p中需要实现的方法
  * ============================================================
  */
-public abstract class BasePresenter<V extends MvpView, M extends MvpModel> implements LifecycleObserver, MvpPresenter<V, M> {
+public abstract class BasePresenter<V extends MvpView, M extends MvpModel> implements LifecycleEventObserver, MvpPresenter<V, M> {
 
     //mvp
     private V mView;
@@ -38,11 +41,13 @@ public abstract class BasePresenter<V extends MvpView, M extends MvpModel> imple
     /*RxBus的接收器*/
     private RxBusClient mRxBusClient;
 
-    public BasePresenter(V view, M model) {
+    public BasePresenter(V view) {
         mView = view;
-        mModel = model;
-        model.setPresenter(this);
+        mModel = openModel(view.getViewModelProvider());
+        mModel.setPresenter(this);
     }
+
+    protected abstract M openModel(ViewModelProvider provider);
 
     @Override
     public V getView() {
@@ -59,38 +64,73 @@ public abstract class BasePresenter<V extends MvpView, M extends MvpModel> imple
         return this;
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    protected void onCreate() {
-        bindRxBus();
+
+    /**
+     * 刷新数据
+     */
+    protected void refreshData(boolean isActive) {
+
     }
 
+    /**
+     * 网络状态改变
+     *
+     * @param isLink
+     */
+    public void changeNetworkState(boolean isLink) {
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    protected void onResume() {
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    protected void onStart() {
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    protected void onStop() {
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    protected void onPause() {
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    public void onDestroy() {
-        if (mRxBusClient != null) {
-            mRxBusClient.cancel();
-            mRxBusClient = null;
+    @Override
+    public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
+        switch (event) {
+            case ON_CREATE:
+                onCreate();
+                if (openRxBus()) bindRxBus();
+                break;
+            case ON_START:
+                break;
+            case ON_RESUME:
+                onResume();
+                refreshData(false);
+                break;
+            case ON_PAUSE:
+                onPause();
+                break;
+            case ON_STOP:
+                break;
+            case ON_DESTROY:
+                if (mRxBusClient != null) {
+                    mRxBusClient.cancel();
+                    mRxBusClient = null;
+                }
+                onClose();
+                break;
         }
     }
 
+    protected  void onCreate(){}
+    protected  void onResume(){}
+    protected  void onPause(){}
+    protected  void onClose(){}
 
-    /**注册绑定rxbus*/
+
+
+//=================================RxBus=========================================//
+
+    /**
+     * 是否启用RxBus
+     *
+     * @return
+     */
+    protected boolean openRxBus() {
+        return true;
+    }
+
+
+    /**
+     * 注册绑定rxbus
+     */
     private void bindRxBus() {
         mRxBusClient = new RxBusClient(getRxBusClientId()) {
             @Override
@@ -150,38 +190,7 @@ public abstract class BasePresenter<V extends MvpView, M extends MvpModel> imple
         }
         //刷新数据
         if (RxBusMessage.CommonType.DATA_REFRESH.equals(type)) {
-            refreshData();
+            refreshData(true);
         }
-    }
-
-
-    /**
-     * 刷新数据
-     */
-    protected void refreshData() {
-
-    }
-
-    /**
-     * 网络状态改变
-     *
-     * @param isLink
-     */
-    public void changeNetworkState(boolean isLink) {
-
-    }
-
-    @Override
-    public void startLoading() {
-        getView().showLoadingView(true);
-        getView().changeRequestState(RequestState.RUNNING);
-    }
-
-
-    @Override
-    public void endLoading(@RequestState int state) {
-        getView().changeRequestState(state);//加载改变状态
-        if (state == ResultState.SUCCESS)
-            getView().hideLoadingView();//正常时隐藏加载
     }
 }

@@ -58,7 +58,6 @@ class AudioRecordActivity : BaseActivity() {
     override fun initView() {
         findViewById<TextView>(R.id.title)?.text = "音频录制"
         mModel = ViewModelProvider(this).get(RecordModel::class.java)
-        mModel.register()
         mContainer = findViewById(R.id.container)
         mPlay = findViewById(R.id.bt_play)
         mDuration = findViewById(R.id.tv_duration)

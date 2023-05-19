@@ -2,10 +2,11 @@ package com.melvinhou.kami.mvp;
 
 import com.melvinhou.kami.mvp.interfaces.MvpPresenter;
 import com.melvinhou.kami.mvp.interfaces.MvpView;
-import com.melvinhou.kami.mvvm.DataBindingActivity;
+import com.melvinhou.kami.view.activities.BaseActivity2;
 
-import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.viewbinding.ViewBinding;
 
 /**
  * ===============================================
@@ -17,48 +18,34 @@ import androidx.lifecycle.LifecycleOwner;
  * <p>
  * = 时 间：2020/6/30 20:24
  * <p>
- * = 分 类 说 明：mvp页面顶层
+ * = 分 类 说 明：加个vb
  * ================================================
  */
-public abstract class MvpActivity2<P extends MvpPresenter, DB extends ViewDataBinding> extends DataBindingActivity<DB>
-        implements MvpView<P> {
+public abstract class MvpActivity2<VB extends ViewBinding, P extends MvpPresenter> extends MvpActivity<P>{
 
 
-    /*mvp-p*/
-    private P mPresenter;
+    private VB mBinding;
 
-
-    public P getPresenter() {
-        return mPresenter;
+    public VB getBinding() {
+        return mBinding;
     }
 
     @Override
-    public LifecycleOwner getLifecycleOwner() {
-        return this;
+    public ViewModelProvider getViewModelProvider() {
+        return new ViewModelProvider(this);
     }
 
     @Override
     protected void initActivity(int layoutId) {
-        mPresenter = upPresenter();
-        //使用新组件，监听activity生命周期
-        getLifecycle().addObserver(getPresenter().getLifecycleObserver());
+        mBinding = openViewBinding();
+        setContentView(mBinding.getRoot());
         super.initActivity(layoutId);
     }
 
-    /**
-     * 初始化p
-     * @return
-     */
-    protected abstract P upPresenter();
-
-
+    protected abstract VB openViewBinding();
 
     @Override
-    public void refresh() {
-    }
-
-    @Override
-    protected void onLoading() {
-
+    protected int getLayoutID() {
+        return 0;
     }
 }

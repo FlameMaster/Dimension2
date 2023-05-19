@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<com.melvinhou.tiktok_sample.widget.TikTokCommentLayout
+    android:id="@+id/root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    >
+
+    <TextView
+        android:id="@+id/comment_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="共1444条评论"
+        android:textColor="#444"
+        android:gravity="center_horizontal"
+        android:paddingVertical="12dp"
+        android:textSize="12sp"
+        />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        >
+        <LinearLayout
+            android:id="@+id/comments_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/comment_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:text="发送评论..."
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="16dp"
+        android:background="@color/colorAccent"
+        android:gravity="center_vertical"
+        android:drawableRight="@android:drawable/ic_menu_send"
+        android:drawablePadding="16dp"
+        android:maxLines="1"
+        android:includeFontPadding="false"
+        />
+</com.melvinhou.tiktok_sample.widget.TikTokCommentLayout>

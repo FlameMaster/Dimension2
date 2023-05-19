@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:drawable="@drawable/svg_dome_trimpath"
-    tools:ignore="NewApi">
-    <target
-        android:animation="@animator/dome_svg_trimpath"
-        android:name="path"/>
-</animated-vector>

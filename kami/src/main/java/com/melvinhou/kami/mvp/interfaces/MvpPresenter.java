@@ -26,15 +26,4 @@ public interface MvpPresenter<V extends MvpView, M extends MvpModel> {
      * @return
      */
     LifecycleObserver getLifecycleObserver();
-
-    /**
-     * 开始加载
-     */
-    void startLoading();
-
-    /**
-     * 结束加载
-     * @param state
-     */
-    void endLoading(@ResultState int state);
 }

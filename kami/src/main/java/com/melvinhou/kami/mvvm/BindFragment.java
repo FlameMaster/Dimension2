@@ -49,7 +49,6 @@ public abstract class BindFragment<VB extends ViewBinding, M extends BaseViewMod
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         mBinding = openViewBinding(inflater, container);
         mModel = new ViewModelProvider(getActivity()).get(openModelClazz());
-        mModel.register();
         //初始化
         initFragment();
         return mBinding.getRoot();
@@ -86,14 +85,6 @@ public abstract class BindFragment<VB extends ViewBinding, M extends BaseViewMod
     @Override
     protected void initData() {
 
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mModel != null)
-            mModel.cancel();
     }
 
 

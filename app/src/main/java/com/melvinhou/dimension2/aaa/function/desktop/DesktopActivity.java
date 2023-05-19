@@ -20,13 +20,13 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.kami.tool.GlideBlurTransformation;
-import com.melvinhou.dimension2.utils.PinYinUtil;
 import com.melvinhou.kami.adapter.RecyclerAdapter;
 import com.melvinhou.kami.adapter.RecyclerHolder;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.view.activities.BaseActivity;
+import com.sample.im_sample.util.PinYinUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -67,7 +67,7 @@ android {
             res.srcDirs =
                     [
                             'src/main/res',
-                            'src/main/res_media',
+//                            'src/main/res_media',
                             'src/main/res_game',
                             'src/main/res_function',
                             'src/main/aaa'
@@ -85,6 +85,7 @@ dependencies {
     api project(':game-sample')
     api project(':model3d-sample')
     api project(':im-sample')
+    api project(':tiktok-sample')
 
 
 

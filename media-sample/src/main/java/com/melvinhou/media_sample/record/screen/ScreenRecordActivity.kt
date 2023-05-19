@@ -79,7 +79,6 @@ class ScreenRecordActivity : SecreenRecordView() {
     override fun initView() {
         findViewById<TextView>(R.id.title)?.text = "屏幕录制"
         mModel = ViewModelProvider(this).get(RecordModel::class.java)
-        mModel.register()
         mContainer = findViewById(R.id.container)
         initList()
 

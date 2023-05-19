@@ -51,6 +51,21 @@ public abstract class MvpActivity<P extends MvpPresenter> extends BaseActivity2 
 
 
 
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
     @Override
     public void refresh() {
     }

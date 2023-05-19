@@ -59,57 +59,11 @@
             android:name=".prespace.SpacePreActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".media.picture.PictureActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".media.picture.AlbumActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".media.video.VideoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".media.video.VideoActivity2"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".media.picture.CameraActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".media.picture.ScanActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".media.music.MusicPlayerActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".media.music.MusicListActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".media.animation.SystemAnimationActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".media.animation.SvgAnimationActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".media.tiktok.TiktokActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ar.ARActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ar.ARActivity2"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ar.d3.D3Activity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ar.d3.D3ListActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
@@ -128,63 +82,12 @@
         <activity
             android:name=".aaa.function.document.zip.ZipActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".function.screenrecord.ScreenRecordActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".function.im.ImHomeActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".function.im.ImChatActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
 
         <meta-data
             android:name="com.google.ar.core"
             android:value="optional" /> <!-- "required"必须使用arcore or "optional"可以不使用. -->
 
-        <receiver
-            android:name=".media.music.MusicWidgetProvider"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
 
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/appwidget_info" />
-        </receiver>
-
-        <receiver
-            android:name=".function.screenrecord.ScreenRecordBroadcastReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="screen_record_stop" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name=".function.screenrecord.ScreenRecordService"
-            android:foregroundServiceType="mediaProjection"></service>
-
-        <service android:name=".media.video.MediaPlayerService" />
-
-        <!--
-             在API 21之前，MediaSession使用广播接收器与媒体会话通信。不一定非得是这个广播接收器,
-             但它必须处理行动"android.intent.action.MEDIA_BUTTON".
-             此外，这用于在接收到媒体按钮事件(如“play”)时从非活动状态恢复服务。
-             用于接受媒体播放的意图（MediaNotificationManager）
-             exported必须为false，不然退出时无法关闭通知栏
-        -->
-        <service
-            android:name=".media.music.MusicService"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.media.browse.MediaBrowserService" />
-            </intent-filter>
-        </service>
     </application>
 
     <supports-gl-texture android:name="GL_OES_compressed_ETC1_RGB8_texture" /> <!-- <uses-feature android:name="android.hardware.camera" -->

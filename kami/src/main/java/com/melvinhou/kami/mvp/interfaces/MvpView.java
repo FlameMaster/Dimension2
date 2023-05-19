@@ -3,6 +3,7 @@ package com.melvinhou.kami.mvp.interfaces;
 import com.melvinhou.kami.view.interfaces.BaseView;
 
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
 
 /**
  * ===============================================
@@ -20,6 +21,7 @@ import androidx.lifecycle.LifecycleOwner;
 public interface MvpView<P extends MvpPresenter> extends BaseView {
     P getPresenter();
     LifecycleOwner getLifecycleOwner();
+    ViewModelProvider getViewModelProvider();
 
 
 }

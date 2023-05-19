@@ -7,22 +7,15 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
-import android.widget.FrameLayout;
 
 import com.melvinhou.dimension2.R;
-import com.melvinhou.dimension2.ui.widget.NestedScrollLayout;
 import com.melvinhou.kami.util.DimenUtils;
-
-import java.lang.reflect.Field;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.NestedScrollingChild2;
 import androidx.core.view.NestedScrollingParent2;
 import androidx.core.view.NestedScrollingParentHelper;
 import androidx.core.view.ViewCompat;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 
 

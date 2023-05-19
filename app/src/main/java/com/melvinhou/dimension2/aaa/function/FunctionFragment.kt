@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import com.melvinhou.dimension2.aaa.function.desktop.DesktopActivity
 import com.melvinhou.dimension2.aaa.function.document.pdf.PdfActivity
 import com.melvinhou.dimension2.aaa.function.document.zip.ZipActivity
+import com.melvinhou.tiktok_sample.TiktokActivity
 import com.melvinhou.dimension2.databinding.FragmentFunctionBinding
 import com.melvinhou.dimension2.net.HttpConstant
 import com.melvinhou.kami.mvvm.BaseViewModel
@@ -58,6 +59,9 @@ class FunctionFragment  : KindFragment<FragmentFunctionBinding, BaseViewModel>()
                 putSerializable("fragment", ImTcpChatFragment::class.java)
                 toActivity<FragmentContainActivity>(this)
             }
+        }
+        mBinding.inFunMedia.root.getChildAt(0).setOnClickListener {
+            toActivity<TiktokActivity>()
         }
         mBinding.inFunSys.root.getChildAt(0).setOnClickListener {
             toActivity<DesktopActivity>()

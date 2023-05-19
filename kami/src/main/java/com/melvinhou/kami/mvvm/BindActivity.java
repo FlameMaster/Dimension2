@@ -33,7 +33,6 @@ public abstract class BindActivity<VB extends ViewBinding, M extends BaseViewMod
         mBinding = openViewBinding();
         setContentView(mBinding.getRoot());
         mModel = new ViewModelProvider(this).get(openModelClazz());
-        mModel.register();
         super.initActivity(layoutId);
     }
 
@@ -50,14 +49,6 @@ public abstract class BindActivity<VB extends ViewBinding, M extends BaseViewMod
     @Override
     protected void initData() {
 
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mModel != null)
-            mModel.cancel();
     }
 
 

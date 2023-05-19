@@ -13,14 +13,14 @@ package com.melvinhou.kami.mvp.interfaces;
  * = 分 类 说 明：mvp-m
  * ============================================================
  */
-public  interface MvpModel<P extends MvpPresenter>{
+public interface MvpModel<P extends MvpPresenter> {
     P getPresenter();
-    void setPresenter(P presenter);
 
+    void setPresenter(P presenter);
 
 
     /**
      * 加载网络数据数据
      */
-     void loadNetWorkData();
+    void loadNetWorkData();
 }

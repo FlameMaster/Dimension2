@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.melvinhou.kami.mvp.interfaces.MvpModel;
 import com.melvinhou.kami.mvp.interfaces.MvpPresenter;
+import com.melvinhou.kami.mvvm.BaseViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -21,7 +22,7 @@ import androidx.lifecycle.AndroidViewModel;
  * = 分 类 说 明：实现mvp-m中需要实现的方法
  * ============================================================
  */
-public abstract class BaseModel<P extends MvpPresenter> extends AndroidViewModel implements MvpModel<P> {
+public abstract class BaseModel<P extends MvpPresenter> extends BaseViewModel implements MvpModel<P> {
 
     /*mvp-p*/
     private P mPresenter;

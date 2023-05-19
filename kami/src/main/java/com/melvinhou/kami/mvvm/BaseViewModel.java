@@ -36,6 +36,7 @@ import io.reactivex.schedulers.Schedulers;
 public class BaseViewModel extends AndroidViewModel {
     public BaseViewModel(@NonNull Application application) {
         super(application);
+        register();
     }
 
 //***********************************状态管理*********************************************//
@@ -72,13 +73,16 @@ public class BaseViewModel extends AndroidViewModel {
         updateState(RequestState.READY);
     }
 
-    //注销
-    public void cancel() {
+
+    @Override
+    protected void onCleared() {
+        //注销
         if (mDisposable != null) {
 //            mDisposable.dispose();
             mDisposable.clear();
             mDisposable = null;
         }
+
     }
 
     /**
