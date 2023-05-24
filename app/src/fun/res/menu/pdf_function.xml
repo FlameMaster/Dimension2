@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".a_inset.PictureActivity">
+
+
+    <item
+        android:id="@+id/signature"
+        android:icon="@drawable/ic_pdf_signature"
+        android:orderInCategory="90"
+        android:title="签字"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/save"
+        android:title="保存到本地"
+        app:showAsAction="collapseActionView"/>
+
+    <item
+        android:id="@+id/zoom"
+        android:orderInCategory="100"
+        android:title="占个位置"
+        app:showAsAction="never"/>
+
+</menu>

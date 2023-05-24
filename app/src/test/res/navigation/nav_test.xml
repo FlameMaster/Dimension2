@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    android:id="@+id/nav_test_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/nav_test_start"
+    >
+
+    <fragment
+        android:id="@+id/nav_test_start"
+        android:name="com.melvinhou.test.TestStartFragment"
+        android:label="实验室说明" />
+
+    <fragment
+        android:id="@+id/test00"
+        android:name="com.melvinhou.test.t00.TestFragment00"
+        android:label="自定义控件" />
+
+    <fragment
+        android:id="@+id/test01"
+        android:name="com.melvinhou.test.t01.TestFragment01"
+        android:label="相册查看器" />
+    <fragment
+        android:id="@+id/test02"
+        android:name="com.melvinhou.test.t02.TestFragment02"
+        android:label="列表-流星效果" />
+    <fragment
+        android:id="@+id/test03"
+        android:name="com.melvinhou.test.t03.TestFragment03"
+        android:label="嵌套滑动01" />
+    <fragment
+        android:id="@+id/test04"
+        android:name="com.melvinhou.test.t04.TestFragment04"
+        android:label="列表-加载" />
+    <fragment
+        android:id="@+id/test05"
+        android:name="com.melvinhou.test.t05.TestFragment05"
+        android:label="列表-卡片切换效果" />
+
+</navigation>

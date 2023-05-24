@@ -69,6 +69,10 @@
         <item name="android:windowEnterAnimation">@anim/anim_page_bottom_enter</item>
         <item name="android:windowExitAnimation">@anim/anim_page_bottom_exit</item>
     </style>
+    <style name="Animation.Dialog.Top" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/anim_page_top_enter</item>
+        <item name="android:windowExitAnimation">@anim/anim_page_top_exit</item>
+    </style>
     <style name="Animation.Dialog.Center" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/anim_page_center_enter</item>
         <item name="android:windowExitAnimation">@anim/anim_page_center_exit</item>

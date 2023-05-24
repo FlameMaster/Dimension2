@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:background="@color/silver"
+    >
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/imageView"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        app:srcCompat="@mipmap/fc"
+        app:round="8dp"
+        android:layout_marginTop="48dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="实验室"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_marginTop="16dp"
+        />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="选择测试页面"
+        />
+
+</LinearLayout>

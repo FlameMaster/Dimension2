@@ -103,7 +103,7 @@
         android:text="复位"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:background="@drawable/bg_radius"
+        android:background="@drawable/bg_round"
         android:backgroundTint="#16f"
         android:paddingVertical="8dp"
         android:layout_marginHorizontal="24dp"

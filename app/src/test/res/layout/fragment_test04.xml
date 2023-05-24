@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.melvinhou.test.t04.NestedSwipeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/top_swipe_view"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:text="这是下拉的控件"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:background="@drawable/round_dp8_s1"
+        />
+    <TextView
+        android:id="@+id/bottom_swipe_view"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:text="这是上拉的控件"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:background="@drawable/round_dp8_s1"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        />
+
+
+</com.melvinhou.test.t04.NestedSwipeLayout>

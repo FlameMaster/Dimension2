@@ -22,7 +22,6 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@id/bar_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@{bg!=null?bg:@color/white}"

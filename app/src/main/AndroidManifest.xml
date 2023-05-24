@@ -23,7 +23,7 @@
         android:theme="@style/Dimension2Theme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".aaa.MainActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".test.TestActivity"
+            android:name="com.melvinhou.test.TestActivity"
             android:exported="true">
             <!-- 隐式意图打开app -->
             <intent-filter>
@@ -67,10 +67,10 @@
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".aaa.function.document.pdf.PdfActivity"
+            android:name="com.melvinhou.fun.document.pdf.PdfActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".aaa.function.desktop.DesktopActivity"
+            android:name="com.melvinhou.fun.desktop.DesktopActivity"
             android:screenOrientation="portrait">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -80,7 +80,7 @@
             <!--            </intent-filter>-->
         </activity>
         <activity
-            android:name=".aaa.function.document.zip.ZipActivity"
+            android:name="com.melvinhou.fun.document.zip.ZipActivity"
             android:screenOrientation="portrait" />
 
         <meta-data

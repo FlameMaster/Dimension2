@@ -39,9 +39,9 @@ public class RoundLayout extends ConstraintLayout {
     public RoundLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RoundImageView);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RoundView);
         roundLayoutRadius = typedArray
-                .getDimensionPixelSize(R.styleable.RoundImageView_corner_radius,
+                .getDimensionPixelSize(R.styleable.RoundView_corner_radius,
                         (int) roundLayoutRadius);
         typedArray.recycle();
 

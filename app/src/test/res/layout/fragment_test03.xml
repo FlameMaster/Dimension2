@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.melvinhou.test.t03.Test3View
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+<!--    封面-->
+    <com.melvinhou.test.t03.NestedScrollChildView
+        android:id="@+id/mCover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/img_d3_andy"
+            android:scaleType="centerCrop"
+            />
+
+    </com.melvinhou.test.t03.NestedScrollChildView>
+<!--    个人信息-->
+    <include layout="@layout/inset_test03_top"/>
+    <TextView
+        android:id="@+id/mIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:text="这是指示器"
+        android:textColor="@color/black"
+        android:background="#ccc"
+        />
+<!--    主区域-->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/mScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:text="@string/text_sample"
+                android:padding="16dp"
+                />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+<!--    标题栏-->
+    <include
+        android:id="@id/bar_root"
+        layout="@layout/inset_bar"/>
+
+</com.melvinhou.test.t03.Test3View>

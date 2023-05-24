@@ -13,7 +13,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 33
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -51,7 +51,6 @@ android {
     }
     buildFeatures {
         dataBinding = true
-        // for view binding :
         viewBinding = true
     }
     compileOptions {
@@ -62,16 +61,17 @@ android {
 
     sourceSets {
         main {
+            java.srcDirs = [
+                    'src/main/java',
+                    'src/test/java',//一些演示dome
+                    'src/fun/java'//更复杂的功能演示
+            ]
             jniLibs.srcDirs = ['libs']
-            //配置res文件目录：
-            res.srcDirs =
-                    [
-                            'src/main/res',
-//                            'src/main/res_media',
-                            'src/main/res_game',
-                            'src/main/res_function',
-                            'src/main/aaa'
-                    ]
+            res.srcDirs = [
+                    'src/main/res',
+                    'src/test/res',
+                    'src/fun/res'
+            ]
         }
     }
 }
@@ -86,7 +86,6 @@ dependencies {
     api project(':model3d-sample')
     api project(':im-sample')
     api project(':tiktok-sample')
-
 
 
     implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.8.1'

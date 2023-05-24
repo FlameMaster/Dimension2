@@ -176,7 +176,8 @@ public abstract class FcCameraActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        stopVideoRecord();
+        if (mCameraMode == CAMERA_MODE_VIDEO)
+            stopVideoRecord();
     }
 
     /**
@@ -236,7 +237,7 @@ public abstract class FcCameraActivity extends BaseActivity {
      * @param mode
      */
     protected void changeCameraMode(@CameraMode int mode) {
-        if (camera==null) return;
+        if (camera == null) return;
         mCameraMode = mode;
         startCamera();
     }
@@ -245,7 +246,7 @@ public abstract class FcCameraActivity extends BaseActivity {
      * 切换前后摄像头
      */
     protected void changeLensFacing() {
-        if (camera==null) return;
+        if (camera == null) return;
         int lensFacing = mLensFacing;
         if (mLensFacing != CameraSelector.LENS_FACING_BACK) {
             lensFacing = CameraSelector.LENS_FACING_BACK;

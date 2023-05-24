@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/ripple_down"
+    android:background="@drawable/button_down_ripple"
     tools:ignore="MissingDefaultResource">
 
     <TextView
