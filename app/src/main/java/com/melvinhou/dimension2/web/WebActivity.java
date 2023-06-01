@@ -557,12 +557,12 @@ public class WebActivity extends DataBindingActivity<ActWebBD> {
                 //权限获取
                 PermissionUtil.PermissionGrant permissionGrant = new PermissionUtil.PermissionGrant() {
                     @Override
-                    public void onPermissionGranted(int requestCode) {
+                    public void onPermissionGranted() {
                         takePhoto();
                     }
 
                     @Override
-                    public void onPermissionCancel(int requestCode) {
+                    public void onPermissionCancel() {
                         String appName = ResourcesUtils.getString(R.string.app_name);
                         //必要权限判断
                         showCheckView(new DialogCheckBuilder(
@@ -587,17 +587,17 @@ public class WebActivity extends DataBindingActivity<ActWebBD> {
     }
 
     @Override
-    protected void onPermissionGranted(int requestCode) {
-        super.onPermissionGranted(requestCode);
+    protected void onPermissionGranted() {
+        super.onPermissionGranted();
         if (permissionGrant != null)
-            permissionGrant.onPermissionGranted(requestCode);
+            permissionGrant.onPermissionGranted();
     }
 
     @Override
-    protected void onPermissionCancel(int requestCode) {
-        super.onPermissionCancel(requestCode);
+    protected void onPermissionCancel() {
+        super.onPermissionCancel();
         if (permissionGrant != null)
-            permissionGrant.onPermissionCancel(requestCode);
+            permissionGrant.onPermissionCancel();
     }
 
     /**

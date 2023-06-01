@@ -129,7 +129,7 @@ public class BaseViewModel extends AndroidViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(entity -> {
                     Log.w("BaseViewModel——",
-                            "返回数据：code=" + entity.getCode() + "\ndata=" + entity.getData());
+                            "返回数据：code=" + entity.getCode() + "\ndata=" + entity.toString());
                     return entity;
                 });
     }

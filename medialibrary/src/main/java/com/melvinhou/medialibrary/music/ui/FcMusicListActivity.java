@@ -181,8 +181,8 @@ public class FcMusicListActivity extends BaseActivity {
     }
 
     @Override
-    protected void onPermissionGranted(int requestCode) {
-        super.onPermissionGranted(requestCode);
+    protected void onPermissionGranted() {
+        super.onPermissionGranted();
         //权限申请成功
         initData();
     }

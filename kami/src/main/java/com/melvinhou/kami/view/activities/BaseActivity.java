@@ -433,9 +433,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void requestPermissions(String[] permissions) {
         //请求授予此应用程序的权限
         ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_PERMISSIONS);
-        registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
-
-        }).launch(permissions);
     }
 
     /**
@@ -451,26 +448,22 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         //权限判断
-        if (checkPermission(grantResults)) onPermissionGranted(requestCode);
-        else onPermissionCancel(requestCode);
+        if (checkPermission(grantResults)) onPermissionGranted();
+        else onPermissionCancel();
 
     }
 
     /**
      * 获取权限回调
-     *
-     * @param requestCode
      */
-    protected void onPermissionGranted(int requestCode) {
+    protected void onPermissionGranted() {
         Log.i(getClass().getName(), "权限授予成功");
     }
 
     /**
      * 获取权限回调
-     *
-     * @param requestCode
      */
-    protected void onPermissionCancel(int requestCode) {
+    protected void onPermissionCancel() {
         Log.w(getClass().getName(), "权限授予失败");
     }
 

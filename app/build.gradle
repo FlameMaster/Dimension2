@@ -80,10 +80,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(':kami')
     api project(':knight')
-    api project(':medialibrary')
     api project(':media-sample')
     api project(':game-sample')
     api project(':model3d-sample')
+    api project(':ar-sample')
     api project(':im-sample')
     api project(':tiktok-sample')
 

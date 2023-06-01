@@ -60,13 +60,12 @@ public class LoadDialog extends ProgressDialog {
     }
 
     public void show(String text) {
+        if (!isShowing())
+            show();
         TextView tv = findViewById(R.id.tv_load_dialog);
         if (tv != null) {
             tv.setText(text);
             tv.setVisibility(TextUtils.isEmpty(text) ? View.GONE : View.VISIBLE);
         }
-
-        if (!isShowing())
-            show();
     }
 }

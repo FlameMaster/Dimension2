@@ -84,10 +84,10 @@ public class PermissionUtil {
 
     public interface PermissionGrant {
         //成功授权
-        void onPermissionGranted(int requestCode);
+        void onPermissionGranted();
 
         //授权失败
-        void onPermissionCancel(int requestCode);
+        void onPermissionCancel();
     }
 
     /**
@@ -151,7 +151,7 @@ public class PermissionUtil {
 ////            Toast.makeText(activity, "opened:" + requestPermissions[requestCode], Toast.LENGTH_SHORT).show();
             //得到权限的时候，就可以在回调里面做你想做的事情了
             if (permissionGrant != null)
-                permissionGrant.onPermissionGranted(requestCode);
+                permissionGrant.onPermissionGranted();
         }
     }
 
@@ -177,7 +177,7 @@ public class PermissionUtil {
 //            Toast.makeText(activity, "all permission success" + notGranted, Toast.LENGTH_SHORT)
 //                    .show();
             if (permissionGrant != null)
-                permissionGrant.onPermissionGranted(CODE_MULTI_PERMISSION);
+                permissionGrant.onPermissionGranted();
         } else {
             openSettingActivity(activity, "those permission need granted!", permissionGrant);
         }
@@ -215,7 +215,7 @@ public class PermissionUtil {
                         }
                     }, grant);
         } else {
-            grant.onPermissionGranted(CODE_MULTI_PERMISSION);
+            grant.onPermissionGranted();
         }
 
     }
@@ -248,7 +248,7 @@ public class PermissionUtil {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (permissionGrant != null)
-                                    permissionGrant.onPermissionCancel(-1);
+                                    permissionGrant.onPermissionCancel();
                             }
                         })
                 .create()
@@ -287,7 +287,7 @@ public class PermissionUtil {
         if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "onRequestPermissionsResult PERMISSION_GRANTED");
             if (permissionGrant != null)
-                permissionGrant.onPermissionGranted(requestCode);
+                permissionGrant.onPermissionGranted();
 
         } else {
             Log.i(TAG, "onRequestPermissionsResult PERMISSION NOT GRANTED");

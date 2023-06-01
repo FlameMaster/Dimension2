@@ -3,16 +3,20 @@ package com.melvinhou.model3d_sample.model;
 import android.graphics.Bitmap;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
-import android.util.Log;
 
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.model3d_sample.D3Config;
-import com.melvinhou.model3d_sample.ShaderUtil;
+import com.melvinhou.opengllibrary.d3.D3Config;
+import com.melvinhou.opengllibrary.d3.entity.D3Object;
+import com.melvinhou.opengllibrary.utils.ShaderUtil;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
+
+import de.javagl.obj.Obj;
+import de.javagl.obj.ObjFace;
+import de.javagl.obj.ObjGroup;
 
 /**
  * ===============================================
@@ -27,7 +31,7 @@ import java.nio.FloatBuffer;
  * = 分 类 说 明：
  * ================================================
  */
-public class D3Player1Obj implements D3Object{
+public class D3Player1Obj implements D3Object {
     private static final String TAG = D3Player1Obj.class.getSimpleName();
     //着色器代码
     private static final String VERTEX_SHADER_NAME = "ar/shaders/player1_vert.sh";
@@ -66,17 +70,48 @@ public class D3Player1Obj implements D3Object{
     //object color property (to change the primary color of the object).对象颜色属性(更改对象的原色)
     private int colorUniform;
 
-    public D3Player1Obj(String groupName, float[] vertices, float[] normals, float[] texCoords, Bitmap bitmap, D3Config config) {
-        Log.e("模型绘制", "当前：" + groupName);
-        initVertexData(vertices, normals, texCoords,config);
-        initTexture(bitmap);
-        //初始化shader
-        try {
-            initShader();
-        } catch (IOException e) {
-            e.printStackTrace();
+
+    @Override
+    public void loadData(Obj obj, ObjGroup group, Bitmap texture) throws IOException {
+        //加载顶点
+        float[] vertices = new float[group.getNumFaces() * 3 * 3];
+        float[] normals = new float[group.getNumFaces() * 3 * 3];
+        float[] texCoords = new float[group.getNumFaces() * 3 * 2];
+        int vNum = 0, nNum = 0, tNum = 0;
+        for (int i = 0; i < group.getNumFaces(); i++) {
+            ObjFace face = group.getFace(i);
+            for (int j = 0; j < face.getNumVertices(); j++) {
+                vertices[vNum++] =
+                        obj.getVertex(face.getVertexIndex(j)).get(0);
+                vertices[vNum++] =
+                        obj.getVertex(face.getVertexIndex(j)).get(1);
+                vertices[vNum++] =
+                        obj.getVertex(face.getVertexIndex(j)).get(2);
+
+                if (obj.getNumNormals() > 0) {
+                    normals[nNum++] =
+                            obj.getNormal(face.getNormalIndex(j)).get(0);
+                    normals[nNum++] =
+                            obj.getNormal(face.getNormalIndex(j)).get(1);
+                    normals[nNum++] =
+                            obj.getNormal(face.getNormalIndex(j)).get(2);
+                }
+
+                texCoords[tNum++] =
+                        obj.getTexCoord(face.getTexCoordIndex(j)).get(0);
+                texCoords[tNum++] =
+                        obj.getTexCoord(face.getTexCoordIndex(j)).get(1);
+            }
         }
+        initVertexData(vertices, normals, texCoords);
+        //加载纹理
+        initTexture(texture);
+        //加载着色器
+        initShader();
     }
+
+
+
 
     /**
      * 加载纹理
@@ -108,7 +143,16 @@ public class D3Player1Obj implements D3Object{
         textureId = textures[0];
     }
 
-    private void initVertexData(float[] vertices, float[] normals, float[] texCoords, D3Config config) {
+
+
+    //光源位置（Player1）
+    public float[] lightLocation = new float[]{0, 0, 100};
+
+
+    private void initVertexData(float[] vertices, float[] normals, float[] texCoords) {
+        //当前配置
+        D3Config config = D3Config.instance(false);
+
         vertexCount = vertices.length / 3;
 
         ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length * 4);
@@ -133,14 +177,14 @@ public class D3Player1Obj implements D3Object{
         ByteBuffer llbb = ByteBuffer.allocateDirect(3 * 4);
         llbb.order(ByteOrder.nativeOrder());//设置字节顺序
         lightPositionFB = llbb.asFloatBuffer();
-        lightPositionFB.put(config.lightLocation);
+        lightPositionFB.put(lightLocation);
         lightPositionFB.position(0);
 
         //摄像机位置
         float[] cameraLocation = new float[3];
-        cameraLocation[0] = config.eye_x;
-        cameraLocation[1] = config.eye_y;
-        cameraLocation[2] = config.eye_z;
+        cameraLocation[0] = config.look_eye_x;
+        cameraLocation[1] = config.look_eye_y;
+        cameraLocation[2] = config.look_eye_z;
         ByteBuffer cbb = ByteBuffer.allocateDirect(3 * 4);
         cbb.order(ByteOrder.nativeOrder());//设置字节顺序
         cameraFB = cbb.asFloatBuffer();
@@ -184,7 +228,7 @@ public class D3Player1Obj implements D3Object{
 
 
     @Override
-    public void onDraw(
+    public void doDraw(
             float[] mMatrix,
             float[] mvpMatrix) {
 

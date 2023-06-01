@@ -36,6 +36,7 @@ android {
 dependencies {
     api project(':kami')
     api project(':knight')
+    api project(':opengllibrary')
 
 
 

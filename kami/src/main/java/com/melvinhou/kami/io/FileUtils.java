@@ -158,6 +158,25 @@ public class FileUtils {
 //***********************************本地文件操作*********************************************//
 
 
+
+    /****
+     * 计算文件大小
+     *
+     * @param length
+     * @return
+     */
+    public static String getFileSizeText(Long length) {
+        if (length >= 1048576) {
+            return (length / 1048576) + "MB";
+        } else if (length >= 1024) {
+            return (length / 1024) + "KB";
+        } else if (length < 1024) {
+            return length + "B";
+        } else {
+            return "0KB";
+        }
+    }
+
     /**
      * 获取文件夹大小
      *

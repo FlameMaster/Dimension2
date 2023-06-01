@@ -112,7 +112,7 @@ class AudioRecordActivity : BaseActivity() {
         }
     }
 
-    override fun onPermissionGranted(requestCode: Int) {
+    override fun onPermissionGranted() {
 //        super.onPermissionGranted(requestCode)
         //权限申请成功
         launchRecord()

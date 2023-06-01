@@ -3,6 +3,7 @@ package com.melvinhou.dimension2.home
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.melvinhou.ar_sample.sample.ArSampleListActivity
 import com.melvinhou.`fun`.desktop.DesktopActivity
 import com.melvinhou.`fun`.document.pdf.PdfActivity
 import com.melvinhou.`fun`.document.zip.ZipActivity
@@ -12,6 +13,7 @@ import com.melvinhou.dimension2.net.HttpConstant
 import com.melvinhou.kami.mvvm.BaseViewModel
 import com.melvinhou.knight.FragmentContainActivity
 import com.melvinhou.knight.KindFragment
+import com.melvinhou.model3d_sample.sample.D3SampleListActivity
 import com.sample.im_sample.ImHomeActivity
 import com.sample.im_sample.tcp.ImTcpChatFragment
 
@@ -59,6 +61,12 @@ class FunctionFragment  : KindFragment<FragmentFunctionBinding, BaseViewModel>()
                 putSerializable("fragment", ImTcpChatFragment::class.java)
                 toActivity<FragmentContainActivity>(this)
             }
+        }
+        mBinding.inFunVr.root.getChildAt(0).setOnClickListener {
+            toActivity<D3SampleListActivity>()
+        }
+        mBinding.inFunVr.root.getChildAt(1).setOnClickListener {
+            toActivity<ArSampleListActivity>()
         }
         mBinding.inFunMedia.root.getChildAt(0).setOnClickListener {
             toActivity<TiktokActivity>()

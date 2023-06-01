@@ -4,16 +4,20 @@ import android.graphics.Bitmap;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
-import android.util.Log;
 
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.model3d_sample.D3Config;
-import com.melvinhou.model3d_sample.ShaderUtil;
+import com.melvinhou.opengllibrary.d3.D3Config;
+import com.melvinhou.opengllibrary.d3.entity.D3Object;
+import com.melvinhou.opengllibrary.utils.ShaderUtil;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
+
+import de.javagl.obj.Obj;
+import de.javagl.obj.ObjFace;
+import de.javagl.obj.ObjGroup;
 
 /**
  * ===============================================
@@ -31,14 +35,12 @@ import java.nio.FloatBuffer;
 public class D3DomeObj implements D3Object {
     private static final String TAG = D3DomeObj.class.getSimpleName();
     //着色器代码
-    private static final String DOME_VERTEX_SHADER_NAME = "ar/shaders/dome.vert";
-    private static final String DOME_FRAGMENT_SHADER_NAME = "ar/shaders/dome.frag";
+    private static final String DOME_VERTEX_SHADER_NAME = "d3/shaders/dome.vert";
+    private static final String DOME_FRAGMENT_SHADER_NAME = "d3/shaders/dome.frag";
     private static final String VERTEX_SHADER_NAME = "ar/shaders/object.vert";
     private static final String FRAGMENT_SHADER_NAME = "ar/shaders/object.frag";
     private String vertex_shader_name = DOME_VERTEX_SHADER_NAME;
     private String fragment_shader_name = DOME_FRAGMENT_SHADER_NAME;
-
-    private D3Config mConfig;
 
     //顶点数
     private int vertexCount;
@@ -72,21 +74,45 @@ public class D3DomeObj implements D3Object {
     //object color property (to change the primary color of the object).对象颜色属性(更改对象的原色)
     private int colorUniform;
 
-    public D3DomeObj(String groupName, float[] vertices, float[] normals, float[] texCoords, Bitmap bitmap, D3Config config) {
-        Log.e("模型绘制", "当前：" + groupName);
-        mConfig = config;
-        if (config.texture_type == 2) {
-            vertex_shader_name = VERTEX_SHADER_NAME;
-            fragment_shader_name = FRAGMENT_SHADER_NAME;
+
+    @Override
+    public void loadData(Obj obj, ObjGroup group, Bitmap texture) throws IOException {
+
+        //加载顶点
+        float[] vertices = new float[group.getNumFaces() * 3 * 3];
+        float[] normals = new float[group.getNumFaces() * 3 * 3];
+        float[] texCoords = new float[group.getNumFaces() * 3 * 2];
+        int vNum = 0, nNum = 0, tNum = 0;
+        for (int i = 0; i < group.getNumFaces(); i++) {
+            ObjFace face = group.getFace(i);
+            for (int j = 0; j < face.getNumVertices(); j++) {
+                vertices[vNum++] =
+                        obj.getVertex(face.getVertexIndex(j)).get(0);
+                vertices[vNum++] =
+                        obj.getVertex(face.getVertexIndex(j)).get(1);
+                vertices[vNum++] =
+                        obj.getVertex(face.getVertexIndex(j)).get(2);
+
+                if (obj.getNumNormals() > 0) {
+                    normals[nNum++] =
+                            obj.getNormal(face.getNormalIndex(j)).get(0);
+                    normals[nNum++] =
+                            obj.getNormal(face.getNormalIndex(j)).get(1);
+                    normals[nNum++] =
+                            obj.getNormal(face.getNormalIndex(j)).get(2);
+                }
+
+                texCoords[tNum++] =
+                        obj.getTexCoord(face.getTexCoordIndex(j)).get(0);
+                texCoords[tNum++] =
+                        obj.getTexCoord(face.getTexCoordIndex(j)).get(1);
+            }
         }
         initVertexData(vertices, normals, texCoords);
-        initTexture(bitmap);
-        //初始化shader
-        try {
-            initShader();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //加载纹理
+        initTexture(texture);
+        //加载着色器
+        initShader();
     }
 
     /**
@@ -180,7 +206,7 @@ public class D3DomeObj implements D3Object {
 
 
     @Override
-    public void onDraw(
+    public void doDraw(
             float[] mMatrix,
             float[] mvpMatrix) {
 
@@ -188,9 +214,11 @@ public class D3DomeObj implements D3Object {
 
         GLES20.glUseProgram(mProgram);
 
+        //当前配置
+        D3Config config = D3Config.instance(false);
 
         // 设置照明环境属性.
-        Matrix.multiplyMV(viewLightDirection, 0, mMatrix, 0, mConfig.LIGHT_DIRECTION, 0);
+        Matrix.multiplyMV(viewLightDirection, 0, mMatrix, 0, config.LIGHT_DIRECTION, 0);
         normalizeVec3(viewLightDirection);
         GLES20.glUniform4f(
                 lightingParametersUniform,
@@ -198,15 +226,15 @@ public class D3DomeObj implements D3Object {
                 viewLightDirection[1],
                 viewLightDirection[2],
                 1.f);
-        GLES20.glUniform4fv(colorCorrectionParameterUniform, 1, mConfig.COLOR_CORRECTION_RGBA, 0);
+        GLES20.glUniform4fv(colorCorrectionParameterUniform, 1, config.COLOR_CORRECTION_RGBA, 0);
 
         // 设置对象材质属性.
         GLES20.glUniform4f(materialParametersUniform,
-                mConfig.ambient, mConfig.diffuse, mConfig.specular, mConfig.specularPower);
+                config.ambient, config.diffuse, config.specular, config.specularPower);
 
 
         // 设置绘制对象颜色，将color数据传递给GPU替换vColor字段，指定的是GPU渲染的形状的颜色
-        GLES20.glUniform4fv(colorUniform, 1, mConfig.DEFAULT_COLOR, 0);
+        GLES20.glUniform4fv(colorUniform, 1, config.DEFAULT_COLOR, 0);
         GLES20.glUniformMatrix4fv(modelViewProjectionUniform, 1, false, mvpMatrix, 0);// 将投影和视图转换传递给着色器
         GLES20.glUniformMatrix4fv(modelViewUniform, 1, false, mMatrix, 0);//将位置、旋转变换矩阵传入着色器
 

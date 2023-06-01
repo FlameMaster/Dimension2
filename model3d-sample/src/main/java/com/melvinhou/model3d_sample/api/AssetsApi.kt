@@ -2,7 +2,7 @@ package com.melvinhou.model3d_sample.api
 
 import com.melvinhou.kami.bean.FcEntity
 import com.melvinhou.kami.io.AssetsPath
-import com.melvinhou.model3d_sample.D3Entity
+import com.melvinhou.model3d_sample.sample.D3SampleEntity
 import io.reactivex.Observable
 
 
@@ -23,5 +23,5 @@ interface AssetsApi {
 
     //模型列表
     @AssetsPath("sample_d3_list.json")
-    fun getD3List(): Observable<FcEntity<ArrayList<D3Entity>>>
+    fun getD3List(): Observable<FcEntity<ArrayList<D3SampleEntity>>>
 }

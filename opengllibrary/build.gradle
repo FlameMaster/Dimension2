@@ -1,0 +1,38 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    namespace 'com.melvinhou.opengllibrary'
+    compileSdk global_config.compileSdkVersion
+
+    defaultConfig {
+        minSdk 23
+        targetSdk global_config.compileSdkVersion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+dependencies {
+    api fileTree(dir: "libs", include: ["*.jar", "*.aar"])
+    api project(':kami')
+
+
+    api 'de.javagl:obj:0.3.0'
+}

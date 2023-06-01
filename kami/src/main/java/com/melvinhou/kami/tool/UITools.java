@@ -4,10 +4,16 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.Settings;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import com.melvinhou.kami.R;
+import com.melvinhou.kami.util.FcUtils;
 
 import androidx.annotation.GravityInt;
 import androidx.annotation.LayoutRes;
@@ -84,11 +90,14 @@ public class UITools {
      *
      * @param activity
      * @param layoutResID
+     * @param themeResID
      * @param gravity
      * @param animResID
      */
-    public static AlertDialog createDialog(Activity activity, @LayoutRes int layoutResID, @GravityInt int gravity, @StyleRes int animResID) {
-        AlertDialog dialog = new AlertDialog.Builder(activity).create();
+    public static AlertDialog createDialog(Activity activity,
+                                           @LayoutRes int layoutResID, @StyleRes int themeResID,
+                                           @GravityInt int gravity, @StyleRes int animResID) {
+        AlertDialog dialog = new AlertDialog.Builder(activity, themeResID).create();
         dialog.setContentView(layoutResID);
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
@@ -108,5 +117,23 @@ public class UITools {
         window.setContentView(layoutResID);//设置在show之后
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         return dialog;
+    }
+
+    public static AlertDialog createDialog(Activity activity,
+                                           @LayoutRes int layoutResID,
+                                           @GravityInt int gravity, @StyleRes int animResID) {
+        return createDialog(activity, layoutResID, R.style.KamiDialog, gravity, animResID);
+    }
+
+    /**
+     * 打开app设置
+     */
+    public static void toAppSetting() {
+//        Html.fromHtml("<font color='#000000'>" + builder.getExplainText() + "</font>");
+        Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.fromParts("package", FcUtils.getContext().getPackageName(), null));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        FcUtils.getContext().startActivity(intent);
     }
 }

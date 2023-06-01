@@ -29,6 +29,12 @@ import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException;
 import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
 import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException;
+import com.melvinhou.ar_sample.BackgroundRenderer;
+import com.melvinhou.ar_sample.DisplayRotationHelper;
+import com.melvinhou.ar_sample.ObjectRenderer;
+import com.melvinhou.ar_sample.PlaneRenderer;
+import com.melvinhou.ar_sample.PointCloudRenderer;
+import com.melvinhou.ar_sample.TapHelper;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.kami.view.activities.BaseActivity;
 
@@ -91,7 +97,7 @@ public class ARActivity2 extends BaseActivity  implements GLSurfaceView.Renderer
 
     @Override
     protected int getLayoutID() {
-        return R.layout.activity_ar;
+        return R.layout.activity_ar2;
     }
 
     @Override
@@ -255,15 +261,15 @@ public class ARActivity2 extends BaseActivity  implements GLSurfaceView.Renderer
         try {
             // 创建纹理（texture）并将其传递给ARCore的session 以在update（）期间来进行填充。
             backgroundRenderer.createOnGlThread(this);
-            planeRenderer.createOnGlThread(this, "ar/models/trigrid.png");
+            planeRenderer.createOnGlThread(this, "d3/models/trigrid.png");
             pointCloudRenderer.createOnGlThread(this);
             //模型对象,可以设置多个纹理，懒得写
             virtualObject.createOnGlThread(this,
-                    "ar/models/redcar.obj", "models/sample/redcar.jpg");
+                    "d3/sample/redcar.obj", "d3/sample/redcar.jpg");
             virtualObject.setMaterialProperties(0.0f, 2.0f, 0.5f, 6.0f);
             //阴影
             virtualObjectShadow.createOnGlThread(
-                    this, "ar/models/andy_shadow.obj", "ar/models/andy_shadow.png");
+                    this, "d3/models/andy_shadow.obj", "d3/models/andy_shadow.png");
             virtualObjectShadow.setBlendMode(ObjectRenderer.BlendMode.Shadow);
             virtualObjectShadow.setMaterialProperties(1.0f, 0.0f, 0.0f, 1.0f);
         } catch (IOException e) {
@@ -322,7 +328,7 @@ public class ARActivity2 extends BaseActivity  implements GLSurfaceView.Renderer
             // 可视化跟踪点。PointCloud 指 一组观察到的3D点和置信度值。
             PointCloud pointCloud = frame.acquirePointCloud();
             pointCloudRenderer.update(pointCloud);
-            pointCloudRenderer.draw(viewmtx, projmtx);
+//            pointCloudRenderer.draw(viewmtx, projmtx);
             // 应用程序负责在使用后释放PointCloud 资源。
             pointCloud.release();
             // 检查我们是否检测到至少一个平面。 如果是，请隐藏加载消息。
@@ -338,7 +344,7 @@ public class ARActivity2 extends BaseActivity  implements GLSurfaceView.Renderer
             planeRenderer.drawPlanes(
                     session.getAllTrackables(Plane.class), camera.getDisplayOrientedPose(), projmtx);
             // 可视化触摸创建的锚点。
-            float scaleFactor = 1.0f;
+            float scaleFactor = 0.1f;
             for (ColoredAnchor coloredAnchor : anchors) {
                 if (coloredAnchor.anchor.getTrackingState() != TrackingState.TRACKING) {
                     continue;
@@ -348,9 +354,9 @@ public class ARActivity2 extends BaseActivity  implements GLSurfaceView.Renderer
                 coloredAnchor.anchor.getPose().toMatrix(anchorMatrix, 0);
                 // 更新并绘制模型（在这个程序里就是Android小人）及其阴影。
                 virtualObject.updateModelMatrix(anchorMatrix, scaleFactor);
-                virtualObjectShadow.updateModelMatrix(anchorMatrix, scaleFactor);
+//                virtualObjectShadow.updateModelMatrix(anchorMatrix, scaleFactor);
                 virtualObject.draw(viewmtx, projmtx, colorCorrectionRgba, coloredAnchor.color);
-                virtualObjectShadow.draw(viewmtx, projmtx, colorCorrectionRgba, coloredAnchor.color);
+//                virtualObjectShadow.draw(viewmtx, projmtx, colorCorrectionRgba, coloredAnchor.color);
             }
         } catch (Throwable t) {
             // Avoid crashing the application due to unhandled exceptions.

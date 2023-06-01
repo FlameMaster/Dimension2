@@ -46,6 +46,20 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="虚拟现实"
+            android:textColor="@color/dodgerblue"
+            android:textSize="14sp"
+            android:textStyle="bold|italic"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            />
+        <include
+            android:id="@+id/in_fun_vr"
+            layout="@layout/layout_fun_vr"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="媒体"
             android:textColor="@color/dodgerblue"
             android:textSize="14sp"

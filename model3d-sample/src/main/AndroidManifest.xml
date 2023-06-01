@@ -5,11 +5,15 @@
         android:allowBackup="true"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true">
-        <activity android:name=".D3ListActivity"
+        <activity android:name=".D3SimpleActivity"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
-        <activity android:name=".D3Activity"
+        <activity android:name=".sample.D3SampleListActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            />
+        <activity android:name=".sample.D3SampleActivity"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />

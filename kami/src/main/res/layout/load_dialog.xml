@@ -6,7 +6,9 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/bg_load_dialog_bg">
+    android:background="@drawable/round_dp16"
+    android:gravity="center"
+    >
 
     <ProgressBar
         android:id="@+id/pb_load"
@@ -24,9 +26,9 @@
         android:id="@+id/tv_load_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:textColor="?android:attr/textColor"
-        android:paddingHorizontal="10dp"
+        android:paddingHorizontal="16dp"
         android:textSize="12sp" />
 
 </LinearLayout>

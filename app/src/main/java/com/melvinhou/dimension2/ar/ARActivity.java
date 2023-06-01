@@ -29,6 +29,12 @@ import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException;
 import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
 import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException;
+import com.melvinhou.ar_sample.BackgroundRenderer;
+import com.melvinhou.ar_sample.DisplayRotationHelper;
+import com.melvinhou.ar_sample.ObjectRenderer;
+import com.melvinhou.ar_sample.PlaneRenderer;
+import com.melvinhou.ar_sample.PointCloudRenderer;
+import com.melvinhou.ar_sample.TapHelper;
 import com.melvinhou.dimension2.R;
 import com.melvinhou.kami.view.activities.BaseActivity;
 
@@ -90,7 +96,7 @@ public class ARActivity extends BaseActivity  implements GLSurfaceView.Renderer 
 
     @Override
     protected int getLayoutID() {
-        return R.layout.activity_ar;
+        return R.layout.activity_ar2;
     }
 
     @Override
@@ -254,15 +260,15 @@ public class ARActivity extends BaseActivity  implements GLSurfaceView.Renderer 
         try {
             // 创建纹理（texture）并将其传递给ARCore的session 以在update（）期间来进行填充。
             backgroundRenderer.createOnGlThread(this);
-            planeRenderer.createOnGlThread(this, "ar/models/trigrid.png");
+            planeRenderer.createOnGlThread(this, "d3/models/trigrid.png");
             pointCloudRenderer.createOnGlThread(this);
             //模型对象,可以设置多个纹理，懒得写
             virtualObject.createOnGlThread(this,
-                    "ar/models/redcar.obj", "models/sample/redcar.jpg");
+                    "d3/models/redcar.obj", "d3/sample/redcar.jpg");
             virtualObject.setMaterialProperties(0.0f, 2.0f, 0.5f, 6.0f);
             //阴影
             virtualObjectShadow.createOnGlThread(
-                    this, "ar/models/andy_shadow.obj", "ar/models/andy_shadow.png");
+                    this, "d3/models/andy_shadow.obj", "d3/models/andy_shadow.png");
             virtualObjectShadow.setBlendMode(ObjectRenderer.BlendMode.Shadow);
             virtualObjectShadow.setMaterialProperties(1.0f, 0.0f, 0.0f, 1.0f);
         } catch (IOException e) {
