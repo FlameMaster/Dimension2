@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.melvinhou.dimension2.ar;
+package com.melvinhou.ar_sample;
 
 import android.media.Image;
 import android.opengl.GLES20;

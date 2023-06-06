@@ -7,6 +7,7 @@ import android.view.View;
 import com.melvinhou.model3d_sample.databinding.ActivityD3SimpleBinding;
 import com.melvinhou.kami.mvvm.BindActivity;
 import com.melvinhou.model3d_sample.sample.D3SampleModel;
+import com.melvinhou.opengllibrary.GLSampleRenderer;
 import com.melvinhou.opengllibrary.d3.D3Config;
 import com.melvinhou.opengllibrary.d3.D3Renderer;
 import com.melvinhou.opengllibrary.d3.entity.D3CustomObj;
@@ -86,7 +87,7 @@ public class D3SimpleActivity extends BindActivity<ActivityD3SimpleBinding, D3Sa
         String objPath = "d3/sample";
         String objName = "redcar.obj";
         mRenderer = new D3Renderer(D3CustomObj.class, objPath, objName);
-        mBinding.container.setRenderer(mRenderer);
+        mBinding.container.setRenderer(new GLSampleRenderer());
         //RENDERMODE_WHEN_DIRTY：被动渲染，设置只在requestRender时重绘
         //RENDERMODE_CONTINUOUSLY：主动渲染
         mBinding.container.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);

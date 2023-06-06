@@ -37,6 +37,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Group;
+import androidx.core.graphics.Insets;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -86,6 +87,12 @@ public class PdfActivity extends BaseActivity2 {
     @Override
     protected int getLayoutID() {
         return R.layout.activity_pdf;
+    }
+
+    @Override
+    protected void onWindowInsetsChange(Insets insets) {
+        super.onWindowInsetsChange(insets);
+        getWindow().getDecorView().setPadding(0,insets.top,0,insets.bottom);
     }
 
     @Override

@@ -3,17 +3,11 @@ package com.melvinhou.dimension2.home
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import com.melvinhou.accountlibrary.bean.User
-import com.melvinhou.ar_sample.sample.ArSampleActivity
-import com.melvinhou.ar_sample.sample.ArSampleListActivity
-import com.melvinhou.dimension2.ar.ARActivity2
 import com.melvinhou.dimension2.databinding.FragmentHomeBinding
 import com.melvinhou.dimension2.web.WebActivity
 import com.melvinhou.game.GameLaunchActivity
 import com.melvinhou.kami.mvvm.BaseViewModel
 import com.melvinhou.knight.KindFragment
-import com.melvinhou.model3d_sample.D3SimpleActivity
 import com.melvinhou.model3d_sample.sample.D3SampleListActivity
 import com.melvinhou.test.TestActivity
 

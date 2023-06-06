@@ -11,8 +11,10 @@ import android.net.Uri
 import android.os.Build
 import android.os.CountDownTimer
 import android.provider.Settings
+import android.util.Log
 import android.view.*
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,18 +48,9 @@ class ScreenRecordActivity : SecreenRecordView() {
     private val TAG = ScreenRecordActivity::class.java.name
 
 
-    //权限
-    val REQUIRED_PERMISSIONS = arrayOf(
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.RECORD_AUDIO
-    )
-    val REQUIRED_PERMISSIONS_33 = arrayOf(
-        Manifest.permission.READ_MEDIA_VIDEO,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.RECORD_AUDIO
-    )
     private lateinit var mModel: RecordModel
+
+    private var mTapButton: View? = null
 
     //列表
     private var adapter: MyAdapter? = null
@@ -80,6 +73,8 @@ class ScreenRecordActivity : SecreenRecordView() {
         findViewById<TextView>(R.id.title)?.text = "屏幕录制"
         mModel = ViewModelProvider(this).get(RecordModel::class.java)
         mContainer = findViewById(R.id.container)
+        mTapButton = findViewById(R.id.iv_add)
+        mTapButton?.isVisible = false
         initList()
 
     }
@@ -114,7 +109,7 @@ class ScreenRecordActivity : SecreenRecordView() {
 
     override fun initListener() {
         mWindowManager = getSystemService(WINDOW_SERVICE) as? WindowManager
-        findViewById<View>(R.id.iv_add)?.setOnClickListener {
+        mTapButton?.setOnClickListener {
             launchRecord()
         }
     }
@@ -125,15 +120,20 @@ class ScreenRecordActivity : SecreenRecordView() {
         initData()
     }
 
-    override fun initData() {
-        val permissions =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) REQUIRED_PERMISSIONS_33 else REQUIRED_PERMISSIONS
-        // 请求权限
-        if (!checkPermission(permissions)) {
-            requestPermissions(permissions)
-            return
-        }
+    override fun onResume() {
+        super.onResume()
         //加载列表
+        loadData()
+    }
+
+    override fun initData() {
+        if (!checkPermissions()) return
+        mTapButton?.isVisible = true
+        //加载列表
+        loadData()
+    }
+
+    private fun loadData(){
         mModel.loadListData {
             adapter?.clearData()
 //            adapter?.addDatas(it)

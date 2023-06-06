@@ -146,7 +146,7 @@ public class ArSampleRenderer2 implements GLSurfaceView.Renderer {
         try {
             // 创建纹理（texture）并将其传递给ARCore的session 以在update（）期间来进行填充。
             backgroundRenderer.createOnGlThread(FcUtils.getContext());
-            planeRenderer.createOnGlThread(FcUtils.getContext(), "d3/models/trigrid.png");
+            planeRenderer.createOnGlThread(FcUtils.getContext(), "ar/models/trigrid.png");
             pointCloudRenderer.createOnGlThread(FcUtils.getContext());
 //            //模型对象,可以设置多个纹理，懒得写
             virtualObject.createOnGlThread(FcUtils.getContext(),

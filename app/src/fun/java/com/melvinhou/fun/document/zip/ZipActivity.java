@@ -1,13 +1,16 @@
 package com.melvinhou.fun.document.zip;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.OpenableColumns;
+import android.provider.Settings;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,6 +22,7 @@ import com.melvinhou.kami.io.IOUtils;
 import com.melvinhou.kami.util.ResourcesUtils;
 import com.melvinhou.kami.util.StringUtils;
 import com.melvinhou.kami.view.activities.BaseActivity;
+import com.melvinhou.kami.view.dialog.DialogCheckBuilder;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -31,6 +35,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.graphics.Insets;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 
@@ -48,6 +54,11 @@ import io.reactivex.ObservableOnSubscribe;
  * ================================================
  */
 public class ZipActivity extends BaseActivity {
+
+    private static final String[] REQUIRED_PERMISSIONS = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     private static final int BUFF_SIZE = 1024 * 1024; // 1M Byte
     //  回调码
@@ -86,7 +97,43 @@ public class ZipActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        checkPermissions();
+    }
 
+    protected boolean checkPermissions() {
+        //危险权限
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {//11以上
+            //文件管理权限
+            if (!Environment.isExternalStorageManager()) {
+                showCheckView(new DialogCheckBuilder("权限提醒",
+                        "存储录制视频需要文件管理权限，是否授予权限？",
+                        "授权", "取消") {
+                    @Override
+                    public void confirm() {
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                        intent.setData(Uri.fromParts("package", getPackageName(), null));
+                        toResultActivity(intent, result -> {
+                            if (Environment.isExternalStorageManager())
+                                onPermissionGranted();
+                            else onPermissionCancel();
+                        });
+                    }
+
+                    @Override
+                    public void cancel() {
+                        onPermissionCancel();
+                    }
+                });
+                return false;
+            }
+        }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if (!checkPermission(REQUIRED_PERMISSIONS)) {
+                requestPermissions(REQUIRED_PERMISSIONS);
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

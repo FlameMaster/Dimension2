@@ -128,6 +128,13 @@ public class D3SampleActivity extends BindActivity<ActivityD3SampleBinding, D3Sa
             list.add("目标坐标X");
             list.add("目标坐标Y");
             list.add("目标坐标Z");
+            list.add("光源坐标X");
+            list.add("光源坐标Y");
+            list.add("光源坐标Z");
+            list.add("环境光强度");
+            list.add("镜面光强度");
+            list.add("反射光强度");
+            list.add("光源效率");
             KUITools.INSTANCE.showListSelectDialog02(this, "调整参数", list, new Function1<Integer, Unit>() {
                 @Override
                 public Unit invoke(Integer index) {
@@ -160,6 +167,15 @@ public class D3SampleActivity extends BindActivity<ActivityD3SampleBinding, D3Sa
         mConfig.look_up_x = 0;
         mConfig.look_up_y = 1;
         mConfig.look_up_z = 0;
+        //材质
+        mConfig.ambient = 0.2f;//环境光强度,影响明暗度
+        mConfig.diffuse = 0.1f;//散射光强度，影响背光面
+        mConfig.specular = 0.0f;//镜面光强度，直射光
+        mConfig.specularPower = 10.0f;//高光功率
+        //光源位置
+        mConfig.LIGHT_DIRECTION[0] = 0f;
+        mConfig.LIGHT_DIRECTION[1] = 0f;
+        mConfig.LIGHT_DIRECTION[2] = 30f;
 
         //延迟一点
         mBinding.getRoot().post(new Runnable() {
@@ -198,6 +214,7 @@ public class D3SampleActivity extends BindActivity<ActivityD3SampleBinding, D3Sa
 
     /**
      * 参数调整进度条
+     *
      * @param type
      * @param title
      */
@@ -235,6 +252,37 @@ public class D3SampleActivity extends BindActivity<ActivityD3SampleBinding, D3Sa
             case 9:
                 current = mConfig.look_view_z;
                 break;
+            case 10:
+                current = mConfig.LIGHT_DIRECTION[0];
+                max = 200;
+                negative = 100;
+                break;
+            case 11:
+                current = mConfig.LIGHT_DIRECTION[1];
+                max = 200;
+                negative = 100;
+                break;
+            case 12:
+                current = mConfig.LIGHT_DIRECTION[2];
+                max = 200;
+                negative = 100;
+                break;
+            case 13:
+                current = mConfig.ambient*100;
+                negative = 0;
+                break;
+            case 14:
+                current = mConfig.specular*100;
+                negative = 0;
+                break;
+            case 15:
+                current = mConfig.diffuse*100;
+                negative = 0;
+                break;
+            case 16:
+                current = mConfig.specularPower;
+                negative = 0;
+                break;
         }
         //ui
         Dialog dialog = UITools.createDialog(this,
@@ -260,11 +308,12 @@ public class D3SampleActivity extends BindActivity<ActivityD3SampleBinding, D3Sa
             dialog.dismiss();
         });
         //滑动监听
+        int finalNegative = negative;
         progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (!fromUser) return;
-                progress -= negative;
+                progress -= finalNegative;
                 switch (type) {
                     case 1:
                         mConfig.look_up_x = progress;
@@ -292,6 +341,27 @@ public class D3SampleActivity extends BindActivity<ActivityD3SampleBinding, D3Sa
                         break;
                     case 9:
                         mConfig.look_view_z = progress;
+                        break;
+                    case 10:
+                        mConfig.LIGHT_DIRECTION[0] = progress;
+                        break;
+                    case 11:
+                        mConfig.LIGHT_DIRECTION[1] = progress;
+                        break;
+                    case 12:
+                        mConfig.LIGHT_DIRECTION[2] = progress;
+                        break;
+                    case 13:
+                        mConfig.ambient = progress / 100f;
+                        break;
+                    case 14:
+                        mConfig.specular = progress / 100f;
+                        break;
+                    case 15:
+                        mConfig.diffuse = progress / 100f;
+                        break;
+                    case 16:
+                        mConfig.specularPower = progress;
                         break;
                 }
                 tvNow.setText("当前：" + progress);

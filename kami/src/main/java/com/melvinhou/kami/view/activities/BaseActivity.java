@@ -63,6 +63,8 @@ import androidx.core.view.WindowInsetsControllerCompat;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
+    //当前的屏幕间隔
+    private Insets currentStableInsets;
     //工具栏
     private Toolbar mToolbar;
     private View mBarLayout;
@@ -291,13 +293,17 @@ public abstract class BaseActivity extends AppCompatActivity {
                             WindowInsetsCompat.Type.displayCutout() |//刘海屏
                             WindowInsetsCompat.Type.ime()//软键盘
             );
-            onWindowInsetsChange(stableInsets);
+            if (!stableInsets.equals(currentStableInsets)) {
+                currentStableInsets = stableInsets;
+                onWindowInsetsChange(stableInsets);
+            }
             return insets;
         });
     }
 
     /**
      * 界面布局的边距
+     *
      * @param insets
      */
     protected void onWindowInsetsChange(Insets insets) {

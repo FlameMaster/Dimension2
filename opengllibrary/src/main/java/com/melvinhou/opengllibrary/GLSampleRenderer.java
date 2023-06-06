@@ -1,4 +1,4 @@
-package com.melvinhou.dimension2.ar;
+package com.melvinhou.opengllibrary;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
@@ -21,20 +21,21 @@ import javax.microedition.khronos.opengles.GL10;
  * = 分 类 说 明：2D图像，新学习对于triang12
  * ================================================
  */
-class Ar3Renderer implements GLSurfaceView.Renderer {
+public class GLSampleRenderer implements GLSurfaceView.Renderer {
 
     //GLSurfaceView会在单独一条线程中调用渲染器的方法。
     //需要一个顶点着色器绘制形状和一个片段染色器的颜色
     //顶点着色器（Vertex Shader）顶点着色器是GPU上运行的小程序，
-    // 由名字可以知道，通过它来处理顶点，他用于渲染图形顶点的OpenGL ES图形代码。
-    // 顶点着色器可用来修改图形的位置，颜色，纹理坐标，不过不能用来创建新的顶点坐标。
+    //由名字可以知道，通过它来处理顶点，他用于渲染图形顶点的OpenGL ES图形代码。
+    //顶点着色器可用来修改图形的位置，颜色，纹理坐标，不过不能用来创建新的顶点坐标。
     //片段着色器（Fragment Shader ) 用于呈现与颜色或纹理的形状的面的OpenGL ES代码。
     //项目（Program）包含要用于绘制一个或多个形状着色器的OpenGL ES的对象。
 
 
 
-    Ar3Triangle mGLObject;
-    Ar3Triangle2 mGLObject2;
+    TriangleObj mGLObject = new TriangleObj();
+    TriangleRainbowObj mGLObject2 = new TriangleRainbowObj();
+    TrianglePyramidObj mGLObject3 = new TrianglePyramidObj();
 
 
 
@@ -49,7 +50,10 @@ class Ar3Renderer implements GLSurfaceView.Renderer {
 //        GLES20.glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);//黑色
 
-        mGLObject2 =new Ar3Triangle2();
+        //初始化
+        mGLObject.createOnGlThread();
+        mGLObject2 .createOnGlThread();
+        mGLObject3.createOnGlThread();
     }
 
     //在Surface创建以后，每次Surface尺寸变化后，这个方法都会调用
@@ -57,28 +61,30 @@ class Ar3Renderer implements GLSurfaceView.Renderer {
     public void onSurfaceChanged(GL10 gl10, int width, int height) {
         //设置视口的大小
         GLES20.glViewport(0, 0, width, height);
-//        mGLObject2.onSurfaceChanged(gl10, width, height);
 
-
+        //计算宽高比
         float ratio = (float) width / height;
         // 这个投影矩阵被应用于对象坐标在onDrawFrame（）方法中
-        Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
+        Matrix.frustumM(mProjectMatrix, 0, -ratio, ratio, -1, 1, 3, 120);
+        // 设置观察视角,摄像头位置 (View matrix)
+        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, 7,//摄像机的坐标
+                0f, 0f, 0f,//目标物的中心坐标
+                0f, 1f, 0f);//相机方向
+
+
+        // 计算投影和视图转换,将mProjectMatrix矩阵的值赋值给mMVPMatrix
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjectMatrix, 0, mViewMatrix, 0);
     }
 
     //当绘制每一帧的时候会被调用
     @Override
     public void onDrawFrame(GL10 gl10) {
-        // Redraw background color
         //清空屏幕，会调用glClearColor中定义的颜色来填充整个屏幕
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT|GLES20.GL_DEPTH_BUFFER_BIT);
-
-
-        // 设置摄像头位置 (View matrix)
-        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
-        // 计算投影和视图转换
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
         //绘制图像
-        mGLObject2.draw(mMVPMatrix);
+        mGLObject.doDraw(mMVPMatrix);
+        mGLObject2.doDraw(mMVPMatrix);
+        mGLObject3.doDraw(mMVPMatrix);
 
     }
 
@@ -135,7 +141,7 @@ class Ar3Renderer implements GLSurfaceView.Renderer {
     //定义一个投影
     // mMVPMatrix是“模型视图投影矩阵”的缩写。
     private final float[] mMVPMatrix = new float[16];
-    private final float[] mProjectionMatrix = new float[16];
+    private final float[] mProjectMatrix = new float[16];
     private final float[] mViewMatrix = new float[16];
 
 

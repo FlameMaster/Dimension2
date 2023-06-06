@@ -50,18 +50,18 @@ public class D3Config {
     public final float[] DEFAULT_COLOR
             = new float[]{0.63671875f, 0.76953125f, 0.22265625f, 1.0f};
 
-    // 注意:最后一个分量必须为零，以避免应用矩阵的平移部分(Dome)
+    // xyz,注意:最后一个分量必须为零，以避免应用矩阵的平移部分(Dome)
     public final float[] LIGHT_DIRECTION
-            = new float[]{0.250f, 0.866f, 0.433f, 0.0f};
+            = new float[]{0.0f, 0.0f, 5.0f, 0.0f};
     //颜色修正(Dome)
     public final float[] COLOR_CORRECTION_RGBA
             = new float[]{1f, 0.9f, 0.8f, 1f};//rgba
 
     // 设置一些用于照明的默认材质属性(Dome)
-    public float ambient = 0.1f;//环境
+    public float ambient = 0.2f;//环境
     public float diffuse = 0.1f;//扩散
     public float specular = 0.0f;//镜面
-    public float specularPower = 6.0f;//高光功率
+    public float specularPower = 6.0f;//高光功率，表面发亮。较大的值导致更小，更清晰的镜面高光。
 
     public float scaleFactor = 1.0f;//缩放大小
 

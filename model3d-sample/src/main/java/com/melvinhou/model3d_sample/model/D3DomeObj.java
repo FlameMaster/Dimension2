@@ -37,10 +37,10 @@ public class D3DomeObj implements D3Object {
     //着色器代码
     private static final String DOME_VERTEX_SHADER_NAME = "d3/shaders/dome.vert";
     private static final String DOME_FRAGMENT_SHADER_NAME = "d3/shaders/dome.frag";
-    private static final String VERTEX_SHADER_NAME = "ar/shaders/object.vert";
-    private static final String FRAGMENT_SHADER_NAME = "ar/shaders/object.frag";
-    private String vertex_shader_name = DOME_VERTEX_SHADER_NAME;
-    private String fragment_shader_name = DOME_FRAGMENT_SHADER_NAME;
+    private static final String VERTEX_SHADER_NAME = "d3/shaders/object.vert";
+    private static final String FRAGMENT_SHADER_NAME = "d3/shaders/object.frag";
+    private String vertex_shader_name = VERTEX_SHADER_NAME;
+    private String fragment_shader_name = FRAGMENT_SHADER_NAME;
 
     //顶点数
     private int vertexCount;

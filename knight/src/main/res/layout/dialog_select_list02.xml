@@ -44,40 +44,49 @@
         android:background="#F0F0F0"
         />
 
-    <RadioGroup
-        android:id="@+id/rgGroup"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="18dp"
-        android:layout_marginBottom="22dp"
+        android:overScrollMode="never"
+        android:scrollbars=""
         >
 
-        <RadioButton
-            android:id="@+id/rb01"
+        <RadioGroup
+            android:id="@+id/rgGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="选项01"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:checked="true"
-            android:paddingVertical="16dp"
-            android:drawableRight="@drawable/selector_check"
-            android:button="@null"
-            />
+            android:paddingHorizontal="18dp"
+            android:layout_marginBottom="22dp"
+            >
 
-        <RadioButton
-            android:id="@+id/rb02"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="选项02"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:checked="true"
-            android:paddingVertical="16dp"
-            android:drawableRight="@drawable/selector_check"
-            android:button="@null"
-            />
+            <RadioButton
+                android:id="@+id/rb01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="选项01"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:checked="true"
+                android:paddingVertical="16dp"
+                android:drawableRight="@drawable/selector_check"
+                android:button="@null"
+                />
 
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/rb02"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="选项02"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:checked="true"
+                android:paddingVertical="16dp"
+                android:drawableRight="@drawable/selector_check"
+                android:button="@null"
+                />
+
+        </RadioGroup>
+
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

@@ -27,6 +27,14 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public class D3Renderer implements GLSurfaceView.Renderer {
 
+    //GLSurfaceView会在单独一条线程中调用渲染器的方法。
+    //需要一个顶点着色器绘制形状和一个片段染色器的颜色
+    //顶点着色器（Vertex Shader）顶点着色器是GPU上运行的小程序，
+    // 由名字可以知道，通过它来处理顶点，他用于渲染图形顶点的OpenGL ES图形代码。
+    // 顶点着色器可用来修改图形的位置，颜色，纹理坐标，不过不能用来创建新的顶点坐标。
+    //片段着色器（Fragment Shader ) 用于呈现与颜色或纹理的形状的面的OpenGL ES代码。
+    //项目（Program）包含要用于绘制一个或多个形状着色器的OpenGL ES的对象。
+
 
     //组合模型
     private D3Group mGroup;

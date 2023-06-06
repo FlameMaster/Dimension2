@@ -33,6 +33,11 @@ android {
             storePassword 'love520'
         }
     }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "2ciyuan${variant.flavorName}_${variant.versionName}_${new Date().format("MM-dd")}.apk"
+        }
+    }
 
     buildTypes {
         release {

@@ -125,7 +125,6 @@ public class D3SampleListActivity extends BindActivity<ActivityD3SampleListBindi
                         else onPermissionCancel();
                     });
                 }
-
                 @Override
                 public void cancel() {
                     onPermissionCancel();

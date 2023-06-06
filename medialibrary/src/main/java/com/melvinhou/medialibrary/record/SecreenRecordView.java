@@ -3,18 +3,23 @@ package com.melvinhou.medialibrary.record;
 import android.Manifest;
 import android.content.Intent;
 import android.media.projection.MediaProjectionManager;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.provider.Settings;
 import android.util.Log;
 
 import com.melvinhou.kami.io.FileUtils;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.view.activities.BaseActivity;
+import com.melvinhou.kami.view.dialog.DialogCheckBuilder;
 
 import java.io.File;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.app.NotificationManagerCompat;
 
 /**
  * ===============================================
@@ -36,11 +41,12 @@ public abstract class SecreenRecordView extends BaseActivity {
     protected static final String[] REQUIRED_PERMISSIONS = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.RECORD_AUDIO};
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.POST_NOTIFICATIONS};
     protected static final String[] REQUIRED_PERMISSIONS_33 = {
             Manifest.permission.READ_MEDIA_VIDEO,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.RECORD_AUDIO};
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.POST_NOTIFICATIONS};
 
     /**
      * 存储位置
@@ -107,16 +113,73 @@ public abstract class SecreenRecordView extends BaseActivity {
 
     @Override
     protected void initData() {
+        checkPermissions();
+    }
+
+
+    protected boolean checkPermissions(){
+
+
+        //普通权限
         String[] permissions = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
                 ? REQUIRED_PERMISSIONS_33 : REQUIRED_PERMISSIONS;
         // 请求权限
         if (!checkPermission(permissions)) {
             requestPermissions(permissions);
+            return false;
         }
 
+        //危险权限
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {//以上
+            //文件管理权限
+//            if (!Environment.isExternalStorageManager()) {
+//                showCheckView(new DialogCheckBuilder("权限提醒",
+//                        "存储录制视频需要文件管理权限，是否授予权限？",
+//                        "授权", "取消") {
+//                    @Override
+//                    public void confirm() {
+//                        Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+//                        intent.setData(Uri.fromParts("package", getPackageName(), null));
+//                        toResultActivity(intent, result -> {
+//                            if (Environment.isExternalStorageManager())
+//                                onPermissionGranted();
+//                            else onPermissionCancel();
+//                        });
+//                    }
+//                    @Override
+//                    public void cancel() {
+//                        onPermissionCancel();
+//                    }
+//                });
+//                return false;
+//            }
+            //通知权限
+            if (!NotificationManagerCompat.from(this).areNotificationsEnabled()) {
+                showCheckView(new DialogCheckBuilder("权限提醒",
+                        "录制视频时需要通知权限，是否授予权限？",
+                        "授权", "取消") {
+                    @Override
+                    public void confirm() {
+                        Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                        intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
+                        intent.putExtra(Settings.EXTRA_CHANNEL_ID, getApplicationInfo().uid);
+                        toResultActivity(intent, result -> {
+                            if (Environment.isExternalStorageManager())
+                                onPermissionGranted();
+                            else onPermissionCancel();
+                        });
+                    }
+                    @Override
+                    public void cancel() {
+                        onPermissionCancel();
+                    }
+                });
+                return false;
+            }
+        }
+
+        return true;
     }
-
-
 
 
     /**

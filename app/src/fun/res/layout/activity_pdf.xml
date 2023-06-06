@@ -9,7 +9,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
 
     <!--标题栏-->
@@ -22,7 +23,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/PdfPopup"
         app:contentInsetStartWithNavigation="0dp"
-        android:layout_marginTop="24dp"
         />
 
 
