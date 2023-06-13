@@ -14,5 +14,5 @@ package com.melvinhou.kami.lucas;
  * ================================================
  */
 public interface CallBack<T> {
-    void callback(T t);
+    void callback(T data);
 }

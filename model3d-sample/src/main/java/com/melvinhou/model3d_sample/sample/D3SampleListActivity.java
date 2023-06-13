@@ -112,24 +112,21 @@ public class D3SampleListActivity extends BindActivity<ActivityD3SampleListBindi
                 onPermissionGranted();
                 return;
             }
-            showCheckView(new DialogCheckBuilder("权限提醒",
+            showCheckView("权限提醒",
                     "模型需要文件管理权限，是否授予权限？",
-                    "授权", "取消") {
-                @Override
-                public void confirm() {
-                    Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-                    intent.setData(Uri.fromParts("package", getPackageName(), null));
-                    toResultActivity(intent, result -> {
-                        if (Environment.isExternalStorageManager())
-                            onPermissionGranted();
-                        else onPermissionCancel();
+                    "授权", "取消",data -> {
+                        if (data){
+                            Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                            intent.setData(Uri.fromParts("package", getPackageName(), null));
+                            toResultActivity(intent, result -> {
+                                if (Environment.isExternalStorageManager())
+                                    onPermissionGranted();
+                                else onPermissionCancel();
+                            });
+                        }else {
+                            onPermissionCancel();
+                        }
                     });
-                }
-                @Override
-                public void cancel() {
-                    onPermissionCancel();
-                }
-            });
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkPermission(REQUIRED_PERMISSIONS)) {
                 onPermissionGranted();
@@ -171,9 +168,8 @@ public class D3SampleListActivity extends BindActivity<ActivityD3SampleListBindi
      * @param data
      */
     private void downloadObj(D3SampleEntity data) {
-        showCheckView(new DialogCheckBuilder("下载提醒", "是否下载[" + data.getTitle() + "]所属模型文件？", "下载", "取消") {
-            @Override
-            public void confirm() {
+        showCheckView("下载提醒", "是否下载[" + data.getTitle() + "]所属模型文件？", "下载", "取消",ischeck->{
+            if (ischeck){
                 showProcess("下载模型中...");
                 mModel.downloadModelFile(data.getFileName(), data.getUrl(), file -> {
                     if (file == null) {

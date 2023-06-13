@@ -545,15 +545,10 @@ public class WebActivity extends DataBindingActivity<ActWebBD> {
 //        //将相册Intent放入Intent.EXTRA_INTENT
 //        intent.putExtra(Intent.EXTRA_INTENT, albumIntent);
 //        startActivityForResult(Intent.createChooser(intent, "Choose"), PHOTO_REQUEST);
-
-        showCheckView(new DialogCheckBuilder("选择需要上传的图片+", "", "相册", "相机") {
-            @Override
-            public void confirm() {
+        showCheckView("选择需要上传的图片+", "", "相册", "相机",data->{
+            if (data){
                 openPhoto();
-            }
-
-            @Override
-            public void cancel() {
+            }else {
                 //权限获取
                 PermissionUtil.PermissionGrant permissionGrant = new PermissionUtil.PermissionGrant() {
                     @Override
@@ -565,15 +560,11 @@ public class WebActivity extends DataBindingActivity<ActWebBD> {
                     public void onPermissionCancel() {
                         String appName = ResourcesUtils.getString(R.string.app_name);
                         //必要权限判断
-                        showCheckView(new DialogCheckBuilder(
-                                "权限获取失败",
+                        showCheckView("权限获取失败",
                                 "该功能必须开启相机，请进入[设置-应用-" + appName + "-权限管理]进行授权",
-                                "退出" + appName, null) {
-                            @Override
-                            public void confirm() {
+                                "退出" + appName, null,data->{
 
-                            }
-                        });
+                                });
                     }
                 };
                 setPermissionGrant(permissionGrant);

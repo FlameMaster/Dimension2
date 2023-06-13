@@ -7,10 +7,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <!-- 控件的高亮状态颜色-->
         <item name="colorAccent">@color/colorAccent</item>
-        <!-- 文字的颜色 -->
-        <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <!-- 默认控件颜色-->
         <item name="colorControlNormal">@color/colorControlNormal</item>
+        <!-- 文字的颜色 -->
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <!-- 底部ico的默认颜色-->
         <item name="android:textColorSecondary">@color/textColorSecondary</item>
         <!-- bar样式-->

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Dimension2</string>
+    <string name="app_slogan">MelvinHou@163.com</string>
     <string name="symbol_eit">\@</string>
     <string name="title_home">首页</string>
     <string name="title_media">娱乐</string>
@@ -11,6 +12,18 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <string name="rule_app_name">#app_name</string>
+    <string name="text_rule">感谢您使用并信任#app_name！
+        \n#app_name APP尊重并保护用户隐私，我们依据最新的监管要求更新了《用户协议》和《隐私政策》，特向您说明如下：
+        \n1.为向您提供完整的交易服务，我们会收集、使用必要的信息；
+        \n2.基于您的明示授权，我们可能会获取您的个人信息，您有权拒绝或取消授权；
+        \n3.我们会采取业界先进的安全措施保护您的信息安全；
+        \n4.未经您同意，我们不会从第三方处获取、共享或向其提供您的信息；
+        \n5.您可以查询、更正、删除您的个人信息。
+        \n如您未同意上述权限，可能会影响到部分功能的正常使用。
+        \n我们将尽全力保护您的个人信息及合法权益。</string>
+    <string name="title_rule_platform_agreement">《隐私政策》</string>
+    <string name="title_rule_user_agreement">《用户协议》</string>
     <string name="menu_home">Home</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="text_sample">

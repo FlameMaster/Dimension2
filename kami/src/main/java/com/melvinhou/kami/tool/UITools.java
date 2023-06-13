@@ -109,7 +109,7 @@ public class UITools {
         });
         //窗口
         Window window = dialog.getWindow();
-        window.setBackgroundDrawable(null);
+        window.setBackgroundDrawableResource(R.color.transparent);
         window.setGravity(gravity);
         window.setWindowAnimations(animResID);
         //显示

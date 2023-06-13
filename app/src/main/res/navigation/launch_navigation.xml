@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    android:id="@+id/launch_navigation"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/navigation_splash">
+
+    <fragment
+        android:id="@+id/navigation_splash"
+        android:name="com.melvinhou.dimension2.launch.SplashFragment"
+        android:label="启动页"
+        tools:layout="@layout/fragment_splash"
+        />
+
+    <fragment
+        android:id="@+id/navigation_advert"
+        android:name="com.melvinhou.dimension2.launch.AdvertFragment"
+        android:label="广告页"
+        tools:layout="@layout/fragment_advert"
+        >
+        <action
+            android:id="@+id/action_advert2guide"
+            app:destination="@id/navigation_guide"
+            app:enterAnim="@anim/anim_page_right_enter"
+            app:exitAnim="@anim/anim_page_left_exit"
+            app:popEnterAnim="@anim/anim_page_left_enter"
+            app:popExitAnim="@anim/anim_page_right_exit"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_guide"
+        android:name="com.melvinhou.dimension2.launch.GuideFragment"
+        android:label="引导页"
+        tools:layout="@layout/fragment_guide"
+        />
+
+    <fragment
+        android:id="@+id/navigation_permission"
+        android:name="com.melvinhou.dimension2.launch.PermissionFragment"
+        android:label="权限页"
+        tools:layout="@layout/fragment_permission"
+        />
+</navigation>

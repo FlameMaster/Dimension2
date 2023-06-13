@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.melvinhou.dimension2.R;
+import com.melvinhou.kami.lucas.CallBack;
 import com.melvinhou.kami.util.FcUtils;
 import com.melvinhou.kami.io.FileUtils;
 import com.melvinhou.kami.io.IOUtils;
@@ -105,28 +106,24 @@ public class ZipActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {//11以上
             //文件管理权限
             if (!Environment.isExternalStorageManager()) {
-                showCheckView(new DialogCheckBuilder("权限提醒",
+                showCheckView("权限提醒",
                         "存储录制视频需要文件管理权限，是否授予权限？",
-                        "授权", "取消") {
-                    @Override
-                    public void confirm() {
-                        Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-                        intent.setData(Uri.fromParts("package", getPackageName(), null));
-                        toResultActivity(intent, result -> {
-                            if (Environment.isExternalStorageManager())
-                                onPermissionGranted();
-                            else onPermissionCancel();
+                        "授权", "取消", data -> {
+                            if (data) {
+                                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                                intent.setData(Uri.fromParts("package", getPackageName(), null));
+                                toResultActivity(intent, result -> {
+                                    if (Environment.isExternalStorageManager())
+                                        onPermissionGranted();
+                                    else onPermissionCancel();
+                                });
+                            } else {
+                                onPermissionCancel();
+                            }
                         });
-                    }
-
-                    @Override
-                    public void cancel() {
-                        onPermissionCancel();
-                    }
-                });
                 return false;
             }
-        }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!checkPermission(REQUIRED_PERMISSIONS)) {
                 requestPermissions(REQUIRED_PERMISSIONS);
                 return false;

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:background="@drawable/bg_box"
+    android:layout_marginHorizontal="30dp"
+    >
+<!--    app:layout_optimizationLevel="none"-->
+<!--    Optimizer
+当我们使用 MATCH_CONSTRAINT 时，ConstraintLayout 将对控件进行 2 次测量，
+ConstraintLayout在1.1中可以通过设置 layout_optimizationLevel 进行优化，可设置的值有：
+none：无优化
+standard：仅优化直接约束和屏障约束（默认）
+direct：优化直接约束
+barrier：优化屏障约束
+chain：优化链约束
+dimensions：优化尺寸测量   -->
+
+
+
+    <TextView
+        android:id="@+id/tv_01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_box"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:textColor="@color/black"
+        android:text="Center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tv_02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_box"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:textColor="@color/black"
+        android:text="Circle"
+        app:layout_constraintCircle="@id/tv_01"
+        app:layout_constraintCircleAngle="330"
+        app:layout_constraintCircleRadius="60dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_box"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:textColor="@color/black"
+        android:text="Bias"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.7"
+        />
+
+    <TextView
+        android:id="@+id/tv_04"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:background="@drawable/bg_box"
+        android:textColor="@color/black"
+        android:text="Dimension\nRatio"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_03"
+        app:layout_constraintDimensionRatio="W,1:1"
+        />
+
+
+
+    <TextView
+        android:id="@+id/tv_05"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_box"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:textColor="@color/black"
+        android:text="Short"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+    <TextView
+        android:id="@+id/tv_06"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_box"
+        android:paddingHorizontal="32dp"
+        android:paddingVertical="8dp"
+        android:textColor="@color/black"
+        android:text="Long"
+        app:layout_constraintBottom_toTopOf="@id/tv_05"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/baarier"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="tv_05,tv_06"
+        app:barrierDirection="right"
+        />
+    <TextView
+        android:id="@+id/tv_07"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_box"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:textColor="@color/black"
+        android:text="Barrier"
+        app:layout_constraintTop_toTopOf="@id/tv_06"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/baarier"
+        android:layout_marginTop="0dp"
+        app:layout_goneMarginTop="20dp"
+        />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="tv_03,tv_04,tv_06"
+        android:visibility="visible"
+        />
+
+    <androidx.constraintlayout.widget.Placeholder
+        android:id="@+id/placeholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:content="@id/tv_08"
+        />
+
+    <TextView
+        android:id="@+id/tv_08"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_box"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:textColor="@color/black"
+        android:text="Placeholder"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gu_01"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="60dp"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gu_02"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"
+        />
+
+    <TextView
+        android:id="@+id/tv_09"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_box"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:textColor="@color/black"
+        android:text="Guideline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8"
+        app:layout_constraintLeft_toLeftOf="@id/gu_02"
+        app:layout_constraintRight_toRightOf="@id/gu_01"
+        />
+
+    <TextView
+        android:id="@+id/tv_10"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_box"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:text="Width\npercent"
+        app:layout_constraintWidth_percent="0.4"
+        app:layout_constraintHeight_percent="0.2"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

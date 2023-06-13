@@ -117,7 +117,7 @@ public abstract class SecreenRecordView extends BaseActivity {
     }
 
 
-    protected boolean checkPermissions(){
+    protected boolean checkPermissions() {
 
 
         //普通权限
@@ -155,25 +155,22 @@ public abstract class SecreenRecordView extends BaseActivity {
 //            }
             //通知权限
             if (!NotificationManagerCompat.from(this).areNotificationsEnabled()) {
-                showCheckView(new DialogCheckBuilder("权限提醒",
+                showCheckView("权限提醒",
                         "录制视频时需要通知权限，是否授予权限？",
-                        "授权", "取消") {
-                    @Override
-                    public void confirm() {
-                        Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
-                        intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
-                        intent.putExtra(Settings.EXTRA_CHANNEL_ID, getApplicationInfo().uid);
-                        toResultActivity(intent, result -> {
-                            if (Environment.isExternalStorageManager())
-                                onPermissionGranted();
-                            else onPermissionCancel();
+                        "授权", "取消", data -> {
+                            if (data) {
+                                Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                                intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
+                                intent.putExtra(Settings.EXTRA_CHANNEL_ID, getApplicationInfo().uid);
+                                toResultActivity(intent, result -> {
+                                    if (NotificationManagerCompat.from(SecreenRecordView.this).areNotificationsEnabled())
+                                        onPermissionGranted();
+                                    else onPermissionCancel();
+                                });
+                            }else {
+                                onPermissionCancel();
+                            }
                         });
-                    }
-                    @Override
-                    public void cancel() {
-                        onPermissionCancel();
-                    }
-                });
                 return false;
             }
         }

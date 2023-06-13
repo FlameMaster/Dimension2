@@ -32,7 +32,7 @@ public class StringUtils {
 
 
     //非空判断
-    public static boolean nonEmpty(String str) {
+    public static boolean nonEmpty(CharSequence str) {
         return !isEmpty(str) && !str.equals("") && !str.equals("null");
     }
 

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.viewbinding.ViewBinding
+import com.melvinhou.kami.lucas.CallBack
 import com.melvinhou.kami.mvvm.BaseViewModel
 import com.melvinhou.kami.mvvm.BindFragment
 
@@ -47,6 +48,16 @@ abstract class KindFragment<VB : ViewBinding, M : BaseViewModel>  : BindFragment
     }
     inline fun <reified Y : Activity> toResultActivity(bundle: Bundle?, callback: ActivityResultCallback<ActivityResult>) {
         toResultActivity(Y::class.java, bundle,callback)
+    }
+
+
+
+    fun showCheckDialog(
+        title: CharSequence? = "提示", message: CharSequence = "是否确定？",
+        positiveStr: CharSequence? = "确定", negativeStr: CharSequence? ="取消",
+        callBack: CallBack<Boolean>?
+    ) {
+        super.showCheckView(title, message, positiveStr, negativeStr, callBack)
     }
 
 }

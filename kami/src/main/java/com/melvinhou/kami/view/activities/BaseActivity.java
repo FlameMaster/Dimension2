@@ -22,6 +22,7 @@ import android.view.WindowManager;
 import com.melvinhou.kami.BaseApplication;
 import com.melvinhou.kami.R;
 import com.melvinhou.kami.io.FcLog;
+import com.melvinhou.kami.lucas.CallBack;
 import com.melvinhou.kami.mvvm.BindActivity;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.view.dialog.DialogCheckBuilder;
@@ -47,6 +48,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
+import kotlin.Unit;
 
 /**
  * ===============================================
@@ -186,6 +188,29 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         //显示
         mCheckDialog = dialogBuilder.show();
+    }
+
+    public void showCheckView(CharSequence title, @NonNull CharSequence message,
+                              CharSequence positiveStr, CharSequence negativeStr,
+                              CallBack<Boolean> callBack) {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog
+                .Builder(this)
+                .setMessage(message);
+        if (StringUtils.nonEmpty(title))
+            dialogBuilder.setTitle(title);
+        if (StringUtils.nonEmpty(positiveStr))
+            dialogBuilder.setPositiveButton(positiveStr, (dialog, which) -> {
+                if (callBack != null) callBack.callback(true);
+            });
+        if (StringUtils.nonEmpty(negativeStr))
+            dialogBuilder.setNegativeButton(negativeStr, (dialog, which) -> {
+                if (callBack != null) callBack.callback(false);
+            });
+        //显示
+        mCheckDialog = dialogBuilder.show();
+        mCheckDialog.setCancelable(false);
+        mCheckDialog.setCanceledOnTouchOutside(false);
     }
 
     /**

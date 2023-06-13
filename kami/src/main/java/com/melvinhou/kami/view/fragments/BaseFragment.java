@@ -1,6 +1,7 @@
 package com.melvinhou.kami.view.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.melvinhou.kami.R;
+import com.melvinhou.kami.lucas.CallBack;
 import com.melvinhou.kami.util.DimenUtils;
+import com.melvinhou.kami.util.StringUtils;
 import com.melvinhou.kami.view.activities.BaseActivity;
 import com.melvinhou.kami.view.dialog.DialogCheckBuilder;
 
@@ -191,10 +194,14 @@ public abstract class BaseFragment extends Fragment {
 
 //*******************弹窗*******************************//
 
-    protected void showCheckView(DialogCheckBuilder builder) {
+
+    public void showCheckView(CharSequence title, @NonNull CharSequence message,
+                              CharSequence positiveStr, CharSequence negativeStr,
+                              CallBack<Boolean> callBack) {
         BaseActivity activity = getAct();
         if (activity != null)
-            activity.showCheckView(builder);
+            activity.showCheckView(title, message, positiveStr, negativeStr, callBack);
+
     }
 
     protected void hideCheckView() {
@@ -233,7 +240,7 @@ public abstract class BaseFragment extends Fragment {
      *
      * @param permission
      */
-    protected void requestPermissions(String permission) {
+    protected void requestPermission(String permission) {
         startPermission.launch(permission);
     }
 
