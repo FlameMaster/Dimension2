@@ -346,7 +346,7 @@ object KUITools {
         title:String,
         inputHint:String,
         inputType:Int,
-        callBack: (String) -> Unit
+        callBack: (String?) -> Unit
     ) {
         val dialog = UITools.createDialog(
             activity,
@@ -354,6 +354,9 @@ object KUITools {
             Gravity.BOTTOM,
             R.style.Animation_Dialog_Bottom
         )
+        dialog.setOnCancelListener {
+            callBack(null)
+        }
         dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         val btSubmit = dialog.window?.findViewById<View>(R.id.bt_submit)

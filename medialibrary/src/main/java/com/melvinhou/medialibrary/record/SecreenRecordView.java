@@ -3,22 +3,16 @@ package com.melvinhou.medialibrary.record;
 import android.Manifest;
 import android.content.Intent;
 import android.media.projection.MediaProjectionManager;
-import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.Settings;
 import android.util.Log;
 
 import com.melvinhou.kami.io.FileUtils;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.view.activities.BaseActivity;
-import com.melvinhou.kami.view.dialog.DialogCheckBuilder;
 
 import java.io.File;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.app.NotificationManagerCompat;
 
 /**
@@ -53,7 +47,7 @@ public abstract class SecreenRecordView extends BaseActivity {
      *
      * @return
      */
-    private File getRecordFilesDir() {
+    protected File getRecordFilesDir() {
         File folderFile = new File(FileUtils.getAppFileDir(FileUtils.RECORD_DIR_SUFFIX));
         if (!folderFile.exists()) {
             folderFile.mkdirs();

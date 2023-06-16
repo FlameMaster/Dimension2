@@ -79,6 +79,10 @@ class ScreenRecordActivity : SecreenRecordView() {
 
     }
 
+    override fun getRecordFilesDir(): File {
+        return mModel.getRecordFilesDir()
+    }
+
     /**
      * 初始化列表
      */

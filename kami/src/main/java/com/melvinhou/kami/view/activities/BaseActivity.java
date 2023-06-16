@@ -1,7 +1,6 @@
 package com.melvinhou.kami.view.activities;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -12,7 +11,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,20 +19,16 @@ import android.view.WindowManager;
 
 import com.melvinhou.kami.BaseApplication;
 import com.melvinhou.kami.R;
-import com.melvinhou.kami.io.FcLog;
 import com.melvinhou.kami.lucas.CallBack;
-import com.melvinhou.kami.mvvm.BindActivity;
-import com.melvinhou.kami.util.DimenUtils;
-import com.melvinhou.kami.view.dialog.DialogCheckBuilder;
 import com.melvinhou.kami.util.StringUtils;
 import com.melvinhou.kami.view.dialog.LoadDialog;
 
 import java.util.List;
-import java.util.Map;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,12 +37,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
-import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.core.view.WindowInsetsControllerCompat;
-import kotlin.Unit;
 
 /**
  * ===============================================
@@ -104,6 +94,16 @@ public abstract class BaseActivity extends AppCompatActivity {
                 new ActivityResultContracts.OpenDocument(), this::onFileResult);
         openFiles = registerForActivityResult(
                 new ActivityResultContracts.OpenMultipleDocuments(), this::onFileResult);
+        //图片
+        openImage = registerForActivityResult(
+                new ActivityResultContracts.PickVisualMedia(),this::onFileResult);
+        openImages = registerForActivityResult(
+                new ActivityResultContracts.PickMultipleVisualMedia(),this::onFileResult);
+        //拍照
+        openCamera = registerForActivityResult(new ActivityResultContracts.TakePicture(), this::onCameraResult);
+        //联系人
+//        registerForActivityResult(new ActivityResultContracts.PickContact(), this::onFileResult);
+
         //初始化
         initActivity(layoutId);
     }
@@ -163,33 +163,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 显示校验弹窗
-     *
-     * @param builder
      */
-    public void showCheckView(final DialogCheckBuilder builder) {
-        if (builder == null) return;
-
-        AlertDialog.Builder dialogBuilder = new AlertDialog
-                .Builder(this)
-                .setMessage(builder.getExplainText());
-
-        //标题
-        if (StringUtils.nonEmpty(builder.getTitleText()))
-            dialogBuilder.setTitle(builder.getTitleText());
-
-        //积极按钮
-        String confirmText = "确定";
-        if (StringUtils.nonEmpty(builder.getConfirmText())) confirmText = builder.getConfirmText();
-        dialogBuilder.setPositiveButton(confirmText, (dialog, which) -> builder.confirm());
-
-        //消极按钮
-        if (StringUtils.nonEmpty(builder.getCancelText()))
-            dialogBuilder.setNegativeButton(builder.getCancelText(), (dialog, which) -> builder.cancel());
-
-        //显示
-        mCheckDialog = dialogBuilder.show();
-    }
-
     public void showCheckView(CharSequence title, @NonNull CharSequence message,
                               CharSequence positiveStr, CharSequence negativeStr,
                               CallBack<Boolean> callBack) {
@@ -629,8 +603,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     //新版本的文件选择
     private ActivityResultLauncher<String[]> openFile;
     private ActivityResultLauncher<String[]> openFiles;
+    private ActivityResultLauncher<PickVisualMediaRequest> openImage;
+    private ActivityResultLauncher<PickVisualMediaRequest> openImages;
+    private ActivityResultLauncher<Uri> openCamera;
     private ActivityResultCallback<Uri> openFileCallback;
     private ActivityResultCallback<List<Uri>> openFilesCallback;
+    private ActivityResultCallback<Boolean>  openCameraCallback;
 
 
     /**
@@ -644,6 +622,19 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
+     * 选择图片
+     *
+     * @param type
+     */
+    protected void openImage(ActivityResultContracts.PickVisualMedia.VisualMediaType type, ActivityResultCallback<Uri> callback) {
+        openFileCallback = callback;
+        PickVisualMediaRequest request = new PickVisualMediaRequest.Builder()
+                .setMediaType(type)
+                .build();
+        openImage.launch(request);
+    }
+
+    /**
      * 选择多个文件
      *
      * @param types
@@ -651,6 +642,28 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void openFiles(String[] types, ActivityResultCallback<List<Uri>> callback) {
         openFilesCallback = callback;
         openFiles.launch(types);
+    }
+
+    /**
+     * 选择多个图片
+     *
+     * @param type
+     */
+    protected void openImages(ActivityResultContracts.PickVisualMedia.VisualMediaType type, ActivityResultCallback<List<Uri>> callback) {
+        openFilesCallback = callback;
+        PickVisualMediaRequest request = new PickVisualMediaRequest.Builder()
+                .setMediaType(type)
+                .build();
+        openImages.launch(request);
+    }
+
+    /**
+     * 调取相机
+     *
+     */
+    protected void openCamera(Uri uri,ActivityResultCallback<Boolean> callback) {
+        openCameraCallback = callback;
+        openCamera.launch(uri);
     }
 
     /**
@@ -683,6 +696,18 @@ public abstract class BaseActivity extends AppCompatActivity {
             buffer.append(uri.toString()).append(",");
         }
         Log.w("文件选择", buffer.toString());
+    }
+
+    /**
+     * 拍照返回
+     *
+     */
+    protected void onCameraResult(boolean isTake) {
+        if (openCameraCallback != null) {
+            openCameraCallback.onActivityResult(isTake);
+            openCameraCallback = null;
+            return;
+        }
     }
 
 }

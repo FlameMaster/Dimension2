@@ -21,7 +21,6 @@ import com.melvinhou.dimension2.databinding.FragmentSplashBinding
 import com.melvinhou.dimension2.utils.KeyConstant
 import com.melvinhou.dimension2.web.WebActivity
 import com.melvinhou.kami.io.SharePrefUtil
-import com.melvinhou.kami.lucas.CallBack
 import com.melvinhou.kami.tool.UITools
 import com.melvinhou.knight.KindFragment
 

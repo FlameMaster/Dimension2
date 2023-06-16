@@ -2,8 +2,11 @@ package com.melvinhou.media_sample.record
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.os.Environment
 import com.melvinhou.kami.io.FileUtils
 import com.melvinhou.kami.mvvm.BaseViewModel
+import com.melvinhou.kami.util.ResourcesUtils
+import com.melvinhou.media_sample.R
 import com.melvinhou.media_sample.bean.*
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
@@ -33,7 +36,9 @@ class RecordModel(application: Application) : BaseViewModel(application) {
      * 存储位置
      */
     fun getRecordFilesDir(): File {
-        val folderFile = File(FileUtils.getAppFileDir(FileUtils.RECORD_DIR_SUFFIX))
+//        val folderFile = File(FileUtils.getAppFileDir(FileUtils.RECORD_DIR_SUFFIX))
+        val folderPath = ResourcesUtils.getString(R.string.app_name) + FileUtils.RECORD_DIR_SUFFIX;
+        val folderFile = Environment.getExternalStoragePublicDirectory(folderPath)
         if (!folderFile.exists()) {
             folderFile.mkdirs()
         }

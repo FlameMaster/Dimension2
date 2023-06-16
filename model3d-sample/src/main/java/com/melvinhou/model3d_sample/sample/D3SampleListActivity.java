@@ -19,7 +19,6 @@ import com.melvinhou.kami.adapter.BindRecyclerAdapter;
 import com.melvinhou.kami.mvvm.BindActivity;
 import com.melvinhou.kami.util.DimenUtils;
 import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.view.dialog.DialogCheckBuilder;
 import com.melvinhou.model3d_sample.R;
 import com.melvinhou.model3d_sample.databinding.ActivityD3SampleListBinding;
 import com.melvinhou.model3d_sample.databinding.ItemD3SampleBinding;

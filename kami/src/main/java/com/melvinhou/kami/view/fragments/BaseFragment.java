@@ -1,7 +1,6 @@
 package com.melvinhou.kami.view.fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,9 +16,7 @@ import android.view.ViewGroup;
 import com.melvinhou.kami.R;
 import com.melvinhou.kami.lucas.CallBack;
 import com.melvinhou.kami.util.DimenUtils;
-import com.melvinhou.kami.util.StringUtils;
 import com.melvinhou.kami.view.activities.BaseActivity;
-import com.melvinhou.kami.view.dialog.DialogCheckBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -27,12 +24,12 @@ import java.util.Map;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -94,6 +91,12 @@ public abstract class BaseFragment extends Fragment {
                 new ActivityResultContracts.OpenDocument(), this::onFileResult);
         openFiles = registerForActivityResult(
                 new ActivityResultContracts.OpenMultipleDocuments(), this::onFileResult);
+        //图片
+        openImage = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(),this::onFileResult);
+        openImages = registerForActivityResult(
+                new ActivityResultContracts.PickMultipleVisualMedia(),this::onFileResult);
+        //拍照
+        openCamera = registerForActivityResult(new ActivityResultContracts.TakePicture(), this::onCameraResult);
     }
 
     @Override
@@ -410,8 +413,12 @@ public abstract class BaseFragment extends Fragment {
     //新版本的文件选择
     private ActivityResultLauncher<String[]> openFile;
     private ActivityResultLauncher<String[]> openFiles;
+    private ActivityResultLauncher<PickVisualMediaRequest> openImage;
+    private ActivityResultLauncher<PickVisualMediaRequest> openImages;
+    private ActivityResultLauncher<Uri> openCamera;
     private ActivityResultCallback<Uri> openFileCallback;
     private ActivityResultCallback<List<Uri>> openFilesCallback;
+    private ActivityResultCallback<Boolean>  openCameraCallback;
 
 
     /**
@@ -424,6 +431,20 @@ public abstract class BaseFragment extends Fragment {
         openFile.launch(types);
     }
 
+
+    /**
+     * 选择图片
+     *
+     * @param type
+     */
+    protected void openImage(ActivityResultContracts.PickVisualMedia.VisualMediaType type, ActivityResultCallback<Uri> callback) {
+        openFileCallback = callback;
+        PickVisualMediaRequest request = new PickVisualMediaRequest.Builder()
+                .setMediaType(type)
+                .build();
+        openImage.launch(request);
+    }
+
     /**
      * 选择多个文件
      *
@@ -432,6 +453,28 @@ public abstract class BaseFragment extends Fragment {
     protected void openFiles(String[] types, ActivityResultCallback<List<Uri>> callback) {
         openFilesCallback = callback;
         openFiles.launch(types);
+    }
+
+    /**
+     * 选择多个图片
+     *
+     * @param type
+     */
+    protected void openImages(ActivityResultContracts.PickVisualMedia.VisualMediaType type, ActivityResultCallback<List<Uri>> callback) {
+        openFilesCallback = callback;
+        PickVisualMediaRequest request = new PickVisualMediaRequest.Builder()
+                .setMediaType(type)
+                .build();
+        openImages.launch(request);
+    }
+
+    /**
+     * 调取相机
+     *
+     */
+    protected void openCamera(Uri uri,ActivityResultCallback<Boolean> callback) {
+        openCameraCallback = callback;
+        openCamera.launch(uri);
     }
 
     /**
@@ -464,6 +507,18 @@ public abstract class BaseFragment extends Fragment {
             buffer.append(uri.toString()).append(",");
         }
         Log.w("文件选择", buffer.toString());
+    }
+
+    /**
+     * 拍照返回
+     *
+     */
+    protected void onCameraResult(boolean isTake) {
+        if (openCameraCallback != null) {
+            openCameraCallback.onActivityResult(isTake);
+            openCameraCallback = null;
+            return;
+        }
     }
 
 

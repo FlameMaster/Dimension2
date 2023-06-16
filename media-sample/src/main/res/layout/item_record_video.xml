@@ -20,7 +20,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:background="#E0E0E0"
-        android:scaleType="fitCenter"
+        android:scaleType="centerCrop"
         app:layout_constraintDimensionRatio="9:16"
         app:round="8dp"
         android:layout_margin="1dp"

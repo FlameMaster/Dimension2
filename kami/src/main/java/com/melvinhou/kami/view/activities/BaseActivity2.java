@@ -51,8 +51,8 @@ public abstract class BaseActivity2 extends BaseActivity implements BaseView {
 
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         onLoading();
     }
 

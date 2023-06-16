@@ -2,12 +2,8 @@ package com.melvinhou.ar_sample.sample;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.Intent;
-import android.net.Uri;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
-import android.os.Environment;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -31,8 +27,6 @@ import com.melvinhou.ar_sample.TapHelper;
 import com.melvinhou.ar_sample.databinding.ActivityArSampleBinding;
 import com.melvinhou.kami.mvvm.BindActivity;
 import com.melvinhou.kami.tool.UITools;
-import com.melvinhou.kami.util.FcUtils;
-import com.melvinhou.kami.view.dialog.DialogCheckBuilder;
 import com.melvinhou.opengllibrary.d3.D3Config;
 
 import androidx.core.graphics.Insets;

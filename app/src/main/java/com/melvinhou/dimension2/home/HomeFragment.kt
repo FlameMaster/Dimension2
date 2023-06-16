@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.melvinhou.dimension2.databinding.FragmentHomeBinding
 import com.melvinhou.dimension2.web.WebActivity
+import com.melvinhou.dimension2.web.WebBrowserActivity
 import com.melvinhou.game.GameLaunchActivity
 import com.melvinhou.kami.mvvm.BaseViewModel
 import com.melvinhou.knight.KindFragment
@@ -48,7 +49,7 @@ class HomeFragment() : KindFragment<FragmentHomeBinding, BaseViewModel>() {
             Bundle().apply {
                 putString("title", "微软中国")
                 putString("url", "https://cn.bing.com/")
-                toActivity<WebActivity>(this)
+                toActivity<WebBrowserActivity>(this)
             }
         }
         mBinding.tvFunGame.setOnClickListener {

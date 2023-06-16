@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eee"
+    android:background="#F0F0F0"
     android:overScrollMode="never"
     android:scrollbars="none"
     tools:context="com.melvinhou.dimension2.home.FunctionFragment">
@@ -15,75 +15,21 @@
         android:orientation="vertical"
         android:paddingBottom="72dp"
         >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="文档处理"
-            android:textColor="@color/dodgerblue"
-            android:textSize="14sp"
-            android:textStyle="bold|italic"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            />
         <include
             android:id="@+id/in_fun_document"
             layout="@layout/layout_fun_document"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="即时通讯"
-            android:textColor="@color/dodgerblue"
-            android:textSize="14sp"
-            android:textStyle="bold|italic"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            />
-        <include
-            android:id="@+id/in_fun_im"
-            layout="@layout/layout_fun_im"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="虚拟现实"
-            android:textColor="@color/dodgerblue"
-            android:textSize="14sp"
-            android:textStyle="bold|italic"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            />
-        <include
-            android:id="@+id/in_fun_vr"
-            layout="@layout/layout_fun_vr"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="媒体"
-            android:textColor="@color/dodgerblue"
-            android:textSize="14sp"
-            android:textStyle="bold|italic"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            />
-        <include
-            android:id="@+id/in_fun_media"
-            layout="@layout/layout_fun_media"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="系统"
-            android:textColor="@color/dodgerblue"
-            android:textSize="14sp"
-            android:textStyle="bold|italic"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            />
         <include
             android:id="@+id/in_fun_sys"
             layout="@layout/layout_fun_sys"/>
+        <include
+            android:id="@+id/in_fun_im"
+            layout="@layout/layout_fun_im"/>
+        <include
+            android:id="@+id/in_fun_vr"
+            layout="@layout/layout_fun_vr"/>
+        <include
+            android:id="@+id/in_fun_media"
+            layout="@layout/layout_fun_media"/>
 
 
     </LinearLayout>

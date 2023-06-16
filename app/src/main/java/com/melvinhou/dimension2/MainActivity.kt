@@ -84,6 +84,7 @@ class MainActivity : BindActivity<ActivityMainBinding, BaseViewModel>() {
         }
         //监听，切换状态栏颜色
         mNavController.addOnDestinationChangedListener { _, destination, _ ->
+
             val isblank = when (destination.id) {
 //                R.id.navigation_home -> false
                 else -> true

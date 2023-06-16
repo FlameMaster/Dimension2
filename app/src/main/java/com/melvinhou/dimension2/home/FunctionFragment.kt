@@ -3,6 +3,8 @@ package com.melvinhou.dimension2.home
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import com.melvinhou.accountlibrary.bean.User
 import com.melvinhou.ar_sample.sample.ArSampleListActivity
 import com.melvinhou.`fun`.desktop.DesktopActivity
 import com.melvinhou.`fun`.document.pdf.PdfActivity
@@ -10,6 +12,8 @@ import com.melvinhou.`fun`.document.zip.ZipActivity
 import com.melvinhou.tiktok_sample.TiktokActivity
 import com.melvinhou.dimension2.databinding.FragmentFunctionBinding
 import com.melvinhou.dimension2.net.HttpConstant
+import com.melvinhou.dimension2.web.WebBrowserActivity
+import com.melvinhou.dimension2.web.WebUtils
 import com.melvinhou.kami.mvvm.BaseViewModel
 import com.melvinhou.knight.FragmentContainActivity
 import com.melvinhou.knight.KindFragment
@@ -42,7 +46,8 @@ class FunctionFragment  : KindFragment<FragmentFunctionBinding, BaseViewModel>()
     }
 
     override fun initListener() {
-        mBinding.inFunDocument.root.getChildAt(0).setOnClickListener {
+        //0是标题，序号从1开始
+        mBinding.inFunDocument.root.getChildAt(1).setOnClickListener {
             Bundle().apply {
                 val url = HttpConstant.SERVER_RES + "pdf/product.pdf"
                 putString("url",url)
@@ -50,33 +55,44 @@ class FunctionFragment  : KindFragment<FragmentFunctionBinding, BaseViewModel>()
                 toActivity<PdfActivity>(this)
             }
         }
-        mBinding.inFunDocument.root.getChildAt(1).setOnClickListener {
+        mBinding.inFunDocument.root.getChildAt(2).setOnClickListener {
             toActivity<ZipActivity>()
         }
-        mBinding.inFunIm.root.getChildAt(0).setOnClickListener {
-            toActivity<ImHomeActivity>()
+        mBinding.inFunDocument.root.getChildAt(3).setOnClickListener {
+            val url = "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/pdf/TestWord.doc"
+//            val url = "https://otakuboy.oss-cn-beijing.aliyuncs.com/Ciyuan2/app/pdf/TestExcel.xlsx"
+            WebUtils.toOfficeWeb(context,url,2)
         }
         mBinding.inFunIm.root.getChildAt(1).setOnClickListener {
+            toActivity<ImHomeActivity>()
+        }
+        mBinding.inFunIm.root.getChildAt(2).setOnClickListener {
             Bundle().apply {
                 putSerializable("fragment", ImTcpChatFragment::class.java)
                 toActivity<FragmentContainActivity>(this)
             }
         }
-        mBinding.inFunVr.root.getChildAt(0).setOnClickListener {
+        mBinding.inFunVr.root.getChildAt(1).setOnClickListener {
             toActivity<D3SampleListActivity>()
         }
-        mBinding.inFunVr.root.getChildAt(1).setOnClickListener {
+        mBinding.inFunVr.root.getChildAt(2).setOnClickListener {
             toActivity<ArSampleListActivity>()
         }
-        mBinding.inFunMedia.root.getChildAt(0).setOnClickListener {
+        mBinding.inFunMedia.root.getChildAt(1).setOnClickListener {
             toActivity<TiktokActivity>()
         }
-        mBinding.inFunSys.root.getChildAt(0).setOnClickListener {
+        mBinding.inFunSys.root.getChildAt(2).setOnClickListener {
             toActivity<DesktopActivity>()
 //            Bundle().apply {
 //                putSerializable("fragment",ImContactsFragment::class.java)
 //                toActivity<FragmentContainActivity>(this)
 //            }
+        }
+        mBinding.inFunSys.root.getChildAt(4).setOnClickListener {
+            Bundle().apply {
+                putString("url","file:///android_asset/javascript.html")
+                toActivity<WebBrowserActivity>(this)
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ package com.melvinhou.media_sample.live
 import android.content.Intent
 import android.graphics.Rect
 import android.text.InputType
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,7 +77,8 @@ class LiveFragment : BindFragment<ActivityListBinding, BiliModel>() {
                 "输入直播间号",
                 InputType.TYPE_CLASS_NUMBER
             ) {
-                openBiliLive(it)
+                if (!TextUtils.isEmpty(it))
+                openBiliLive(it!!)
             }
         }
     }
