@@ -67,6 +67,12 @@ public class BaseViewModel extends AndroidViewModel {
         mDisposable.add(disposable);
     }
 
+    //移除管理
+    protected void removeDisposable(Disposable disposable){
+        disposable.dispose();
+        mDisposable.remove(disposable);
+    }
+
     //注册初始化
     public void register() {
         mDisposable = new CompositeDisposable();

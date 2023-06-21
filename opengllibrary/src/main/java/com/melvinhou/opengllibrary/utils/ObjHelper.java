@@ -96,4 +96,8 @@ public class ObjHelper {
         return FcUtils.getContext().getContentResolver().openInputStream(uri);
     }
 
+    public void clear(){
+        mLruCache.evictAll();
+    }
+
 }

@@ -5,21 +5,17 @@
 *  所属分类：
 -->
 <animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/icon_end"
-        android:drawable="@drawable/ic_main_tab_media"
-        android:state_checked="true" />
-    <item
-        android:id="@+id/icon_start"
-        android:drawable="@drawable/ic_main_tab_media" />
-
+    <item android:id="@+id/icon_end" android:drawable="@drawable/ic_main_tab_media_h" android:state_checked="true"/>
+    <item android:id="@+id/icon_start" android:drawable="@drawable/ic_main_tab_media"/>
     <transition
         android:fromId="@id/icon_start"
         android:toId="@id/icon_end">
-        <animated-vector android:drawable="@drawable/ic_main_tab_media">
+        <animated-vector android:drawable="@drawable/ic_main_tab_media_h">
             <target
-                android:name="obj"
-                android:animation="@animator/objanim_main_tab" />
+                android:animation="@animator/objanim_main_tab"
+                android:name="group"
+                />
         </animated-vector>
     </transition>
+
 </animated-selector>

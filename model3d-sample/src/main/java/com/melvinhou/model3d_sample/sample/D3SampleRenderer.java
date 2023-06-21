@@ -8,6 +8,7 @@ import com.melvinhou.opengllibrary.d3.D3Config;
 import com.melvinhou.opengllibrary.d3.D3Renderer;
 import com.melvinhou.opengllibrary.d3.entity.D3Group;
 import com.melvinhou.opengllibrary.d3.entity.D3Object;
+import com.melvinhou.opengllibrary.utils.ObjHelper;
 
 import java.util.Stack;
 
@@ -114,6 +115,12 @@ public class D3SampleRenderer extends D3Renderer {
             if (mCallBack!=null) mCallBack.callback(false);
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        mGroup.clear();
+        ObjHelper.instance().clear();
     }
 
     //在Surface创建以后，每次Surface尺寸变化后，这个方法都会调用

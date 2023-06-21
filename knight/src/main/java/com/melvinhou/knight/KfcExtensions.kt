@@ -1,5 +1,6 @@
 package com.melvinhou.knight
 
+import android.os.Build
 import android.text.TextUtils
 import android.util.Log
 import android.widget.ImageView
@@ -75,7 +76,7 @@ fun TextView.showMobile(mobileStr: String?) {
  * 设置图片
  */
 fun ImageView.loadImage(path: String?) {
-    Log.d("图片加载","width=${width},height=${height}")
+//    Log.d("图片加载","width=${width},height=${height},path=${path}")
     loadImage(path,width,height)
 }
 

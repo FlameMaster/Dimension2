@@ -37,7 +37,6 @@ class MainActivity : BindActivity<ActivityMainBinding, BaseViewModel>() {
 
 
     private lateinit var mNavController: NavController
-    private lateinit var mNavView: BottomNavigationView
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -53,14 +52,13 @@ class MainActivity : BindActivity<ActivityMainBinding, BaseViewModel>() {
         //添加一个toolbar，阻止底部导航栏setTitle报错
         setSupportActionBar(mBinding.bar)
         //显示标题
-        supportActionBar!!.setDisplayShowTitleEnabled(true)
-        val drawable = DrawerArrowDrawable(baseContext)
-        supportActionBar?.setHomeAsUpIndicator(drawable);
+        supportActionBar?.setDisplayShowTitleEnabled(true)
+//        val drawable = DrawerArrowDrawable(baseContext)
+//        supportActionBar?.setHomeAsUpIndicator(drawable);
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         //
         mNavController = findNavController(R.id.nav_host_fragment)
-        mNavView = mBinding.btnNavView
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home,
@@ -69,22 +67,21 @@ class MainActivity : BindActivity<ActivityMainBinding, BaseViewModel>() {
             )
         )
         setupActionBarWithNavController(mNavController, appBarConfiguration)
-        mNavView.setupWithNavController(mNavController)
+        mBinding.navbView.setupWithNavController(mNavController)
         mBinding.navView.setupWithNavController(mNavController)
         //切换时保留原始色彩
-//        mNavView.itemIconTintList = null
+        mBinding.navbView.itemIconTintList = null
     }
 
 
     override fun initListener() {
         //自定义跳转
-        mNavView.setOnItemSelectedListener {
+        mBinding.navbView.setOnItemSelectedListener {
             mNavController.navigate(it.itemId)
             true
         }
         //监听，切换状态栏颜色
         mNavController.addOnDestinationChangedListener { _, destination, _ ->
-
             val isblank = when (destination.id) {
 //                R.id.navigation_home -> false
                 else -> true

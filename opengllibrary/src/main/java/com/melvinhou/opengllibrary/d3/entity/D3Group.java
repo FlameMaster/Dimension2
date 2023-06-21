@@ -84,4 +84,10 @@ public class D3Group<T extends D3Object> {
             obj.doDraw(mMatrix, mvpMatrix);
         }
     }
+
+    public void clear() {
+        for (D3Object obj : objs) {
+            obj.claer();
+        }
+    }
 }

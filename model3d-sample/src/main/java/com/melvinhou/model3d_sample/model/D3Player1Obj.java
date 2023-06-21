@@ -282,4 +282,9 @@ public class D3Player1Obj implements D3Object {
         ShaderUtil.checkGLError(TAG, "After draw");
     }
 
+    @Override
+    public void claer() {
+
+    }
+
 }

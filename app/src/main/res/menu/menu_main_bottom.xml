@@ -8,13 +8,18 @@
 
     <item
         android:id="@+id/navigation_media"
-        android:icon="@drawable/ic_main_tab_media"
+        android:icon="@drawable/anim_main_tab_media"
         android:title="@string/title_media"
         />
 
     <item
         android:id="@+id/navigation_function"
-        android:icon="@drawable/ic_function_black_24dp"
+        android:icon="@drawable/anim_main_tab_funcation"
         android:title="@string/title_function" />
+
+    <item
+        android:id="@+id/navigation_mine"
+        android:icon="@drawable/ic_main_tab_media"
+        android:title="@string/title_mine" />
 
 </menu>

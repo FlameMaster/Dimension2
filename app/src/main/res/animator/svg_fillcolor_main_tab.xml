@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<set xmlns:android="http://schemas.android.com/apk/res/android"
-    android:ordering="sequentially">
-    <objectAnimator
-        android:duration="500"
-        android:interpolator="@android:anim/bounce_interpolator"
-        android:propertyName="fillColor"
-        android:valueFrom="@color/gray"
-        android:valueTo="@color/colorAccent"
-        android:valueType="colorType"/>
-</set>
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/linear_interpolator"
+    android:duration="1000"
+    android:propertyName="fillColor"
+    android:valueFrom="?attr/colorControlNormal"
+    android:valueTo="?attr/colorAccent"
+    android:valueType="colorType"
+    />

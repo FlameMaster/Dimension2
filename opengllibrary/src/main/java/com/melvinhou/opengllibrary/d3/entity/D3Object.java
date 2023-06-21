@@ -36,4 +36,6 @@ public interface D3Object {
      * @param mvpMatrix
      */
     void doDraw(float[] mMatrix, float[] mvpMatrix);
+
+    void claer();
 }

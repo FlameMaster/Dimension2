@@ -212,6 +212,12 @@ public class D3SampleActivity extends BindActivity<ActivityD3SampleBinding, D3Sa
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        mRenderer.onDestroy();
+        super.onDestroy();
+    }
+
     /**
      * 参数调整进度条
      *

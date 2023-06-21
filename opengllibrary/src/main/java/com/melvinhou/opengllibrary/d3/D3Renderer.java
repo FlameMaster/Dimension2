@@ -123,4 +123,8 @@ public class D3Renderer implements GLSurfaceView.Renderer {
         Matrix.multiplyMM(mMVPMatrix, 0, projectionMatrix, 0, mMVPMatrix, 0);
         mGroup.doDraw(mMatrix, mMVPMatrix);
     }
+
+    public void onDestroy() {
+        mGroup.clear();
+    }
 }

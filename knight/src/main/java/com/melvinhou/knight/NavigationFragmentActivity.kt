@@ -37,7 +37,6 @@ abstract class NavigationFragmentActivity<M : NavigaionFragmentModel> :
     protected abstract val _navigationRes: Int
 
     private lateinit var navController: NavController
-    private var mControllerCompat: WindowInsetsControllerCompat? = null
 
 
     override fun onNavigateUp(): Boolean {
@@ -55,7 +54,6 @@ abstract class NavigationFragmentActivity<M : NavigaionFragmentModel> :
     }
 
     override fun initView() {
-        mControllerCompat = WindowCompat.getInsetsController(window, mBinding.root)
         navController = findNavController(R.id.nav_host_fragment)
         //设置管理资源
         val navGraph = navController.navInflater.inflate(_navigationRes)

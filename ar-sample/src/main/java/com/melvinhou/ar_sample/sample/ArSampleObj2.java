@@ -294,4 +294,9 @@ public class ArSampleObj2 implements D3Object {
         v[1] *= reciprocalLength;
         v[2] *= reciprocalLength;
     }
+
+    @Override
+    public void claer() {
+
+    }
 }

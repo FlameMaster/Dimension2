@@ -1,7 +1,9 @@
 package com.melvinhou.dimension2.home
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import com.melvinhou.accountlibrary.bean.User
@@ -42,7 +44,9 @@ class FunctionFragment  : KindFragment<FragmentFunctionBinding, BaseViewModel>()
         get() = BaseViewModel::class.java
 
     override fun initView() {
-
+        mBinding.root.isFocusable =true
+        mBinding.root.isFocusableInTouchMode = true
+        mBinding.root.requestFocus()
     }
 
     override fun initListener() {
@@ -94,5 +98,9 @@ class FunctionFragment  : KindFragment<FragmentFunctionBinding, BaseViewModel>()
                 toActivity<WebBrowserActivity>(this)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 }
