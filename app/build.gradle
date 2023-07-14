@@ -91,6 +91,7 @@ dependencies {
     api project(':ar-sample')
     api project(':im-sample')
     api project(':tiktok-sample')
+    api project(':user-sample')
 
 
     implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.8.1'

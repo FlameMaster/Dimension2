@@ -1,6 +1,7 @@
 package com.melvinhou.test;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.View;
 
@@ -10,9 +11,13 @@ import com.melvinhou.dimension2.databinding.ActivityTestBinding;
 import com.melvinhou.kami.mvvm.BaseViewModel;
 import com.melvinhou.kami.mvvm.BindActivity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 import androidx.collection.SparseArrayCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
@@ -55,6 +60,24 @@ public class TestActivity extends BindActivity<ActivityTestBinding, BaseViewMode
 //        NavigationUI.setupWithNavController(mBinding.barRoot.bar, navController, appBarConfiguration);
 
         mBinding.barRoot.getRoot().setVisibility(View.GONE);
+        //返回按钮动画
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mBinding.drawerLayout, mBinding.barRoot.bar, R.string.title_home, R.string.title_mine);
+        toggle.syncState();
+        mBinding.drawerLayout.addDrawerListener(toggle);
+//        DrawerArrowDrawable mSlider = new DrawerArrowDrawable(getBaseContext());
+//        mBinding.barRoot.bar.setNavigationIcon(mSlider);
+//        mBinding.drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+//            @Override
+//            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+//                float position = Math.min(1f, Math.max(0, slideOffset));
+//                if (position == 1f) {
+//                    mSlider.setVerticalMirror(true);
+//                } else if (position == 0f) {
+//                    mSlider.setVerticalMirror(false);
+//                }
+//                mSlider.setProgress(position);
+//            }
+//        });
     }
 
     @Override

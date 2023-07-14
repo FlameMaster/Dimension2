@@ -1,7 +1,7 @@
 package com.melvinhou.dimension2;
 
-import com.melvinhou.accountlibrary.bean.User;
-import com.melvinhou.accountlibrary.db.SqlManager;
+import com.melvinhou.userlibrary.bean.User;
+import com.melvinhou.userlibrary.db.SqlManager;
 import com.melvinhou.dimension2.net.HttpConstant;
 import com.melvinhou.kami.BaseApplication;
 import com.melvinhou.kami.BaseException;

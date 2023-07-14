@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="txt_user_signin">SIGN IN</string>
+    <string name="txt_user_hi">HI,</string>
+    <string name="txt_user_edit">编辑个人信息</string>
+</resources>

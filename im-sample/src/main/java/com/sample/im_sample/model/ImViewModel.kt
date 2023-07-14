@@ -2,7 +2,6 @@ package com.sample.im_sample.model
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.util.Log
 import androidx.collection.arrayMapOf
 import androidx.lifecycle.LiveData
 import androidx.room.Room
@@ -13,8 +12,8 @@ import com.melvinhou.kami.util.StringCompareUtils
 import com.melvinhou.knight.NavigaionFragmentModel
 import com.sample.im_sample.bean.ImChatEntity
 import com.sample.im_sample.bean.ImContactEntity
-import com.melvinhou.accountlibrary.bean.User
-import com.melvinhou.accountlibrary.db.SqlManager
+import com.melvinhou.userlibrary.bean.User
+import com.melvinhou.userlibrary.db.SqlManager
 import com.melvinhou.kami.util.ResourcesUtils
 import com.sample.im_sample.R
 import com.sample.im_sample.db.im.ImChatDB

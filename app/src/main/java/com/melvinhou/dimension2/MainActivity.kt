@@ -63,7 +63,8 @@ class MainActivity : BindActivity<ActivityMainBinding, BaseViewModel>() {
             setOf(
                 R.id.navigation_home,
                 R.id.navigation_media,
-                R.id.navigation_function
+                R.id.navigation_function,
+                R.id.navigation_mine
             )
         )
         setupActionBarWithNavController(mNavController, appBarConfiguration)

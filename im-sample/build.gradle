@@ -37,7 +37,7 @@ dependencies {
     api fileTree(dir: "libs", include: ["*.jar", "*.aar"])
     api project(':kami')
     api project(':knight')
-    api project(':accountlibrary')
+    api project(':userlibrary')
 
     //数据库相关
     annotationProcessor 'androidx.room:room-compiler:2.4.2'

@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.lifecycle.MutableLiveData
 import androidx.viewpager2.widget.ViewPager2
 import com.melvinhou.kami.adapter.BindRecyclerAdapter
 import com.melvinhou.kami.mvp.MvpActivity2
@@ -50,6 +51,9 @@ class TiktokActivity : MvpActivity2<ActivityTiktok2Binding, TiktokCotract.Presen
 
     private lateinit var adapter: MyAdapter
 
+    //当前播放位置，控制多播放
+    val mPlayingPosition = MutableLiveData(-1)
+
     //vp的回调
     private val mPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
@@ -65,12 +69,14 @@ class TiktokActivity : MvpActivity2<ActivityTiktok2Binding, TiktokCotract.Presen
                     }
                 }
             }
+            mPlayingPosition.value = position
         }
     }
 
     override fun initView() {
         binding.container.isUserInputEnabled = true//用户输入
-        binding.container.offscreenPageLimit = ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT//预加载
+//        binding.container.offscreenPageLimit = ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT//预加载
+        binding.container.offscreenPageLimit = 1
         //适配器
         adapter = MyAdapter()
         binding.container.adapter = adapter
@@ -100,11 +106,13 @@ class TiktokActivity : MvpActivity2<ActivityTiktok2Binding, TiktokCotract.Presen
     override fun onResume() {
         super.onResume()
         binding.container.registerOnPageChangeCallback(mPageChangeCallback)
+        mPlayingPosition.value = binding.container.currentItem
     }
 
     override fun onPause() {
         super.onPause()
         binding.container.unregisterOnPageChangeCallback(mPageChangeCallback)
+        mPlayingPosition.value = -1
     }
 
     override fun addItems(isRefresh: Boolean, items: ArrayList<TiktokEntity>) {
@@ -182,8 +190,13 @@ class TiktokActivity : MvpActivity2<ActivityTiktok2Binding, TiktokCotract.Presen
     }
 
 
-    internal class MyAdapter :
+    //    internal
+    inner class MyAdapter :
         BindRecyclerAdapter<TiktokEntity, ItemTiktok2Binding>() {
+
+        fun setPlayPosition(position: Int) {
+        }
+
         override fun getViewBinding(
             inflater: LayoutInflater,
             parent: ViewGroup
@@ -199,10 +212,13 @@ class TiktokActivity : MvpActivity2<ActivityTiktok2Binding, TiktokCotract.Presen
             binding.videoLoading.isVisible = true
             binding.videoErrorMessage.isVisible = false
             binding.videoPlay.isVisible = false
+
             binding.video.setVideoURI(Uri.parse(data.url))
             //监听
             binding.video.setOnPreparedListener {
                 binding.videoLoading.isVisible = false
+                if (position != mPlayingPosition.value)
+                    binding.video.pause()
             }
             binding.video.setOnErrorListener { mp, what, extra ->
                 binding.videoErrorMessage.isVisible = true
@@ -219,6 +235,26 @@ class TiktokActivity : MvpActivity2<ActivityTiktok2Binding, TiktokCotract.Presen
                     }
                     else -> {
                         binding.videoPlay.isVisible = false
+                    }
+                }
+            }
+
+            //播放控制
+            mPlayingPosition.observe(this@TiktokActivity) {
+                binding.video.apply {
+                    if (position == it) {
+                        when (state) {
+                            FcVideoView.STATE_IDLE -> {
+                                if (isPrepared) resetVideo()
+                            }
+                            FcVideoView.STATE_PAUSED,
+                            FcVideoView.STATE_PREPARED,
+                            FcVideoView.STATE_STOPPED -> {
+                                start()
+                            }
+                        }
+                    } else {
+                        if (isPlaying) stop()
                     }
                 }
             }

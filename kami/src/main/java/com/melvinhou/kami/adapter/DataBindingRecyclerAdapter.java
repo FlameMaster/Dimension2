@@ -134,8 +134,10 @@ public abstract class DataBindingRecyclerAdapter<T, VH extends DataBindingHolder
      * 删除顶部头布局
      */
     public void removedTopHeader() {
-        mHeaderBindings.remove(0);
-        notifyItemRemoved(0);
+        if (mHeaderBindings.size()>0){
+            mHeaderBindings.remove(0);
+            notifyItemRemoved(0);
+        }
     }
 
 //////////////////////////////////////尾部布局///////////////////////////////////////////////////////

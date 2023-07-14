@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/icon_end" android:drawable="@drawable/ic_main_tab_mine" android:state_checked="true"/>
+    <item android:id="@+id/icon_start" android:drawable="@drawable/ic_main_tab_mine"/>
+    <transition
+        android:fromId="@id/icon_start"
+        android:toId="@id/icon_end">
+        <animated-vector android:drawable="@drawable/ic_main_tab_mine">
+            <target
+                android:animation="@animator/svg_path_main_mine01"
+                android:name="eyes"
+                />
+            <target
+                android:animation="@animator/svg_path_main_mine02"
+                android:name="mouth"
+                />
+        </animated-vector>
+    </transition>
+
+</animated-selector>

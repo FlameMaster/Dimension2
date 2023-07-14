@@ -1,12 +1,8 @@
 package com.melvinhou.dimension2.home
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import com.melvinhou.accountlibrary.bean.User
 import com.melvinhou.ar_sample.sample.ArSampleListActivity
 import com.melvinhou.`fun`.desktop.DesktopActivity
 import com.melvinhou.`fun`.document.pdf.PdfActivity

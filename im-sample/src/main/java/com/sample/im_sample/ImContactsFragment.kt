@@ -12,27 +12,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.melvinhou.accountlibrary.bean.User
+import com.melvinhou.userlibrary.bean.User
 import com.melvinhou.kami.adapter.BindRecyclerAdapter
 import com.melvinhou.kami.io.IOUtils
 import com.melvinhou.kami.io.SharePrefUtil
-import com.melvinhou.kami.tool.ThreadManager
 import com.melvinhou.kami.tool.UITools
 import com.melvinhou.kami.util.DimenUtils
 import com.melvinhou.kami.util.FcUtils
-import com.melvinhou.kami.util.StringCompareUtils
 import com.melvinhou.knight.KindFragment
-import com.melvinhou.knight.loadImage
 import com.sample.im_sample.bean.ImContactEntity
 import com.sample.im_sample.databinding.FragmentImContactsBinding
 import com.sample.im_sample.databinding.ItemImContactBinding
 import com.sample.im_sample.model.ImViewModel
-import com.sample.im_sample.tcp.ImTcpServer
 import com.sample.im_sample.udp.ImUdpServer
-import java.io.DataInputStream
-import java.io.IOException
-import java.net.ServerSocket
-import java.net.Socket
 import java.util.*
 
 

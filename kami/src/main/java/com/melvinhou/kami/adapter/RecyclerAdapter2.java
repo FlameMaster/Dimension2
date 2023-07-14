@@ -204,8 +204,10 @@ public abstract class RecyclerAdapter2<T, VH extends RecyclerHolder> extends Rec
      * 删除顶部头布局
      */
     public void removedTopHead() {
-        mHeadDatas.remove(0);
-        notifyItemRemoved(0);
+        if (mHeadDatas.size()>0){
+            mHeadDatas.remove(0);
+            notifyItemRemoved(0);
+        }
     }
 
     /**

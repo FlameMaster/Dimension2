@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
+import android.view.View;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
@@ -38,7 +39,7 @@ public class FcVideoView extends TextureView {
     public @interface PlayerState {
     }
 
-    //播放器状态
+    //播放器状态:错误-1 默认0 准备中1 准备完毕2 播放中3 暂停4 播放完毕5 停止6
     public static final int STATE_ERROR = -1;
     public static final int STATE_IDLE = 0;
     public static final int STATE_PREPARING = 1;
@@ -356,6 +357,7 @@ public class FcVideoView extends TextureView {
     public void stop_l() {
         if (mMediaPlayer != null) {
             mMediaPlayer.stop();
+            updateState(STATE_STOPPED);
             mMediaPlayer.release();
             mMediaPlayer = null;
             updateState(STATE_IDLE);
@@ -409,6 +411,9 @@ public class FcVideoView extends TextureView {
             mPlayerStateListener.onChanged(state);
     }
 
+    public int getState() {
+        return mCurrentState;
+    }
 
     @Override
     public void setBackgroundDrawable(Drawable background) {
@@ -434,5 +439,10 @@ public class FcVideoView extends TextureView {
 
     public void setPlayerStateListener(PlayerStateListener l) {
         mPlayerStateListener = l;
+    }
+
+    @Override
+    protected void onWindowVisibilityChanged(int visibility) {
+        super.onWindowVisibilityChanged(visibility);
     }
 }

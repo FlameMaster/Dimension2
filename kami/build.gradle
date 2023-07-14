@@ -60,4 +60,7 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:4.11.0"
     //获取图片色值
     api 'androidx.palette:palette:1.0.0'
+    //流式布局
+    api 'com.google.android.flexbox:flexbox:3.0.0'
+
 }

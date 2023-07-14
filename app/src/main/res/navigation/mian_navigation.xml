@@ -25,4 +25,10 @@
         android:name="com.melvinhou.dimension2.home.FunctionFragment"
         android:label="@string/title_function"
         tools:layout="@layout/fragment_function" />
+
+    <fragment
+        android:id="@+id/navigation_mine"
+        android:name="com.melvinhou.user_sample.MineFragment01"
+        android:label="@string/title_mine"
+        tools:layout="@layout/fragment_mine01" />
 </navigation>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:duration="500"
+    android:propertyName="pathData"
+    android:repeatCount="3"
+    android:repeatMode="restart"
+    android:valueFrom="
+        m7,8
+        a1,1,0,0,1,2,0
+        a1,1,0,0,1,-2,0
+        m8,0
+        a1,1,0,0,1,2,0
+        a1,1,0,0,1,-2,0
+        "
+    android:valueTo="
+        m7,8
+        a1,2,0,0,1,2,0
+        a1,2,0,0,1,-2,0
+        m8,0
+        a1,2,0,0,1,2,0
+        a1,2,0,0,1,-2,0
+        "
+    android:valueType="pathType" />

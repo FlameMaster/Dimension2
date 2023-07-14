@@ -1,6 +1,6 @@
 package com.sample.im_sample.bean;
 
-import com.melvinhou.accountlibrary.bean.User;
+import com.melvinhou.userlibrary.bean.User;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

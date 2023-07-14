@@ -139,8 +139,10 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends Recy
      * 删除顶部头布局
      */
     public void removedTopHead() {
-        mHeadViews.remove(0);
-        notifyItemRemoved(0);
+        if (mHeadViews.size()>0){
+            mHeadViews.remove(0);
+            notifyItemRemoved(0);
+        }
     }
 
 //////////////////////////////////////尾部布局///////////////////////////////////////////////////////

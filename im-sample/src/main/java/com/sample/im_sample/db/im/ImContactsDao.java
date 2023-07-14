@@ -1,7 +1,7 @@
 package com.sample.im_sample.db.im;
 
 import com.sample.im_sample.bean.ImContactEntity;
-import com.melvinhou.accountlibrary.bean.User;
+import com.melvinhou.userlibrary.bean.User;
 
 import java.util.List;
 

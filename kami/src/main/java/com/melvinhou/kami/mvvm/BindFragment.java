@@ -89,7 +89,7 @@ public abstract class BindFragment<VB extends ViewBinding, M extends BaseViewMod
 
 
 
-    protected abstract VB openViewBinding(LayoutInflater inflater, ViewGroup container);
+    protected abstract VB openViewBinding(@NonNull LayoutInflater inflater, ViewGroup container);
 
     protected abstract Class<M> openModelClazz();
 

@@ -43,7 +43,7 @@ import com.melvinhou.media_sample.databinding.ItemMediaTabBinding
 class MediaFragment : BindFragment<LayoutListBinding, MediaViewModel>() {
 
     override fun openViewBinding(
-        inflater: LayoutInflater?,
+        inflater: LayoutInflater,
         container: ViewGroup?
     ): LayoutListBinding = LayoutListBinding.inflate(layoutInflater, container, false)
 

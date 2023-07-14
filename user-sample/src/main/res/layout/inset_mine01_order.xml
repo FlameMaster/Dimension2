@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<LinearLayout
+    android:id="@+id/root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+            android:id="@+id/tv_order_title"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:text="我的订单"
+            android:textStyle="bold"
+            android:paddingHorizontal="24dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+        <TextView
+            android:id="@+id/bt_order_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:text="查看全部"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_order_title"
+            app:layout_constraintBottom_toBottomOf="@id/tv_order_title"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEE"
+        android:layout_marginHorizontal="24dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="24dp"
+        android:paddingBottom="16dp"
+        >
+        <TextView
+            android:id="@+id/tv_order1"
+            android:text="待付款"
+            android:textColor="@color/gray"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:drawableTop="@drawable/ic_error_outline_24"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/tv_order2"
+            android:text="待发货"
+            android:textColor="@color/gray"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:drawableTop="@drawable/ic_error_outline_24"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/tv_order3"
+            android:text="待收货"
+            android:textColor="@color/gray"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:drawableTop="@drawable/ic_error_outline_24"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/tv_order4"
+            android:text="已完成"
+            android:textColor="@color/gray"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:drawableTop="@drawable/ic_error_outline_24"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>

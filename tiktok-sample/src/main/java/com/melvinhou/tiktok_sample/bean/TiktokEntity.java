@@ -1,7 +1,7 @@
 package com.melvinhou.tiktok_sample.bean;
 
 import com.google.gson.annotations.SerializedName;
-import com.melvinhou.accountlibrary.bean.User;
+import com.melvinhou.userlibrary.bean.User;
 
 import java.util.List;
 
