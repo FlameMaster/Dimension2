@@ -112,6 +112,19 @@
             android:gravity="center"
             />
 
+        <TextView
+            android:id="@+id/tv_order5"
+            android:text="售后"
+            android:textColor="@color/gray"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:drawableTop="@drawable/ic_error_outline_24"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            />
+
     </LinearLayout>
 
 

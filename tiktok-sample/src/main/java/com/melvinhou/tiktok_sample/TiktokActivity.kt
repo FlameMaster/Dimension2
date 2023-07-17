@@ -14,6 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.graphics.Insets
+import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
 import androidx.viewpager2.widget.ViewPager2
@@ -73,6 +75,17 @@ class TiktokActivity : MvpActivity2<ActivityTiktok2Binding, TiktokCotract.Presen
         }
     }
 
+    override fun initWindowUI() {
+        super.initWindowUI()
+        WindowCompat.getInsetsController(window, binding.root).let {
+            it.isAppearanceLightStatusBars = false
+            it.isAppearanceLightNavigationBars = false
+        }
+    }
+    override fun onWindowInsetsChange(insets: Insets) {
+        super.onWindowInsetsChange(insets)
+        binding.inInfo.root.setPadding(0,0,0,insets.bottom)
+    }
     override fun initView() {
         binding.container.isUserInputEnabled = true//用户输入
 //        binding.container.offscreenPageLimit = ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT//预加载

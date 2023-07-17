@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<androidx.core.widget.NestedScrollView
+    android:id="@+id/root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="72dp"
+        >
+        <include
+            android:id="@+id/in_user"
+            layout="@layout/inset_mine02_user"/>
+        <include
+            android:id="@+id/in_order"
+            layout="@layout/inset_mine02_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="-32dp"
+            />
+        <include
+            android:id="@+id/in_account"
+            layout="@layout/inset_mine02_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:text="其他功能"
+            android:textStyle="bold"
+            android:background="@drawable/round_dp8_top"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="16dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            />
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            android:orientation="horizontal"
+            android:rowCount="2"
+            android:background="@drawable/round_dp8_bottom"
+            android:paddingTop="6dp"
+            android:paddingBottom="12dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="48dp"
+            >
+            <!--            android:stretchColumns="1"-->
+
+            <TextView
+                android:text="我的收藏"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:layout_columnWeight="1"
+                android:drawableTop="@drawable/ic_error_outline_24"
+                android:drawablePadding="12dp"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                />
+            <TextView
+                android:text="地址管理"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:layout_columnWeight="1"
+                android:drawableTop="@drawable/ic_error_outline_24"
+                android:drawablePadding="12dp"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                />
+            <TextView
+                android:text="历史记录"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:layout_columnWeight="1"
+                android:drawableTop="@drawable/ic_error_outline_24"
+                android:drawablePadding="12dp"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                />
+            <TextView
+                android:text="意见反馈"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:layout_columnWeight="1"
+                android:drawableTop="@drawable/ic_error_outline_24"
+                android:drawablePadding="12dp"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                />
+            <TextView
+                android:text="关于我们"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:layout_columnWeight="1"
+                android:drawableTop="@drawable/ic_error_outline_24"
+                android:drawablePadding="12dp"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                />
+            <TextView
+                android:text="系统设置"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:layout_columnWeight="1"
+                android:drawableTop="@drawable/ic_error_outline_24"
+                android:drawablePadding="12dp"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                />
+
+        </GridLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
