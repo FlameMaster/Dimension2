@@ -3,4 +3,25 @@
     <string name="txt_user_signin">SIGN IN</string>
     <string name="txt_user_hi">HI,</string>
     <string name="txt_user_edit">编辑个人信息</string>
+
+
+
+    <string name="action_sign_in">立即登录</string>
+    <string name="prompt_mobile">请输入手机号</string>
+    <string name="prompt_mobile_lenght">请输入11位有效电话号码</string>
+    <string name="prompt_password">请输入密码</string>
+    <string name="action_sign_in_short">登录</string>
+    <string name="prompt_code">请输入短信验证码</string>
+    <string name="prompt_password2">6-16位含数字、字母</string>
+    <string name="prompt_password2_new">设置新密码，长度6-20位</string>
+    <string name="prompt_password_repeat">重复新密码</string>
+    <string name="button_submit">提交</string>
+    <string name="button_logon">立即注册</string>
+    <string name="button_logon2">注册</string>
+    <string name="button_next">下一步</string>
+    <string name="txt_send_code"> (%sS)后可点击重新发送</string>
+
+    <string name="text_login_rule">我已阅读并同意《用户协议》和《隐私政策》并使用本机号码登录</string>
+    <string name="title_rule_user_agreement">《用户协议》</string>
+    <string name="title_rule_privacy_policy">《隐私政策》</string>
 </resources>

@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/navigation_mine"
-        android:name="com.melvinhou.user_sample.MineFragment01"
+        android:name="com.melvinhou.user_sample.MineFragment02"
         android:label="@string/title_mine"
-        tools:layout="@layout/fragment_mine01" />
+        tools:layout="@layout/fragment_mine02" />
 </navigation>

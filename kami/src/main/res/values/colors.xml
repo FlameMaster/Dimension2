@@ -20,6 +20,10 @@
     <color name="textColorSecondary">#80000000</color>
     <color name="colorSwitchThumbNormal">#80000000</color>
 
+
+    <color name="edit_text_normal_color">@color/gray</color>
+    <color name="edit_text_activated_color">@color/black</color>
+
     <!--常用颜色-->
     <color name="app_main">?attr/colorPrimary</color>
     <color name="app_bg">#F8F8F8</color>

@@ -1,8 +1,6 @@
 package com.melvinhou.knight
 
-import android.os.Build
-import android.text.TextUtils
-import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -10,7 +8,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.melvinhou.kami.util.FcUtils
 import java.text.DecimalFormat
-
 
 /**
  * 显示价格

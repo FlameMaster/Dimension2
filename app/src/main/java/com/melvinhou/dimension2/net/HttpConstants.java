@@ -13,7 +13,7 @@ package com.melvinhou.dimension2.net;
  * = 分 类 说 明：网络接口
  * ================================================
  */
-public class HttpConstant {
+public class HttpConstants {
 
     /*访问成功*/
     public static final int CODE_NORMAL = 200;

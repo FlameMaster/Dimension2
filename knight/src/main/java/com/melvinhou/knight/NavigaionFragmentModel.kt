@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.lifecycle.MutableLiveData
 import com.melvinhou.kami.bean.PageInfo
-import com.melvinhou.kami.mvvm.BaseViewModel
 
 
 /**
@@ -21,7 +20,7 @@ import com.melvinhou.kami.mvvm.BaseViewModel
  * = 分 类 说 明：
  * ================================================
  */
-open class NavigaionFragmentModel(application: Application) : BaseViewModel(application) {
+open class NavigaionFragmentModel(application: Application) : FormViewModel(application) {
 
 
     //页面

@@ -56,4 +56,8 @@ public class SqlManager {
         return getIntance(context).userDao().getAll();
     }
 
+    //手机号查询
+    public static synchronized User findUserByPhone(Context context, String phone) {
+        return getIntance(context).userDao().findUserByPhone(phone);
+    }
 }

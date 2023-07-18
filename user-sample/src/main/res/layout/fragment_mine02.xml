@@ -21,13 +21,52 @@
         <include
             android:id="@+id/in_user"
             layout="@layout/inset_mine02_user"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_vip_card"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="-72dp"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="开通会员 尊享会员权益"
+                android:textColor="@color/sienna"
+                android:textSize="12sp"
+                android:drawableLeft="@drawable/ic_error_outline_24"
+                android:drawableTint="@color/sienna"
+                android:drawablePadding="4dp"
+                android:layout_marginLeft="16dp"
+                android:gravity="center_vertical"
+                />
+            <TextView
+                android:id="@+id/bt_vip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="会员中心"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:background="@drawable/bg_round"
+                android:backgroundTint="@color/saddlebrown"
+                android:layout_marginRight="14dp"
+                android:paddingVertical="4dp"
+                android:paddingHorizontal="10dp"
+                android:layout_marginVertical="8dp"
+                />
+        </LinearLayout>
+
         <include
             android:id="@+id/in_order"
             layout="@layout/inset_mine02_order"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="-32dp"
+            android:layout_marginTop="-8dp"
             />
         <include
             android:id="@+id/in_account"

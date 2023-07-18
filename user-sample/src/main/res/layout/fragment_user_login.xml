@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:animateLayoutChanges="true"
+    android:layout_height="match_parent">
+
+    <RadioGroup
+        android:id="@+id/rg_login_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="36dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="80dp"
+        >
+        <RadioButton
+            android:id="@+id/rb_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="验证码登录"
+            android:textColor="@color/selector_state_text_sample02"
+            android:textSize="24sp"
+            android:button="@null"
+            android:textStyle="bold"
+            android:checked="true"
+            />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="10dp"
+            android:background="@color/gray"
+            android:layout_marginHorizontal="16dp"
+            />
+        <RadioButton
+            android:id="@+id/rb_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="密码登录"
+            android:textColor="@color/selector_state_text_sample02"
+            android:textSize="24sp"
+            android:button="@null"
+            />
+
+    </RadioGroup>
+
+    <TableLayout
+        android:id="@+id/ll_edit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rg_login_mode"
+        android:layout_marginTop="30dp"
+        >
+        <TableRow
+            android:background="@drawable/selector_edit_line"
+            android:layout_marginHorizontal="36dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="手机号"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                />
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_marginLeft="30dp"
+                android:gravity="center_vertical"
+                >
+                <EditText
+                    android:id="@+id/et_mobile"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:hint="请输入手机号"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textColorHint="@color/gray"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:inputType="phone"
+                    android:background="@null"
+                    android:maxLength="11"
+                    android:theme="@style/KamiEditStyle"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_mobile_cleal"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:src="@drawable/ic_edit_cancel"
+                    android:paddingVertical="12dp"
+                    android:paddingLeft="24dp"
+                    android:visibility="gone"
+                    />
+            </LinearLayout>
+
+        </TableRow>
+        <TableRow
+            android:id="@+id/ll_code"
+            android:background="@drawable/selector_edit_line"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="36dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="验证码"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                />
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_marginLeft="30dp"
+                android:gravity="center_vertical"
+                >
+                <EditText
+                    android:id="@+id/et_code"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:hint="请输入验证码"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textColorHint="@color/gray"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:background="@null"
+                    android:theme="@style/KamiEditStyle"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_code_get"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="获取验证码"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    android:gravity="center_vertical"
+                    />
+            </LinearLayout>
+
+        </TableRow>
+        <TableRow
+            android:id="@+id/ll_password"
+            android:background="@drawable/selector_edit_line"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="36dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="密码"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                />
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_marginLeft="30dp"
+                android:gravity="center_vertical"
+                >
+                <EditText
+                    android:id="@+id/et_password"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:hint="请输入密码"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textColorHint="@color/gray"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:inputType="textWebPassword"
+                    android:maxLength="20"
+                    android:background="@null"
+                    android:theme="@style/KamiEditStyle"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_password_cleal"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:src="@drawable/ic_edit_cancel"
+                    android:paddingVertical="12dp"
+                    android:paddingLeft="18dp"
+                    android:layout_marginRight="6dp"
+                    android:visibility="gone"
+                    />
+                <CheckBox
+                    android:id="@+id/cb_password_show"
+                    android:layout_width="34dp"
+                    android:layout_height="38dp"
+                    android:button="@drawable/selector_edit_password"
+                    android:paddingVertical="5dp"
+                    android:paddingLeft="6dp"
+                    app:tint="@color/gray"
+                    />
+            </LinearLayout>
+
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/tv_password_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:textSize="12sp"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="36dp"
+        android:maxLength="16"
+        app:layout_constraintTop_toBottomOf="@id/ll_edit"
+        app:layout_constraintLeft_toLeftOf="@id/ll_edit"
+        app:layout_constraintRight_toRightOf="@id/ll_edit"
+        />
+
+    <TextView
+        android:id="@+id/bt_login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="50dp"
+        android:text="@string/action_sign_in"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_edit"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_round"
+        android:backgroundTint="@color/selector_button_sample01"
+        android:layout_marginHorizontal="36dp"
+        android:gravity="center"
+        android:paddingVertical="12dp"
+        app:layout_constraintVertical_bias="0.2" />
+<!--    android:enabled="false"-->
+
+    <TextView
+        android:id="@+id/tv_logon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="用户注册"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/bt_login"
+        app:layout_constraintLeft_toLeftOf="@id/bt_login"
+        android:padding="12dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_password_retrieve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="忘记密码?找回密码"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/bt_login"
+        app:layout_constraintRight_toRightOf="@id/bt_login"
+        android:padding="12dp"
+        />
+
+    <CheckBox
+        android:id="@+id/cb_rule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/selector_check"
+        app:layout_constraintTop_toBottomOf="@id/tv_password_retrieve"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="36dp"
+        android:paddingRight="8dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_rule"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_login_rule"
+        android:textColor="@color/gray"
+        android:textSize="12sp"
+        app:layout_constraintTop_toTopOf="@id/cb_rule"
+        app:layout_constraintLeft_toRightOf="@id/cb_rule"
+        app:layout_constraintRight_toRightOf="@id/bt_login"
+        android:lineSpacingExtra="4sp"
+        />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="42dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:visibility="gone"
+        >
+
+
+        <View
+            android:id="@+id/bt_login_wechat"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/ic_error_outline_24"
+            android:layout_marginHorizontal="24dp"
+            />
+        <View
+            android:id="@+id/bt_login_apple"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/ic_error_outline_24"
+            android:layout_marginHorizontal="24dp"
+            />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

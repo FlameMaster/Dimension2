@@ -1,5 +1,7 @@
 package com.melvinhou.kami.net;
 
+import android.content.Intent;
+
 import com.melvinhou.kami.util.FcUtils;
 
 /**
@@ -18,9 +20,11 @@ import com.melvinhou.kami.util.FcUtils;
 public abstract class  RequestCallback<D> {
     public abstract void  onSuceess(D data);
     public void onFailure(@ResultState int code, String message){
-        if (code == ResultState.RELOGIN) {
-            FcUtils.showToast(message);
-        } else if (code != ResultState.CONVERT_ERROR) {
+        if (code == ResultState.RELOGIN) {//需要登录
+            Intent intent = new Intent();
+            intent.setAction("user.login");
+            FcUtils.getContext().startActivity(intent);
+        } else if (code != ResultState.CONVERT_ERROR) {//数据解析错误
             FcUtils.showToast(message);
         }
     }

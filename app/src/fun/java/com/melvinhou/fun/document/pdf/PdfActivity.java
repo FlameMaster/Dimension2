@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.melvinhou.dimension2.R;
-import com.melvinhou.dimension2.net.HttpConstant;
+import com.melvinhou.dimension2.net.HttpConstants;
 import com.melvinhou.kami.net.RequestState;
 import com.melvinhou.kami.net.ResultState;
 import com.melvinhou.kami.util.FcUtils;
@@ -136,7 +136,7 @@ public class PdfActivity extends BaseActivity2 {
         mUrl = getIntent().getStringExtra("url");
         String title = getIntent().getStringExtra("title");
         if (TextUtils.isEmpty(mUrl)) {
-            mUrl = HttpConstant.SERVER_RES +"pdf/live2d.pdf";
+            mUrl = HttpConstants.SERVER_RES +"pdf/live2d.pdf";
             title = "Live2D Config Generator 使用说明";
         }
         getSupportActionBar().setDisplayShowTitleEnabled(true);

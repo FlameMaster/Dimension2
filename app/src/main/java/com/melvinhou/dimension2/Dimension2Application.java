@@ -2,7 +2,7 @@ package com.melvinhou.dimension2;
 
 import com.melvinhou.userlibrary.bean.User;
 import com.melvinhou.userlibrary.db.SqlManager;
-import com.melvinhou.dimension2.net.HttpConstant;
+import com.melvinhou.dimension2.net.HttpConstants;
 import com.melvinhou.kami.BaseApplication;
 import com.melvinhou.kami.BaseException;
 import com.melvinhou.kami.tool.ThreadManager;
@@ -40,15 +40,15 @@ public class Dimension2Application extends BaseApplication {
                 if (!isUserCreated){
                     SqlManager.addUsers(getApplicationContext(),
                             createUser(10001l,"拜拜风尘子",
-                                    HttpConstant.SERVER_RES +"image/portrait/01.jpg"),
+                                    HttpConstants.SERVER_RES +"image/portrait/01.jpg"),
                             createUser(10002l,"车厘子",
-                                    HttpConstant.SERVER_RES +"image/portrait/02.jpeg"),
+                                    HttpConstants.SERVER_RES +"image/portrait/02.jpeg"),
                             createUser(10003l,"呆呆小耗子",
-                                    HttpConstant.SERVER_RES +"image/portrait/03.jpg"),
+                                    HttpConstants.SERVER_RES +"image/portrait/03.jpg"),
                             createUser(10004l,"医生姐姐来啦",
-                                    HttpConstant.SERVER_RES +"image/portrait/04.jpg"),
+                                    HttpConstants.SERVER_RES +"image/portrait/04.jpg"),
                             createUser(10005l,"花无痕两两",
-                                    HttpConstant.SERVER_RES +"image/portrait/05.jpeg")
+                                    HttpConstants.SERVER_RES +"image/portrait/05.jpeg")
                             );
 
                 }

@@ -23,18 +23,15 @@ import com.melvinhou.kami.util.StringCompareUtils
  */
 open class FormViewModel(application: Application) : BaseViewModel(application){
 
-    //常用字段
-    val page = MutableLiveData<Int>()
 
-    //提交
-    var isRequest = MutableLiveData(false)
+    //是否提交成功
+    var isSubmit = MutableLiveData(false)
 
     //修改模式
     var isChanged = false
 
-    //状态
+    //申请状态
     var status = MutableLiveData(-1)
-
 
 
 

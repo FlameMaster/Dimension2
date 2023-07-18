@@ -1,6 +1,8 @@
 package com.melvinhou.user_sample
 
+import android.annotation.SuppressLint
 import android.app.Application
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.pdf.PdfRenderer
 import android.util.Log
@@ -11,13 +13,17 @@ import com.melvinhou.kami.io.SharePrefUtil
 import com.melvinhou.kami.mvvm.BaseViewModel
 import com.melvinhou.kami.net.RequestCallback
 import com.melvinhou.kami.tool.AssetsUtil
+import com.melvinhou.kami.util.FcUtils
 import com.melvinhou.knight.NavigaionFragmentModel
 import com.melvinhou.user_sample.net.ApiModel
 import com.melvinhou.userlibrary.bean.User
+import com.melvinhou.userlibrary.db.SqlManager
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.ObservableOnSubscribe
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 
@@ -34,35 +40,32 @@ import java.util.concurrent.TimeUnit
  * = 分 类 说 明：
  * ================================================
  */
-class UserModel(application: Application) : BaseViewModel(application) {
-
-    private val isNative = true//本地
-    private val nativeModel by lazy { UserNativeModel() }
-
-
-
-    val info =  MutableLiveData<User>()
+class UserNativeModel {
 
 
     /**
      * 加载用户信息
      */
-    fun loadUserInfo() {
-        val userId = SharePrefUtil.getLong(User.USER_ID,-1)
-        if (isNative){
-            nativeModel.loadUserInfo(userId){data->
-                data?.let {
-                    info.postValue(it)
-                }
-            }
+    @SuppressLint("CheckResult")
+    fun loadUserInfo(id: Long, callback: (User?) -> Unit) {
+        if (id < 0) {
             return
         }
-        val param = ApiModel.instance.Api().getUserInfo(userId)
-        requestData(param, object : RequestCallback<User>() {
-            override fun onSuceess(data: User) {
-                info.postValue(data)
+        Observable
+            .create { emitter: ObservableEmitter<User> ->
+                var user: User? = null
+                try {
+                    user = SqlManager.findUser(FcUtils.getContext(), id)
+                } finally {
+                    user?.let { emitter.onNext(it) }
+                    emitter.onComplete()
+                }
             }
-        })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { data: User ->
+                callback(data)
+            }
     }
 
 }

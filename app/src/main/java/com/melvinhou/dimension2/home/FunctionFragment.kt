@@ -9,7 +9,7 @@ import com.melvinhou.`fun`.document.pdf.PdfActivity
 import com.melvinhou.`fun`.document.zip.ZipActivity
 import com.melvinhou.tiktok_sample.TiktokActivity
 import com.melvinhou.dimension2.databinding.FragmentFunctionBinding
-import com.melvinhou.dimension2.net.HttpConstant
+import com.melvinhou.dimension2.net.HttpConstants
 import com.melvinhou.dimension2.web.WebBrowserActivity
 import com.melvinhou.dimension2.web.WebUtils
 import com.melvinhou.kami.mvvm.BaseViewModel
@@ -49,7 +49,7 @@ class FunctionFragment  : KindFragment<FragmentFunctionBinding, BaseViewModel>()
         //0是标题，序号从1开始
         mBinding.inFunDocument.root.getChildAt(1).setOnClickListener {
             Bundle().apply {
-                val url = HttpConstant.SERVER_RES + "pdf/product.pdf"
+                val url = HttpConstants.SERVER_RES + "pdf/product.pdf"
                 putString("url",url)
                 putString("title","测试专用PDF")
                 toActivity<PdfActivity>(this)

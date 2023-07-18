@@ -93,4 +93,10 @@
     </style>
 
 
+    <style name="KamiEditStyle" parent="Base.Widget.AppCompat.EditText">
+        <item name="colorControlNormal">@color/edit_text_normal_color</item>
+        <item name="colorControlActivated">@color/edit_text_activated_color</item>
+        <item name="editTextBackground">@drawable/edit_text_material</item>
+    </style>
+
 </resources>

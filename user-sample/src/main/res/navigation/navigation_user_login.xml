@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation android:id="@+id/user_login_navigation"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/nav_user_login">
+
+    <fragment
+        android:id="@+id/nav_user_login"
+        android:name="com.melvinhou.user_sample.login.UserLoginFragment"
+        android:label="用户登录"
+        tools:layout="@layout/fragment_user_login">
+        <action
+            android:id="@+id/action_user_login2register"
+            app:destination="@id/nav_user_register"
+            app:enterAnim="@anim/anim_page_right_enter"
+            app:exitAnim="@anim/anim_page_left_exit"
+            app:popEnterAnim="@anim/anim_page_left_enter"
+            app:popExitAnim="@anim/anim_page_right_exit"
+            />
+        <action
+            android:id="@+id/action_user_login2passwordretrieve"
+            app:destination="@id/nav_user_password_retrieve"
+            app:enterAnim="@anim/anim_page_right_enter"
+            app:exitAnim="@anim/anim_page_left_exit"
+            app:popEnterAnim="@anim/anim_page_left_enter"
+            app:popExitAnim="@anim/anim_page_right_exit"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_user_register"
+        android:name="com.melvinhou.user_sample.login.UserRegisterFragment"
+        android:label="注册"
+        tools:layout="@layout/fragment_user_register" />
+
+    <fragment
+        android:id="@+id/nav_user_password_retrieve"
+        android:name="com.melvinhou.user_sample.login.UserPasswordRetrieveFragment"
+        android:label="找回密码"
+        tools:layout="@layout/fragment_user_password_retrieve" />
+
+</navigation>

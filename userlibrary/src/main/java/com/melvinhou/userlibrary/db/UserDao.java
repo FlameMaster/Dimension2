@@ -35,6 +35,10 @@ public interface UserDao {
     @Query("select * from "+User.TABLE_NAME+" where " + User.USER_ID + "=:userId")
     User findUser(long userId);
 
+    //查手机号
+    @Query("select * from "+User.TABLE_NAME+" where phone=:phone")
+    User findUserByPhone(String phone);
+
 
     //插入
     @Insert(onConflict = OnConflictStrategy.REPLACE)//若数据库中已存在，则将其替换
