@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation android:id="@+id/user_navigation"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/nav_user_info">
+
+    <fragment
+        android:id="@+id/nav_user_info"
+        android:name="com.melvinhou.user_sample.user.UserInfoFragment"
+        android:label="用户资料"
+        tools:layout="@layout/fragment_user_info">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_user_safe"
+        android:name="com.melvinhou.user_sample.user.UserSafeFragment"
+        android:label="账号安全"
+        tools:layout="@layout/fragment_user_safe">
+    </fragment>
+
+</navigation>

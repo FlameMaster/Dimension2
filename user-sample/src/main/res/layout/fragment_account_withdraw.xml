@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/app_bg"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@id/bar_root"
+        layout="@layout/inset_bar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:text="提现至"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_bankcard"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="选择银行卡"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:gravity="right"
+                    android:paddingVertical="16dp"
+                    android:drawableRight="@drawable/arrow_right"
+                    android:drawableTint="@color/gray"
+                    android:drawablePadding="4dp"
+                    />
+            </TableRow>
+
+            <TextView
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:text="填写提现余额"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:paddingVertical="16dp"
+                />
+            <EditText
+                android:id="@+id/et_money"
+                android:hint="请输入提现金额"
+                android:paddingHorizontal="15dp"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:paddingLeft="8dp"
+                android:maxLines="1"
+                android:background="@color/white"
+                android:inputType="numberDecimal"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                />
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:text="当前可提金额为："
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_money"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="0.00"
+                    android:textColor="@color/red"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:paddingVertical="16dp"
+                    />
+            </TableRow>
+
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:text="代缴税额"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="0.00"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:gravity="right"
+                    android:paddingVertical="10dp"
+                    />
+            </TableRow>
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:text="实际到账金额"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="0.00"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:gravity="right"
+                    android:paddingVertical="10dp"
+                    />
+            </TableRow>
+
+            <TextView
+                android:id="@+id/tv_mobile"
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:text="发送验证码至000****0000"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:paddingVertical="16dp"
+                />
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/et_code"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="请输入验证码"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:background="@null"
+                    android:textSize="16sp"
+                    android:paddingVertical="16dp"
+                    android:maxLines="1"
+                    android:maxLength="8"
+                    android:inputType="number"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_code"
+                    android:text="发送验证码"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"
+                    android:gravity="right"
+                    android:paddingVertical="16dp"
+                    />
+            </TableRow>
+
+
+        </TableLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        >
+        <Button
+            android:id="@+id/bt_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:enabled="false"
+            android:text="@string/button_submit"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_round"
+            android:backgroundTint="@color/selector_button"
+            android:letterSpacing="0.5" />
+
+    </FrameLayout>
+</LinearLayout>

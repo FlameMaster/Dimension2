@@ -14,15 +14,29 @@ android {
         targetSdkVersion 33
         versionCode 1
         versionName "1.0.0"
+        buildConfigField "String", "channel_customer", "\"${config_customer.channelName}\""
+        buildConfigField "String", "channel_business", "\"${config_business.channelName}\""
+//        resValue "string", "my_string", "MyApp"
+//        resValue "bool", "my_bool", "true"
+//        resValue "integer", "my_integer", "1"
+//        buildConfigField "String", "my_string", '"MyApp"'
+//        buildConfigField "boolean", "my_bool", "true"
+//        buildConfigField "int", "my_integer", "1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        //设置支持的so库框架
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
         //指定room.schemaLocation生成的文件路径
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+        // 只保留指定和默认资源
+        resConfigs('zh-rCN')
     }
 
     signingConfigs {
@@ -62,20 +76,76 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 
 
     sourceSets {
         main {
             java.srcDirs = [
                     'src/main/java',
-                    'src/test/java',//一些演示dome
+                    'src/exert/java',//一些演示dome
                     'src/fun/java'//更复杂的功能演示
             ]
             jniLibs.srcDirs = ['libs']
             res.srcDirs = [
                     'src/main/res',
-                    'src/test/res',
+                    'src/exert/res',
                     'src/fun/res'
+            ]
+        }
+    }
+
+
+    //通过维度组合配置不同参数
+    flavorDimensions "target","channel"
+    productFlavors {
+        official {
+            dimension "channel"
+            buildConfigField "int", "channel_type", "0"
+        }
+        google {
+            dimension "channel"
+            buildConfigField "int", "channel_type", "1"
+        }
+        sample {
+            dimension "target"
+            buildConfigField "int", "target_type", "0"
+            //设置参数方法1
+            manifestPlaceholders = [
+                    CHANNEL_VALUE: "sample",
+            ]
+        }
+        customer {
+            dimension "target"
+            applicationId config_customer.applicationId
+            versionName config_customer.versionName
+            versionCode config_customer.versionCode
+//            resValue "string", "app_name", config_customer.appName
+//            resValue "color", "mainColor", config_customer.colorMain
+            buildConfigField "int", "target_type", "1"
+            //设置参数方法1
+            manifestPlaceholders = [
+                    app_icon     : config_customer.appIcon,
+                    CHANNEL_VALUE: config_customer.channelName,
+            ]
+        }
+        business {
+            dimension "target"
+            applicationId config_business.applicationId
+            versionName config_business.versionName
+            versionCode config_business.versionCode
+//            applicationIdSuffix ".business"
+//            versionNameSuffix "-business"
+//            resValue "string", "app_name", config_business.appName
+//            resValue "color", "mainColor", config_business.colorMain
+            buildConfigField "int", "target_type", "2"
+            //设置参数方法1
+            manifestPlaceholders = [
+                    app_icon     : config_business.appIcon,
+                    app_name     : config_business.appName,
+                    CHANNEL_VALUE: config_business.channelName,
             ]
         }
     }

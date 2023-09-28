@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/nav_backcard_list"
+    android:id="@+id/nav_backcard"
+    >
+
+
+    <fragment
+        android:id="@+id/nav_backcard_list"
+        android:name="com.melvinhou.user_sample.account.card.BankcardListFragment"
+        android:label="银行卡列表"
+        tools:layout="@layout/activity_list" >
+        <action
+            android:id="@+id/action_list2add"
+            app:destination="@id/nav_backcard_add"
+            app:enterAnim="@anim/anim_page_right_enter"
+            app:exitAnim="@anim/anim_page_left_exit"
+            app:popEnterAnim="@anim/anim_page_left_enter"
+            app:popExitAnim="@anim/anim_page_right_exit"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_backcard_add"
+        android:name="com.melvinhou.user_sample.account.card.BankcardFormFragment"
+        android:label="添加银行卡"
+        tools:layout="@layout/fragment_bankcard_form" />
+
+</navigation>

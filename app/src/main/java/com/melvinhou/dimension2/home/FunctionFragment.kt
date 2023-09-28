@@ -3,6 +3,7 @@ package com.melvinhou.dimension2.home
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import com.melvinhou.ar_sample.sample.ArSampleListActivity
 import com.melvinhou.`fun`.desktop.DesktopActivity
 import com.melvinhou.`fun`.document.pdf.PdfActivity
@@ -12,6 +13,8 @@ import com.melvinhou.dimension2.databinding.FragmentFunctionBinding
 import com.melvinhou.dimension2.net.HttpConstants
 import com.melvinhou.dimension2.web.WebBrowserActivity
 import com.melvinhou.dimension2.web.WebUtils
+import com.melvinhou.`fun`.device.BluetoothFragment
+import com.melvinhou.`fun`.device.BluetoothLeFragment
 import com.melvinhou.kami.mvvm.BaseViewModel
 import com.melvinhou.knight.FragmentContainActivity
 import com.melvinhou.knight.KindFragment
@@ -93,6 +96,11 @@ class FunctionFragment  : KindFragment<FragmentFunctionBinding, BaseViewModel>()
                 putString("url","file:///android_asset/javascript.html")
                 toActivity<WebBrowserActivity>(this)
             }
+        }
+        mBinding.inFunSys.root.getChildAt(5).setOnClickListener {
+//            val bundle = bundleOf("fragment" to BluetoothFragment::class.java)
+            val bundle = bundleOf("fragment" to BluetoothLeFragment::class.java)
+            toActivity<FragmentContainActivity>(bundle)
         }
     }
 

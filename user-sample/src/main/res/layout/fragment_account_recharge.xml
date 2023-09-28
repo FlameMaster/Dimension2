@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/app_bg"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@id/bar_root"
+        layout="@layout/inset_bar" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"
+        tools:itemCount="5"
+        tools:listitem="@layout/item_account_recharge"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="15dp"
+        android:background="@color/white"
+        android:layout_marginTop="1dp"
+        />
+
+    <RadioGroup
+        android:id="@+id/rg_pay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingLeft="16dp"
+        android:paddingRight="20dp"
+        android:background="@color/white"
+        android:paddingBottom="20dp"
+        android:layout_marginTop="10dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="选择充值方式"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginTop="12dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/app_bg"
+            android:layout_marginTop="14dp"
+            />
+        <RadioButton
+            android:id="@+id/rb_wechat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="18dp"
+            android:text="微信支付"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginHorizontal="16dp"
+            android:drawableLeft="@drawable/ic_pay_wechat"
+            android:drawablePadding="14dp"
+            android:drawableRight="@drawable/selector_check"
+            android:button="@null"
+            />
+        <RadioButton
+            android:id="@+id/rb_alipay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="18dp"
+            android:text="支付宝支付"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginHorizontal="16dp"
+            android:drawableLeft="@drawable/ic_pay_alipay"
+            android:drawablePadding="14dp"
+            android:drawableRight="@drawable/selector_check"
+            android:button="@null"
+            />
+    </RadioGroup>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        >
+        <Button
+            android:id="@+id/bt_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:enabled="false"
+            android:text="@string/button_submit"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_round"
+            android:backgroundTint="@color/selector_button"
+            android:letterSpacing="0.5" />
+
+    </FrameLayout>
+</LinearLayout>

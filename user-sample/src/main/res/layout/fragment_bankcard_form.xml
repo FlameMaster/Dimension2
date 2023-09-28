@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/app_bg">
+
+    <include
+        android:id="@id/bar_root"
+        layout="@layout/inset_bar" />
+
+    <TableRow
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="15dp"
+        >
+        <TextView
+            android:text="持卡人姓名"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:layout_marginRight="15dp"
+            />
+        <EditText
+            android:id="@+id/et_user_name"
+            android:layout_weight="1"
+            android:hint="请输入持卡人姓名"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textColorHint="@color/gray"
+            android:gravity="right"
+            android:maxLines="1"
+            android:inputType="text"
+            android:background="@null"
+            android:theme="@style/KamiEditStyle"
+            />
+
+    </TableRow>
+    <TableRow
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="15dp"
+        >
+        <TextView
+            android:text="持卡人手机号"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:layout_marginRight="15dp"
+            />
+        <EditText
+            android:id="@+id/et_user_mobile"
+            android:layout_weight="1"
+            android:hint="请输入手机号"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textColorHint="@color/gray"
+            android:gravity="right"
+            android:maxLines="1"
+            android:inputType="number"
+            android:background="@null"
+            android:theme="@style/KamiEditStyle"/>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="15dp"
+        >
+
+        <TextView
+            android:text="添加银行类型"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:layout_marginRight="15dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_card_type"
+            android:layout_weight="1"
+            android:hint="请选择银行卡类型"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textColorHint="@color/gray"
+            android:gravity="right"
+            android:maxLines="1"
+            android:drawablePadding="8dp"
+            android:background="@null"
+            android:drawableRight="@drawable/arrow_right"
+            android:drawableTint="@color/gray"
+            android:theme="@style/KamiEditStyle"/>
+
+    </TableRow>
+    <TableRow
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="15dp"
+        >
+        <TextView
+            android:text="开户行"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:layout_marginRight="15dp"
+            />
+        <EditText
+            android:id="@+id/et_bank_name"
+            android:layout_weight="1"
+            android:hint="请输入开户行"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textColorHint="@color/gray"
+            android:gravity="right"
+            android:maxLines="1"
+            android:inputType="text"
+            android:background="@null"
+            android:theme="@style/KamiEditStyle"/>
+
+    </TableRow>
+    <TableRow
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="15dp"
+        >
+        <TextView
+            android:text="银行卡号"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:layout_marginRight="15dp"
+            />
+        <EditText
+            android:id="@+id/et_bank_number"
+            android:layout_weight="1"
+            android:hint="请输入银行卡号"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textColorHint="@color/gray"
+            android:gravity="right"
+            android:maxLines="1"
+            android:inputType="number"
+            android:background="@null"
+            android:theme="@style/KamiEditStyle"/>
+
+    </TableRow>
+
+    <Button
+        android:id="@+id/bt_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:enabled="false"
+        android:text="立即添加"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_round"
+        android:backgroundTint="@color/selector_button"
+        android:letterSpacing="0.5"
+        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="100dp"
+        />
+
+</TableLayout>

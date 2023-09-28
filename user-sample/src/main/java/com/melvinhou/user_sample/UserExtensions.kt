@@ -16,6 +16,7 @@ fun View.setOnLoginClickListener(Callback: () -> Unit) {
         }else{//需要登录
             val intent = Intent()
             intent.action = "user.login"
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             FcUtils.getContext().startActivity(intent)
         }
     }

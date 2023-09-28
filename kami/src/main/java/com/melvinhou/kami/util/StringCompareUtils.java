@@ -26,7 +26,8 @@ public class StringCompareUtils {
 //    public static final String REGEX_PASSWORD = "^[a-zA-Z0-9]{6,16}$";
     public static final String REGEX_PASSWORD = "^[!-~]{6,20}$";
     // 正则表达式：验证手机号*/
-    public static final String REGEX_MOBILE = "^((13[0-9])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$";
+//    public static final String REGEX_MOBILE = "^((13[0-9])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$";
+    public static final String REGEX_MOBILE = "^1[3456789]\\d{9}$";
     //正则表达式：验证邮箱*/
     public static final String REGEX_EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
     //正则表达式：验证汉字*/
@@ -124,6 +125,27 @@ public class StringCompareUtils {
     //用正则表达式判断企业信用码
     public static boolean isQyCode(String str) {
         return Pattern.matches(REGEX_QYCODE, str);
+    }
+
+    //基于Luhn算法的银行卡卡号的格式校验
+    public static boolean isBankCard(String str) {
+        try {
+            int[] cardNoArr = new int[str.length()];
+            for (int i = 0; i < str.length(); i++) {
+                cardNoArr[i] = Integer.valueOf(String.valueOf(str.charAt(i)));
+            }
+            for (int i = cardNoArr.length - 2; i >= 0; i -= 2) {
+                cardNoArr[i] <<= 1;
+                cardNoArr[i] = cardNoArr[i] / 10 + cardNoArr[i] % 10;
+            }
+            int sum = 0;
+            for (int i = 0; i < cardNoArr.length; i++) {
+                sum += cardNoArr[i];
+            }
+            return sum % 10 == 0;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     //用正则表达式判断汉字

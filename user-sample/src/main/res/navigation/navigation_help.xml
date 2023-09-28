@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation android:id="@+id/help_navigation"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/nav_help_center">
+
+    <fragment
+        android:id="@+id/nav_help_center"
+        android:name="com.melvinhou.user_sample.help.HelpCenterFragment"
+        android:label="帮助中心"
+        tools:layout="@layout/top_help_center">
+        <action
+            android:id="@+id/action_center2list"
+            app:destination="@id/nav_help_list"
+            app:enterAnim="@anim/anim_page_right_enter"
+            app:exitAnim="@anim/anim_page_left_exit"
+            app:popEnterAnim="@anim/anim_page_left_enter"
+            app:popExitAnim="@anim/anim_page_right_exit"
+            />
+        <action
+            android:id="@+id/action_center2detail"
+            app:destination="@id/nav_help_detail"
+            app:enterAnim="@anim/anim_page_right_enter"
+            app:exitAnim="@anim/anim_page_left_exit"
+            app:popEnterAnim="@anim/anim_page_left_enter"
+            app:popExitAnim="@anim/anim_page_right_exit"
+            />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_help_list"
+        android:name="com.melvinhou.user_sample.help.HelpListFragment"
+        android:label="帮助列表"
+        tools:layout="@layout/activity_list">
+        <action
+            android:id="@+id/action_list2detail"
+            app:destination="@id/nav_help_detail"
+            app:enterAnim="@anim/anim_page_right_enter"
+            app:exitAnim="@anim/anim_page_left_exit"
+            app:popEnterAnim="@anim/anim_page_left_enter"
+            app:popExitAnim="@anim/anim_page_right_exit"
+            />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_help_detail"
+        android:name="com.melvinhou.user_sample.help.HelpDetailFragment"
+        android:label="帮助详情"
+        tools:layout="@layout/fragment_help_detail"/>
+
+
+    <fragment
+        android:id="@+id/nav_help_feedback"
+        android:name="com.melvinhou.user_sample.help.FeedbackFragment"
+        android:label="意见反馈"
+        tools:layout="@layout/fragment_help_feedback">
+    </fragment>
+
+</navigation>

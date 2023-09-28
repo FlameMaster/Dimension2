@@ -95,9 +95,11 @@ public class FcUtils {
      * @param tost
      */
     public static void showToast(String tost) {
-        Toast toast = Toast.makeText(getContext(), tost, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);//设置位置
-        toast.show();
+        runOnUiThread(() -> {
+            Toast toast = Toast.makeText(getContext(), tost, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);//设置位置
+            toast.show();
+        });
     }
 
     /**

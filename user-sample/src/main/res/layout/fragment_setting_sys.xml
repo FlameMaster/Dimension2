@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:orientation="vertical">
+
+
+    <include
+        android:id="@id/bar_root"
+        layout="@layout/inset_bar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        >
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/bt_feed_back"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="用户反馈"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:paddingVertical="16dp"
+                    />
+            </TableRow>
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/bt_about_us"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="关于我们"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:paddingVertical="16dp"
+                    />
+            </TableRow>
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:text="当前版本"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_mobile"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="v1.0.0"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:drawablePadding="10dp"
+                    android:gravity="right"
+                    android:paddingVertical="16dp"
+                    />
+            </TableRow>
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/bt_rule"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="协议与条款"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:paddingVertical="16dp"
+                    />
+            </TableRow>
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/bt_user_cancel"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="注销账户"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:paddingVertical="16dp"
+                    />
+            </TableRow>
+
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/bt_logout"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="退出登录"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:paddingVertical="16dp"
+                    />
+            </TableRow>
+
+        </TableLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

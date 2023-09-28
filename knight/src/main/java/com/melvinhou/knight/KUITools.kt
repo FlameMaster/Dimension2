@@ -1,15 +1,15 @@
 package com.melvinhou.knight
 
 import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.Context
 import android.icu.util.TimeZone
 import android.os.Build
 import android.text.TextUtils
 import android.text.format.Time
 import android.view.*
-import android.widget.EditText
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.TextView
+import android.widget.*
 import androidx.collection.arrayMapOf
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
@@ -21,6 +21,7 @@ import com.melvinhou.kami.tool.UITools
 import com.melvinhou.kami.util.DimenUtils
 import com.melvinhou.kami.util.ResourcesUtils
 import com.melvinhou.knight.databinding.ItemCheckTitleBinding
+import java.util.*
 
 
 /**
@@ -37,7 +38,6 @@ import com.melvinhou.knight.databinding.ItemCheckTitleBinding
  * ================================================
  */
 object KUITools {
-
 
 
     /**
@@ -336,6 +336,52 @@ object KUITools {
 
     }
 
+    /**
+     * Android的系统日期选择器
+     */
+    fun showDatePickerDialog(activity: Activity,title: String?, callBack: (String, String, String) -> Unit) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return
+        //获取Calendar对象，用于获取当前时间
+        val calendar = Calendar.getInstance()
+        val year = calendar[Calendar.YEAR]
+        val month = calendar[Calendar.MONTH]
+        val day = calendar[Calendar.DAY_OF_MONTH]
+        //时间选择器
+        val datePickerDialog = DatePickerDialog(activity, R.style.KamiDialog)
+        datePickerDialog.updateDate(year, month, day)
+        datePickerDialog.setTitle(title)
+        //选择完日期后会调用该回调函数
+        datePickerDialog.setOnDateSetListener { view, year1, monthOfYear, dayOfMonth ->
+            //因为monthOfYear会比实际月份少一月所以这边要加1
+            val selectY = year1.toString()
+            val selectM = "${if (monthOfYear < 9) "0" else ""}${monthOfYear + 1}"
+            val selectD = "${if (dayOfMonth < 10) "0" else ""}$dayOfMonth"
+            callBack(selectY, selectM, selectD)
+        }
+        datePickerDialog.show()
+    }
+
+    /**
+     * Android的系统时间选择器
+     */
+    fun showTimePickerDialog(activity: Activity,title: String?, callBack: (String, String) -> Unit) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return
+        //获取Calendar对象，用于获取当前时间
+        val calendar = Calendar.getInstance()
+        val hour = calendar[Calendar.HOUR_OF_DAY]
+        val minute = calendar[Calendar.MINUTE]
+        //时间选择
+        val timePickerDialog = TimePickerDialog(activity,
+            //选择完日期后会调用该回调函数
+            { view: TimePicker?, hourOfDay: Int, minute1: Int ->
+                val selectH = "${if (hourOfDay < 10) "0" else ""}${hourOfDay}"
+                val selectM = "${if (minute1 < 10) "0" else ""}$minute1"
+                callBack(selectH,selectM)
+            }, hour, minute, true
+        )
+        timePickerDialog.setTitle(title)
+        timePickerDialog.show()
+    }
 
 
     /**
@@ -343,9 +389,9 @@ object KUITools {
      */
     fun showInputDialog01(
         activity: Activity,
-        title:String,
-        inputHint:String,
-        inputType:Int,
+        title: String,
+        inputHint: String,
+        inputType: Int,
         callBack: (String?) -> Unit
     ) {
         val dialog = UITools.createDialog(
@@ -377,9 +423,9 @@ object KUITools {
      */
     fun showInputDialog02(
         activity: Activity,
-        title:String,
-        inputHint:String,
-        inputType:Int,
+        title: String,
+        inputHint: String,
+        inputType: Int,
         callBack: (String) -> Unit
     ) {
         val dialog = UITools.createDialog(

@@ -9,5 +9,6 @@
     <item android:color="?attr/colorControlNormal" android:state_checked="true"/>
     <item android:color="?attr/colorControlNormal" android:state_checkable="true"/>
     <item android:color="?attr/colorControlNormal" android:state_selected="true"/>
+    <item android:color="@color/gray" android:state_enabled="false"/>
     <item android:color="?attr/colorAccent"/>
 </selector>

@@ -15,7 +15,7 @@ import com.melvinhou.user_sample.R
  * <p>
  * = 时 间：2023/5/5 0005 15:50
  * <p>
- * = 分 类 说 明：即时通讯相关
+ * = 分 类 说 明：用户登录
  * ================================================
  */
 class UserLoginActivity : NavigationFragmentActivity<LoginModel>() {

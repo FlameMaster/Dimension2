@@ -1,12 +1,32 @@
 ext {
     //全局引用
-    global_config = [
+    config_global = [
             compileSdkVersion: 33,
             buildToolsVersion: "30.0.3",
             minSdkVersion    : 14,
             targetSdkVersion : 30,
-            applicationId    : "com.yunduan.kami",
+            applicationId    : "com.melvinhou.kami",
             versionCode      : 1,
             versionName      : "1.0.0",
+    ]
+    //c端
+    config_customer = [
+            channelName  : "customer",
+            appName      : "FC刺源-c端",
+            colorMain    : "#3D7EFF",
+            appIcon      : "@mipmap/ic_launcher",
+            applicationId: "com.melvinhou.kami.customer",
+            versionCode  : 1,
+            versionName  : "1.0.0",
+    ]
+    //b端
+    config_business = [
+            channelName  : "business",
+            appName      : "FC刺源-b端",
+            colorMain    : "#3D7EFF",
+            appIcon      : "@mipmap/ic_launcher",
+            applicationId: "com.melvinhou.kami.business",
+            versionCode  : 1,
+            versionName  : "1.0.0",
     ]
 }

@@ -1,6 +1,7 @@
 package com.melvinhou.kami.util;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,6 +19,10 @@ import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -33,6 +38,7 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 
+import androidx.annotation.RequiresApi;
 import androidx.palette.graphics.Palette;
 
 /**
@@ -265,6 +271,42 @@ public class ImageUtils {
         bitmap.setPixels(pix, 0, w, 0, 0, w, h);
 
         return (bitmap);
+    }
+
+    /**
+     * 模糊的具体实现
+     *
+     * @param inputBitmap 要模糊的 bitmap
+     */
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public static Bitmap blur(Context context, Bitmap inputBitmap, int radius, boolean canReuseInBitmap) {
+        if (radius < 1 || inputBitmap == null) {
+            return inputBitmap;
+        }
+
+        Bitmap outputBitmap;
+        if (canReuseInBitmap) {
+            outputBitmap = inputBitmap;
+        } else {
+            outputBitmap = inputBitmap.copy(inputBitmap.getConfig(), true);
+        }
+        // 创建 RenderScript
+        RenderScript rs = RenderScript.create(context);
+        Allocation input = Allocation.createFromBitmap(rs, outputBitmap);
+        Allocation output = Allocation.createTyped(rs, input.getType());
+        // 使用 ScriptIntrinsicBlur 类来模糊图片
+        ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(
+                rs, Element.U8_4(rs));
+        // 设置模糊半径 ( 取值范围为( 0.0f , 25f ] ，半径越大，模糊效果也越大)
+        blur.setRadius(radius);
+        blur.setInput(input);
+        // 模糊计算
+        blur.forEach(output);
+        // 模糊 outputBitmap
+        output.copyTo(outputBitmap);
+        // 将模糊后的 outputBitmap 设为目标 View 的背景
+        rs.destroy();
+        return outputBitmap;
     }
 
     public static void setBackground(View view, Drawable img) {

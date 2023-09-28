@@ -4,11 +4,11 @@ plugins {
 
 android {
     namespace 'com.melvinhou.userlibrary'
-    compileSdk global_config.compileSdkVersion
+    compileSdk config_global.compileSdkVersion
 
     defaultConfig {
         minSdk 16
-        targetSdk global_config.compileSdkVersion
+        targetSdk config_global.compileSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

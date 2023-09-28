@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation android:id="@+id/setting_navigation"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/nav_setting_sys">
+
+    <fragment
+        android:id="@+id/nav_setting_sys"
+        android:name="com.melvinhou.user_sample.setting.SettingSysFragment"
+        android:label="系统设置"
+        tools:layout="@layout/fragment_setting_sys">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_abuot_us"
+        android:name="com.melvinhou.user_sample.setting.AboutUsFragment"
+        android:label="关于我们"
+        tools:layout="@layout/fragment_about_us">
+    </fragment>
+
+</navigation>

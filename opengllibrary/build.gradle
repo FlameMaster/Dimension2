@@ -4,11 +4,11 @@ plugins {
 
 android {
     namespace 'com.melvinhou.opengllibrary'
-    compileSdk global_config.compileSdkVersion
+    compileSdk config_global.compileSdkVersion
 
     defaultConfig {
         minSdk 23
-        targetSdk global_config.compileSdkVersion
+        targetSdk config_global.compileSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

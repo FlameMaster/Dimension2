@@ -1,17 +1,23 @@
 package com.melvinhou.user_sample
 
+import android.app.PendingIntent
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.core.view.get
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.melvinhou.kami.io.SharePrefUtil
 import com.melvinhou.kami.util.FcUtils
 import com.melvinhou.knight.KfcUtils
 import com.melvinhou.knight.KindFragment
+import com.melvinhou.user_sample.account.AccountActivity
 import com.melvinhou.user_sample.databinding.FragmentMine02Binding
-import com.melvinhou.userlibrary.UserConstants
+import com.melvinhou.user_sample.help.HelpActivity
+import com.melvinhou.user_sample.setting.SettingActivity
+import com.melvinhou.user_sample.user.UserActivity
 import com.melvinhou.userlibrary.UserUtils
 import com.melvinhou.userlibrary.bean.User
 import com.melvinhou.userlibrary.setOnLoginClickListener
@@ -39,13 +45,29 @@ class MineFragment02 : KindFragment<FragmentMine02Binding, UserModel>() {
         container: ViewGroup?
     ): FragmentMine02Binding = FragmentMine02Binding.inflate(inflater, container, false)
 
+    var isStart = true
     override fun initListener() {
         arrayOf(
             mBinding.inUser.ivUser,
             mBinding.inUser.llUser,
             mBinding.inUser.tvMore,
         ).setOnLoginClickListener {
+            toActivity<UserActivity>()
+        }
+        mBinding.inAccount.root.setOnLoginClickListener {
+            toActivity<AccountActivity>()
+        }
 
+        mBinding.glFuns.get(3).setOnLoginClickListener {
+            val bundle = bundleOf("start" to R.id.nav_help_center)
+            toActivity<HelpActivity>(bundle)
+        }
+        mBinding.glFuns.get(4).setOnLoginClickListener {
+            val bundle = bundleOf("start" to R.id.nav_abuot_us)
+            toActivity<SettingActivity>(bundle)
+        }
+        mBinding.glFuns.get(5).setOnLoginClickListener {
+            toActivity<SettingActivity>()
         }
     }
 

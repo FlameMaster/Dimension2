@@ -169,7 +169,7 @@ public abstract class BaseFragment extends Fragment {
         switch (item.getItemId()) {
             case android.R.id.home:
                 backward();
-                break;
+                return true;
             default:
         }
         return super.onOptionsItemSelected(item);

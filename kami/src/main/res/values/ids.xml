@@ -5,4 +5,9 @@
     <item name="title" type="id"/>
     <item name="bar_root" type="id"/>
     <item name="loading" type="id"/>
+
+    <item name="list_root" type="id"/>
+    <item name="swipe_top_view" type="id"/>
+    <item name="swipe_bottom_view" type="id"/>
+    <item name="list_view" type="id"/>
 </resources>

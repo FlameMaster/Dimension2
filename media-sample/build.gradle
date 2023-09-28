@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion global_config.compileSdkVersion
-    buildToolsVersion global_config.buildToolsVersion
+    compileSdkVersion config_global.compileSdkVersion
+    buildToolsVersion config_global.buildToolsVersion
 
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion global_config.targetSdkVersion
+        targetSdkVersion config_global.targetSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

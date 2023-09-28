@@ -96,9 +96,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                 new ActivityResultContracts.OpenMultipleDocuments(), this::onFileResult);
         //图片
         openImage = registerForActivityResult(
-                new ActivityResultContracts.PickVisualMedia(),this::onFileResult);
+                new ActivityResultContracts.PickVisualMedia(), this::onFileResult);
         openImages = registerForActivityResult(
-                new ActivityResultContracts.PickMultipleVisualMedia(),this::onFileResult);
+                new ActivityResultContracts.PickMultipleVisualMedia(), this::onFileResult);
         //拍照
         openCamera = registerForActivityResult(new ActivityResultContracts.TakePicture(), this::onCameraResult);
         //联系人
@@ -147,7 +147,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     public void hideProcess() {
         if (mLoadDialog != null) {
-            mLoadDialog.hide();
+            mLoadDialog.dismiss();
+            mLoadDialog = null;
         }
     }
 
@@ -608,7 +609,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private ActivityResultLauncher<Uri> openCamera;
     private ActivityResultCallback<Uri> openFileCallback;
     private ActivityResultCallback<List<Uri>> openFilesCallback;
-    private ActivityResultCallback<Boolean>  openCameraCallback;
+    private ActivityResultCallback<Boolean> openCameraCallback;
 
 
     /**
@@ -659,9 +660,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 调取相机
-     *
      */
-    protected void openCamera(Uri uri,ActivityResultCallback<Boolean> callback) {
+    protected void openCamera(Uri uri, ActivityResultCallback<Boolean> callback) {
         openCameraCallback = callback;
         openCamera.launch(uri);
     }
@@ -700,7 +700,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 拍照返回
-     *
      */
     protected void onCameraResult(boolean isTake) {
         if (openCameraCallback != null) {

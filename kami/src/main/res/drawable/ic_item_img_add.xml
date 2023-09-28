@@ -1,22 +1,31 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="143.5dp"
-    android:height="143.5dp"
-    android:viewportWidth="143.5"
-    android:viewportHeight="143.5">
-  <path
-      android:pathData="M9.85,1.85L133.15,1.85C137.568,1.85 141.15,5.432 141.15,9.85L141.15,133.15C141.15,137.568 137.568,141.15 133.15,141.15L9.85,141.15C5.432,141.15 1.85,137.568 1.85,133.15L1.85,9.85C1.85,5.432 5.432,1.85 9.85,1.85Z"
-      android:strokeLineJoin="miter"
-      android:strokeWidth="1"
-      android:fillColor="#F7F8FA"
-      android:fillType="evenOdd"
-      android:strokeColor="#D2D4DF"
-      android:strokeLineCap="butt"/>
-  <path
-      android:pathData="M30.502,65.056L110.498,65.056L110.498,65.056L110.498,73.203L110.498,73.203L30.502,73.203L30.502,73.203L30.502,65.056L30.502,65.056Z"
-      android:fillColor="#D2D4DF"
-      android:fillType="evenOdd"/>
-  <path
-      android:pathData="M74.944,29.502L74.944,109.498L74.944,109.498L66.796,109.498L66.796,109.498L66.796,29.502L66.796,29.502L74.944,29.502L74.944,29.502Z"
-      android:fillColor="#D2D4DF"
-      android:fillType="evenOdd"/>
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!--    A(x轴半径，y轴半径 x轴旋转角度 大1小0弧 顺1逆0时针 终点的相对坐标)-->
+<!--    <path-->
+<!--        android:fillColor="#F2F2F2"-->
+<!--        android:pathData="-->
+<!--        M0,5-->
+<!--        a5,5,0,0,1,5,-5-->
+<!--        h98-->
+<!--        a5,5,0,0,1,5,5-->
+<!--        v98-->
+<!--        a5,5,0,0,1,-5,5-->
+<!--        h-98-->
+<!--        a5,5,0,0,1,-5,-5-->
+<!--        z"/>-->
+    <path
+        android:fillColor="#F2F2F2"
+        android:pathData="
+        M0,0
+        H108
+        V108
+        H-108
+        z"/>
+    <path
+        android:fillColor="#6E6E6E"
+        android:pathData="M43,53 h22 v2 h-22 z M53,43 h2 v22 h-2 z"/>
+
 </vector>

@@ -1,24 +1,12 @@
 package com.melvinhou.user_sample
 
 import android.app.Application
-import android.graphics.Bitmap
-import android.graphics.pdf.PdfRenderer
-import android.util.Log
-import androidx.core.graphics.Insets
 import androidx.lifecycle.MutableLiveData
-import com.melvinhou.kami.io.IOUtils
 import com.melvinhou.kami.io.SharePrefUtil
-import com.melvinhou.kami.mvvm.BaseViewModel
 import com.melvinhou.kami.net.RequestCallback
-import com.melvinhou.kami.tool.AssetsUtil
 import com.melvinhou.knight.NavigaionFragmentModel
 import com.melvinhou.user_sample.net.ApiModel
 import com.melvinhou.userlibrary.bean.User
-import io.reactivex.Observable
-import io.reactivex.ObservableEmitter
-import io.reactivex.ObservableOnSubscribe
-import io.reactivex.disposables.Disposable
-import java.util.concurrent.TimeUnit
 
 
 /**
@@ -34,7 +22,7 @@ import java.util.concurrent.TimeUnit
  * = 分 类 说 明：
  * ================================================
  */
-class UserModel(application: Application) : BaseViewModel(application) {
+class UserModel(application: Application) : NavigaionFragmentModel(application) {
 
     private val isNative = true//本地
     private val nativeModel by lazy { UserNativeModel() }

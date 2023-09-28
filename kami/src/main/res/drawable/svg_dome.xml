@@ -5,7 +5,7 @@
     android:tint="?attr/colorPrimary"
     android:viewportHeight="24.0"
     android:viewportWidth="24.0">
-    <!--    A(x轴半径，y轴半径 x轴旋转角度 大1小0弧 顺1逆0时针 终点的相对坐标)-->
+    <!--    A(x轴半径，y轴半径 x轴旋转角度 大1小0弧 顺1逆0时针 终点的坐标)-->
     <path
         android:fillColor="@color/gray"
         android:pathData="

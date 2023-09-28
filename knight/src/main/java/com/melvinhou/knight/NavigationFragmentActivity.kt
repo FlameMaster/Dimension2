@@ -1,16 +1,10 @@
 package com.melvinhou.knight
 
-import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import androidx.annotation.NavigationRes
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import com.melvinhou.kami.databinding.ActivityListBinding
-import com.melvinhou.kami.mvvm.BaseViewModel
-import com.melvinhou.kami.mvvm.BindActivity
 import com.melvinhou.knight.databinding.ActivityFragmentContainerBinding
 
 
@@ -55,6 +49,11 @@ abstract class NavigationFragmentActivity<M : NavigaionFragmentModel> :
 
     override fun initView() {
         navController = findNavController(R.id.nav_host_fragment)
+        //创建自定义的Fragment导航器
+        val fragmentNavigator = KfcFragmentNavigator(this, supportFragmentManager,R.id.nav_host_fragment)
+        //把自定义的Fragment导航器添加进去
+        navController.navigatorProvider.addNavigator(fragmentNavigator);
+
         //设置管理资源
         val navGraph = navController.navInflater.inflate(_navigationRes)
         //设置启动页

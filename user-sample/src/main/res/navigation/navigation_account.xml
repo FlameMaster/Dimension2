@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/nav_account_center"
+    android:id="@+id/nav_account"
+    >
+
+    <fragment
+        android:id="@+id/nav_account_center"
+        android:name="com.melvinhou.user_sample.account.AccountCenterFragment"
+        android:label="账户中心"
+        tools:layout="@layout/fragment_account_center">
+        <action
+            android:id="@+id/action_center2log"
+            app:destination="@id/nav_account_log"
+            app:enterAnim="@anim/anim_page_right_enter"
+            app:exitAnim="@anim/anim_page_left_exit"
+            app:popEnterAnim="@anim/anim_page_left_enter"
+            app:popExitAnim="@anim/anim_page_right_exit"
+            />
+        <action
+            android:id="@+id/action_center2detail"
+            app:destination="@id/nav_account_bill"
+            app:enterAnim="@anim/anim_page_right_enter"
+            app:exitAnim="@anim/anim_page_left_exit"
+            app:popEnterAnim="@anim/anim_page_left_enter"
+            app:popExitAnim="@anim/anim_page_right_exit"
+            />
+        <action
+            android:id="@+id/action_center2recharge"
+            app:destination="@id/nav_account_recharge"
+            app:enterAnim="@anim/anim_page_right_enter"
+            app:exitAnim="@anim/anim_page_left_exit"
+            app:popEnterAnim="@anim/anim_page_left_enter"
+            app:popExitAnim="@anim/anim_page_right_exit"
+            />
+        <action
+            android:id="@+id/action_center2withdraw"
+            app:destination="@id/nav_account_withdraw"
+            app:enterAnim="@anim/anim_page_right_enter"
+            app:exitAnim="@anim/anim_page_left_exit"
+            app:popEnterAnim="@anim/anim_page_left_enter"
+            app:popExitAnim="@anim/anim_page_right_exit"
+            />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_account_log"
+        android:name="com.melvinhou.user_sample.account.BillListFragment"
+        android:label="全部账单"
+        tools:layout="@layout/activity_page" >
+        <action
+            android:id="@+id/action_list2detail"
+            app:destination="@id/nav_account_bill"
+            app:enterAnim="@anim/anim_page_right_enter"
+            app:exitAnim="@anim/anim_page_left_exit"
+            app:popEnterAnim="@anim/anim_page_left_enter"
+            app:popExitAnim="@anim/anim_page_right_exit"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_account_bill"
+        android:name="com.melvinhou.user_sample.account.BillDetailFragment"
+        android:label="账单详情"
+        tools:layout="@layout/fragment_account_bill_detail" />
+
+
+    <fragment
+        android:id="@+id/nav_account_recharge"
+        android:name="com.melvinhou.user_sample.account.AccountRechargeFragment"
+        android:label="余额充值"
+        tools:layout="@layout/fragment_account_recharge" />
+
+
+    <fragment
+        android:id="@+id/nav_account_withdraw"
+        android:name="com.melvinhou.user_sample.account.AccountWithdrawFragment"
+        android:label="余额提现"
+        tools:layout="@layout/fragment_account_withdraw" />
+
+</navigation>

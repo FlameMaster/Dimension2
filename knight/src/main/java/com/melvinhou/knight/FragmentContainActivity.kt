@@ -3,6 +3,8 @@ package com.melvinhou.knight
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import androidx.core.graphics.Insets
+import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import com.melvinhou.kami.mvvm.BaseViewModel
@@ -67,6 +69,12 @@ class FragmentContainActivity : BindActivity<ActivityFragmentContainBinding, Bas
 
     override fun backward() {
         super.backward()
+    }
+
+    override fun onWindowInsetsChange(insets: Insets) {
+        super.onWindowInsetsChange(insets)
+        val bundle = bundleOf("left" to insets.left,"top" to insets.top,"right" to insets.right,"bottom" to insets.bottom,)
+        supportFragmentManager.fragments[0].arguments = bundle
     }
 
 }

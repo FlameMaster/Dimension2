@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<com.melvinhou.kami.view.wiget.NestedSwipeLayout
+    android:id="@+id/sl_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@id/swipe_top_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="24dp"
+        >
+        <ImageView
+            app:layout_constraintHorizontal_chainStyle="packed"
+            android:id="@+id/iv_refresh"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_refresh01"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_refresh_date"
+            android:layout_marginRight="8dp"
+            app:tint="@color/gray" />
+        <TextView
+            android:id="@+id/tv_refresh_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上次更新: 00-00 00:00"
+            android:textSize="12sp"
+            android:textColor="@color/gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_refresh"
+            android:layout_marginLeft="8dp"
+            />
+        <TextView
+            android:id="@+id/tv_refresh_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="下拉刷新"
+            android:textSize="14sp"
+            android:textColor="@color/gray"
+            app:layout_constraintTop_toTopOf="@id/iv_refresh"
+            app:layout_constraintStart_toStartOf="@id/tv_refresh_date"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@id/swipe_bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:text="加载中..."
+        android:gravity="center"
+        android:textColor="@color/gray"
+        android:textSize="16sp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="true"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+
+
+</com.melvinhou.kami.view.wiget.NestedSwipeLayout>

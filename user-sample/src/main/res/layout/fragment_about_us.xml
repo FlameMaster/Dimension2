@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:orientation="vertical">
+
+
+    <include
+        android:id="@id/bar_root"
+        layout="@layout/inset_bar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        >
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@color/white"
+                android:layout_marginTop="1dp"
+                >
+                <androidx.constraintlayout.utils.widget.ImageFilterView
+                    android:id="@+id/iv_app_icon"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    app:round="16dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:layout_marginTop="48dp"
+                    />
+                <TextView
+                    android:id="@+id/tv_app_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:layout_marginTop="16dp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="?android:attr/colorAccent"
+                    android:layout_marginBottom="24dp"
+                    />
+            </LinearLayout>
+
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:text="关注微信"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_wechat"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="Dark Flame Master"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:gravity="right"
+                    android:paddingVertical="16dp"
+                    android:drawableRight="@drawable/arrow_right"
+                    android:drawableTint="@color/gray"
+                    android:drawablePadding="4dp"
+                    />
+            </TableRow>
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:text="联系电话"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_mobile"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="000****0000"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:gravity="right"
+                    android:paddingVertical="16dp"
+                    android:drawableRight="@drawable/arrow_right"
+                    android:drawableTint="@color/gray"
+                    android:drawablePadding="4dp"
+                    />
+            </TableRow>
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:text="联系邮箱"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_email"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="melvinhou@163.com"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:gravity="right"
+                    android:paddingVertical="16dp"
+                    android:drawableRight="@drawable/arrow_right"
+                    android:drawableTint="@color/gray"
+                    android:drawablePadding="4dp"
+                    />
+            </TableRow>
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:text="详细地址"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="github.com"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:gravity="right"
+                    android:paddingVertical="16dp"
+                    android:drawableRight="@drawable/arrow_right"
+                    android:drawableTint="@color/gray"
+                    android:drawablePadding="4dp"
+                    />
+            </TableRow>
+
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="简介"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:paddingVertical="16dp"
+                    />
+            </TableRow>
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="32dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:minHeight="90dp"
+                    android:text="这是一个普通的简介，普通的文字，在普通的日子里普通的敲。"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp"
+                    android:background="@drawable/round_dp8"
+                    android:backgroundTint="@color/app_bg"
+                    android:padding="8dp"
+                    />
+            </TableRow>
+
+        </TableLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

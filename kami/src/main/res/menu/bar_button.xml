@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/menu_icon"
+        android:title="按钮"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_error_outline_24"
+        android:visible="false"
+        />
+
+    <item
+        android:id="@+id/menu_txt"
+        android:orderInCategory="10"
+        android:title="确定"
+        app:showAsAction="always|withText"
+        android:visible="false"
+        />
+
+</menu>

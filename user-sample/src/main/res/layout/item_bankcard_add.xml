@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_title"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:drawablePadding="10dp"
+    android:drawableTop="@drawable/ic_add01"
+    android:drawableTint="@color/red"
+    android:gravity="center_horizontal"
+    android:paddingTop="40dp"
+    android:text="添加银行卡"
+    android:textColor="@color/black"
+    android:background="@drawable/round_dp8"
+    android:textSize="14sp" />

@@ -166,8 +166,10 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerHolder> extends Recy
      * @param position 删除的尾布局位置
      */
     public void removedTail(int position) {
-        mTailViews.remove(position);
-        notifyItemRemoved(getHeadSize() + getDatas().size() + position);
+        if (mTailViews.size() > position) {
+            mTailViews.remove(position);
+            notifyItemRemoved(getHeadSize() + getDatas().size() + position);
+        }
     }
 
     /**

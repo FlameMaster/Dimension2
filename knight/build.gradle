@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    compileSdk global_config.compileSdkVersion
+    compileSdk config_global.compileSdkVersion
 
     defaultConfig {
         minSdk 23
-        targetSdk global_config.targetSdkVersion
+        targetSdk config_global.targetSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

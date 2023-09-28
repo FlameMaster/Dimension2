@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion global_config.compileSdkVersion
-    buildToolsVersion = global_config.buildToolsVersion
+    compileSdkVersion config_global.compileSdkVersion
+    buildToolsVersion = config_global.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion global_config.minSdkVersion
-        targetSdkVersion global_config.targetSdkVersion
+        minSdkVersion config_global.minSdkVersion
+        targetSdkVersion config_global.targetSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'

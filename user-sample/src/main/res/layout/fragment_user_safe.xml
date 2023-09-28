@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:orientation="vertical">
+
+
+    <include
+        android:id="@id/bar_root"
+        layout="@layout/inset_bar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        >
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:text="修改手机号"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_mobile"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="Admin"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:gravity="right"
+                    android:paddingVertical="16dp"
+                    android:drawableRight="@drawable/arrow_right"
+                    android:drawableTint="@color/gray"
+                    android:drawablePadding="4dp"
+                    />
+            </TableRow>
+            <TableRow
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tv_password"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="修改密码"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:paddingVertical="16dp"
+                    android:drawableRight="@drawable/arrow_right"
+                    android:drawableTint="@color/gray"
+                    android:drawablePadding="4dp"
+                    />
+            </TableRow>
+
+        </TableLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

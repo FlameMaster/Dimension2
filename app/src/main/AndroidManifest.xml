@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.melvinhou.dimension2"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <!--
     从Android 10 开始，应用即使申请了权限，也只能读写自己外部存储的私有目录，
     就是Android/data/对应应用包名 下的相关目目录。
@@ -23,6 +24,9 @@
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
         >
+        <meta-data
+            android:name="CHANNEL"
+            android:value="${CHANNEL_VALUE}" />
         <activity
             android:name=".launch.LaunchActivity"
             android:exported="true"
@@ -109,6 +113,8 @@
             android:name="com.google.ar.core"
             android:value="optional" /> <!-- "required"必须使用arcore or "optional"可以不使用. -->
 
+        <service android:name="com.melvinhou.fun.device.FcBluetoothLeService"
+            android:exported="false"/>
 
     </application>
 
@@ -180,6 +186,30 @@
 
     <!--安装应用-->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+
+    <!--蓝牙-->
+    <!--  允许应用程序连接到配对的蓝牙设备  -->
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <!--  允许应用程序发现和配对蓝牙设备  -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <!--  获得定位  -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!--Android12新增蓝牙权限 -->
+    <!-- Android 12在不申请定位权限时，必须加上android:usesPermissionFlags="neverForLocation"，否则搜不到设备 -->
+<!--    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"-->
+<!--        android:usesPermissionFlags="neverForLocation"-->
+<!--        tools:targetApi="s" />-->
+    <!--  需要能够发现和配对附近的蓝牙设备  -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
+    <!--  需要能够连接到配对的蓝牙设备  -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+    <!--  需要能够向附近的蓝牙设备做广告 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE"/>
+    <!--  允许应用程序在没有用户交互的情况下配对蓝牙设备，并允许或禁止电话簿访问或消息访问  -->
+    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="com.google.android.things.permission.MANAGE_BLUETOOTH" />
 
 
 

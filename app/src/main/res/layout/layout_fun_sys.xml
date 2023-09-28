@@ -74,6 +74,18 @@
         android:textSize="12sp"
         />
 
+    <TextView
+        android:layout_width="0dp"
+        android:layout_columnWeight="1"
+        android:drawablePadding="12dp"
+        android:layout_margin="4dp"
+        android:drawableTop="@drawable/icon_function"
+        android:gravity="center"
+        android:text="蓝牙"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        />
+
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
