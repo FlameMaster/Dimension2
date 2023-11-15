@@ -1,23 +1,19 @@
 package com.melvinhou.`fun`.device
 
 import android.Manifest
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.bluetooth.*
-import android.companion.CompanionDeviceManager
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.bluetooth.le.ScanCallback
+import android.bluetooth.le.ScanResult
+import android.content.*
 import android.graphics.Color
 import android.graphics.Rect
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Message
+import android.os.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresPermission
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.melvinhou.dimension2.databinding.FragmentBluetoothScanBinding
@@ -27,6 +23,7 @@ import com.melvinhou.kami.mvvm.BaseViewModel
 import com.melvinhou.kami.util.DimenUtils
 import com.melvinhou.kami.util.FcUtils
 import com.melvinhou.kami.util.StringUtils
+import com.melvinhou.knight.FragmentContainActivity
 import com.melvinhou.knight.KindFragment
 import com.melvinhou.knight.databinding.ItemTitle01Binding
 
@@ -41,10 +38,27 @@ import com.melvinhou.knight.databinding.ItemTitle01Binding
  * <p>
  * = 时 间：2023/9/14 0014 16:50
  * <p>
- * = 分 类 说 明：蓝牙
+ * = 分 类 说 明：低功耗蓝牙
  * ================================================
  */
-class BluetoothFragment : KindFragment<FragmentBluetoothScanBinding, BaseViewModel>() {
+
+private val TAG = BluetoothLeScanFragment::class.java.name
+//权限
+private val REQUIRED_PERMISSIONS = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+    arrayOf(
+        Manifest.permission.BLUETOOTH_CONNECT,
+        Manifest.permission.BLUETOOTH_ADVERTISE,
+        Manifest.permission.BLUETOOTH_SCAN,
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+    )
+} else {
+    arrayOf(
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.ACCESS_FINE_LOCATION,
+    )
+}
+class BluetoothLeScanFragment : KindFragment<FragmentBluetoothScanBinding, BaseViewModel>() {
     override val _ModelClazz: Class<BaseViewModel>
         get() = BaseViewModel::class.java
 
@@ -54,59 +68,33 @@ class BluetoothFragment : KindFragment<FragmentBluetoothScanBinding, BaseViewMod
     ): FragmentBluetoothScanBinding =
         FragmentBluetoothScanBinding.inflate(inflater, container, false)
 
-    private val TAG = BluetoothFragment::class.java.name
-
-    //蓝牙开启
-    private val REQUEST_ENABLE_BT = 17
-
-    //权限
-    val REQUIRED_PERMISSIONS = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        arrayOf(
-            Manifest.permission.BLUETOOTH_CONNECT,
-            Manifest.permission.BLUETOOTH_ADVERTISE,
-            Manifest.permission.BLUETOOTH_SCAN,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-        )
-    } else {
-        arrayOf(
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-        )
-    }
-
-    private val deviceManager: CompanionDeviceManager? by lazy(LazyThreadSafetyMode.NONE) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            requireContext().getSystemService(CompanionDeviceManager::class.java)
-        } else {
-            null
-        }
-    }
-
 
     // 获取默认适配器
     var bluetoothAdapter: BluetoothAdapter? = null
     private var adapter: MyAdapter? = null
 
-    /**
-     * Member object for the chat services
-     */
-    private var mBluetoothService: FcBluetoothService? = null
-    private val handler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-
+    // 10秒后停止扫描.
+    private val SCAN_PERIOD: Long = 10000
+    private var isScanning = false
+    private val handler = Handler()
+    // 设备扫描回调.
+    private val leScanCallback: ScanCallback = object : ScanCallback() {
+        override fun onScanResult(callbackType: Int, result: ScanResult) {
+            super.onScanResult(callbackType, result)
+            adapter?.addData(result.device)
         }
     }
 
 
     override fun initView() {
-        mBinding.barRoot.title.text = "蓝牙"
+        mBinding.barRoot.title.text = "蓝牙扫描"
         initList()
     }
 
     /**
      * 初始化列表
      */
+    @SuppressLint("MissingPermission")
     private fun initList() {
         adapter = MyAdapter()
         mBinding.container.adapter = this.adapter
@@ -127,14 +115,18 @@ class BluetoothFragment : KindFragment<FragmentBluetoothScanBinding, BaseViewMod
         //点击事件
         adapter?.setOnItemClickListener { _, _, device ->
             if (!checkBluetooth(false)) return@setOnItemClickListener
-            when (device.bondState) {
-                BluetoothDevice.BOND_NONE -> {
-                    device.createBond()
-                }
-                BluetoothDevice.BOND_BONDED -> {
-                    connect(device)
-                }
+
+            //如果正在搜索，先取消搜索状态
+            if (isScanning) {
+                val bluetoothLeScanner = bluetoothAdapter?.bluetoothLeScanner
+                isScanning = false
+                bluetoothLeScanner?.stopScan(leScanCallback)
             }
+            val bundle = bundleOf(
+                "fragment" to BluetoothLeFragment::class.java,
+                "address" to device.address
+            )
+            toActivity<FragmentContainActivity>(bundle)
         }
     }
 
@@ -143,11 +135,11 @@ class BluetoothFragment : KindFragment<FragmentBluetoothScanBinding, BaseViewMod
         //更新下边距
         val top = args?.getInt("top")
         val bottom = args?.getInt("bottom")
-        mBinding.barRoot.barRoot.setPadding(0, top ?: 0, 0, 0)
-        mBinding.root.setPadding(0, 0, 0, bottom ?: 0)
+        mBinding?.barRoot!!.barRoot.setPadding(0, top ?: 0, 0, 0)
+        mBinding?.root!!.setPadding(0, 0, 0, bottom ?: 0)
     }
 
-    @RequiresPermission(value = "android.permission.BLUETOOTH_CONNECT")
+    @SuppressLint("MissingPermission")
     override fun initListener() {
         mBinding.open.setOnCheckedChangeListener { _, isChecked ->
             if (!checkBluetooth(true)) return@setOnCheckedChangeListener
@@ -165,14 +157,6 @@ class BluetoothFragment : KindFragment<FragmentBluetoothScanBinding, BaseViewMod
                 bluetoothAdapter?.disable()//关闭蓝牙
             }
         }
-        mBinding.find.setOnCheckedChangeListener { _, isChecked ->
-            if (!checkBluetooth(false)) return@setOnCheckedChangeListener
-            //设置300秒可被发现
-//        val discoverableIntent: Intent = Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply {
-//            putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300)
-//        }
-//        startActivity(discoverableIntent)
-        }
         mBinding.btScan.setOnClickListener {
             if (!checkBluetooth(false)) return@setOnClickListener
             scan()
@@ -184,27 +168,6 @@ class BluetoothFragment : KindFragment<FragmentBluetoothScanBinding, BaseViewMod
         if (checkBluetooth(true)) {
             mBinding.open.isChecked = bluetoothAdapter?.isEnabled == true
         }
-        FcLog.e(TAG,"重新获取焦点")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        // 使用后关闭代理连接.
-        bluetoothAdapter?.closeProfileProxy(BluetoothProfile.HEADSET, bluetoothHeadset)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        // 不要忘记取消注册ACTION_FOUND接收器.
-        requireContext().unregisterReceiver(receiver)
-        mBluetoothService?.stop()
-    }
-
-    override fun initData() {
-        // Initialize the BluetoothChatService to perform bluetooth connections
-        mBluetoothService = FcBluetoothService(requireContext(), handler)
-
     }
 
     /**
@@ -222,8 +185,6 @@ class BluetoothFragment : KindFragment<FragmentBluetoothScanBinding, BaseViewMod
             FcUtils.showToast("设备不支持蓝牙")
             return false
         }
-        // 建立与代理的连接.
-        bluetoothAdapter?.getProfileProxy(context, profileListener, BluetoothProfile.HEADSET)
         //如果是开关就此返回
         if (isOpen) return true
         //是否打开蓝牙
@@ -237,47 +198,23 @@ class BluetoothFragment : KindFragment<FragmentBluetoothScanBinding, BaseViewMod
     /**
      * 扫描蓝牙
      */
-    @RequiresPermission(value = "android.permission.BLUETOOTH_SCAN")
+    @SuppressLint("MissingPermission")
     private fun scan() {
-        //如果正在搜索，先取消搜索状态
-        if (bluetoothAdapter?.isDiscovering == true) {
-            bluetoothAdapter?.cancelDiscovery();
-        }
         adapter?.clearData()
         adapter?.addDatas(bluetoothAdapter?.bondedDevices?.toMutableList())
-        // 发现设备时注册广播.
-        val filter = IntentFilter()
-//        filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
-        filter.addAction(BluetoothDevice.ACTION_FOUND)//获得扫描结果
-        filter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED)//状态变化
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED)//开始扫描
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)//扫描结束
-        requireContext().registerReceiver(receiver, filter)
-        bluetoothAdapter?.startDiscovery()
-    }
-
-    @RequiresPermission(value = "android.permission.BLUETOOTH_CONNECT")
-    private fun connect(device: BluetoothDevice) {
-        val uuid = device.uuids[0].uuid
-        mBluetoothService?.connect(device, true, uuid)//是否建立安全连接，安全连接会先建立配队关系
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_ENABLE_BT) {
-            if (resultCode == Activity.RESULT_OK) {
-
-            }
-        }
-        FcLog.w(TAG, "返回了requestCode=${resultCode}")
-        when (requestCode) {
-            REQUEST_ENABLE_BT -> when(resultCode) {
-                Activity.RESULT_OK -> {
-                }
-            }
+        val bluetoothLeScanner = bluetoothAdapter?.bluetoothLeScanner
+        if (!isScanning) { // 在设定的扫描周期后停止扫描.
+            handler.postDelayed({
+                isScanning = false
+                bluetoothLeScanner?.stopScan(leScanCallback)
+            }, SCAN_PERIOD)
+            isScanning = true
+            bluetoothLeScanner?.startScan(leScanCallback)
+        } else {
+            isScanning = false
+            bluetoothLeScanner?.stopScan(leScanCallback)
         }
     }
-
 
     /**
      * 列表适配器
@@ -341,58 +278,4 @@ class BluetoothFragment : KindFragment<FragmentBluetoothScanBinding, BaseViewMod
             )
         }
     }
-
-    /**
-     * 发现蓝牙设备的广播
-     */
-    private val receiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val action: String? = intent.action
-            FcLog.w(TAG, "收到消息")
-            when (action) {
-                BluetoothDevice.ACTION_FOUND -> {
-                    val device: BluetoothDevice? =
-                        intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
-                    device?.let { adapter?.addData(it) }
-                }
-                BluetoothDevice.ACTION_BOND_STATE_CHANGED -> {
-                    val state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, -1)
-                    val device: BluetoothDevice? =
-                        intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
-                    val state2 = device?.bondState
-                    FcLog.w(TAG, "配队状态变化${device?.name}_${state}_${state2}")
-                    val newDevice = bluetoothAdapter?.getRemoteDevice(device?.address)
-                    if (state == BluetoothDevice.BOND_BONDED)
-                        newDevice?.let { connect(newDevice) }
-                }
-                BluetoothAdapter.ACTION_DISCOVERY_STARTED -> {
-                    FcLog.w(TAG, "开始扫描")
-                }
-                BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {
-                    FcLog.w(TAG, "结束扫描")
-                }
-            }
-        }
-    }
-
-
-    var bluetoothHeadset: BluetoothHeadset? = null
-
-
-    private val profileListener = object : BluetoothProfile.ServiceListener {
-
-        @RequiresPermission(value = "android.permission.BLUETOOTH_CONNECT")
-        override fun onServiceConnected(profile: Int, proxy: BluetoothProfile) {
-            if (profile == BluetoothProfile.HEADSET) {
-                bluetoothHeadset = proxy as BluetoothHeadset
-            }
-        }
-
-        override fun onServiceDisconnected(profile: Int) {
-            if (profile == BluetoothProfile.HEADSET) {
-                bluetoothHeadset = null
-            }
-        }
-    }
-
 }

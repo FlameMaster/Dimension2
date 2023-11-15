@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*  布局说明：
+*  所属分类：
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/app_bg">
+    <include
+        android:id="@id/bar_root"
+        layout="@layout/inset_bar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/sv_log"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:background="#8000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bar_root"
+        >
+        <TextView
+            android:id="@+id/tv_log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DEBUG\n连接中..."
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:padding="8dp"
+            android:lineSpacingExtra="4dp"
+            android:letterSpacing="0.1"
+            />
+    </androidx.core.widget.NestedScrollView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sv_log"
+        app:layout_constraintBottom_toTopOf="@id/ll_tools"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="5"
+        tools:listitem="@layout/item_bluetooth_service"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/bt_read"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="读取数据"
+            android:letterSpacing="0.2"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_round"
+            android:backgroundTint="@color/selector_button"
+            android:gravity="center"
+            android:paddingVertical="15dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginVertical="8dp"
+            />
+        <TextView
+            android:id="@+id/bt_write"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="写入数据"
+            android:letterSpacing="0.2"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_round"
+            android:backgroundTint="@color/selector_button"
+            android:gravity="center"
+            android:paddingVertical="15dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginVertical="8dp"
+            />
+        <CheckBox
+            android:id="@+id/cb_notify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="监听数据"
+            android:letterSpacing="0.2"
+            android:textColor="@color/black"
+            android:gravity="center_vertical"
+            android:paddingVertical="15dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginVertical="8dp"
+            />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

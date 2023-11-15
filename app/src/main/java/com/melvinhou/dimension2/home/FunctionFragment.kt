@@ -13,8 +13,7 @@ import com.melvinhou.dimension2.databinding.FragmentFunctionBinding
 import com.melvinhou.dimension2.net.HttpConstants
 import com.melvinhou.dimension2.web.WebBrowserActivity
 import com.melvinhou.dimension2.web.WebUtils
-import com.melvinhou.`fun`.device.BluetoothFragment
-import com.melvinhou.`fun`.device.BluetoothLeFragment
+import com.melvinhou.`fun`.device.BluetoothLeScanFragment
 import com.melvinhou.kami.mvvm.BaseViewModel
 import com.melvinhou.knight.FragmentContainActivity
 import com.melvinhou.knight.KindFragment
@@ -99,7 +98,7 @@ class FunctionFragment  : KindFragment<FragmentFunctionBinding, BaseViewModel>()
         }
         mBinding.inFunSys.root.getChildAt(5).setOnClickListener {
 //            val bundle = bundleOf("fragment" to BluetoothFragment::class.java)
-            val bundle = bundleOf("fragment" to BluetoothLeFragment::class.java)
+            val bundle = bundleOf("fragment" to BluetoothLeScanFragment::class.java)
             toActivity<FragmentContainActivity>(bundle)
         }
     }

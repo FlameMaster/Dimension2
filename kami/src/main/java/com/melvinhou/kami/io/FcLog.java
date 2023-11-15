@@ -37,6 +37,15 @@ public class FcLog {
     }
 
     /**
+     * 打印DEBUG级别日志
+     *
+     * @param strInfo 消息
+     */
+    public static void d( String strInfo) {
+        log(LOG_LEVEL_DEBUG, TAG, strInfo);
+    }
+
+    /**
      * 打印INFO级别日志
      *
      * @param strTag  TAG

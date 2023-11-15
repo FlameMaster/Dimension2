@@ -1,6 +1,7 @@
 package com.melvinhou.kami.util;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * ===============================================
@@ -75,5 +76,22 @@ public class DateUtils {
             return String.format("%02d:%02d:%02d", hour, min, sec);
         } else
             return "max";//超出24小时的一般都是直播
+    }
+
+    /**
+     * 计算年龄
+     * @param birthday
+     * @return
+     */
+    public static int getAge(long birthday){
+        Calendar currentCalendar = Calendar.getInstance();
+        currentCalendar.setTimeInMillis(System.currentTimeMillis());
+        Calendar targetCalendar = Calendar.getInstance();
+        targetCalendar.setTimeInMillis(birthday);//这个解析传进来的时间戳
+        if (currentCalendar.get(Calendar.MONTH) >= targetCalendar.get(Calendar.MONTH)) {//如果现在的月份大于生日的月份
+            return currentCalendar.get(Calendar.YEAR) - targetCalendar.get(Calendar.YEAR);//那就直接减,因为现在的年月都大于生日的年月
+        } else {
+            return currentCalendar.get(Calendar.YEAR) - targetCalendar.get(Calendar.YEAR) - 1;//否则,减掉一年
+        }
     }
 }
